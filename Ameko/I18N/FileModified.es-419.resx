@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FileModified_WindowTitle" xml:space="preserve">
+        <value>Archivo modificado</value>
+    </data>
+  <data name="FileModified_CallToAction" xml:space="preserve">
+        <value>Puedes ignorar los cambios o guardar tu trabajo en un archivo diferente.</value>
+    </data>
+  <data name="FileModified_Recommendation" xml:space="preserve">
+        <value>Es recomendable que guardes tu trabajo para evitar perderlo.</value>
+    </data>
+  <data name="FileModified_Header" xml:space="preserve">
+        <value>Otro programa ha modificado "{0}".</value>
+    </data>
+  <data name="FileModified_Button_Ignore" xml:space="preserve">
+        <value>Descartar cambios</value>
+    </data>
+  <data name="FileModified_Button_SaveAs" xml:space="preserve">
+        <value>Guardar como...</value>
+    </data>
+</root>

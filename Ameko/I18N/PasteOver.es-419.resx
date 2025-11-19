@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PasteOver_WindowTitle" xml:space="preserve">
+        <value>Paste Over</value>
+    </data>
+  <data name="PasteOver_Label_SelectFields" xml:space="preserve">
+        <value>Select fields to paste over:</value>
+    </data>
+  <data name="PasteOver_CB_Comment" xml:space="preserve">
+        <value>Comment</value>
+    </data>
+  <data name="PasteOver_CB_Layer" xml:space="preserve">
+        <value>Layer</value>
+    </data>
+  <data name="PasteOver_CB_StartTime" xml:space="preserve">
+        <value>Start Time</value>
+    </data>
+  <data name="PasteOver_CB_EndTime" xml:space="preserve">
+        <value>End Time</value>
+    </data>
+  <data name="PasteOver_CB_Style" xml:space="preserve">
+        <value>Style</value>
+    </data>
+  <data name="PasteOver_CB_Actor" xml:space="preserve">
+        <value>Actor</value>
+    </data>
+  <data name="PasteOver_CB_MarginLeft" xml:space="preserve">
+        <value>Left Margin</value>
+    </data>
+  <data name="PasteOver_CB_MarginRight" xml:space="preserve">
+        <value>Right Margin</value>
+    </data>
+  <data name="PasteOver_CB_MarginVertical" xml:space="preserve">
+        <value>Vertical Margin</value>
+    </data>
+  <data name="PasteOver_CB_Effect" xml:space="preserve">
+        <value>Effect</value>
+    </data>
+  <data name="PasteOver_CB_Text" xml:space="preserve">
+        <value>Text</value>
+    </data>
+  <data name="PasteOver_Button_All" xml:space="preserve">
+        <value>All</value>
+    </data>
+  <data name="PasteOver_Button_None" xml:space="preserve">
+        <value>None</value>
+    </data>
+  <data name="PasteOver_Button_Times" xml:space="preserve">
+        <value>Times</value>
+    </data>
+  <data name="PasteOver_Button_Text" xml:space="preserve">
+        <value>Text</value>
+    </data>
+  <data name="PasteOver_Button_Confirm" xml:space="preserve">
+        <value>OK</value>
+    </data>
+  <data name="PasteOver_Button_All_ToolTip" xml:space="preserve">
+        <value>Select all fields</value>
+    </data>
+  <data name="PasteOver_Button_None_ToolTip" xml:space="preserve">
+        <value>Select no fields</value>
+    </data>
+  <data name="PasteOver_Button_Times_ToolTip" xml:space="preserve">
+        <value>Select only start and end time</value>
+    </data>
+  <data name="PasteOver_Button_Text_ToolTip" xml:space="preserve">
+        <value>Select only text</value>
+    </data>
+</root>

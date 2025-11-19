@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PkgManWindow_Title" xml:space="preserve">
+        <value>Ameko Package Manager</value>
+    </data>
+  <data name="PkgMan_ModuleStore" xml:space="preserve">
+        <value>Module Store</value>
+    </data>
+  <data name="PkgMan_Info_Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+  <data name="PkgMan_Info_QualifiedName" xml:space="preserve">
+        <value>Qualified Name</value>
+    </data>
+  <data name="PkgMan_Info_Version" xml:space="preserve">
+        <value>Version</value>
+    </data>
+  <data name="PkgMan_Info_Author" xml:space="preserve">
+        <value>Author</value>
+    </data>
+  <data name="PkgMan_Info_Description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+  <data name="PkgMan_Info_Dependencies" xml:space="preserve">
+        <value>Dependencies</value>
+    </data>
+  <data name="PkgMan_Info_Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+  <data name="PkgMan_Info_NoSelection" xml:space="preserve">
+        <value>No Selection</value>
+    </data>
+  <data name="PkgMan_InstalledModules" xml:space="preserve">
+        <value>Installed Modules</value>
+    </data>
+  <data name="PkgMan_Info_Repository" xml:space="preserve">
+        <value>Repository</value>
+    </data>
+  <data name="PkgMan_RepositoriesTab" xml:space="preserve">
+        <value>Repositories</value>
+    </data>
+  <data name="PkgMan_Button_Install" xml:space="preserve">
+        <value>Install</value>
+    </data>
+  <data name="PkgMan_Button_UpdateAll" xml:space="preserve">
+        <value>Update All</value>
+    </data>
+  <data name="PkgMan_Button_Update" xml:space="preserve">
+        <value>Update</value>
+    </data>
+  <data name="PkgMan_Button_Uninstall" xml:space="preserve">
+        <value>Uninstall</value>
+    </data>
+  <data name="PkgMan_Button_Install_ToolTip" xml:space="preserve">
+        <value>Install the selected module</value>
+    </data>
+  <data name="PkgMan_Button_UpdateAll_ToolTip" xml:space="preserve">
+        <value>Update all modules to their latest version</value>
+    </data>
+  <data name="PkgMan_Button_Update_ToolTip" xml:space="preserve">
+        <value>Update the selected module to its latest version</value>
+    </data>
+  <data name="PkgMan_Button_Uninstall_ToolTip" xml:space="preserve">
+        <value>Uninstall the selected module</value>
+    </data>
+  <data name="PkgMan_Result_Success" xml:space="preserve">
+        <value>Success!</value>
+    </data>
+  <data name="PkgMan_Result_Failure" xml:space="preserve">
+        <value>Failed!</value>
+    </data>
+  <data name="PkgMan_Result_DepNotFound" xml:space="preserve">
+        <value>Could not find a required dependency</value>
+    </data>
+  <data name="PkgMan_Result_AlreadyInstalled" xml:space="preserve">
+        <value>The module is already installed!</value>
+    </data>
+  <data name="PkgMan_Result_NotInstalled" xml:space="preserve">
+        <value>The module is not installed</value>
+    </data>
+  <data name="PkgMan_Result_FS_Failure" xml:space="preserve">
+        <value>A filesystem error occured</value>
+    </data>
+  <data name="PkgMan_Result_IsRequiredDep" xml:space="preserve">
+        <value>This module is required by other modules</value>
+    </data>
+  <data name="PkgMan_Update_Available_ToolTip" xml:space="preserve">
+        <value>An update is available for this module</value>
+    </data>
+  <data name="PkgMan_Button_Refresh_ToolTip" xml:space="preserve">
+        <value>Refresh the Module Store</value>
+    </data>
+  <data name="PkgMan_MsgBox_Refreshed" xml:space="preserve">
+        <value>Refresh successful</value>
+    </data>
+  <data name="PkgMan_ModulesTab" xml:space="preserve">
+        <value>Modules</value>
+    </data>
+  <data name="PkgMan_Button_RemoveRepo" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+  <data name="PkgMan_Button_AddRepo" xml:space="preserve">
+        <value>Add</value>
+    </data>
+  <data name="PkgMan_Button_RemoveRepo_ToolTip" xml:space="preserve">
+        <value>Remove the selected repository</value>
+    </data>
+  <data name="PkgMan_Button_AddRepo_ToolTip" xml:space="preserve">
+        <value>Add a new repository</value>
+    </data>
+  <data name="PkgMan_Info_Maintainer" xml:space="preserve">
+        <value>Maintainer</value>
+    </data>
+  <data name="PkgMan_Info_IsBetaChannel" xml:space="preserve">
+        <value>Beta Channel?</value>
+    </data>
+  <data name="PkgMan_Info_SubRepoCount" xml:space="preserve">
+        <value>Sub-Repositories</value>
+    </data>
+  <data name="PkgMan_Info_ModuleCount" xml:space="preserve">
+        <value>Modules</value>
+    </data>
+  <data name="PkgMan_Info_Url" xml:space="preserve">
+        <value>Url</value>
+    </data>
+  <data name="PkgMan_Result_Repository_NotInstalled" xml:space="preserve">
+        <value>The repository is not installed</value>
+    </data>
+  <data name="PkgMan_Result_Repository_AlreadyInstalled" xml:space="preserve">
+        <value>The repository is already installed!</value>
+    </data>
+  <data name="PkgMan_Result_InvalidName" xml:space="preserve">
+        <value>The module has an invalid name</value>
+    </data>
+</root>

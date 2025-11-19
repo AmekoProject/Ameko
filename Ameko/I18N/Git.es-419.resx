@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Git_NotInRepo" xml:space="preserve">
+        <value>No se detectó un repositorio Git.</value>
+    </data>
+  <data name="Git_NotInRepo_Tutorial" xml:space="preserve">
+        <value>Para utilizar las características de Git, inicia tu Proyecto en una carpeta que contenga un repositorio Git.</value>
+    </data>
+  <data name="Git_StagedChanges" xml:space="preserve">
+        <value>Cambios agregados</value>
+    </data>
+  <data name="Git_UnstagedChanges" xml:space="preserve">
+        <value>Cambios omitidos</value>
+    </data>
+  <data name="Git_Button_Unstage_ToolTip" xml:space="preserve">
+        <value>Omitir los cambios</value>
+    </data>
+  <data name="Git_Button_Stage_ToolTip" xml:space="preserve">
+        <value>Agregar los cambios</value>
+    </data>
+  <data name="Git_Button_Commit" xml:space="preserve">
+        <value>Enviar cambios</value>
+    </data>
+  <data name="Git_Button_Stash" xml:space="preserve">
+        <value>Guardar</value>
+    </data>
+  <data name="Git_Button_Commit_ToolTip" xml:space="preserve">
+        <value>Confirmar los cambios en {0}</value>
+    </data>
+  <data name="Git_Button_Stash_ToolTip" xml:space="preserve">
+        <value>Guardar cambios</value>
+    </data>
+  <data name="Git_Button_Refresh_ToolTip" xml:space="preserve">
+        <value>Actualizar</value>
+    </data>
+  <data name="Git_CommitBox_Watermark" xml:space="preserve">
+        <value>Mensaje de confirmación</value>
+    </data>
+  <data name="Git_PotentialOwnershipIssue" xml:space="preserve">
+        <value>Se detectó un directorio .git, pero libgit2 no puede procesarlo. Asegúrese de que este repositorio esté marcado como "seguro" en su .gitconfig.</value>
+    </data>
+  <data name="Git_NothingToCommit" xml:space="preserve">
+        <value>No hay cambios que enviar en este momento.</value>
+    </data>
+  <data name="Git_Button_Pull_ToolTip" xml:space="preserve">
+        <value>Extraer desde el servidor</value>
+    </data>
+  <data name="Git_LatestCommits" xml:space="preserve">
+        <value>Últimos cambios enviados en {0}:</value>
+    </data>
+  <data name="Git_Button_Push_ToolTip" xml:space="preserve">
+        <value>Enviar al servidor</value>
+    </data>
+</root>
