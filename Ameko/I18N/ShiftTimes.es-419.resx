@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ShiftTimes_WindowTitle" xml:space="preserve">
+        <value>Shift Times</value>
+    </data>
+  <data name="ShiftTimes_Header_ShiftBy" xml:space="preserve">
+        <value>Shift By</value>
+    </data>
+  <data name="ShiftTimes_RB_Time" xml:space="preserve">
+        <value>Time</value>
+    </data>
+  <data name="ShiftTimes_RB_Frames" xml:space="preserve">
+        <value>Frames</value>
+    </data>
+  <data name="ShiftTimes_RB_TowardEnd" xml:space="preserve">
+        <value>Toward End</value>
+    </data>
+  <data name="ShiftTimes_RB_TowardStart" xml:space="preserve">
+        <value>Toward Start</value>
+    </data>
+  <data name="ShiftTimes_Header_Affect" xml:space="preserve">
+        <value>Affect</value>
+    </data>
+  <data name="ShiftTimes_RB_AllEvents" xml:space="preserve">
+        <value>All Rows</value>
+    </data>
+  <data name="ShiftTimes_RB_SelectedEvents" xml:space="preserve">
+        <value>Selected Rows</value>
+    </data>
+  <data name="ShiftTimes_Header_Times" xml:space="preserve">
+        <value>Times</value>
+    </data>
+  <data name="ShiftTimes_RB_Both" xml:space="preserve">
+        <value>Both</value>
+    </data>
+  <data name="ShiftTimes_RB_Start" xml:space="preserve">
+        <value>Start</value>
+    </data>
+  <data name="ShiftTimes_RB_End" xml:space="preserve">
+        <value>End</value>
+    </data>
+  <data name="ShiftTimes_Button_Ok" xml:space="preserve">
+        <value>OK</value>
+    </data>
+  <data name="ShiftTimes_RB_Milliseconds" xml:space="preserve">
+        <value>Milliseconds</value>
+    </data>
+</root>

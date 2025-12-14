@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LogWindow_Title" xml:space="preserve">
+        <value>Ameko Logs</value>
+    </data>
+  <data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
+        <value>Remove Document?</value>
+    </data>
+  <data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
+        <value>Are you sure you want to remove this document from the project?</value>
+    </data>
+  <data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
+        <value>Remove Directory?</value>
+    </data>
+  <data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
+        <value>Are you sure you want to remove this directory from the project?</value>
+    </data>
+  <data name="MsgBox_NameDirectory_Title" xml:space="preserve">
+        <value>Set Directory Name</value>
+    </data>
+  <data name="MsgBox_NameDirectory_Body" xml:space="preserve">
+        <value>Please choose a name for the directory:</value>
+    </data>
+  <data name="MsgBox_NameItem_Label" xml:space="preserve">
+        <value>Name:</value>
+    </data>
+  <data name="MsgBox_NameDocument_Body" xml:space="preserve">
+        <value>Please choose a display name for the document:</value>
+    </data>
+  <data name="MsgBox_NameDocument_Title" xml:space="preserve">
+        <value>Set Document Name</value>
+    </data>
+  <data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
+        <value>Service of type {0} is not registered for use by scripts</value>
+    </data>
+  <data name="MsgBox_Save_Title" xml:space="preserve">
+        <value>Save work?</value>
+    </data>
+  <data name="MsgBox_Save_Body" xml:space="preserve">
+        <value>{0} contains unsaved work. Do you want to save?</value>
+    </data>
+  <data name="FileDialog_FileType_Project" xml:space="preserve">
+        <value>Ameko Project Files</value>
+    </data>
+  <data name="FileDialog_OpenProject_Title" xml:space="preserve">
+        <value>Open Project File</value>
+    </data>
+  <data name="FileDialog_SaveProject_Title" xml:space="preserve">
+        <value>Save Project File</value>
+    </data>
+  <data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
+        <value>Open Subtitle File</value>
+    </data>
+  <data name="FileDialog_FileType_Ass" xml:space="preserve">
+        <value>ASS Files</value>
+    </data>
+  <data name="FileDialog_FileType_Srt" xml:space="preserve">
+        <value>SRT Files</value>
+    </data>
+  <data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
+        <value>Save Subtitle File</value>
+    </data>
+  <data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
+        <value>Export Subtitle File</value>
+    </data>
+  <data name="FileDialog_FileType_Text" xml:space="preserve">
+        <value>Text Files</value>
+    </data>
+  <data name="MsgBox_ScriptService_Title" xml:space="preserve">
+        <value>Ameko Script Service</value>
+    </data>
+  <data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
+        <value>Scripts reloaded successfully</value>
+    </data>
+  <data name="FileDialog_OpenVideo_Title" xml:space="preserve">
+        <value>Open Video File</value>
+    </data>
+  <data name="FileDialog_FileType_Video" xml:space="preserve">
+        <value>Video Files</value>
+    </data>
+  <data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
+        <value>Open Project Folder</value>
+    </data>
+  <data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
+        <value>Attach Reference File</value>
+    </data>
+  <data name="CrashReporter_WindowTitle" xml:space="preserve">
+        <value>Ameko Crash Reporter</value>
+    </data>
+  <data name="CrashReporter_Header" xml:space="preserve">
+        <value>Ameko has crashed :(</value>
+    </data>
+  <data name="CrashReporter_Info" xml:space="preserve">
+        <value>The details of the error are as follows:</value>
+    </data>
+  <data name="Message_ClipboardEmpty" xml:space="preserve">
+        <value>Clipboard was empty!</value>
+    </data>
+  <data name="MsgBox_Btn_OK" xml:space="preserve">
+        <value>OK</value>
+    </data>
+  <data name="MsgBox_Btn_Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+  <data name="MsgBox_Btn_Yes" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+  <data name="MsgBox_Btn_No" xml:space="preserve">
+        <value>No</value>
+    </data>
+  <data name="MsgBox_LoadVideo_Title" xml:space="preserve">
+        <value>Load Video</value>
+    </data>
+  <data name="MsgBox_LoadVideo_Body" xml:space="preserve">
+        <value>Do you want to load the associated video?</value>
+    </data>
+  <data name="Message_VideoNotFound" xml:space="preserve">
+        <value>The associated video "{0}" was not found.</value>
+    </data>
+  <data name="Message_SavedFrame" xml:space="preserve">
+        <value>Saved frame to {0}</value>
+    </data>
+  <data name="Message_CopiedFrame" xml:space="preserve">
+        <value>Copied frame to clipboard</value>
+    </data>
+  <data name="FileDialog_SaveFrame_Title" xml:space="preserve">
+        <value>Save Frame</value>
+    </data>
+  <data name="FileDialog_FileType_Png" xml:space="preserve">
+        <value>PNG Files</value>
+    </data>
+  <data name="Message_UpdateAvailable" xml:space="preserve">
+        <value>A new version of Ameko, {0}, is available!</value>
+    </data>
+  <data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
+        <value>Media playback is disabled! Ffms2 or libass may be missing!</value>
+    </data>
+  <data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
+        <value>Media Playback</value>
+    </data>
+</root>

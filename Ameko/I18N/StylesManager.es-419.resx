@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StylesManager_Title" xml:space="preserve">
+        <value>Styles Manager</value>
+    </data>
+  <data name="StylesManager_GlobalStyles" xml:space="preserve">
+        <value>Global Styles</value>
+    </data>
+  <data name="StylesManager_ProjectStyles" xml:space="preserve">
+        <value>Project Styles</value>
+    </data>
+  <data name="StylesManager_DocumentStyles" xml:space="preserve">
+        <value>Document Styles</value>
+    </data>
+  <data name="StylesManager_Button_Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+  <data name="StylesManager_Button_Copy" xml:space="preserve">
+        <value>Copy</value>
+    </data>
+  <data name="StylesManager_Button_Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+  <data name="StylesManager_Button_New" xml:space="preserve">
+        <value>New</value>
+    </data>
+  <data name="StylesManager_Button_CopyToProject" xml:space="preserve">
+        <value>Copy to Project</value>
+    </data>
+  <data name="StylesManager_Button_CopyToGlobal" xml:space="preserve">
+        <value>Copy to Global</value>
+    </data>
+  <data name="StylesManager_Button_CopyToDocument" xml:space="preserve">
+        <value>Copy to Document</value>
+    </data>
+  <data name="StylesManager_CopyAppendage" xml:space="preserve">
+        <value>Copy</value>
+    </data>
+  <data name="StylesManager_Button_Copy_ToolTip" xml:space="preserve">
+        <value>Make a copy of the selected style</value>
+    </data>
+  <data name="StylesManager_Button_Delete_ToolTip" xml:space="preserve">
+        <value>Delete the selected style</value>
+    </data>
+  <data name="StylesManager_Button_Edit_ToolTip" xml:space="preserve">
+        <value>Open the selected style in the Style Editor</value>
+    </data>
+  <data name="StylesManager_Button_New_ToolTip" xml:space="preserve">
+        <value>Add a new style</value>
+    </data>
+  <data name="StylesManager_Button_CopyToDocument_ToolTip" xml:space="preserve">
+        <value>Copy the selected style to the open Document</value>
+    </data>
+  <data name="StylesManager_Button_CopyToGlobal_ToolTip" xml:space="preserve">
+        <value>Copy the selected style to your global styles list</value>
+    </data>
+  <data name="StylesManager_Button_CopyToProject_ToolTip" xml:space="preserve">
+        <value>Copy the selected style to the open Project</value>
+    </data>
+</root>

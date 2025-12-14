@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StyleEditor_WindowTitle" xml:space="preserve">
+        <value>Style Editor</value>
+    </data>
+  <data name="StyleEditor_Section_BasicInfo" xml:space="preserve">
+        <value>Basic Info</value>
+    </data>
+  <data name="StyleEditor_InvalidName" xml:space="preserve">
+        <value>Invalid name!</value>
+    </data>
+  <data name="StyleEditor_NameBox_Watermark" xml:space="preserve">
+        <value>Style Name</value>
+    </data>
+  <data name="StyleEditor_Section_Font" xml:space="preserve">
+        <value>Font</value>
+    </data>
+  <data name="StyleEditor_FontFamilyBox_Watermark" xml:space="preserve">
+        <value>Font Family</value>
+    </data>
+  <data name="StyleEditor_CheckBox_Bold" xml:space="preserve">
+        <value>Bold</value>
+    </data>
+  <data name="StyleEditor_CheckBox_Italic" xml:space="preserve">
+        <value>Italic</value>
+    </data>
+  <data name="StyleEditor_CheckBox_Underline" xml:space="preserve">
+        <value>Underline</value>
+    </data>
+  <data name="StyleEditor_CheckBox_Strikethrough" xml:space="preserve">
+        <value>Strikethrough</value>
+    </data>
+  <data name="StyleEditor_Section_Colors" xml:space="preserve">
+        <value>Colors</value>
+    </data>
+  <data name="StyleEditor_Label_Primary" xml:space="preserve">
+        <value>Primary</value>
+    </data>
+  <data name="StyleEditor_Label_Secondary" xml:space="preserve">
+        <value>Secondary</value>
+    </data>
+  <data name="StyleEditor_Label_Outline" xml:space="preserve">
+        <value>Outline</value>
+    </data>
+  <data name="StyleEditor_Label_Shadow" xml:space="preserve">
+        <value>Shadow</value>
+    </data>
+  <data name="StyleEditor_Header_Positioning" xml:space="preserve">
+        <value>Positioning</value>
+    </data>
+  <data name="StyleEditor_Label_Margins" xml:space="preserve">
+        <value>Margins</value>
+    </data>
+  <data name="StyleEditor_Label_Alignment" xml:space="preserve">
+        <value>Alignment</value>
+    </data>
+  <data name="StyleEditor_MarginLeft_ToolTip" xml:space="preserve">
+        <value>Left margin</value>
+    </data>
+  <data name="StyleEditor_MarginRight_ToolTip" xml:space="preserve">
+        <value>Right margin</value>
+    </data>
+  <data name="StyleEditor_MarginVertical_ToolTip" xml:space="preserve">
+        <value>Vertical margin</value>
+    </data>
+  <data name="StyleEditor_An1_ToolTip" xml:space="preserve">
+        <value>Align bottom-left (\an1)</value>
+    </data>
+  <data name="StyleEditor_An2_ToolTip" xml:space="preserve">
+        <value>Align bottom-center (\an2)</value>
+    </data>
+  <data name="StyleEditor_An3_ToolTip" xml:space="preserve">
+        <value>Align bottom-right (\an3)</value>
+    </data>
+  <data name="StyleEditor_An4_ToolTip" xml:space="preserve">
+        <value>Align middle-left (\an4)</value>
+    </data>
+  <data name="StyleEditor_An5_ToolTip" xml:space="preserve">
+        <value>Align center (\an5)</value>
+    </data>
+  <data name="StyleEditor_An6_ToolTip" xml:space="preserve">
+        <value>Align middle-right (\an6)</value>
+    </data>
+  <data name="StyleEditor_An7_ToolTip" xml:space="preserve">
+        <value>Align top-left (\an7)</value>
+    </data>
+  <data name="StyleEditor_An8_ToolTip" xml:space="preserve">
+        <value>Align top-center (\an8)</value>
+    </data>
+  <data name="StyleEditor_An9_ToolTip" xml:space="preserve">
+        <value>Align top-right (\an9)</value>
+    </data>
+  <data name="StyleEditor_Label_MarginLeft" xml:space="preserve">
+        <value>Left</value>
+    </data>
+  <data name="StyleEditor_Label_MarginRight" xml:space="preserve">
+        <value>Right</value>
+    </data>
+  <data name="StyleEditor_Label_MarginVertical" xml:space="preserve">
+        <value>Vertical</value>
+    </data>
+  <data name="StyleEditor_Header_Decoration" xml:space="preserve">
+        <value>Decoration</value>
+    </data>
+  <data name="StyleEditor_Label_BorderThickness" xml:space="preserve">
+        <value>Outline</value>
+    </data>
+  <data name="StyleEditor_Label_ShadowDistance" xml:space="preserve">
+        <value>Shadow</value>
+    </data>
+  <data name="StyleEditor_BBox4" xml:space="preserve">
+        <value>Box (Event)</value>
+    </data>
+  <data name="StyleEditor_BBox1" xml:space="preserve">
+        <value>Outline &amp; Shadow</value>
+    </data>
+  <data name="StyleEditor_BBox3" xml:space="preserve">
+        <value>Box (Line)</value>
+    </data>
+  <data name="StyleEditor_BBox1_ToolTip" xml:space="preserve">
+        <value>Display an outline and shadow around each character</value>
+    </data>
+  <data name="StyleEditor_BBox3_ToolTip" xml:space="preserve">
+        <value>Display an opaque box around each line in the event</value>
+    </data>
+  <data name="StyleEditor_BBox4_ToolTip" xml:space="preserve">
+        <value>Display a single opaque box around all lines in the event (libass only)</value>
+    </data>
+  <data name="StyleEditor_Header_Appearance" xml:space="preserve">
+        <value>Appearance</value>
+    </data>
+  <data name="StyleEditor_Label_ScaleX" xml:space="preserve">
+        <value>X Scale %</value>
+    </data>
+  <data name="StyleEditor_Label_ScaleY" xml:space="preserve">
+        <value>Y Scale %</value>
+    </data>
+  <data name="StyleEditor_Label_Rotation" xml:space="preserve">
+        <value>Rotation (deg)</value>
+    </data>
+  <data name="StyleEditor_Label_Spacing" xml:space="preserve">
+        <value>Spacing</value>
+    </data>
+  <data name="ColorDialog_WindowTitle" xml:space="preserve">
+        <value>Colors</value>
+    </data>
+  <data name="ColorDialog_CheckBox_UseRing" xml:space="preserve">
+        <value>Ring</value>
+    </data>
+  <data name="ColorDialog_Label_AssColor" xml:space="preserve">
+        <value>ASS Color:</value>
+    </data>
+  <data name="ColorDialog_Button_Select" xml:space="preserve">
+        <value>Select</value>
+    </data>
+</root>
