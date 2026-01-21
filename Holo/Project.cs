@@ -933,7 +933,7 @@ public class Project : BindableBase
                 var (currentPath, currentCollection) = stack.Pop();
 
                 // Subdirectories
-                foreach (var subDirectory in fileSystem.Directory.EnumerateDirectories(currentPath))
+                foreach (var subDirectory in fileSystem.Directory.EnumerateDirectories(currentPath).Order())
                 {
                     var dirName = fileSystem.Path.GetFileName(subDirectory);
 
@@ -967,7 +967,8 @@ public class Project : BindableBase
                 // Files
                 var files = fileSystem
                     .Directory.EnumerateFiles(currentPath, "*.ass")
-                    .Concat(fileSystem.Directory.EnumerateFiles(currentPath, "*.srt"));
+                    .Concat(fileSystem.Directory.EnumerateFiles(currentPath, "*.srt"))
+                    .Order();
                 foreach (var file in files)
                 {
                     var docItem = new DocumentItem { Id = NextId, Uri = new Uri(file) };
