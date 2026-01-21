@@ -3,6 +3,7 @@
 using System.Buffers.Text;
 using System.Globalization;
 using System.IO.Abstractions;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -55,9 +56,18 @@ public unsafe class MizukiSourceProvider(
         var ffms2Exists = false;
         var libassExists = false;
 
+        var assembly = typeof(MizukiSourceProvider).Assembly;
         foreach (var candidate in ffms2Candidates)
         {
-            if (!NativeLibrary.TryLoad(candidate, out var handle))
+            if (
+                !NativeLibrary.TryLoad(
+                    candidate,
+                    assembly,
+                    DllImportSearchPath.ApplicationDirectory
+                        | DllImportSearchPath.UseDllDirectoryForDependencies,
+                    out var handle
+                )
+            )
                 continue;
             NativeLibrary.Free(handle);
             ffms2Exists = true;
@@ -65,7 +75,15 @@ public unsafe class MizukiSourceProvider(
         }
         foreach (var candidate in libassCandidates)
         {
-            if (!NativeLibrary.TryLoad(candidate, out var handle))
+            if (
+                !NativeLibrary.TryLoad(
+                    candidate,
+                    assembly,
+                    DllImportSearchPath.ApplicationDirectory
+                        | DllImportSearchPath.UseDllDirectoryForDependencies,
+                    out var handle
+                )
+            )
                 continue;
             NativeLibrary.Free(handle);
             libassExists = true;
