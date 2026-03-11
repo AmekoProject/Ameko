@@ -103,6 +103,7 @@ public class AmekoServiceProvider
         services.AddSingleton<IScriptService, ScriptService>();
         services.AddSingleton<IPackageManager, PackageManager>();
         services.AddSingleton<IScriptConfigurationService, ScriptConfigurationService>();
+        services.AddSingleton<IScriptInvoker, ScriptInvoker>();
         services.AddSingleton<ScriptServiceLocator>();
 
         // --- Media ---

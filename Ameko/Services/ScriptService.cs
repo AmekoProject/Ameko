@@ -55,14 +55,17 @@ public class ScriptService : IScriptService
     }
 
     /// <inheritdoc />
-    public async Task<ExecutionResult> ExecuteScriptAsync(string qualifiedName)
+    public async Task<ExecutionResult> ExecuteScriptAsync(
+        string qualifiedName,
+        ScriptArgs? args = null
+    )
     {
         // Try running as a script
         if (TryGetScript(qualifiedName, out var script))
         {
             try
             {
-                return await script.ExecuteAsync(null);
+                return await script.ExecuteAsync(null, args);
             }
             catch (Exception ex)
             {
@@ -86,7 +89,7 @@ public class ScriptService : IScriptService
             {
                 try
                 {
-                    return await script.ExecuteAsync(methodName);
+                    return await script.ExecuteAsync(methodName, args);
                 }
                 catch (Exception ex)
                 {

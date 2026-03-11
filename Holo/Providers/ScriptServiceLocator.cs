@@ -102,7 +102,8 @@ public sealed class ScriptServiceLocator
         IMessageService messageService,
         IMessageBoxService messageBoxService,
         IWindowService windowService,
-        ICultureService cultureService
+        ICultureService cultureService,
+        IScriptInvoker scriptInvoker
     )
     {
         LoggerFactory = loggerFactory;
@@ -116,6 +117,7 @@ public sealed class ScriptServiceLocator
             [typeof(IMessageBoxService)] = messageBoxService,
             [typeof(IWindowService)] = windowService,
             [typeof(ICultureService)] = cultureService,
+            [typeof(IScriptInvoker)] = scriptInvoker,
         };
     }
 }

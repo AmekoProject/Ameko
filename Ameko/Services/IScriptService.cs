@@ -34,12 +34,13 @@ public interface IScriptService
     /// Asynchronously execute a script or method
     /// </summary>
     /// <param name="qualifiedName">Name of the script or method</param>
+    /// <param name="args">Arguments passed to the script</param>
     /// <returns>Execution result of the script or method</returns>
     /// <remarks>
     /// This method attempts to execute a script first, then a method.
-    /// This relies on method names being <c>scriptName.methodName</c>.
+    /// This relies on method names being <c>scriptName+methodName</c>.
     /// </remarks>
-    Task<ExecutionResult> ExecuteScriptAsync(string qualifiedName);
+    Task<ExecutionResult> ExecuteScriptAsync(string qualifiedName, ScriptArgs? args = null);
 
     /// <summary>
     /// Execute a playground script
