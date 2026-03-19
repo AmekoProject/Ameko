@@ -16,6 +16,19 @@ namespace Holo.Scripting;
 /// </summary>
 public partial class PackageManager : IPackageManager
 {
+    /// <summary>
+    /// Base repository URL
+    /// </summary>
+    public string BaseRepositoryUrl => "https://dc.ameko.moe/base.json";
+
+    /// <summary>
+    /// Limit repository recursion to 2
+    /// </summary>
+    /// <remarks>
+    /// Restricts repo discovery to the parent and its direct children.
+    /// </remarks>
+    private const int MaxRepositoryRecursionDepth = 2;
+
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -44,11 +57,6 @@ public partial class PackageManager : IPackageManager
     private readonly ObservableCollection<Package> _packageStore;
 
     private readonly ObservableCollection<Package> _installedPackages;
-
-    /// <summary>
-    /// Base repository URL
-    /// </summary>
-    public string BaseRepositoryUrl { get; } = "https://dc.ameko.moe/base.json";
 
     /// <summary>
     /// List of available repositories
@@ -351,8 +359,9 @@ public partial class PackageManager : IPackageManager
     /// Recursively collect repositories
     /// </summary>
     /// <param name="repository">Head repository</param>
+    /// <param name="depth">Current recursion depth</param>
     /// <returns>List of new repositories</returns>
-    private async Task<IList<Repository>> GatherRepositories(Repository repository)
+    private async Task<IList<Repository>> GatherRepositories(Repository repository, int depth = 1)
     {
         _logger.LogTrace(
             "Gathering repositories for repository '{RepositoryName}'",
@@ -371,8 +380,8 @@ public partial class PackageManager : IPackageManager
             try
             {
                 var repo = await Repository.Build(url, _httpClient);
-                if (!_repositoryMap.ContainsKey(repo.Name))
-                    newRepos.AddRange(await GatherRepositories(repo));
+                if (!_repositoryMap.ContainsKey(repo.Name) && depth < MaxRepositoryRecursionDepth)
+                    newRepos.AddRange(await GatherRepositories(repo, ++depth));
             }
             catch (Exception e)
             {
@@ -485,7 +494,7 @@ public partial class PackageManager : IPackageManager
         _logger.LogInformation("Done!");
     }
 
-    /// <inheritdoc cref="IPackageManager.AddRepository"/>
+    /// <inheritdoc />
     public async Task<InstallationResult> AddRepository(string repoUrl)
     {
         try
@@ -507,7 +516,7 @@ public partial class PackageManager : IPackageManager
         }
     }
 
-    /// <inheritdoc cref="IPackageManager.RemoveRepository"/>
+    /// <inheritdoc />
     public InstallationResult RemoveRepository(string repositoryName)
     {
         if (!_repositoryMap.Remove(repositoryName, out var repo))
