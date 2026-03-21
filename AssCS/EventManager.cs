@@ -919,7 +919,8 @@ public class EventManager : BindableBase
         {
             var newEvent = Event.FromEvent(NextId, @event);
             var ratio =
-                segment.Length / (double)@event.Text.ReplaceMany(delimiters, string.Empty).Length;
+                segment.Length
+                / (double)@event.GetStrippedText().ReplaceMany(delimiters, string.Empty).Length;
 
             newEvent.Text = segment;
             if (!keepTimes) // Calculate start/end times using CPS
