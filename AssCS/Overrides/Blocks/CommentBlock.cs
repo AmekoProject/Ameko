@@ -6,7 +6,13 @@ namespace AssCS.Overrides.Blocks;
 /// A comment block
 /// </summary>
 /// <remarks>
-/// Text within a set of override brackers <c>{ }</c>
+/// Text within a set of override brackets <c>{ }</c>
 /// that does not contain an override is a Comment
 /// </remarks>
-public class CommentBlock(string data) : Block($"{{{data}}}", BlockType.Comment) { }
+public class CommentBlock(string data) : Block($"{{{data}}}", BlockType.Comment)
+{
+    /// <summary>
+    /// Comment text, excluding the surrounding brackets <c>{ }</c>
+    /// </summary>
+    public string InnerText => data;
+}
