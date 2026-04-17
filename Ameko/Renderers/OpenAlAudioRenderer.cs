@@ -34,8 +34,9 @@ public class OpenAlAudioRenderer(MediaController mediaController) : IAudioRender
         if (_context is not null)
             return;
 
-        _al = AL.GetApi();
-        _alc = ALContext.GetApi();
+        // Use OpenAL Soft on macOS to work around buffer memory leak
+        _al = OperatingSystem.IsMacOS() ? AL.GetApi(true) : AL.GetApi();
+        _alc = OperatingSystem.IsMacOS() ? ALContext.GetApi(true) : ALContext.GetApi();
 
         _device = _alc.OpenDevice(null);
         if (_device is null)
