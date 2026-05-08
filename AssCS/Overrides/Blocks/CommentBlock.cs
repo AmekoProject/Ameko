@@ -14,5 +14,5 @@ public class CommentBlock(string data) : Block($"{{{data}}}", BlockType.Comment)
     /// <summary>
     /// Comment text, excluding the surrounding brackets <c>{ }</c>
     /// </summary>
-    public string InnerText => data;
+    public string InnerText { get; set; } = data;
 }

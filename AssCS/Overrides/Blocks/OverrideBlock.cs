@@ -17,9 +17,23 @@ public class OverrideBlock(ReadOnlySpan<char> data) : Block(data.ToString(), Blo
     private readonly string _data = data.ToString();
 
     /// <summary>
-    /// Override tags in this block
+    /// Gets the list of <see cref="OverrideTag"/> objects parsed from this block.
     /// </summary>
-    public List<OverrideTag> Tags => field ??= ParseTags(_data.AsSpan());
+    /// <seealso cref="SetTags"/>
+    public List<OverrideTag> Tags
+    {
+        get => field ??= ParseTags(_data.AsSpan());
+        private set;
+    }
+
+    /// <summary>
+    /// Replace the <see cref="Tags"/> of this block with new <paramref name="tags"/>
+    /// </summary>
+    /// <param name="tags">The tags to set</param>
+    public void SetTags(IEnumerable<OverrideTag> tags)
+    {
+        Tags = tags.ToList();
+    }
 
     /// <summary>
     /// Text content of the block, including { }

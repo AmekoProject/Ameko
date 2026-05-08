@@ -243,4 +243,150 @@ public static class BlockListExtensions
             return shift;
         }
     }
+
+    /// <summary>
+    /// Extensions for a read-only list of <see cref="Block"/>s
+    /// </summary>
+    /// <param name="blocks">List of <see cref="Block"/>s</param>
+    extension(IReadOnlyList<Block> blocks)
+    {
+        /// <summary>
+        /// Normalize indexes relative to plain text in the event,
+        /// excluding Override, Comment, and Drawing blocks
+        /// </summary>
+        /// <remarks>
+        /// Given <c>Hello {\b1}World{\b0}!</c>, origin index 13 ("r"),
+        /// normalized index 8 will be returned.
+        /// </remarks>
+        /// <param name="originIndex">Original index</param>
+        /// <returns>Normalized index</returns>
+        public int NormalizeIndex(int originIndex)
+        {
+            var remaining = originIndex;
+            var plainLength = 0;
+
+            for (var i = 0; i < blocks.Count && remaining > 0; i++)
+            {
+                var block = blocks[i];
+                var blockLength = block.Text.Length;
+
+                if (block is OverrideBlock or CommentBlock)
+                {
+                    remaining -= blockLength;
+                    continue;
+                }
+
+                var consumed = Math.Min(blockLength, remaining);
+                plainLength += consumed;
+                remaining -= consumed;
+            }
+
+            return plainLength;
+        }
+
+        /// <summary>
+        /// Normalize indexes relative to the given block
+        /// </summary>
+        /// <remarks>
+        /// Given <c>Hello {\b1}World{\b0}!</c>, origin index 13 ("r"),
+        /// normalized index 2 will be returned.
+        /// </remarks>
+        /// <param name="plainBlockIdx">Plain text block to normalize to</param>
+        /// <param name="originIndex">Original index</param>
+        /// <returns>Normalized index</returns>
+        public int NormalizeIndex(int plainBlockIdx, int originIndex)
+        {
+            var remaining = originIndex;
+
+            for (var i = 0; i < blocks.Count && remaining > 0; i++)
+            {
+                var block = blocks[i];
+                var blockLength = block.Text.Length;
+
+                if (block is OverrideBlock or CommentBlock)
+                {
+                    remaining -= blockLength;
+                    continue;
+                }
+
+                var consumed = Math.Min(blockLength, remaining);
+
+                // If this is the block we're targeting, return index within it
+                if (i == plainBlockIdx)
+                    return consumed;
+
+                remaining -= consumed;
+            }
+
+            return remaining;
+        }
+
+        /// <summary>
+        /// Get the index of the block at the given index in the text
+        /// </summary>
+        /// <param name="originIndex">Origin index in the text</param>
+        /// <returns>Index of the block at the given <paramref name="originIndex"/></returns>
+        public int BlockIndexAt(int originIndex)
+        {
+            var remaining = originIndex;
+            var blockCount = blocks.Count;
+
+            var i = 0;
+            for (; i < blockCount; i++)
+            {
+                var block = blocks[i];
+                var hasNext = i + 1 < blockCount;
+
+                remaining -= block.Text.Length;
+                switch (remaining)
+                {
+                    case < 0:
+                        return i;
+                    case 0:
+                        return i + (hasNext && IsBraced(blocks[i + 1]) ? 1 : 0);
+                }
+            }
+
+            return i;
+
+            bool IsBraced(Block block) => block is OverrideBlock or CommentBlock;
+        }
+
+        /// <summary>
+        /// Get the block at the given index
+        /// </summary>
+        /// <param name="originIndex">Origin index in the text</param>
+        /// <returns>The block at the given <paramref name="originIndex"/></returns>
+        public Block GetBlockAt(int originIndex)
+        {
+            return blocks[BlockIndexAt(blocks, originIndex)];
+        }
+
+        /// <summary>
+        /// Find the tag with the given name
+        /// </summary>
+        /// <param name="blockIdx">Block index to check</param>
+        /// <param name="tagName">Name of the tag</param>
+        /// <param name="alt">Alternate name for the tag</param>
+        /// <returns>The tag, or <see langword="null"/> if not found</returns>
+        public OverrideTag? FindTag(int blockIdx, string tagName, string alt = "")
+        {
+            if (blockIdx >= blocks.Count)
+                blockIdx = blocks.Count - 1;
+
+            for (var b = blockIdx; b >= 0; b--)
+            {
+                if (blocks[b] is not OverrideBlock block)
+                    continue;
+
+                for (var t = block.Tags.Count - 1; t >= 0; t--)
+                {
+                    if (block.Tags[t].Name == tagName || block.Tags[t].Name == alt)
+                        return block.Tags[t];
+                }
+            }
+
+            return null;
+        }
+    }
 }

@@ -537,10 +537,12 @@ public partial class Event(int id) : BindableBase, IEntry
     #region Tags n stuff
 
     /// <summary>
-    /// Parse the event into a list of Blocks
+    /// Parses <see cref="Text"/> into a list of <see cref="Block"/> objects.
     /// </summary>
-    /// <returns>List of Blocks representing the event</returns>
-    public List<Block> ParseBlocks()
+    /// <returns>
+    /// A read-only list of <see cref="Block"/> objects. To apply modifications, use <see cref="SetBlocks"/>.
+    /// </returns>
+    public IReadOnlyList<Block> ParseBlocks()
     {
         List<Block> blocks = [];
         if (_text.Length <= 0)
@@ -604,6 +606,22 @@ public partial class Event(int id) : BindableBase, IEntry
     }
 
     /// <summary>
+    /// Sets <see cref="Text"/> by joining the <see cref="Block.Text"/> of each block in <paramref name="blocks"/>
+    /// </summary>
+    /// <param name="blocks">The blocks to set</param>
+    /// <remarks>
+    /// <paramref name="blocks"/> must contain at least one element, as an empty event is represented by a single
+    /// <see cref="PlainBlock"/> with an empty <see cref="Block.Text"/>. An empty input is a no-op.
+    /// </remarks>
+    public void SetBlocks(IEnumerable<Block> blocks)
+    {
+        var list = blocks.ToList();
+        if (list.Count == 0)
+            return;
+        Text = string.Join(string.Empty, list.Select(b => b.Text));
+    }
+
+    /// <summary>
     /// Get the event's text content without override tags,
     /// comments, or drawings
     /// </summary>
@@ -636,7 +654,7 @@ public partial class Event(int id) : BindableBase, IEntry
         if (selStart > selEnd)
             (selStart, selEnd) = (selEnd, selStart);
 
-        var blocks = ParseBlocks();
+        var blocks = ParseBlocks().ToList();
 
         // Get style state
         var state =
@@ -689,22 +707,6 @@ public partial class Event(int id) : BindableBase, IEntry
 
         SetBlocks(blocks);
         return shift;
-    }
-
-    /// <summary>
-    /// Update the text in the line to use the new <paramref name="blocks"/>
-    /// Operation is skipped if the input is empty.
-    /// </summary>
-    /// <remarks>
-    /// This should be called after making modifications directly to blocks and/or tags.
-    /// Also note that the blocks are not persisted!
-    /// </remarks>
-    /// <param name="blocks">Blocks to set</param>
-    public void SetBlocks(List<Block> blocks)
-    {
-        if (blocks.Count == 0)
-            return;
-        Text = string.Join(string.Empty, blocks.Select(b => b.Text));
     }
 
     #endregion

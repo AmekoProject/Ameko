@@ -37,7 +37,11 @@ public abstract class Block
     /// <summary>
     /// Text content
     /// </summary>
-    public virtual string Text => _text;
+    public virtual string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     /// <summary>
     /// Initialize a new block with a type
