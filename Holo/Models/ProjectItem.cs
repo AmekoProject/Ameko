@@ -73,7 +73,7 @@ public class DocumentItem : ProjectItem
         Name
         ?? (
             IsLoaded ? Workspace!.Title
-            : IsSavedToFileSystem ? Path.GetFileNameWithoutExtension(Uri!.LocalPath)
+            : IsSavedToFileSystem ? Path.GetFileName(Uri!.LocalPath)
             : $"New {Id}"
         );
 }
