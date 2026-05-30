@@ -11,6 +11,9 @@ using WeCantSpell.Hunspell;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides spellchecking functionality
+/// </summary>
 public partial class SpellcheckService(
     IFileSystem fileSystem,
     ILogger<SpellcheckService> logger,
@@ -28,6 +31,9 @@ public partial class SpellcheckService(
 
     private WordList _dictionary = WordList.CreateFromWords([]); // Empty
 
+    /// <summary>
+    /// The currently-active spellcheck language
+    /// </summary>
     public SpellcheckLanguage CurrentLanguage { get; private set; } =
         SpellcheckLanguage.AvailableLanguages[0];
 
@@ -128,11 +134,19 @@ public partial class SpellcheckService(
 
         _dictionary = WordList.CreateFromStreams(dic, aff);
 
+        // Add project-level custom words
         foreach (var word in projectProvider.Current.CustomWords)
         {
             _dictionary.Add(word);
         }
 
+        // Add KNP words
+        foreach (var term in projectProvider.Current.Terms)
+        {
+            _dictionary.Add(term.Translation);
+        }
+
+        // Add user-level custom words
         foreach (var word in globals.CustomWords)
         {
             _dictionary.Add(word);
