@@ -29,12 +29,12 @@ internal static class ConfigurationMigrator
             case 1:
                 var v1 =
                     JsonSerializer.Deserialize<ConfigurationModelV1>(content, JsonOptions)
-                    ?? throw new InvalidDataException("Globals model deserialization failed");
+                    ?? throw new InvalidDataException("Configuration model deserialization failed");
                 return CurrentMigrator.Migrate(V2Migrator.Migrate(v1));
             case 2:
                 var v2 =
                     JsonSerializer.Deserialize<ConfigurationModelV2>(content, JsonOptions)
-                    ?? throw new InvalidDataException("Globals model deserialization failed");
+                    ?? throw new InvalidDataException("Configuration model deserialization failed");
                 return CurrentMigrator.Migrate(v2);
         }
         return null;

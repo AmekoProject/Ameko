@@ -9,7 +9,7 @@ namespace Holo.Models;
 internal record ProjectModelBase
 {
     [JsonIgnore]
-    internal const int CurrentApiVersion = 1;
+    internal const int CurrentApiVersion = 2;
     public required int Version;
 }
 
@@ -29,6 +29,7 @@ internal record ProjectModel : ProjectModelBase
     public required int? DefaultLayer;
     public required string? SpellcheckCulture;
     public required string[] CustomWords;
+    public required Term[] Terms;
     public required TimingModel Timing;
     public required Dictionary<string, Dictionary<string, JsonElement>> ScriptConfiguration;
 }
@@ -62,6 +63,7 @@ internal record ProjectModelV2 : ProjectModelBase
     public required int? DefaultLayer;
     public required string? SpellcheckCulture;
     public required string[] CustomWords;
+    public required Term[] Terms;
     public required TimingModel Timing;
     public required Dictionary<string, Dictionary<string, JsonElement>> ScriptConfiguration;
 }

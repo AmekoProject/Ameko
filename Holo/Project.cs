@@ -60,6 +60,7 @@ public class Project : BindableBase
     private int? _defaultLayer;
     private string? _spellcheckCulture;
     private readonly ObservableCollection<string> _customWords;
+    private readonly ObservableCollection<Term> _terms;
     private readonly RangeObservableCollection<Color> _colors;
 
     /// <summary>
@@ -223,10 +224,18 @@ public class Project : BindableBase
     public AssCS.Utilities.ReadOnlyObservableCollection<string> CustomWords => new(_customWords);
 
     /// <summary>
+    /// Key Names and Phrases for the project
+    /// </summary>
+    public AssCS.Utilities.ReadOnlyObservableCollection<Term> Terms => new(_terms);
+
+    /// <summary>
     /// Custom colors for the project
     /// </summary>
     public AssCS.Utilities.ReadOnlyObservableCollection<Color> Colors => new(_colors);
 
+    /// <summary>
+    /// Timing configuration
+    /// </summary>
     public TimingConfiguration Timing { get; } = new();
 
     /// <summary>
@@ -629,6 +638,7 @@ public class Project : BindableBase
                 DefaultLayer = _defaultLayer,
                 SpellcheckCulture = _spellcheckCulture,
                 CustomWords = _customWords.ToArray(),
+                Terms = _terms.ToArray(),
                 Timing = new TimingModel
                 {
                     LeadIn = Timing.LeadIn,
@@ -927,6 +937,7 @@ public class Project : BindableBase
         _referencedItems = [];
         _loadedWorkspaces = [];
         _customWords = [];
+        _terms = [];
         _colors = [];
         StyleManager = new StyleManager();
 

@@ -80,6 +80,7 @@ internal class ProjectMigratorV2 : IProjectMigrator<ProjectModelV1, ProjectModel
 
             // New in version 2
             Colors = [],
+            Terms = [],
         };
     }
 }
@@ -105,6 +106,7 @@ internal class ProjectMigratorCurrent : IProjectMigrator<ProjectModelV2, Project
             DefaultLayer = project.DefaultLayer,
             SpellcheckCulture = project.SpellcheckCulture,
             CustomWords = project.CustomWords,
+            Terms = project.Terms,
             Timing = project.Timing,
             ScriptConfiguration = project.ScriptConfiguration,
         };
