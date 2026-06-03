@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using System.Text.Json.Serialization;
 using AssCS;
 
 namespace Holo.Models;
@@ -77,4 +78,13 @@ public class Term : BindableBase
         get;
         set => SetProperty(ref field, value);
     } = string.Empty;
+
+    /// <summary>
+    /// This term is empty and can be pruned
+    /// </summary>
+    [JsonIgnore]
+    public bool IsEmpty =>
+        string.IsNullOrEmpty(Original)
+        && string.IsNullOrEmpty(Alternate)
+        && string.IsNullOrEmpty(Translation);
 }

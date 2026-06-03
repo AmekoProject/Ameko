@@ -533,6 +533,44 @@ public class Project : BindableBase
     }
 
     /// <summary>
+    /// Add a new <see cref="Term"/> to the project's KNP bible
+    /// </summary>
+    public void AddTerm()
+    {
+        _terms.Add(new Term());
+    }
+
+    /// <summary>
+    /// Add a <see cref="Term"/> to the project's KNP bible
+    /// </summary>
+    /// <param name="term">Term to add</param>
+    public void AddTerm(Term term)
+    {
+        _terms.Add(term);
+    }
+
+    /// <summary>
+    /// Remove a <see cref="Term"/> from the project's KNP bible
+    /// </summary>
+    /// <param name="term"></param>
+    public void RemoveTerm(Term term)
+    {
+        _terms.Remove(term);
+    }
+
+    /// <summary>
+    /// Remove <see cref="Term"/>s from the project's KNP bible
+    /// </summary>
+    /// <param name="terms"></param>
+    public void RemoveTerms(IEnumerable<Term> terms)
+    {
+        foreach (var term in terms)
+        {
+            _terms.Remove(term);
+        }
+    }
+
+    /// <summary>
     /// Add a color to the project
     /// </summary>
     /// <param name="color">Color to add</param>
@@ -638,7 +676,7 @@ public class Project : BindableBase
                 DefaultLayer = _defaultLayer,
                 SpellcheckCulture = _spellcheckCulture,
                 CustomWords = _customWords.ToArray(),
-                Terms = _terms.ToArray(),
+                Terms = _terms.Where(t => !t.IsEmpty).ToArray(),
                 Timing = new TimingModel
                 {
                     LeadIn = Timing.LeadIn,

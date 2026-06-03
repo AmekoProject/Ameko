@@ -233,6 +233,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CommandPalette.resx</DependentUpon>
     </Compile>
+    <Compile Update="I18N\Knp.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Knp.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="I18N\Resources.resx">
@@ -651,6 +656,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="I18N\StylesManager.zh-TW.resx">
       <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Knp.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
