@@ -224,3 +224,40 @@ jobs:
         with:
           name: ameko-linux-x64-${{ needs.calculate-version.outputs.version }}
           path: Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish
+
+  build-sdk:
+    needs: calculate-version
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "${{ env.DOTNET_VERSION }}.x"
+  
+      - name: Build Holo and AssCS
+        shell: bash
+        run: dotnet build -c Release
+
+      - name: Assemble SDK
+        shell: bash
+        run: |
+          mkdir -p Holo.Sdk/ref
+          
+          cp Packaging/Holo.Sdk/Holo.Sdk.csproj Holo.Sdk/Holo.Sdk.csproj
+          cp Packaging/Holo.Sdk/Holo.Sdk.slnx Holo.Sdk/Holo.Sdk.slnx
+          cp Packaging/Holo.Sdk/YourScript.cs Holo.Sdk/YourScript.cs
+          
+          cp Holo/bin/Release/net${{ env.DOTNET_VERSION }}/Holo.dll Holo.Sdk/ref/Holo.dll
+          cp Holo/bin/Release/net${{ env.DOTNET_VERSION }}/Holo.xml Holo.Sdk/ref/Holo.xml
+          cp AssCS/bin/Release/net${{ env.DOTNET_VERSION }}/AssCS.dll Holo.Sdk/ref/AssCS.dll
+          cp AssCS/bin/Release/net${{ env.DOTNET_VERSION }}/AssCS.xml Holo.Sdk/ref/AssCS.xml
+  
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: holo-sdk-${{ needs.calculate-version.outputs.version }}
+          path: Holo.Sdk
