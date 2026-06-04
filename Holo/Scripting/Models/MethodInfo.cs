@@ -16,7 +16,7 @@ public class MethodInfo
     /// Uniquely identifying name for the method
     /// </summary>
     /// <remarks>
-    /// The name will be passed to <see cref="HoloScript.ExecuteAsync(string)"/>
+    /// The name will be passed to <see cref="HoloScript.ExecuteAsync"/>
     /// </remarks>
     public required string QualifiedName { get; init; }
 

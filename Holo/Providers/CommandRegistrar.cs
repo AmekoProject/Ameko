@@ -6,6 +6,10 @@ using Holo.Models;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for registering and managing
+/// commands and command contexts
+/// </summary>
 public class CommandRegistrar : ICommandRegistrar
 {
     private readonly Dictionary<int, Dictionary<string, ICommand>> _contexts = [];

@@ -2,6 +2,9 @@
 
 namespace Holo.Configuration;
 
+/// <summary>
+/// What to include in Rich Presence, if anything
+/// </summary>
 public enum RichPresenceLevel
 {
     /// <summary>

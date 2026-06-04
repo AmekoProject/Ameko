@@ -106,5 +106,8 @@ public interface IKeybindRegistrar
     /// </summary>
     void Parse();
 
+    /// <summary>
+    /// Raised when a keybind property is modified
+    /// </summary>
     event EventHandler<EventArgs>? KeybindsChanged;
 }

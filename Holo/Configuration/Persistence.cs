@@ -192,6 +192,13 @@ public class Persistence : BindableBase, IPersistence
         }
     }
 
+    /// <summary>
+    /// Load an existing persistence file
+    /// </summary>
+    /// <param name="fileSystem">FileSystem to use</param>
+    /// <param name="logger">Logger to use</param>
+    /// <returns>The <see cref="Persistence"/> represented by the loaded file</returns>
+    /// <exception cref="InvalidDataException">If the file is invalid</exception>
     public static Persistence Parse(IFileSystem fileSystem, ILogger<Persistence> logger)
     {
         logger.LogInformation("Parsing persistence...");

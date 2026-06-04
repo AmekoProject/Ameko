@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo;
 
+/// <summary>
+/// Encapsulates media and playback control
+/// </summary>
 public class MediaController : BindableBase
 {
     private readonly ISourceProvider _provider;
@@ -69,6 +72,9 @@ public class MediaController : BindableBase
         private set => SetProperty(ref field, value);
     }
 
+    /// <summary>
+    /// If a video source is currently loaded
+    /// </summary>
     [MemberNotNullWhen(true, nameof(VideoInfo))]
     public bool IsVideoLoaded
     {
@@ -76,6 +82,9 @@ public class MediaController : BindableBase
         private set => SetProperty(ref field, value);
     }
 
+    /// <summary>
+    /// If an audio source is currently loaded
+    /// </summary>
     [MemberNotNullWhen(true, nameof(AudioInfo))]
     public bool IsAudioLoaded
     {
@@ -101,6 +110,9 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Rotational factor of the viewport
+    /// </summary>
     public RotationalFactor RotationalFactor
     {
         get;
@@ -125,24 +137,36 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Width of the viewport
+    /// </summary>
     public double DisplayWidth
     {
         get;
         private set => SetProperty(ref field, value);
     }
 
+    /// <summary>
+    /// Height of the viewport
+    /// </summary>
     public double DisplayHeight
     {
         get;
         private set => SetProperty(ref field, value);
     }
 
+    /// <summary>
+    /// Angle of the viewport
+    /// </summary>
     public double DisplayAngle
     {
         get;
         private set => SetProperty(ref field, value);
     }
 
+    /// <summary>
+    /// Width of the audio visualizer
+    /// </summary>
     public int VisualizerWidth
     {
         get;
@@ -154,6 +178,9 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Height of the audio visualizer
+    /// </summary>
     public int VisualizerHeight
     {
         get;
@@ -165,6 +192,9 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Horizontal scale of the audio visualizer
+    /// </summary>
     public double VisualizerScaleX
     {
         get;
@@ -178,6 +208,9 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Vertical scale of the audio visualizer
+    /// </summary>
     public double VisualizerScaleY
     {
         get;
@@ -191,6 +224,9 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Current position of the left-hand edge of the audio visualizer, in milliseconds
+    /// </summary>
     public long VisualizerPositionMs
     {
         get;
@@ -216,6 +252,9 @@ public class MediaController : BindableBase
         set => SetProperty(ref field, value);
     } = true;
 
+    /// <summary>
+    /// If audio playback is muted
+    /// </summary>
     public bool IsMuted
     {
         get;
@@ -1034,7 +1073,18 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Event raised when a frame is ready to be rendered
+    /// </summary>
     public event Action? FrameReady;
+
+    /// <summary>
+    /// Event raised when playback starts
+    /// </summary>
     public event EventHandler<PlaybackStartEventArgs>? PlaybackStarted;
+
+    /// <summary>
+    /// Event raised when playback ends
+    /// </summary>
     public event EventHandler<EventArgs>? PlaybackStopped;
 }

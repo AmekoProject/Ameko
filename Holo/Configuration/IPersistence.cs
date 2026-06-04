@@ -6,6 +6,9 @@ using Holo.Models;
 
 namespace Holo.Configuration;
 
+/// <summary>
+/// State to persist across sessions
+/// </summary>
 public interface IPersistence
 {
     /// <summary>
@@ -104,5 +107,8 @@ public interface IPersistence
     /// <returns></returns>
     bool Save();
 
+    /// <summary>
+    /// Raised when a persistence property is modified
+    /// </summary>
     event PropertyChangedEventHandler? PropertyChanged;
 }

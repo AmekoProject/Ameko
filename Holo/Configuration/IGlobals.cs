@@ -5,6 +5,9 @@ using AssCS;
 
 namespace Holo.Configuration;
 
+/// <summary>
+/// Global (not per-project) values
+/// </summary>
 public interface IGlobals
 {
     /// <summary>
@@ -56,5 +59,8 @@ public interface IGlobals
     /// <returns><see langword="true"/> if saving was successful</returns>
     bool Save();
 
+    /// <summary>
+    /// Raised when a globals property is modified
+    /// </summary>
     event PropertyChangedEventHandler? PropertyChanged;
 }

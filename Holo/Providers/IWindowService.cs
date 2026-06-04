@@ -2,6 +2,9 @@
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for creating and displaying windows
+/// </summary>
 public interface IWindowService
 {
     /// <summary>

@@ -35,6 +35,9 @@ public class StaticLoggerFactory
         return _factory?.CreateLogger(name) ?? NullLogger.Instance;
     }
 
+    /// <summary>
+    /// Instantiate the Static Logger Factory
+    /// </summary>
     public StaticLoggerFactory(ILoggerFactory factory)
     {
         _factory = factory;

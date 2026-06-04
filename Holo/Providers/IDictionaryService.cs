@@ -6,8 +6,14 @@ using Holo.Models;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for managing spellcheck dictionaries
+/// </summary>
 public interface IDictionaryService
 {
+    /// <summary>
+    /// List of installed spellcheck dictionaries
+    /// </summary>
     ReadOnlyObservableCollection<SpellcheckDictionary> InstalledDictionaries { get; }
 
     /// <summary>

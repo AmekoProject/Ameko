@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Scripting;
 
+/// <summary>
+/// Provides methods for reading and writing per-script configuration.
+/// </summary>
 public class ScriptConfigurationService(
     IFileSystem fileSystem,
     ILogger<ScriptConfigurationService> logger

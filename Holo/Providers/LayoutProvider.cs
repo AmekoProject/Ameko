@@ -11,6 +11,9 @@ using Tomlet;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for managing UI layouts
+/// </summary>
 public class LayoutProvider : BindableBase, ILayoutProvider
 {
     private static readonly Uri LayoutsRoot = new(Path.Combine(Directories.DataHome, "layouts"));

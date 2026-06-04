@@ -7,6 +7,9 @@ using Holo.Models;
 
 namespace Holo.Configuration;
 
+/// <summary>
+/// Application configuration file
+/// </summary>
 public interface IConfiguration
 {
     /// <summary>
@@ -169,5 +172,8 @@ public interface IConfiguration
     /// <returns><see langword="true"/> if saving was successful</returns>
     bool Save();
 
+    /// <summary>
+    /// Raised when a configuration property is modified
+    /// </summary>
     event PropertyChangedEventHandler? PropertyChanged;
 }

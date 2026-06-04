@@ -5,7 +5,7 @@ using Holo.Media;
 
 namespace Holo.Configuration;
 
-public class PersistenceModel
+internal class PersistenceModel
 {
     [JsonIgnore]
     internal const double CurrentApiVersion = 1.0d;

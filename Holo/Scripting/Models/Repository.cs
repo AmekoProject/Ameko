@@ -56,9 +56,6 @@ public record Repository
     /// </summary>
     public string? Url { get; private set; }
 
-    //
-    //
-
     /// <summary>
     /// Build a repository
     /// </summary>
@@ -88,6 +85,7 @@ public record Repository
     }
 
     #region Serialization fields
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
     [JsonPropertyName("Repositories")]
     public HashSet<string> SerializationRepositories
@@ -103,5 +101,6 @@ public record Repository
         init => Packages = value.ToFrozenSet();
     }
 
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion Serialization fields
 }

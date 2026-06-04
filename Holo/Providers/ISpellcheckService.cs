@@ -5,6 +5,9 @@ using Holo.Models;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Facilitates spellchecking
+/// </summary>
 public interface ISpellcheckService
 {
     /// <summary>

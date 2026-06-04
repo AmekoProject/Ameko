@@ -5,6 +5,9 @@ using Holo.Models;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Service providing methods for managing application cultures
+/// </summary>
 public interface ICultureService
 {
     /// <summary>

@@ -110,6 +110,11 @@ public record Package : IComparable<Package>
     /// </summary>
     public string? Repository { get; set; }
 
+    /// <summary>
+    /// Determines whether the specified object is equal to the current object
+    /// </summary>
+    /// <param name="other">The object to compare with the current object</param>
+    /// <returns><see langword="true"/> if the objects are equal</returns>
     public virtual bool Equals(Package? other)
     {
         if (other is null)
@@ -189,6 +194,7 @@ public record Package : IComparable<Package>
     }
 
     #region Serialization fields
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
     [JsonPropertyName("Dependencies")]
     public HashSet<string> SerializationDependencies
@@ -204,6 +210,7 @@ public record Package : IComparable<Package>
         init => Tags = value.ToFrozenSet();
     }
 
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion Serialization fields
 
     /// <inheritdoc />
@@ -214,6 +221,7 @@ public record Package : IComparable<Package>
         return -1;
     }
 
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return HashCode.Combine((int)Type, QualifiedName, Author, IsBetaChannel);

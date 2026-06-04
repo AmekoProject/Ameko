@@ -4,12 +4,30 @@ using Holo.Configuration.Keybinds;
 
 namespace Holo.Configuration;
 
+/// <summary>
+/// Attribute identifying commands
+/// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
 public sealed class CommandAttribute : Attribute
 {
+    /// <summary>
+    /// Qualified name of the command
+    /// </summary>
     public string QualifiedName { get; }
+
+    /// <summary>
+    /// Default keybind used to invoke the command
+    /// </summary>
     public string? DefaultKey { get; }
+
+    /// <summary>
+    /// Default context the keybind is active in
+    /// </summary>
     public KeybindContext DefaultContext { get; }
+
+    /// <summary>
+    /// If the command should be shown in the command palette
+    /// </summary>
     public bool PaletteEnabled { get; }
 
     /// <summary>

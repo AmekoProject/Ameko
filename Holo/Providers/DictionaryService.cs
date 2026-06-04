@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for managing spellcheck dictionaries
+/// </summary>
 public class DictionaryService : IDictionaryService
 {
     private static readonly Uri DictionariesRoot = new(
@@ -122,6 +125,9 @@ public class DictionaryService : IDictionaryService
         return new Uri($"{baseUrl}/{locale.Directory}/{locale.Locale}{locale.Suffix}.aff");
     }
 
+    /// <summary>
+    /// Initialize the dictionary service
+    /// </summary>
     public DictionaryService(
         IFileSystem fileSystem,
         ILogger<DictionaryService> logger,

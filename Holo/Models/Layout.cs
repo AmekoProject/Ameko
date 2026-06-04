@@ -65,6 +65,10 @@ public class Layout
     /// Events grid section
     /// </summary>
     public required TabSection Events { get; init; }
+
+    /// <summary>
+    /// List of splitters in the layout
+    /// </summary>
     public required Splitter[] Splitters { get; init; }
 }
 
@@ -103,6 +107,9 @@ public class TabSection
     public int RowSpan { get; init; } = 1;
 }
 
+/// <summary>
+/// A movable splitter
+/// </summary>
 public class Splitter
 {
     /// <summary>
@@ -135,7 +142,13 @@ public class Splitter
     public int RowSpan { get; init; } = 1;
 }
 
+/// <summary>
+/// Window section of the layout
+/// </summary>
 public class WindowSection
 {
+    /// <summary>
+    /// Location of the project explorer. If <see langword="false"/>, project explorer is on the right.
+    /// </summary>
     public required bool IsProjectExplorerOnLeft { get; init; }
 }

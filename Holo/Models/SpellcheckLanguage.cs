@@ -2,11 +2,29 @@
 
 namespace Holo.Models;
 
+/// <summary>
+/// A language used for spellchecking
+/// </summary>
 public class SpellcheckLanguage
 {
+    /// <summary>
+    /// Name of the language
+    /// </summary>
     public string Name { get; }
+
+    /// <summary>
+    /// Locale code
+    /// </summary>
     public string Locale { get; }
+
+    /// <summary>
+    /// Language directory name
+    /// </summary>
     public string Directory { get; }
+
+    /// <summary>
+    /// Language directory suffix
+    /// </summary>
     public string Suffix { get; }
 
     private SpellcheckLanguage(
@@ -22,6 +40,11 @@ public class SpellcheckLanguage
         Suffix = suffix ?? string.Empty;
     }
 
+    /// <summary>
+    /// Determines whether the specified object is equal to the current object
+    /// </summary>
+    /// <param name="other">The object to compare with the current object</param>
+    /// <returns><see langword="true"/> if the objects are equal</returns>
     protected bool Equals(SpellcheckLanguage other)
     {
         return Locale == other.Locale;
@@ -45,6 +68,9 @@ public class SpellcheckLanguage
         return Locale.GetHashCode();
     }
 
+    /// <summary>
+    /// List of languages available for spellchecking
+    /// </summary>
     public static IReadOnlyList<SpellcheckLanguage> AvailableLanguages =>
         new List<SpellcheckLanguage>
         {

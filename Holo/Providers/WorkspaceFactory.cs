@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Factory for creating <see cref="Workspace"/>s within the DI container
+/// </summary>
 public class WorkspaceFactory(IServiceProvider provider, ILoggerFactory loggerFactory)
     : IWorkspaceFactory
 {

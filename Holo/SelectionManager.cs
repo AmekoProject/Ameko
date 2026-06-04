@@ -5,6 +5,9 @@ using AssCS;
 
 namespace Holo;
 
+/// <summary>
+/// Provides methods for managing event selections in a <see cref="Workspace"/>
+/// </summary>
 public class SelectionManager : BindableBase
 {
     private Event _activeEvent;
@@ -108,6 +111,10 @@ public class SelectionManager : BindableBase
         SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Initialize the selection manager
+    /// </summary>
+    /// <param name="initialSelection">Event to select initially</param>
     public SelectionManager(Event initialSelection)
     {
         _activeEvent = initialSelection;
@@ -115,5 +122,8 @@ public class SelectionManager : BindableBase
         SelectedEventCollection = new ReadOnlyObservableCollection<Event>(_selectedEventCollection);
     }
 
+    /// <summary>
+    /// Event raised when the current selection changes
+    /// </summary>
     public event EventHandler<EventArgs>? SelectionChanged;
 }

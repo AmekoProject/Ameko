@@ -65,10 +65,15 @@ public abstract class ProjectItem : BindableBase
     public virtual string Title => "Untitled Item";
 }
 
+/// <summary>
+/// A <see cref="ProjectItem"/> representing a <see cref="Document"/>
+/// </summary>
 public class DocumentItem : ProjectItem
 {
+    /// <inheritdoc />
     public override ProjectItemType Type => ProjectItemType.Document;
 
+    /// <inheritdoc />
     public override string Title =>
         Name
         ?? (
@@ -78,8 +83,14 @@ public class DocumentItem : ProjectItem
         );
 }
 
+/// <summary>
+/// A <see cref="ProjectItem"/> representing a directory
+/// </summary>
 public class DirectoryItem : ProjectItem
 {
+    /// <inheritdoc />
     public override ProjectItemType Type => ProjectItemType.Directory;
+
+    /// <inheritdoc />
     public override string Title => Name ?? "Untitled Directory";
 }

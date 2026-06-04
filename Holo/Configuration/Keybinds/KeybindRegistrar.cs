@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Configuration.Keybinds;
 
+/// <summary>
+/// Keybind registration and handling
+/// </summary>
 public class KeybindRegistrar(IFileSystem fileSystem, ILogger<KeybindRegistrar> logger)
     : IKeybindRegistrar
 {

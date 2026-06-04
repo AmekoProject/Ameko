@@ -6,6 +6,9 @@ namespace Holo.Providers;
 
 using AssCS.Utilities;
 
+/// <summary>
+/// Provides access to application logs
+/// </summary>
 public interface ILogProvider
 {
     /// <summary>

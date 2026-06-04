@@ -4,6 +4,9 @@ using Holo.Models;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for managing UI layouts
+/// </summary>
 public interface ILayoutProvider
 {
     /// <summary>
@@ -27,8 +30,15 @@ public interface ILayoutProvider
     /// <remarks>Also fired when reloading completes</remarks>
     event EventHandler<LayoutChangedEventArgs>? LayoutChanged;
 
+    /// <summary>
+    /// EventArgs for the <see cref="ILayoutProvider.LayoutChanged"/> event
+    /// </summary>
+    /// <param name="layout">The new selected layout</param>
     public class LayoutChangedEventArgs(Layout? layout) : EventArgs
     {
+        /// <summary>
+        /// The new selected layout
+        /// </summary>
         public Layout? Layout { get; } = layout;
     }
 }

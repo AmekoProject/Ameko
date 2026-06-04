@@ -2,6 +2,9 @@
 
 namespace Holo.IO;
 
+/// <summary>
+/// Paths to specific files
+/// </summary>
 public static class Paths
 {
     /// <summary>

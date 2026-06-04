@@ -6,6 +6,9 @@ using Material.Icons;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for creating and displaying MessageBoxes
+/// </summary>
 public interface IMessageBoxService
 {
     /// <summary>

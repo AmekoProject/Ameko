@@ -227,6 +227,9 @@ public class Project : BindableBase
     /// </summary>
     public AssCS.Utilities.ReadOnlyObservableCollection<Color> Colors => new(_colors);
 
+    /// <summary>
+    /// Project-level timing configuration
+    /// </summary>
     public TimingConfiguration Timing { get; } = new();
 
     /// <summary>

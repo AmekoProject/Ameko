@@ -10,9 +10,24 @@ namespace Holo.IO;
 /// </summary>
 public class Directories
 {
+    /// <summary>
+    /// Base directory for data files
+    /// </summary>
     public static string DataHome => Path.Combine(BaseDirectory.DataHome, "Ameko");
+
+    /// <summary>
+    /// Base directory for configuration files
+    /// </summary>
     public static string ConfigHome => Path.Combine(BaseDirectory.ConfigHome, "Ameko");
+
+    /// <summary>
+    /// Base directory for cache files
+    /// </summary>
     public static string CacheHome => Path.Combine(BaseDirectory.CacheHome, "Ameko");
+
+    /// <summary>
+    /// Base directory for state files
+    /// </summary>
     public static string StateHome => Path.Combine(BaseDirectory.StateHome, "Ameko");
 
     /// <summary>

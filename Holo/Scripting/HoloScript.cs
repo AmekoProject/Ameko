@@ -38,5 +38,8 @@ public abstract class HoloScript : IHoloExecutable
     }
 
     // ReSharper disable once MemberCanBePrivate.Global
+    /// <summary>
+    /// Logger instance
+    /// </summary>
     protected ILogger Logger { get; }
 }

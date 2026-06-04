@@ -256,6 +256,9 @@ public class HighResolutionTimer
     }
 }
 
+/// <summary>
+/// EventArgs for the <see cref="HighResolutionTimer"/> elapsed event
+/// </summary>
 public class HighResolutionTimerElapsedEventArgs : EventArgs
 {
     /// <summary>Real timer delay in [ms]</summary>

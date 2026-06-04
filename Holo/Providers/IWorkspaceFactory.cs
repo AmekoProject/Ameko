@@ -4,6 +4,9 @@ using AssCS;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Factory for creating <see cref="Workspace"/>s within the DI container
+/// </summary>
 public interface IWorkspaceFactory
 {
     /// <summary>

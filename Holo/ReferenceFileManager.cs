@@ -5,6 +5,9 @@ using AssCS;
 
 namespace Holo;
 
+/// <summary>
+/// Provides methods for managing reference files within a <see cref="Workspace"/>
+/// </summary>
 public class ReferenceFileManager : BindableBase
 {
     private readonly SelectionManager _selectionManager;
@@ -30,12 +33,19 @@ public class ReferenceFileManager : BindableBase
     [MemberNotNullWhen(true, nameof(Reference))]
     public bool IsReferenceLoaded { get; private set; }
 
+    /// <summary>
+    /// Currently-visible lines
+    /// </summary>
     public string CurrentLines
     {
         get;
         set => SetProperty(ref field, value);
     } = string.Empty;
 
+    /// <summary>
+    /// Shift the timing of the reference file
+    /// </summary>
+    /// <param name="seconds">Number of seconds to shift by</param>
     public void Shift(int seconds)
     {
         if (!IsReferenceLoaded)
@@ -60,6 +70,10 @@ public class ReferenceFileManager : BindableBase
         CurrentLines = string.Join(Environment.NewLine, hits);
     }
 
+    /// <summary>
+    /// Instantiate the Reference File Manager
+    /// </summary>
+    /// <param name="selectionManager">Selection Manager instance to use</param>
     public ReferenceFileManager(SelectionManager selectionManager)
     {
         _selectionManager = selectionManager;

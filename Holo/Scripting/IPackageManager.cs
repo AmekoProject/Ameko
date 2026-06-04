@@ -5,6 +5,9 @@ using Holo.Scripting.Models;
 
 namespace Holo.Scripting;
 
+/// <summary>
+/// Provides methods for managing installed scripts and libraries
+/// </summary>
 public interface IPackageManager
 {
     /// <summary>

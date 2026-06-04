@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for accessing and instantiating <see cref="Project"/>s
+/// </summary>
 public interface IProjectProvider : INotifyPropertyChanged
 {
     /// <summary>

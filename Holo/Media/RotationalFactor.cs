@@ -35,6 +35,11 @@ public class RotationalFactor
             })
             .ToList();
 
+    /// <summary>
+    /// Determines whether the specified object is equal to the current object
+    /// </summary>
+    /// <param name="other">The object to compare with the current object</param>
+    /// <returns><see langword="true"/> if the objects are equal</returns>
     protected bool Equals(RotationalFactor other)
     {
         return Angle.Equals(other.Angle);

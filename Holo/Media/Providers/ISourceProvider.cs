@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace Holo.Media.Providers;
 
+/// <summary>
+/// A media source provider
+/// </summary>
 public interface ISourceProvider
 {
     /// <summary>
@@ -130,7 +133,7 @@ public interface ISourceProvider
     /// <param name="videoTime">Timestamp of the current video frame</param>
     /// <param name="audioTime">Timestamp of the current audio frame</param>
     /// <param name="eventBounds">Array of bounds of events to display, in milliseconds</param>
-    /// <param name="eventBoundsLength">Length of the <param name="eventBounds"> array</param></param>
+    /// <param name="eventBoundsLength">Length of the <paramref name="eventBounds"> array</paramref></param>
     /// <returns>Output bitmap</returns>
     unsafe Bitmap* GetVisualization(
         int width,

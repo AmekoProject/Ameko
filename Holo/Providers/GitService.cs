@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Basic service for interacting with Git
+/// </summary>
 public class GitService(IFileSystem fileSystem, ILogger<GitService> logger) : IGitService
 {
     [MemberNotNullWhen(true, nameof(WorkingDirectory))]
@@ -40,6 +43,10 @@ public class GitService(IFileSystem fileSystem, ILogger<GitService> logger) : IG
         }
     }
 
+    /// <summary>
+    /// Check if the project file is located in a directory containing a <c>.git</c> directory
+    /// </summary>
+    /// <returns><see langword="true"/> if a <c>.git</c> directory is present</returns>
     public bool HasGitDirectory()
     {
         if (!Ready)

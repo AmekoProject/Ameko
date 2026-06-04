@@ -93,6 +93,9 @@ public sealed class ScriptServiceLocator
         return LoggerFactory.CreateLogger(qualifiedName);
     }
 
+    /// <summary>
+    /// Instantiate the Script Service Locator
+    /// </summary>
     public ScriptServiceLocator(
         ILoggerFactory loggerFactory,
         IConfiguration configuration,

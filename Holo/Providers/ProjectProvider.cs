@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Holo.Providers;
 
+/// <summary>
+/// Provides methods for accessing and instantiating <see cref="Project"/>s
+/// </summary>
 public class ProjectProvider(
     IFileSystem fileSystem,
     ILoggerFactory loggerFactory,
@@ -41,6 +44,7 @@ public class ProjectProvider(
         );
     }
 
+    /// <inheritdoc />
     public Project CreateFromDirectory(Uri uri)
     {
         return new Project(

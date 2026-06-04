@@ -230,6 +230,9 @@ public class Workspace : BindableBase
         }
     }
 
+    /// <summary>
+    /// Perform an Undo history operation, if legal
+    /// </summary>
     public void Undo()
     {
         if (!Document.HistoryManager.CanUndo)
@@ -257,6 +260,9 @@ public class Workspace : BindableBase
             SelectionManager.ForceSelect(selection[0], selection);
     }
 
+    /// <summary>
+    /// Perform a Redo history operation, if legal
+    /// </summary>
     public void Redo()
     {
         if (!Document.HistoryManager.CanRedo)
@@ -408,5 +414,8 @@ public class Workspace : BindableBase
         document.HistoryManager.ChangeMade += (_, _) => MediaController.SetSubtitles(document);
     }
 
+    /// <summary>
+    /// Event raised if the file represented by this workspace is modified outside the current program
+    /// </summary>
     public event EventHandler<EventArgs>? FileModifiedExternally;
 }

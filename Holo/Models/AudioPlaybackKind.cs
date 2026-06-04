@@ -2,6 +2,9 @@
 
 namespace Holo.Models;
 
+/// <summary>
+/// Type of audio playback to perform
+/// </summary>
 public enum AudioPlaybackKind
 {
     /// <summary>
