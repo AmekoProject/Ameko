@@ -90,6 +90,7 @@ public partial class SearchDialogViewModel : ViewModelBase
                         _ => false,
                     }
                 )
-                .ToList() ?? [];
+                .ToList()
+            ?? [];
     }
 }

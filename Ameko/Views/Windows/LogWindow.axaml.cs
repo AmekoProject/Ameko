@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.ViewModels.Windows;
+using Avalonia.Input.Platform;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
 

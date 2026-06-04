@@ -22,7 +22,8 @@ public class PkgManUpToDateConverter : IValueConverter
             return false;
         return !AmekoServiceProvider
                 .Provider?.GetRequiredService<IPackageManager>()
-                .IsPackageUpToDate(package) ?? true;
+                .IsPackageUpToDate(package)
+            ?? true;
     }
 
     public object? ConvertBack(

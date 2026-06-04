@@ -37,7 +37,7 @@
                         <DataTemplate>
                             <Button IsVisible="{Binding !IsBuiltin}"
                                     Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=MinusCircle, Size=12}"
+                                    Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
                                     ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_Remove_ToolTip}"
                                     Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).DeleteCommand, FallbackValue=.}"
                                     CommandParameter="{Binding .}" />
@@ -68,7 +68,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <c:KeybindTextbox Text="{Binding Key}"
-                                              Watermark="{Binding DefaultKey, FallbackValue=''}"
+                                              PlaceholderText="{Binding DefaultKey, FallbackValue=''}"
                                               Margin="1"
                                               Padding="0" />
                         </DataTemplate>
@@ -79,7 +79,7 @@
                         <DataTemplate>
                             <Button IsVisible="{Binding IsOverridden}"
                                     Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=ArrowULeftBottom, Size=14}"
+                                    Content="{icons:MaterialIconExt Kind=ArrowULeftBottom, IconSize=14}"
                                     ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_ClearOverride_ToolTip}"
                                     Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).ClearCommand, FallbackValue=.}"
                                     CommandParameter="{Binding .}" />

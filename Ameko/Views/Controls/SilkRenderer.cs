@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Ameko.DataModels.OpenGl;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using Avalonia.Threading;
@@ -69,7 +70,7 @@ public class SilkRenderer : OpenGlControlBase
         _gl = GL.GetApi(gl.GetProcAddress);
         IsInitialized = true;
 
-        _scaleFactor = VisualRoot?.RenderScaling ?? 1.0d;
+        _scaleFactor = TopLevel.GetTopLevel(this)?.RenderScaling ?? 1.0d;
         MediaController?.ScreenScaleFactor = _scaleFactor;
 
         _ebo = new BufferObject<uint>(_gl, Indices, BufferTargetARB.ElementArrayBuffer);

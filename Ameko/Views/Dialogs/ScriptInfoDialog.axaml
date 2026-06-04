@@ -34,7 +34,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=MinusCircle, Size=12}"
+                                    Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
                                     ToolTip.Tip="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Remove_ToolTip}"
                                     Command="{Binding $parent[Window].((vm:ScriptInfoDialogViewModel)DataContext).RemoveCommand, FallbackValue=.}"
                                     CommandParameter="{Binding Key}" />

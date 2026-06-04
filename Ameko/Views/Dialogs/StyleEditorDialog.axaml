@@ -35,7 +35,7 @@
                            IsVisible="{Binding IsNameInvalid}"
                            Text="{x:Static i18n:StyleEditor.StyleEditor_InvalidName}" />
                 <TextBox Text="{Binding StyleName}"
-                         Watermark="{x:Static i18n:StyleEditor.StyleEditor_NameBox_Watermark}" />
+                         PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_NameBox_Watermark}" />
             </StackPanel>
         </HeaderedContentControl>
         <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_Font}">
@@ -46,7 +46,7 @@
                              Grid.ColumnSpan="3"
                              Margin="0 0 2 2"
                              Text="{Binding Style.FontFamily}"
-                             Watermark="{x:Static i18n:StyleEditor.StyleEditor_FontFamilyBox_Watermark}" />
+                             PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_FontFamilyBox_Watermark}" />
                     <c:NumberTextBox Grid.Column="3"
                                      Grid.Row="0"
                                      Padding="0"

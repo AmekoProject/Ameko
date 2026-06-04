@@ -68,7 +68,7 @@ public class Visualizer : OpenGlControlBase
         _gl = GL.GetApi(gl.GetProcAddress);
         IsInitialized = true;
 
-        _scaleFactor = VisualRoot?.RenderScaling ?? 1.0d;
+        _scaleFactor = TopLevel.GetTopLevel(this)?.RenderScaling ?? 1.0d;
         MediaController?.VisualizerWidth = (int)Bounds.Width;
 
         _ebo = new BufferObject<uint>(_gl, Indices, BufferTargetARB.ElementArrayBuffer);

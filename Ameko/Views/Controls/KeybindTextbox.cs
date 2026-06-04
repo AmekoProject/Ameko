@@ -81,14 +81,14 @@ public class KeybindTextbox : TextBox
     }
 
     /// <inheritdoc />
-    protected override void OnGotFocus(GotFocusEventArgs e)
+    protected override void OnGotFocus(FocusChangedEventArgs e)
     {
         base.OnGotFocus(e);
         _modifiers = KeyModifiers.None;
     }
 
     /// <inheritdoc />
-    protected override void OnLostFocus(RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         base.OnLostFocus(e);
         _modifiers = KeyModifiers.None;

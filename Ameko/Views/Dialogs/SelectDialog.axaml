@@ -34,7 +34,7 @@
                    Content="{x:Static i18n:Search.Search_Label_Find}" />
             <TextBox Grid.Column="1"
                      Name="QueryBox"
-                     Watermark="{x:Static i18n:Search.Search_QueryBox_Watermark}"
+                     PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
                      AcceptsTab="False"
                      AcceptsReturn="False"
                      Text="{Binding Query}"/>

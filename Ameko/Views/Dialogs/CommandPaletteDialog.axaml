@@ -28,7 +28,7 @@
               DockPanel.Dock="Top">
             <TextBox Grid.Column="0"
                      Name="QueryBox"
-                     Watermark="{x:Static i18n:Search.Search_QueryBox_Watermark}"
+                     PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
                      AcceptsTab="False"
                      AcceptsReturn="False"
                      Text="{Binding Query}"

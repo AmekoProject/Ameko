@@ -55,7 +55,7 @@
                 <TextBox Grid.Column="0"
                          IsEnabled="{Binding HasStagedChanges}"
                          Text="{Binding CommitMessage}"
-                         Watermark="{x:Static i18n:Git.Git_CommitBox_Watermark}"
+                         PlaceholderText="{x:Static i18n:Git.Git_CommitBox_Watermark}"
                          TextWrapping="Wrap" />
                 <Button Grid.Column="1"
                         IsEnabled="{Binding CanCommit}"
@@ -170,7 +170,7 @@
                         Background="Transparent"
                         CornerRadius="20"
                         Classes="Small"
-                        Content="{icons:MaterialIconExt Kind=TransferDown, Size=18}"
+                        Content="{icons:MaterialIconExt Kind=TransferDown, IconSize=18}"
                         ToolTip.Tip="{x:Static i18n:Git.Git_Button_Pull_ToolTip}"
                         Command="{Binding PullCommand}" />
                 <Button Grid.Column="1"
@@ -178,7 +178,7 @@
                         Background="Transparent"
                         CornerRadius="20"
                         Classes="Small"
-                        Content="{icons:MaterialIconExt Kind=TransferUp, Size=18}"
+                        Content="{icons:MaterialIconExt Kind=TransferUp, IconSize=18}"
                         ToolTip.Tip="{x:Static i18n:Git.Git_Button_Push_ToolTip}"
                         Command="{Binding PushCommand}"
                         IsEnabled="{Binding CanPush}" />
@@ -188,7 +188,7 @@
                         CornerRadius="20"
                         Classes="Small"
                         FontSize="14"
-                        Content="{icons:MaterialIconExt Kind=Refresh, Size=18}"
+                        Content="{icons:MaterialIconExt Kind=Refresh, IconSize=18}"
                         ToolTip.Tip="{x:Static i18n:Git.Git_Button_Refresh_ToolTip}"
                         Command="{Binding RefreshCommand}" />
             </Grid>

@@ -91,7 +91,7 @@
                     <TextBox Grid.Column="0"
                              Grid.Row="0"
                              Classes="Small"
-                             Watermark="{x:Static i18n:Config.Config_CustomWordBox_Watermark}"
+                             PlaceholderText="{x:Static i18n:Config.Config_CustomWordBox_Watermark}"
                              Text="{Binding NewCustomWord}" />
                     <Button Grid.Column="1"
                             Grid.Row="0"

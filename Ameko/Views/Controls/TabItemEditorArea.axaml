@@ -72,7 +72,7 @@
                                  Text="{Binding Workspace.SelectionManager.ActiveEvent.Actor}"
                                  ItemsSource="{Binding Workspace.Document.EventManager.Actors}"
                                  FilterMode="Contains"
-                                 Watermark="{x:Static i18n:Resources.Editor_ActorAcBox_Watermark}"
+                                 PlaceholderText="{x:Static i18n:Resources.Editor_ActorAcBox_Watermark}"
                                  ToolTip.Tip="{x:Static i18n:Resources.Editor_ActorAcBox_ToolTip}"
                                  TextChanged="AnyControl_EventMetaChanged" />
                 <AutoCompleteBox Name="EffectAcBox"
@@ -82,7 +82,7 @@
                                  Text="{Binding Workspace.SelectionManager.ActiveEvent.Effect}"
                                  ItemsSource="{Binding Workspace.Document.EventManager.Effects}"
                                  FilterMode="Contains"
-                                 Watermark="{x:Static i18n:Resources.Editor_EffectAcBox_Watermark}"
+                                 PlaceholderText="{x:Static i18n:Resources.Editor_EffectAcBox_Watermark}"
                                  ToolTip.Tip="{x:Static i18n:Resources.Editor_EffectAcBox_ToolTip}"
                                  TextChanged="AnyControl_EventMetaChanged" />
                 <TextBlock Name="MaxLineWidthBox"

@@ -17,8 +17,8 @@ public class ConfigurationTests
         var cfg = new Configuration.Configuration(fs, lg);
 
         await Assert.That(cfg.Cps).IsEqualTo<uint>(18);
-        await Assert.That(cfg.UseSoftLinebreaks).IsEqualTo(false);
-        await Assert.That(cfg.AutosaveEnabled).IsEqualTo(true);
+        await Assert.That(cfg.UseSoftLinebreaks).IsFalse();
+        await Assert.That(cfg.AutosaveEnabled).IsTrue();
         await Assert.That(cfg.AutosaveInterval).IsEqualTo<uint>(60);
     }
 
@@ -31,8 +31,8 @@ public class ConfigurationTests
 
         await Assert.That(cfg).IsNotNull();
         await Assert.That(cfg.Cps).IsEqualTo<uint>(18);
-        await Assert.That(cfg.UseSoftLinebreaks).IsEqualTo(false);
-        await Assert.That(cfg.AutosaveEnabled).IsEqualTo(true);
+        await Assert.That(cfg.UseSoftLinebreaks).IsFalse();
+        await Assert.That(cfg.AutosaveEnabled).IsTrue();
         await Assert.That(cfg.AutosaveInterval).IsEqualTo<uint>(60);
     }
 
@@ -52,8 +52,8 @@ public class ConfigurationTests
         await Assert.That(cfg.Cps).IsEqualTo<uint>(12);
         await Assert.That(cfg.CpsIncludesWhitespace).IsFalse();
         await Assert.That(cfg.CpsIncludesPunctuation).IsFalse();
-        await Assert.That(cfg.UseSoftLinebreaks).IsEqualTo(true);
-        await Assert.That(cfg.AutosaveEnabled).IsEqualTo(false);
+        await Assert.That(cfg.UseSoftLinebreaks).IsTrue();
+        await Assert.That(cfg.AutosaveEnabled).IsFalse();
         await Assert.That(cfg.AutosaveInterval).IsEqualTo<uint>(120);
         await Assert.That(cfg.LineWidthIncludesWhitespace).IsTrue();
         await Assert.That(cfg.LineWidthIncludesPunctuation).IsTrue();

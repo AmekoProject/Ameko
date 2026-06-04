@@ -45,7 +45,7 @@
                          AcceptsReturn="False"
                          AcceptsTab="False"
                          TextWrapping="NoWrap"
-                         Watermark="https://your-repository.gov/base.json"
+                         PlaceholderText="https://your-repository.gov/base.json"
                          Text="{Binding RepoUrlInput}"/>
             </Grid>
         </Grid>

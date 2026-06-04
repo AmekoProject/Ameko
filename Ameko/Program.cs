@@ -13,17 +13,17 @@ using Avalonia.Platform;
 using Holo.IO;
 using Holo.Providers;
 using Microsoft.Extensions.Logging;
-using NLog;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Builder;
 #if !DEBUG
-using System.Threading.Tasks;
 using System.Reactive;
+using System.Threading.Tasks;
 using ReactiveUI;
 #endif
 
 namespace Ameko;
 
-sealed class Program
+internal sealed class Program
 {
     internal static string[] Args { get; private set; } = null!;
 
@@ -34,54 +34,63 @@ sealed class Program
     public static void Main(string[] args)
     {
         Args = args;
-
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        RegisterGlobalExceptionHandlers();
 
+        try
+        {
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
+        }
+        catch (Exception ex) when (!Debugger.IsAttached)
+        {
+            HandleUnhandledException("Application", ex);
+            throw;
+        }
+    }
+
+    private static AppBuilder BuildAvaloniaApp() =>
+        AppBuilder
+            .Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace()
+            .UseReactiveUI(ConfigureReactiveUi)
+            .With(new MacOSPlatformOptions { DisableDefaultApplicationMenuItems = true })
+            .With(new X11PlatformOptions { EnableIme = true });
+
+    /// <summary>
+    /// Avoid everything being wrapped with ReactiveUI.UnhandledErrorException in release mode
+    /// </summary>
+    /// <param name="rxBuilder">RxUI builder</param>
+    private static void ConfigureReactiveUi(ReactiveUIBuilder rxBuilder)
+    {
+#if !DEBUG
+        rxBuilder.WithExceptionHandler(
+            Observer.Create<Exception>(ex =>
+            {
+                HandleUnhandledException(
+                    "UI",
+                    ex is UnhandledErrorException { InnerException: { } inner } ? inner : ex
+                );
+            })
+        );
+#endif
+    }
+
+    /// <summary>
+    /// Configure global exception handlers in release mode
+    /// </summary>
+    private static void RegisterGlobalExceptionHandlers()
+    {
 #if !DEBUG
         // Handle non-UI-thread exceptions
         AppDomain.CurrentDomain.UnhandledException += (_, ex) =>
             HandleUnhandledException("Non-UI", (Exception)ex.ExceptionObject);
         TaskScheduler.UnobservedTaskException += (_, ex) =>
             HandleUnhandledException("Task", ex.Exception);
-
-        // Avoid everything being wrapped with ReactiveUI.UnhandledErrorException
-        RxApp.DefaultExceptionHandler = Observer.Create<Exception>(ex =>
-        {
-            HandleUnhandledException(
-                "UI",
-                ex is UnhandledErrorException { InnerException: { } inner } ? inner : ex
-            );
-        });
-#endif
-        try
-        {
-            BuildAvaloniaApp()
-                .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
-        }
-#if !DEBUG
-        catch (Exception ex)
-        {
-            HandleUnhandledException("Application", ex);
-            throw;
-        }
-#else
-        catch
-        {
-            throw;
-        }
 #endif
     }
-
-    // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace()
-            .UseReactiveUI()
-            .With(new MacOSPlatformOptions { DisableDefaultApplicationMenuItems = true })
-            .With(new X11PlatformOptions { EnableIme = true });
 
     private static bool ShouldIgnoreUnhandledException(Exception ex)
     {

@@ -67,6 +67,7 @@ public partial class SelectDialogViewModel : ViewModelBase
                         _ => false,
                     }
                 )
-                .ToList() ?? [];
+                .ToList()
+            ?? [];
     }
 }

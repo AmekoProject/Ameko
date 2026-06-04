@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Ameko.Services;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Input.Platform;
 
 namespace Ameko.Views.Windows;
 

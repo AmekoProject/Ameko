@@ -15,7 +15,6 @@ using AssCS.Utilities;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Holo.Configuration;
@@ -41,8 +40,6 @@ public partial class App : Application
             return;
 
         desktop.Exit += (_, _) => Environment.Exit(0);
-
-        DisableAvaloniaDataAnnotationValidation();
 
         if (Program.Args.Length == 2 && Program.Args[0] == "--display-crash-report")
             InitializeAmekoForCrashReport(desktop);
@@ -113,20 +110,6 @@ public partial class App : Application
         desktop.MainWindow = new CrashReporterWindow { DataContext = vm };
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    private void DisableAvaloniaDataAnnotationValidation()
-    {
-        // Get an array of plugins to remove
-        var dataValidationPluginsToRemove = BindingPlugins
-            .DataValidators.OfType<DataAnnotationsValidationPlugin>()
-            .ToArray();
-
-        // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
     }
 
     /// <summary>
