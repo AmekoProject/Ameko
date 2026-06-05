@@ -11,6 +11,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -77,10 +78,17 @@ public class IoService(
 
         wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
 
-        var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-        wsp.SavePath = uri;
-        wsp.IsSaved = true;
-        writer.Write(fileSystem, uri);
+        try
+        {
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
+            wsp.SavePath = uri;
+            wsp.IsSaved = true;
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
         logger.LogInformation("Saved subtitle file {WspTitle}", wsp.Title);
 
         if (uriChanged)
@@ -119,8 +127,15 @@ public class IoService(
 
         wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
 
-        var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-        writer.Write(fileSystem, path);
+        try
+        {
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, path);
+        }
+        catch (Exception ex)
+        {
+            return DisplayIoErrorMessageBox(ex, path).Result;
+        }
         return true;
     }
 
@@ -149,10 +164,18 @@ public class IoService(
 
         wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
 
-        var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-        wsp.SavePath = uri;
-        wsp.IsSaved = true;
-        writer.Write(fileSystem, uri);
+        try
+        {
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
+            wsp.SavePath = uri;
+            wsp.IsSaved = true;
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
         logger.LogInformation("Saved subtitle file {WspTitle}", wsp.Title);
 
         var projItem = projectProvider.Current.FindItemById(wsp.Id);
@@ -185,8 +208,16 @@ public class IoService(
             return false;
         }
 
-        var writer = new TxtWriter(wsp.Document, ConsumerService.AmekoInfo);
-        writer.Write(fileSystem, uri, true);
+        try
+        {
+            var writer = new TxtWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri, true);
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
         logger.LogInformation("Exported {WspTitle}", wsp.Title);
         return true;
     }
@@ -291,8 +322,15 @@ public class IoService(
             return false;
         }
 
-        prj.SavePath = uri;
-        prj.Save();
+        try
+        {
+            prj.SavePath = uri;
+            prj.Save();
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
 
         logger.LogInformation("Saved project file {PrjTitle}", prj.Title);
         return true;
@@ -388,7 +426,7 @@ public class IoService(
             prj.WorkingSpace = wsp;
             return wsp;
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not UnauthorizedAccessException or IOException)
         {
             logger.LogError(ex, "Failed to parse file {UriLocalPath}", uri.LocalPath);
             await messageBoxService.ShowAsync(
@@ -398,6 +436,11 @@ public class IoService(
                 MsgBoxButton.Ok,
                 MaterialIconKind.Error
             );
+            return null;
+        }
+        catch (Exception ex)
+        {
+            await DisplayIoErrorMessageBox(ex, uri);
             return null;
         }
     }
@@ -420,7 +463,15 @@ public class IoService(
             return false;
         }
 
-        projectProvider.Current = projectProvider.CreateFromFile(uri);
+        try
+        {
+            projectProvider.Current = projectProvider.CreateFromFile(uri);
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
         persistence.AddRecentProject(uri);
         logger.LogInformation("Loaded project file");
         return true;
@@ -444,7 +495,15 @@ public class IoService(
             return false;
         }
 
-        projectProvider.Current = projectProvider.CreateFromDirectory(uri);
+        try
+        {
+            projectProvider.Current = projectProvider.CreateFromDirectory(uri);
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
         logger.LogInformation("Loaded project directory");
         return true;
     }
@@ -474,7 +533,7 @@ public class IoService(
             };
             return true;
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not UnauthorizedAccessException or IOException)
         {
             logger.LogError(ex, "Failed to parse file {UriLocalPath}", uri.LocalPath);
             await messageBoxService.ShowAsync(
@@ -485,6 +544,10 @@ public class IoService(
                 MaterialIconKind.Error
             );
             return false;
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
         }
     }
 
@@ -543,7 +606,14 @@ public class IoService(
                 );
                 if (fileSystem.File.Exists(kfPath))
                 {
-                    workspace.MediaController.OpenKeyframes(kfPath);
+                    try
+                    {
+                        workspace.MediaController.OpenKeyframes(kfPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        return await DisplayIoErrorMessageBox(ex, new Uri(kfPath));
+                    }
                 }
                 else
                 {
@@ -618,8 +688,7 @@ public class IoService(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to open video file");
-            return false;
+            return await DisplayIoErrorMessageBox(ex, uri);
         }
     }
 
@@ -645,49 +714,56 @@ public class IoService(
         bool allowAutoload = true
     )
     {
-        var audioTracks = await workspace.MediaController.GetAudioTrackInfoAsync(uri.LocalPath);
-        if (audioTracks.Length > 0)
+        try
         {
-            var index = audioTracks[0].Index;
-            if (audioTracks.Length > 1)
+            var audioTracks = await workspace.MediaController.GetAudioTrackInfoAsync(uri.LocalPath);
+            if (audioTracks.Length > 0)
             {
-                var hashedPath = GetHashedFilename(uri.LocalPath);
-                var savedIdx = persistence.GetAudioTrackForVideo(hashedPath);
+                var index = audioTracks[0].Index;
+                if (audioTracks.Length > 1)
+                {
+                    var hashedPath = GetHashedFilename(uri.LocalPath);
+                    var savedIdx = persistence.GetAudioTrackForVideo(hashedPath);
 
-                if (allowAutoload && configuration.AutoloadAudioTracks && savedIdx != -1) // Autoload the track
-                {
-                    index = savedIdx;
-                    messageService.Enqueue(
-                        string.Format(I18N.Other.Message_AudioAutoloaded, index),
-                        TimeSpan.FromSeconds(5)
-                    );
+                    if (allowAutoload && configuration.AutoloadAudioTracks && savedIdx != -1) // Autoload the track
+                    {
+                        index = savedIdx;
+                        messageService.Enqueue(
+                            string.Format(I18N.Other.Message_AudioAutoloaded, index),
+                            TimeSpan.FromSeconds(5)
+                        );
+                    }
+                    else // Ask the user which track to load
+                    {
+                        // TODO: get this out of here, this sucks
+                        var dialogResult = await windowService.ShowDialogAsync<SelectTrackMessage>(
+                            new SelectTrackDialog
+                            {
+                                DataContext = new SelectTrackDialogViewModel(audioTracks),
+                            }
+                        );
+                        index = dialogResult?.TrackIndex ?? audioTracks[0].Index;
+                        persistence.SetAudioTrackForVideo(hashedPath, index); // Save the index for next time
+                    }
                 }
-                else // Ask the user which track to load
+                var aResult = await workspace.MediaController.OpenAudioAsync(
+                    uri.LocalPath,
+                    index,
+                    audioTracks.Length,
+                    progressCallback
+                );
+                if (!aResult)
                 {
-                    // TODO: get this out of here, this sucks
-                    var dialogResult = await windowService.ShowDialogAsync<SelectTrackMessage>(
-                        new SelectTrackDialog
-                        {
-                            DataContext = new SelectTrackDialogViewModel(audioTracks),
-                        }
-                    );
-                    index = dialogResult?.TrackIndex ?? audioTracks[0].Index;
-                    persistence.SetAudioTrackForVideo(hashedPath, index); // Save the index for next time
+                    logger.LogError("Failed to open audio file");
                 }
             }
-            var aResult = await workspace.MediaController.OpenAudioAsync(
-                uri.LocalPath,
-                index,
-                audioTracks.Length,
-                progressCallback
-            );
-            if (!aResult)
-            {
-                logger.LogError("Failed to open audio file");
-            }
+            progressCallback?.Invoke(0, 1); // Reset
+            return true;
         }
-        progressCallback?.Invoke(0, 1); // Reset
-        return true;
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
     }
 
     /// <inheritdoc />
@@ -701,7 +777,16 @@ public class IoService(
             return false;
 
         var kfPath = uri.LocalPath;
-        return fileSystem.File.Exists(kfPath) && workspace.MediaController.OpenKeyframes(kfPath);
+
+        try
+        {
+            return fileSystem.File.Exists(kfPath)
+                && workspace.MediaController.OpenKeyframes(kfPath);
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
     }
 
     /// <inheritdoc />
@@ -873,5 +958,70 @@ public class IoService(
 
         var bytes = MD5.HashData(Encoding.UTF8.GetBytes($"{filePath}-{modified}"));
         return Base64Url.EncodeToString(bytes);
+    }
+
+    /// <summary>
+    /// Display a message box detailing the error
+    /// </summary>
+    /// <param name="ex">Exception</param>
+    /// <param name="uri">URI to the failing file, if applicable</param>
+    /// <returns><see langword="false"/></returns>
+    private async Task<bool> DisplayIoErrorMessageBox(Exception ex, Uri? uri = null)
+    {
+        var title = I18N.Other.MsgBox_IoError_Title;
+        string message;
+
+        switch (ex)
+        {
+            case UnauthorizedAccessException when uri is not null:
+                logger.LogError(
+                    "Failed to access file {Path}: {Message}",
+                    uri.LocalPath,
+                    ex.Message
+                );
+                message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
+                break;
+            case UnauthorizedAccessException when uri is null:
+                logger.LogError("Failed to access file: {Message}", ex.Message);
+                message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+                break;
+            case IOException when uri is not null:
+                logger.LogError(
+                    "Failed to access file {Path}: {Message}",
+                    uri.LocalPath,
+                    ex.Message
+                );
+                message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
+                break;
+            case IOException when uri is null:
+                logger.LogError("Failed to access file: {Message}", ex.Message);
+                message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+                break;
+            case JsonException when uri is not null:
+                logger.LogError(
+                    "Failed to parse file {Path}: {Message}",
+                    uri.LocalPath,
+                    ex.Message
+                );
+                message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
+                break;
+            case JsonException when uri is null:
+                logger.LogError("Failed to parse file: {Message}", ex.Message);
+                message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
+                break;
+            default:
+                logger.LogError("Failed to access file: {Message}", ex.Message);
+                message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+                break;
+        }
+
+        await messageBoxService.ShowAsync(
+            title,
+            message,
+            MsgBoxButtonSet.Ok,
+            MsgBoxButton.Ok,
+            MaterialIconKind.Error
+        );
+        return false;
     }
 }

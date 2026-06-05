@@ -978,67 +978,61 @@ public class Project : BindableBase
         {
             logger.LogInformation("Parsing project {Path}", path);
             _savePath = uri;
-            try
+
+            var dir = fileSystem.Path.GetDirectoryName(path) ?? string.Empty;
+
+            if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
+                fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
+
+            if (!fileSystem.File.Exists(path))
+                throw new FileNotFoundException($"Project {path} was not found");
+
+            using var fs = fileSystem.FileStream.New(
+                path,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.ReadWrite
+            );
+
+            using var reader = new StreamReader(fs);
+            var content = reader.ReadToEnd();
+            var model = ProjectMigrator.MigrateToCurrent(content);
+
+            if (model is null)
+                throw new InvalidDataException("Project model migration failed");
+
+            // De-relative the file paths in the project
+            _referencedItems.AddRange(
+                ConvertFromModels(model.ReferencedDocuments, dir, ref _docId)
+            );
+            _colors.AddRange(model.Colors.Select(Color.FromAss));
+            _cps = model.Cps;
+            _cpsIncludesWhitespace = model.CpsIncludesWhitespace;
+            _cpsIncludesPunctuation = model.CpsIncludesPunctuation;
+            _defaultLayer = model.DefaultLayer;
+            _useSoftLinebreaks = model.UseSoftLinebreaks;
+            _spellcheckCulture = model.SpellcheckCulture;
+            _customWords = new ObservableCollection<string>(model.CustomWords);
+
+            Timing = new TimingConfiguration
             {
-                var dir = fileSystem.Path.GetDirectoryName(path) ?? string.Empty;
+                LeadIn = model.Timing.LeadIn,
+                LeadOut = model.Timing.LeadOut,
+                SnapStartEarlierThreshold = model.Timing.SnapStartEarlierThreshold,
+                SnapStartLaterThreshold = model.Timing.SnapStartLaterThreshold,
+                SnapEndEarlierThreshold = model.Timing.SnapEndEarlierThreshold,
+                SnapEndLaterThreshold = model.Timing.SnapEndLaterThreshold,
+            };
 
-                if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
-                    fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
+            ScriptConfiguration = model.ScriptConfiguration;
 
-                if (!fileSystem.File.Exists(path))
-                    throw new FileNotFoundException($"Project {path} was not found");
+            model
+                .Styles.Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P)) // TODO: Detect style version
+                .Where(s => s is not null)
+                .ToList()
+                .ForEach(StyleManager.Add!);
 
-                using var fs = fileSystem.FileStream.New(
-                    path,
-                    FileMode.Open,
-                    FileAccess.Read,
-                    FileShare.ReadWrite
-                );
-
-                using var reader = new StreamReader(fs);
-                var content = reader.ReadToEnd();
-                var model = ProjectMigrator.MigrateToCurrent(content);
-
-                if (model is null)
-                    throw new InvalidDataException("Project model migration failed");
-
-                // De-relative the file paths in the project
-                _referencedItems.AddRange(
-                    ConvertFromModels(model.ReferencedDocuments, dir, ref _docId)
-                );
-                _colors.AddRange(model.Colors.Select(Color.FromAss));
-                _cps = model.Cps;
-                _cpsIncludesWhitespace = model.CpsIncludesWhitespace;
-                _cpsIncludesPunctuation = model.CpsIncludesPunctuation;
-                _defaultLayer = model.DefaultLayer;
-                _useSoftLinebreaks = model.UseSoftLinebreaks;
-                _spellcheckCulture = model.SpellcheckCulture;
-                _customWords = new ObservableCollection<string>(model.CustomWords);
-
-                Timing = new TimingConfiguration
-                {
-                    LeadIn = model.Timing.LeadIn,
-                    LeadOut = model.Timing.LeadOut,
-                    SnapStartEarlierThreshold = model.Timing.SnapStartEarlierThreshold,
-                    SnapStartLaterThreshold = model.Timing.SnapStartLaterThreshold,
-                    SnapEndEarlierThreshold = model.Timing.SnapEndEarlierThreshold,
-                    SnapEndLaterThreshold = model.Timing.SnapEndLaterThreshold,
-                };
-
-                ScriptConfiguration = model.ScriptConfiguration;
-
-                model
-                    .Styles.Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P)) // TODO: Detect style version
-                    .Where(s => s is not null)
-                    .ToList()
-                    .ForEach(StyleManager.Add!);
-
-                IsSaved = true;
-            }
-            catch (Exception ex) when (ex is IOException or JsonException)
-            {
-                logger.LogError(ex, "Failed to parse project");
-            }
+            IsSaved = true;
         }
         // We are loading a directory as a project
         else if (fileSystem.Directory.Exists(path))

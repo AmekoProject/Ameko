@@ -216,4 +216,16 @@
     <data name="MsgBox_SaveProject_Title" xml:space="preserve">
         <value>Save project?</value>
     </data>
+    <data name="MsgBox_IoError_Title" xml:space="preserve">
+        <value />
+    </data>
+    <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
+        <value>Unauthorized.</value>
+    </data>
+    <data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
+        <value>An I/O error occured.</value>
+    </data>
+    <data name="MsgBox_IoError_Body_Json" xml:space="preserve">
+        <value>Failed to parse JSON.</value>
+    </data>
 </root>

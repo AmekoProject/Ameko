@@ -440,5 +440,29 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("MsgBox_SaveProject_Title", resourceCulture);
             }
         }
+        
+        public static string MsgBox_IoError_Title {
+            get {
+                return ResourceManager.GetString("MsgBox_IoError_Title", resourceCulture);
+            }
+        }
+        
+        public static string MsgBox_IoError_Body_Unauthorized {
+            get {
+                return ResourceManager.GetString("MsgBox_IoError_Body_Unauthorized", resourceCulture);
+            }
+        }
+        
+        public static string MsgBox_IoError_Body_IoError {
+            get {
+                return ResourceManager.GetString("MsgBox_IoError_Body_IoError", resourceCulture);
+            }
+        }
+        
+        public static string MsgBox_IoError_Body_Json {
+            get {
+                return ResourceManager.GetString("MsgBox_IoError_Body_Json", resourceCulture);
+            }
+        }
     }
 }
