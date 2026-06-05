@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using AssCS;
 using AssCS.IO;
@@ -39,6 +40,7 @@ public class Project : BindableBase
     {
         IncludeFields = true,
         WriteIndented = true,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
     private readonly RangeObservableCollection<ProjectItem> _referencedItems;
