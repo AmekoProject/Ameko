@@ -233,6 +233,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CommandPalette.resx</DependentUpon>
     </Compile>
+    <Compile Update="I18N\Knp.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Knp.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="I18N\Resources.resx">
@@ -309,6 +314,352 @@
     <EmbeddedResource Update="I18N\CommandPalette.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CommandPalette.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.de-DE.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.en-GB.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.es-419.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.pl-PL.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.vi-VN.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\About.zh-TW.resx">
+      <DependentUpon>About.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.de-DE.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.en-GB.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.es-419.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.pl-PL.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.vi-VN.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\CommandPalette.zh-TW.resx">
+      <DependentUpon>CommandPalette.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.de-DE.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.en-GB.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.es-419.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.pl-PL.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.vi-VN.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Config.zh-TW.resx">
+      <DependentUpon>Config.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.de-DE.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.en-GB.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.es-419.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.pl-PL.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.vi-VN.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\FileModified.zh-TW.resx">
+      <DependentUpon>FileModified.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.de-DE.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.en-GB.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.es-419.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.pl-PL.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.vi-VN.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Git.zh-TW.resx">
+      <DependentUpon>Git.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.de-DE.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.en-GB.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.es-419.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.pl-PL.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.vi-VN.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Help.zh-TW.resx">
+      <DependentUpon>Help.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.de-DE.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.en-GB.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.es-419.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.pl-PL.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.vi-VN.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Jump.zh-TW.resx">
+      <DependentUpon>Jump.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.de-DE.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.en-GB.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.es-419.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.pl-PL.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.vi-VN.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Keybinds.zh-TW.resx">
+      <DependentUpon>Keybinds.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.de-DE.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.en-GB.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.es-419.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.pl-PL.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.vi-VN.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Other.zh-TW.resx">
+      <DependentUpon>Other.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.de-DE.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.en-GB.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.es-419.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.pl-PL.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.vi-VN.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PasteOver.zh-TW.resx">
+      <DependentUpon>PasteOver.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.de-DE.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.en-GB.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.es-419.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.pl-PL.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.vi-VN.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\PkgMan.zh-TW.resx">
+      <DependentUpon>PkgMan.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.de-DE.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.en-GB.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.es-419.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.pl-PL.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.vi-VN.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Playground.zh-TW.resx">
+      <DependentUpon>Playground.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.de-DE.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.en-GB.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.es-419.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.pl-PL.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.vi-VN.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Resources.zh-TW.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.de-DE.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.en-GB.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.es-419.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.pl-PL.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.vi-VN.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ScriptInfo.zh-TW.resx">
+      <DependentUpon>ScriptInfo.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.de-DE.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.en-GB.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.es-419.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.pl-PL.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.vi-VN.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Search.zh-TW.resx">
+      <DependentUpon>Search.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.de-DE.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.en-GB.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.es-419.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.pl-PL.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.vi-VN.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\ShiftTimes.zh-TW.resx">
+      <DependentUpon>ShiftTimes.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.de-DE.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.en-GB.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.es-419.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.pl-PL.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.vi-VN.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Spellcheck.zh-TW.resx">
+      <DependentUpon>Spellcheck.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.de-DE.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.en-GB.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.es-419.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.pl-PL.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.vi-VN.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StyleEditor.zh-TW.resx">
+      <DependentUpon>StyleEditor.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.de-DE.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.en-GB.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.es-419.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.pl-PL.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.vi-VN.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\StylesManager.zh-TW.resx">
+      <DependentUpon>StylesManager.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Knp.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

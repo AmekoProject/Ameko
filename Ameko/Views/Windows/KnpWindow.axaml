@@ -1,0 +1,83 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="500"
+        d:DesignHeight="600"
+
+        xmlns:i18n="clr-namespace:Ameko.I18N"
+        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+
+        x:Class="Ameko.Views.Windows.KnpWindow"
+        x:DataType="vm:KnpWindowViewModel"
+
+        Focusable="True"
+        Width="800"
+        Height="500"
+        CanResize="True"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Assets/Ameko-Simplified-BG-64.ico"
+        Title="{x:Static i18n:Knp.KnpWindow_Title}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Button Content="{x:Static i18n:Knp.Knp_Button_AddTerm}"
+                    Command="{Binding AddTermCommand}" />
+        </StackPanel>
+        <DataGrid Name="KnpGrid"
+                  IsReadOnly="False"
+                  Margin="0"
+                  Padding="0"
+                  Classes="Small"
+                  Focusable="True"
+                  CanUserResizeColumns="True"
+                  CanUserReorderColumns="False"
+                  SelectionMode="Single"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto"
+                  GridLinesVisibility="All"
+                  ItemsSource="{Binding ProjectProvider.Current.Terms}"
+                  SelectedItem="{Binding SelectedTerm}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Category}"
+                                    Binding="{Binding Category}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Context}"
+                                    Binding="{Binding Context}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Original}"
+                                    Binding="{Binding Original}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Alternate}"
+                                    Binding="{Binding Alternate}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Translation}"
+                                    Binding="{Binding Translation}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+                <DataGridCheckBoxColumn Header="{x:Static i18n:Knp.Knp_Header_CaseSensitive}"
+                                        Binding="{Binding IsCaseSensitive}"
+                                        IsReadOnly="False"
+                                        CanUserResize="True" />
+                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Notes}"
+                                    Binding="{Binding Notes}"
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static i18n:Knp.Knp_ContextMenu_Delete}"
+                              Icon="{avalonia:MaterialIconExt Kind=TrashCan}"
+                              Command="{Binding RemoveTermCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+    </DockPanel>
+</Window>

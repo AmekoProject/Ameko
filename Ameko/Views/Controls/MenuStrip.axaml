@@ -111,6 +111,9 @@
                       Command="{Binding ShowSelectDialogCommand}" />
         </MenuItem>
         <MenuItem Header="{x:Static i18n:Resources.Menu_Project}">
+            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenKnp}"
+                      Icon="{icons:MaterialIconExt Kind=BookAlphabet}"
+                      Command="{Binding ShowKnpWindowCommand}" />
             <MenuItem Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
                       Icon="{icons:MaterialIconExt Kind=ArchiveCogOutline}"
                       Command="{Binding ShowProjectConfigDialogCommand}" />

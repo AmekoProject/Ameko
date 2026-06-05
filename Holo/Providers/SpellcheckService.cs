@@ -12,7 +12,7 @@ using WeCantSpell.Hunspell;
 namespace Holo.Providers;
 
 /// <summary>
-/// Facilitates spellchecking
+/// Provides spellchecking functionality
 /// </summary>
 public partial class SpellcheckService(
     IFileSystem fileSystem,
@@ -132,11 +132,19 @@ public partial class SpellcheckService(
 
         _dictionary = WordList.CreateFromStreams(dic, aff);
 
+        // Add project-level custom words
         foreach (var word in projectProvider.Current.CustomWords)
         {
             _dictionary.Add(word);
         }
 
+        // Add KNP words
+        foreach (var term in projectProvider.Current.Terms)
+        {
+            _dictionary.Add(term.Translation);
+        }
+
+        // Add user-level custom words
         foreach (var word in globals.CustomWords)
         {
             _dictionary.Add(word);

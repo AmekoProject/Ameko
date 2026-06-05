@@ -64,6 +64,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public Interaction<SelectDialogViewModel, Unit> ShowSelectDialog { get; }
 
     // Project
+    public Interaction<KnpWindowViewModel, Unit> ShowKnpWindow { get; }
     public Interaction<ProjectConfigDialogViewModel, Unit> ShowProjectConfigDialog { get; }
 
     // Timing
@@ -172,6 +173,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public ICommand ShowSelectDialogCommand { get; }
 
     // Project
+    [Command("ameko.project.knp.show", KeybindContext.Global)]
+    public ICommand ShowKnpWindowCommand { get; }
+
     [Command("ameko.project.config.show", KeybindContext.Global)]
     public ICommand ShowProjectConfigDialogCommand { get; }
 
@@ -445,6 +449,7 @@ public partial class MainWindowViewModel : ViewModelBase
         ShowSortDialog = new Interaction<SortDialogViewModel, Unit>();
         ShowSelectDialog = new Interaction<SelectDialogViewModel, Unit>();
         // Project
+        ShowKnpWindow = new Interaction<KnpWindowViewModel, Unit>();
         ShowProjectConfigDialog = new Interaction<ProjectConfigDialogViewModel, Unit>();
         // Video
         OpenVideo = new Interaction<Unit, Uri?>();
@@ -503,6 +508,7 @@ public partial class MainWindowViewModel : ViewModelBase
         ShowSortDialogCommand = CreateShowSortDialogCommand();
         ShowSelectDialogCommand = CreateShowSelectDialogCommand();
         // Project
+        ShowKnpWindowCommand = CreateShowKnpWindowCommand();
         ShowProjectConfigDialogCommand = CreateShowProjectConfigDialogCommand();
         // Timing
         ShowShiftTimesDialogCommand = CreateShowShiftTimesDialogCommand();

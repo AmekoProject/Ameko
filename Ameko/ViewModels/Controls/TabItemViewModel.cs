@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Text;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -243,12 +244,82 @@ public partial class TabItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
+    public string VisibleKnpTerms
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = string.Empty;
+
     #region Versioned items
 
     public bool DisplayLayers => Workspace.Document.Version is not AssVersion.V400;
     public bool DisplayMarginTopBtm => Workspace.Document.Version is AssVersion.V400PP;
 
     #endregion
+
+    private string FindVisibleKnpTerms()
+    {
+        var terms = ProjectProvider.Current?.Terms;
+        if (terms is not { Count: > 0 })
+            return string.Empty;
+
+        var tl = Workspace.SelectionManager.ActiveEvent?.Text;
+        var org = Workspace.ReferenceFileManager.IsReferenceLoaded
+            ? Workspace.ReferenceFileManager.CurrentLines
+            : null;
+
+        if (string.IsNullOrEmpty(tl) && org is null)
+            return string.Empty;
+
+        var sb = new StringBuilder();
+
+        foreach (var term in terms)
+        {
+            var cmp = term.IsCaseSensitive
+                ? StringComparison.Ordinal
+                : StringComparison.OrdinalIgnoreCase;
+
+            var matched =
+                (
+                    !string.IsNullOrEmpty(tl)
+                    && !string.IsNullOrEmpty(term.Translation)
+                    && tl.Contains(term.Translation, cmp)
+                )
+                || (
+                    !string.IsNullOrEmpty(org)
+                    && !string.IsNullOrEmpty(term.Original)
+                    && org.Contains(term.Original, cmp)
+                )
+                || (
+                    !string.IsNullOrEmpty(org)
+                    && !string.IsNullOrEmpty(term.Alternate)
+                    && org.Contains(term.Alternate, cmp)
+                );
+
+            if (!matched)
+                continue;
+
+            // Display all non-empty parts regardless of which one matched
+            var source = (term.Original, term.Alternate) switch
+            {
+                ({ Length: > 0 } o, { Length: > 0 } a) => $"{o} ({a})",
+                ({ Length: > 0 } o, _) => o,
+                (_, { Length: > 0 } a) => a,
+                _ => string.Empty,
+            };
+
+            var target = term.Translation;
+
+            if (source.Length > 0 && target.Length > 0)
+                sb.AppendLine($"{source}: {target}");
+            else if (source.Length > 0)
+                sb.AppendLine(source);
+            else if (target.Length > 0)
+                sb.AppendLine(target);
+        }
+
+        return sb.ToString();
+    }
 
     public TabItemViewModel(
         IProjectProvider projectProvider,
@@ -364,6 +435,7 @@ public partial class TabItemViewModel : ViewModelBase
             try
             {
                 await SelectEvents.Handle(Workspace.SelectionManager.SelectedEventCollection);
+                VisibleKnpTerms = FindVisibleKnpTerms();
             }
             catch
             {

@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using AssCS;
 using AssCS.IO;
@@ -39,6 +40,7 @@ public class Project : BindableBase
     {
         IncludeFields = true,
         WriteIndented = true,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
     private readonly RangeObservableCollection<ProjectItem> _referencedItems;
@@ -60,6 +62,7 @@ public class Project : BindableBase
     private int? _defaultLayer;
     private string? _spellcheckCulture;
     private readonly ObservableCollection<string> _customWords;
+    private readonly RangeObservableCollection<Term> _terms;
     private readonly RangeObservableCollection<Color> _colors;
 
     /// <summary>
@@ -221,6 +224,11 @@ public class Project : BindableBase
     /// Custom spellcheck words for the project
     /// </summary>
     public AssCS.Utilities.ReadOnlyObservableCollection<string> CustomWords => new(_customWords);
+
+    /// <summary>
+    /// Key Names and Phrases for the project
+    /// </summary>
+    public AssCS.Utilities.ReadOnlyObservableCollection<Term> Terms => new(_terms);
 
     /// <summary>
     /// Custom colors for the project
@@ -527,6 +535,52 @@ public class Project : BindableBase
     }
 
     /// <summary>
+    /// Add a new <see cref="Term"/> to the project's KNP bible
+    /// </summary>
+    public void AddTerm()
+    {
+        _terms.Add(new Term());
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
+    }
+
+    /// <summary>
+    /// Add a <see cref="Term"/> to the project's KNP bible
+    /// </summary>
+    /// <param name="term">Term to add</param>
+    public void AddTerm(Term term)
+    {
+        _terms.Add(term);
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
+    }
+
+    /// <summary>
+    /// Remove a <see cref="Term"/> from the project's KNP bible
+    /// </summary>
+    /// <param name="term"></param>
+    public void RemoveTerm(Term term)
+    {
+        _terms.Remove(term);
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
+    }
+
+    /// <summary>
+    /// Remove <see cref="Term"/>s from the project's KNP bible
+    /// </summary>
+    /// <param name="terms"></param>
+    public void RemoveTerms(IEnumerable<Term> terms)
+    {
+        foreach (var term in terms)
+        {
+            _terms.Remove(term);
+        }
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
+    }
+
+    /// <summary>
     /// Add a color to the project
     /// </summary>
     /// <param name="color">Color to add</param>
@@ -632,6 +686,7 @@ public class Project : BindableBase
                 DefaultLayer = _defaultLayer,
                 SpellcheckCulture = _spellcheckCulture,
                 CustomWords = _customWords.ToArray(),
+                Terms = _terms.Where(t => !t.IsEmpty).ToArray(),
                 Timing = new TimingModel
                 {
                     LeadIn = Timing.LeadIn,
@@ -930,6 +985,7 @@ public class Project : BindableBase
         _referencedItems = [];
         _loadedWorkspaces = [];
         _customWords = [];
+        _terms = [];
         _colors = [];
         StyleManager = new StyleManager();
 
@@ -1013,6 +1069,7 @@ public class Project : BindableBase
             _useSoftLinebreaks = model.UseSoftLinebreaks;
             _spellcheckCulture = model.SpellcheckCulture;
             _customWords = new ObservableCollection<string>(model.CustomWords);
+            _terms.AddRange(model.Terms);
 
             Timing = new TimingConfiguration
             {

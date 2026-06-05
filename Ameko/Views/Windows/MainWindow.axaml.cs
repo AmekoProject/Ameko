@@ -61,11 +61,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     private readonly ISourceProvider _sourceProvider;
     private readonly SearchDialog _searchDialog;
     private readonly CommandPaletteDialog _cmdPalette;
+    private readonly KnpWindow _knpWindow;
     private bool _isSearching;
     private bool _isCmdPaletteOpen;
+    private bool _isKnpWindowOpen;
     private bool _canClose;
 
-    private WindowState? _lastWindowState = null;
+    private WindowState? _lastWindowState;
 
     /// <summary>
     /// Show an async dialog window
@@ -301,6 +303,22 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(Unit.Default);
     }
 
+    private void DoShowKnpWindow(IInteractionContext<KnpWindowViewModel, Unit> interaction)
+    {
+        _knpWindow.DataContext ??= interaction.Input;
+
+        if (_isKnpWindowOpen)
+        {
+            _knpWindow.Activate();
+        }
+        else
+        {
+            _isKnpWindowOpen = true;
+            _knpWindow.Show();
+        }
+        interaction.SetOutput(Unit.Default);
+    }
+
     private async Task DoShowAttachReferenceFileDialogAsync(
         IInteractionContext<Unit, Uri?> interaction
     )
@@ -498,6 +516,17 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             _isCmdPaletteOpen = false;
         };
 
+        // Set up KNP window
+        _knpWindow = new KnpWindow();
+        _knpWindow.Closing += (sender, args) =>
+        {
+            if (sender is not KnpWindow knpWindow)
+                return;
+            args.Cancel = true;
+            knpWindow.Hide();
+            _isKnpWindowOpen = false;
+        };
+
         Closing += async (sender, args) => await OnWindowClosing(sender, args);
         Closed += OnWindowClosed;
 
@@ -549,6 +578,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
                 ViewModel.ShowSortDialog.RegisterHandler(DoShowDialogAsync<SortDialog, SortDialogViewModel>);
                 ViewModel.ShowSelectDialog.RegisterHandler(DoShowDialogAsync<SelectDialog, SelectDialogViewModel>);
                 // Project
+                ViewModel.ShowKnpWindow.RegisterHandler(DoShowKnpWindow);
                 ViewModel.ShowProjectConfigDialog.RegisterHandler(DoShowDialogAsync<ProjectConfigDialog, ProjectConfigDialogViewModel>);
                 // Timing
                 ViewModel.ShowShiftTimesDialog.RegisterHandler(DoShowDialogAsync<ShiftTimesDialog, ShiftTimesDialogViewModel>);
@@ -613,6 +643,31 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
                 // Update keybinds when keybinds change
                 ViewModel.KeybindService.KeybindRegistrar.KeybindsChanged += (_, _) =>
                     AttachKeybinds(ViewModel);
+
+                // Subscript to project changes and reset persistent windows
+                ViewModel?.ProjectProvider.PropertyChanged += (_, _) =>
+                {
+                    if (_isSearching)
+                    {
+                        _isSearching = false;
+                        _searchDialog.Hide();
+                    }
+                    _searchDialog.DataContext = null;
+
+                    if (_isCmdPaletteOpen)
+                    {
+                        _isCmdPaletteOpen = false;
+                        _cmdPalette.Hide();
+                    }
+                    _cmdPalette.DataContext = null;
+
+                    if (_isKnpWindowOpen)
+                    {
+                        _isKnpWindowOpen = false;
+                        _knpWindow.Hide();
+                    }
+                    _knpWindow.DataContext = null;
+                };
             }
 
             ViewModel?.CheckSpellcheckDictionaryCommand.Execute(null);

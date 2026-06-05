@@ -627,6 +627,19 @@ public partial class MainWindowViewModel
     }
 
     /// <summary>
+    /// Display the <see cref="KnpWindow"/>
+    /// </summary>
+    private ReactiveCommand<Unit, Unit> CreateShowKnpWindowCommand()
+    {
+        return ReactiveCommand.CreateFromTask(async () =>
+        {
+            var vm = _vmFactory.Create<KnpWindowViewModel>();
+            await ShowKnpWindow.Handle(vm);
+            _spellcheckService.RebuildDictionary(); // Just in case :)
+        });
+    }
+
+    /// <summary>
     /// Display the <see cref="ProjectConfigDialog"/>
     /// </summary>
     private ReactiveCommand<Unit, Unit> CreateShowProjectConfigDialogCommand()
