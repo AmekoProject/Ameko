@@ -16,9 +16,9 @@
         x:DataType="vm:KnpWindowViewModel"
 
         Focusable="True"
-        Width="500"
-        Height="600"
-        CanResize="False"
+        Width="800"
+        Height="500"
+        CanResize="True"
         WindowStartupLocation="CenterOwner"
         Icon="/Assets/Ameko-Simplified-BG-64.ico"
         Title="{x:Static i18n:Knp.KnpWindow_Title}">
@@ -33,35 +33,42 @@
                   Padding="0"
                   Classes="Small"
                   Focusable="True"
-                  Background="Transparent"
-                  CanUserResizeColumns="False"
+                  CanUserResizeColumns="True"
                   CanUserReorderColumns="False"
-                  SelectionMode="Extended"
+                  SelectionMode="Single"
                   VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Auto"
+                  GridLinesVisibility="All"
                   ItemsSource="{Binding ProjectProvider.Current.Terms}"
                   SelectedItem="{Binding SelectedTerm}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Category}"
                                     Binding="{Binding Category}"
-                                    CanUserResize="False" />
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Context}"
                                     Binding="{Binding Context}"
-                                    CanUserResize="False" />
+                                    IsReadOnly="False"
+                                    CanUserResize="True" />
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Original}"
                                     Binding="{Binding Original}"
+                                    IsReadOnly="False"
                                     CanUserResize="True" />
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Alternate}"
                                     Binding="{Binding Alternate}"
+                                    IsReadOnly="False"
                                     CanUserResize="True" />
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Translation}"
                                     Binding="{Binding Translation}"
+                                    IsReadOnly="False"
                                     CanUserResize="True" />
-                <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_CaseSensitive}"
-                                    Binding="{Binding IsCaseSensitive}"
-                                    CanUserResize="True" />
+                <DataGridCheckBoxColumn Header="{x:Static i18n:Knp.Knp_Header_CaseSensitive}"
+                                        Binding="{Binding IsCaseSensitive}"
+                                        IsReadOnly="False"
+                                        CanUserResize="True" />
                 <DataGridTextColumn Header="{x:Static i18n:Knp.Knp_Header_Notes}"
                                     Binding="{Binding Notes}"
+                                    IsReadOnly="False"
                                     CanUserResize="True" />
             </DataGrid.Columns>
             <DataGrid.ContextMenu>

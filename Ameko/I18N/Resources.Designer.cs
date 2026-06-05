@@ -860,5 +860,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Editor_MarginBottom_ToolTip", resourceCulture);
             }
         }
+        
+        public static string Menu_OpenKnp {
+            get {
+                return ResourceManager.GetString("Menu_OpenKnp", resourceCulture);
+            }
+        }
     }
 }

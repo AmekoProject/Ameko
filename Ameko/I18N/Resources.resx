@@ -426,4 +426,7 @@
     <data name="Editor_MarginBottom_ToolTip" xml:space="preserve">
         <value>Bottom Margin (0 is style default)</value>
     </data>
+    <data name="Menu_OpenKnp" xml:space="preserve">
+        <value>_Key Names &amp; Terms...</value>
+    </data>
 </root>

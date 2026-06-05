@@ -60,7 +60,7 @@ public class Project : BindableBase
     private int? _defaultLayer;
     private string? _spellcheckCulture;
     private readonly ObservableCollection<string> _customWords;
-    private readonly ObservableCollection<Term> _terms;
+    private readonly RangeObservableCollection<Term> _terms;
     private readonly RangeObservableCollection<Color> _colors;
 
     /// <summary>
@@ -538,6 +538,8 @@ public class Project : BindableBase
     public void AddTerm()
     {
         _terms.Add(new Term());
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
     }
 
     /// <summary>
@@ -547,6 +549,8 @@ public class Project : BindableBase
     public void AddTerm(Term term)
     {
         _terms.Add(term);
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
     }
 
     /// <summary>
@@ -556,6 +560,8 @@ public class Project : BindableBase
     public void RemoveTerm(Term term)
     {
         _terms.Remove(term);
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
     }
 
     /// <summary>
@@ -568,6 +574,8 @@ public class Project : BindableBase
         {
             _terms.Remove(term);
         }
+        IsSaved = false;
+        RaisePropertyChanged(nameof(Terms));
     }
 
     /// <summary>
@@ -1060,6 +1068,7 @@ public class Project : BindableBase
                 _useSoftLinebreaks = model.UseSoftLinebreaks;
                 _spellcheckCulture = model.SpellcheckCulture;
                 _customWords = new ObservableCollection<string>(model.CustomWords);
+                _terms.AddRange(model.Terms);
 
                 Timing = new TimingConfiguration
                 {

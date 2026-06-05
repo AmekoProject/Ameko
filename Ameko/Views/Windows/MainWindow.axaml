@@ -173,6 +173,8 @@
             </NativeMenuItem>
             <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Project}">
                 <NativeMenu>
+                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenKnp}"
+                                    Command="{Binding ShowKnpWindowCommand}" />
                     <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
                                     Command="{Binding ShowProjectConfigDialogCommand}" />
                 </NativeMenu>
