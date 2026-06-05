@@ -21,15 +21,25 @@
         <converters:StyleNameConverter x:Key="StyleNameConverter" />
     </UserControl.Resources>
     <DockPanel>
-        <TextBox Name="ReferenceBox"
-                 DockPanel.Dock="Bottom"
-                 Margin="1"
-                 IsReadOnly="True"
-                 FontSize="{Binding Configuration.ReferenceFontSize}"
-                 MaxLines="4"
-                 TextWrapping="Wrap"
-                 IsVisible="{Binding Workspace.ReferenceFileManager.IsReferenceLoaded}"
-                 Text="{Binding Workspace.ReferenceFileManager.CurrentLines}" />
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBox Name="ReferenceBox"
+                     Margin="1"
+                     IsReadOnly="True"
+                     FontSize="{Binding Configuration.ReferenceFontSize}"
+                     MaxLines="4"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding Workspace.ReferenceFileManager.IsReferenceLoaded}"
+                     Text="{Binding Workspace.ReferenceFileManager.CurrentLines}" />
+            <TextBox Name="TermsBox"
+                     Margin="1"
+                     IsReadOnly="True"
+                     FontSize="{Binding Configuration.ReferenceFontSize}"
+                     MaxLines="4"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding VisibleKnpTerms,
+                                         Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                     Text="{Binding VisibleKnpTerms}"></TextBox>
+        </StackPanel>
         <Grid Name="EditorPanel"
               RowDefinitions="Auto, Auto, *">
             <Grid Grid.Row="0"
