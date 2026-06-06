@@ -30,15 +30,35 @@
                      TextWrapping="Wrap"
                      IsVisible="{Binding Workspace.ReferenceFileManager.IsReferenceLoaded}"
                      Text="{Binding Workspace.ReferenceFileManager.CurrentLines}" />
-            <TextBox Name="TermsBox"
-                     Margin="1"
-                     IsReadOnly="True"
-                     FontSize="{Binding Configuration.ReferenceFontSize}"
-                     MaxLines="4"
-                     TextWrapping="Wrap"
-                     IsVisible="{Binding VisibleKnpTerms,
-                                         Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                     Text="{Binding VisibleKnpTerms}"></TextBox>
+            <DataGrid Name="TermsGrid"
+                      HeadersVisibility="None"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      Background="Transparent"
+                      IsReadOnly="True"
+                      Margin="1"
+                      Padding="0"
+                      Classes="Small"
+                      Focusable="False"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      GridLinesVisibility="All"
+                      ItemsSource="{Binding VisibleKnpTerms}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Original}" />
+                    <DataGridTextColumn Binding="{Binding Alternate}" />
+                    <DataGridTextColumn Binding="{Binding Translation}" />
+                </DataGrid.Columns>
+                <DataGrid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Padding" Value="0" /> 
+                        <Setter Property="Margin" Value="5 0" />
+                    </Style>
+                    <Style Selector="DataGridCell">
+                        <Setter Property="MinHeight" Value="0" />
+                    </Style>
+                </DataGrid.Styles>
+            </DataGrid>
         </StackPanel>
         <Grid Name="EditorPanel"
               RowDefinitions="Auto, Auto, *">

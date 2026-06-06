@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Text;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -15,6 +15,7 @@ using AssCS;
 using Holo;
 using Holo.Configuration;
 using Holo.Configuration.Keybinds;
+using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
 
@@ -244,11 +245,7 @@ public partial class TabItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
-    public string VisibleKnpTerms
-    {
-        get;
-        set => this.RaiseAndSetIfChanged(ref field, value);
-    } = string.Empty;
+    public RangeObservableCollection<Term> VisibleKnpTerms { get; } = [];
 
     #region Versioned items
 
@@ -257,21 +254,19 @@ public partial class TabItemViewModel : ViewModelBase
 
     #endregion
 
-    private string FindVisibleKnpTerms()
+    private IEnumerable<Term> FindVisibleKnpTerms()
     {
-        var terms = ProjectProvider.Current?.Terms;
+        var terms = ProjectProvider.Current.Terms;
         if (terms is not { Count: > 0 })
-            return string.Empty;
+            yield break;
 
-        var tl = Workspace.SelectionManager.ActiveEvent?.Text;
+        var tl = Workspace.SelectionManager.ActiveEvent.Text;
         var org = Workspace.ReferenceFileManager.IsReferenceLoaded
             ? Workspace.ReferenceFileManager.CurrentLines
             : null;
 
         if (string.IsNullOrEmpty(tl) && org is null)
-            return string.Empty;
-
-        var sb = new StringBuilder();
+            yield break;
 
         foreach (var term in terms)
         {
@@ -279,7 +274,7 @@ public partial class TabItemViewModel : ViewModelBase
                 ? StringComparison.Ordinal
                 : StringComparison.OrdinalIgnoreCase;
 
-            var matched =
+            if (
                 (
                     !string.IsNullOrEmpty(tl)
                     && !string.IsNullOrEmpty(term.Translation)
@@ -294,31 +289,10 @@ public partial class TabItemViewModel : ViewModelBase
                     !string.IsNullOrEmpty(org)
                     && !string.IsNullOrEmpty(term.Alternate)
                     && org.Contains(term.Alternate, cmp)
-                );
-
-            if (!matched)
-                continue;
-
-            // Display all non-empty parts regardless of which one matched
-            var source = (term.Original, term.Alternate) switch
-            {
-                ({ Length: > 0 } o, { Length: > 0 } a) => $"{o} ({a})",
-                ({ Length: > 0 } o, _) => o,
-                (_, { Length: > 0 } a) => a,
-                _ => string.Empty,
-            };
-
-            var target = term.Translation;
-
-            if (source.Length > 0 && target.Length > 0)
-                sb.AppendLine($"{source}: {target}");
-            else if (source.Length > 0)
-                sb.AppendLine(source);
-            else if (target.Length > 0)
-                sb.AppendLine(target);
+                )
+            )
+                yield return term;
         }
-
-        return sb.ToString();
     }
 
     public TabItemViewModel(
@@ -435,7 +409,7 @@ public partial class TabItemViewModel : ViewModelBase
             try
             {
                 await SelectEvents.Handle(Workspace.SelectionManager.SelectedEventCollection);
-                VisibleKnpTerms = FindVisibleKnpTerms();
+                VisibleKnpTerms.ReplaceRange(FindVisibleKnpTerms());
             }
             catch
             {
