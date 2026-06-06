@@ -20,7 +20,7 @@
         
         DragDrop.AllowDrop="True"
 
-        Width="1335"
+        Width="1350"
         Height="650"
         MinWidth="650"
         MinHeight="500"
