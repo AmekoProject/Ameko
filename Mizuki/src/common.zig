@@ -2,7 +2,7 @@
 
 const std = @import("std");
 
-pub var gpa: std.heap.GeneralPurposeAllocator(.{ .safety = true }) = undefined;
+pub var gpa: std.heap.DebugAllocator(.{ .safety = true }) = undefined;
 pub var allocator: std.mem.Allocator = undefined;
 
 /// Initialize the global allocator
