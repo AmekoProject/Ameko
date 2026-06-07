@@ -25,6 +25,7 @@ on:
 
 env:
   DOTNET_VERSION: "10.0"
+  ZIG_VERSION: "0.16.0"
 
 jobs:
   calculate-version:
@@ -58,7 +59,7 @@ jobs:
           submodules: recursive
       - uses: mlugg/setup-zig@v2
         with:
-          version: 0.15.1
+          version: "${{ env.ZIG_VERSION }}."
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "${{ env.DOTNET_VERSION }}.x"
@@ -112,7 +113,7 @@ jobs:
           submodules: recursive
       - uses: mlugg/setup-zig@v2
         with:
-          version: 0.15.1
+          version: "${{ env.ZIG_VERSION }}."
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "${{ env.DOTNET_VERSION }}.x"
@@ -178,7 +179,7 @@ jobs:
           fetch-depth: 0
       - uses: mlugg/setup-zig@v2
         with:
-          version: 0.15.1
+          version: "${{ env.ZIG_VERSION }}."
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "${{ env.DOTNET_VERSION }}.x"
