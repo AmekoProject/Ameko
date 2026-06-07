@@ -35,7 +35,7 @@
                        Content="{x:Static i18n:Config.Config_Label_CpsWarnThreshold}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="0"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="0"
                                  Maximum="100"
                                  Increment="1"
@@ -84,7 +84,7 @@
                        Content="{x:Static i18n:Config.Config_Label_DefaultLayer}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="6"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="0"
                                  Maximum="999"
                                  Increment="1"
@@ -174,7 +174,7 @@
                        Content="{x:Static i18n:Config.Config_Label_AutosaveInterval}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="6"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="30"
                                  Maximum="1800"
                                  Increment="1"
@@ -187,7 +187,7 @@
                        Content="{x:Static i18n:Config.Config_Label_IndexCacheExpiration}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="7"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="1"
                                  Maximum="128"
                                  Increment="1"
@@ -228,7 +228,7 @@
                        Content="{x:Static i18n:Config.Config_Label_EditorFs}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="1"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="8"
                                  Maximum="100"
                                  Increment="0.5"
@@ -241,7 +241,7 @@
                        Content="{x:Static i18n:Config.Config_Label_GridFs}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="2"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="8"
                                  Maximum="100"
                                  Increment="0.5"
@@ -254,7 +254,7 @@
                        Content="{x:Static i18n:Config.Config_Label_ReferenceFs}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="3"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="8"
                                  Maximum="100"
                                  Increment="0.5"
@@ -267,7 +267,7 @@
                        Content="{x:Static i18n:Config.Config_Label_GridPadding}" />
                 <c:NumberTextBox Grid.Column="1"
                                  Grid.Row="4"
-                                 Width="50"
+                                 Width="100"
                                  Minimum="0"
                                  Maximum="10"
                                  Increment="1"
