@@ -101,10 +101,15 @@ public class Workspace : BindableBase
     public bool IsAutosaved { get; set; }
 
     /// <summary>
+    /// Fallback title to use when not saved to a file
+    /// </summary>
+    public string FallbackTitle { get; set; }
+
+    /// <summary>
     /// Title of this workspace
     /// </summary>
     public string Title =>
-        SavePath is not null ? Path.GetFileNameWithoutExtension(SavePath.LocalPath) : $"New {Id}";
+        SavePath is not null ? Path.GetFileNameWithoutExtension(SavePath.LocalPath) : FallbackTitle;
 
     /// <summary>
     /// Title to display in the GUI
@@ -113,7 +118,7 @@ public class Workspace : BindableBase
     public string DisplayTitle =>
         SavePath is not null
             ? $"{(!IsSaved ? '*' : string.Empty)}{Path.GetFileNameWithoutExtension(SavePath.LocalPath)}"
-            : $"{(!IsSaved ? '*' : string.Empty)}New {Id}";
+            : $"{(!IsSaved ? '*' : string.Empty)}{FallbackTitle}";
 
     /// <summary>
     /// Whether the Actors column in the events grid should be displayed
@@ -240,7 +245,7 @@ public class Workspace : BindableBase
         SelectionManager.BeginSelectionChange();
         _logger.LogTrace("Undoing");
 
-        if (!Document.HistoryManager.Undo(out var applied, out var undone))
+        if (!Document.HistoryManager.Undo(out var _, out var undone))
         {
             _logger.LogError("Undo failed");
             return;
@@ -382,6 +387,7 @@ public class Workspace : BindableBase
         Document = document;
         MediaController = mediaController;
         Id = id;
+        FallbackTitle = $"New {Id}";
         IsSaved = true;
 
         _savePath = savePath;

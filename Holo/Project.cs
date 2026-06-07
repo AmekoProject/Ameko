@@ -497,6 +497,7 @@ public class Project : BindableBase
             if (ext is not (".ass" or ".ssa"))
             {
                 // Non-ass sourced documents need to be re-saved as an ass file
+                item.Workspace.FallbackTitle = Path.GetFileName(item.Uri!.LocalPath); // With extension, for clarity
                 item.Workspace.SavePath = null;
                 item.Workspace.IsSaved = false;
             }

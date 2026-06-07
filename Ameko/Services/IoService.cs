@@ -412,6 +412,7 @@ public class IoService(
             {
                 // Non-ass sourced documents need to be re-saved as an ass file
                 wsp = prj.AddWorkspace(doc);
+                wsp.FallbackTitle = Path.GetFileName(uri.LocalPath); // With extension, for clarity
                 wsp.IsSaved = false;
             }
 
