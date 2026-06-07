@@ -1,10 +1,3 @@
-## Thank you for participating in the Ameko beta!
-
-Your feedback and contributions during this pre-release phase
-are immensely valuable!
-
-----
-
 **Ameko is free software!** If you paid for it, you were scammed!
 
 Ameko is copyright © 2023-2026 9volt and distributed
