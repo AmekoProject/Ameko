@@ -16,6 +16,16 @@ If you have an established project directory, you can bring the structure into A
 This will load all applicable sub-folders and subtitle files into the Project Explorer, where you can tailor the
 contents and save the resulting project to a file.
 
+## Key Names and Phrases
+
+Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
+Names & Phrases (KNP) bible to help keep everyone on track:
+
+![](../assets/knp-window.png)
+
+Terms that appear in the script or reference files will appear in the Editing Area. See the User Interface tab for more
+details.
+
 ## Display Names and You
 
 While Project structures and names *can* mirror the files on disk, you can rearrange and rename them within the project
