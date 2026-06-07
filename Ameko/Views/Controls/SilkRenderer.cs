@@ -141,14 +141,14 @@ public class SilkRenderer : OpenGlControlBase
         var texHeight = (uint)frame->VideoFrame->Height;
 
         _textureV.Bind(TextureUnit.Texture0);
-        // _textureV.SetTexture(texWidth, texHeight, frame->VideoFrame->Data);
-
-        var transparentPixel = stackalloc byte[4] { 0, 0, 0, 0 };
-        _textureV.SetTexture(1, 1, transparentPixel);
+        _textureV.SetTexture(texWidth, texHeight, frame->VideoFrame->Data);
 
         _textureS.Bind(TextureUnit.Texture1);
-        // _textureS.SetTexture(texWidth, texHeight, frame->SubtitleFrame->Data);
-        _textureS.SetTexture(1, 1, transparentPixel);
+        _textureS.SetTexture(texWidth, texHeight, frame->SubtitleFrame->Data);
+
+        // Ensure the texture uploads are complete before proceeding if there will be no subsequent render request
+        if (!MediaController.IsVideoPlaying)
+            _gl.Finish();
 
         Interlocked.Decrement(ref frame->Refcount);
 

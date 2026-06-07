@@ -140,6 +140,11 @@ public class Visualizer : OpenGlControlBase
 
         _texture.Bind(TextureUnit.Texture0);
         _texture.SetTexture(texWidth, texHeight, frame->Data);
+
+        // Ensure the texture uploads are complete before proceeding if there will be no subsequent render request
+        if (!MediaController.IsVideoPlaying)
+            _gl.Finish();
+
         Interlocked.Decrement(ref frame->Refcount);
 
         _gl.DrawElements(

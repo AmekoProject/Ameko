@@ -333,6 +333,9 @@ public class MediaController : BindableBase
         _videoPlayback.Stop();
         _audioPlayback.Stop();
         PlaybackStopped?.Invoke(this, EventArgs.Empty);
+
+        // Request a re-render of the last frame to ensure GlFinish is executed
+        FrameReady?.Invoke();
     }
 
     /// <summary>
@@ -349,6 +352,9 @@ public class MediaController : BindableBase
         _videoPlayback.Stop();
         _audioPlayback.Stop();
         PlaybackStopped?.Invoke(this, EventArgs.Empty);
+
+        // Request a re-render of the last frame to ensure GlFinish is executed
+        FrameReady?.Invoke();
     }
 
     /// <summary>
