@@ -217,7 +217,7 @@
         <value>Save project?</value>
     </data>
     <data name="MsgBox_IoError_Title" xml:space="preserve">
-        <value />
+        <value>I/O Error</value>
     </data>
     <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
         <value>Unauthorized.</value>
