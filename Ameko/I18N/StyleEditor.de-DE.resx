@@ -18,22 +18,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StyleEditor_WindowTitle" xml:space="preserve">
-        <value>Style Editor</value>
+        <value>Stil-Editor</value>
     </data>
   <data name="StyleEditor_Section_BasicInfo" xml:space="preserve">
-        <value>Basic Info</value>
+        <value>Allgemeine Informationen</value>
     </data>
   <data name="StyleEditor_InvalidName" xml:space="preserve">
         <value>Ungültiger Name!</value>
     </data>
   <data name="StyleEditor_NameBox_Watermark" xml:space="preserve">
-        <value>Style Name</value>
+        <value>Name des Stils</value>
     </data>
   <data name="StyleEditor_Section_Font" xml:space="preserve">
-        <value>Font</value>
+        <value>Schriftart</value>
     </data>
   <data name="StyleEditor_FontFamilyBox_Watermark" xml:space="preserve">
-        <value>Font Family</value>
+        <value>Schriftfamilie</value>
     </data>
   <data name="StyleEditor_CheckBox_Bold" xml:space="preserve">
         <value>Fett</value>
@@ -63,7 +63,7 @@
         <value>Schatten</value>
     </data>
   <data name="StyleEditor_Header_Positioning" xml:space="preserve">
-        <value>Positioning</value>
+        <value>Positionierung</value>
     </data>
   <data name="StyleEditor_Label_Margins" xml:space="preserve">
         <value>Margins</value>
@@ -117,7 +117,7 @@
         <value>Vertikal</value>
     </data>
   <data name="StyleEditor_Header_Decoration" xml:space="preserve">
-        <value>Decoration</value>
+        <value>Dekoration</value>
     </data>
   <data name="StyleEditor_Label_BorderThickness" xml:space="preserve">
         <value>Kontur</value>
@@ -126,16 +126,16 @@
         <value>Schatten</value>
     </data>
   <data name="StyleEditor_BBox4" xml:space="preserve">
-        <value>Box (Event)</value>
+        <value>Box (Ereignis)</value>
     </data>
   <data name="StyleEditor_BBox1" xml:space="preserve">
         <value>Kontur &amp; Schatten</value>
     </data>
   <data name="StyleEditor_BBox3" xml:space="preserve">
-        <value>Box (Line)</value>
+        <value>Box (Zeile)</value>
     </data>
   <data name="StyleEditor_BBox1_ToolTip" xml:space="preserve">
-        <value>Display an outline and shadow around each character</value>
+        <value>Zeige eine Kontur und Schatten um jedes Zeichen an</value>
     </data>
   <data name="StyleEditor_BBox3_ToolTip" xml:space="preserve">
         <value>Display an opaque box around each line in the event</value>
@@ -147,10 +147,10 @@
         <value>Appearance</value>
     </data>
   <data name="StyleEditor_Label_ScaleX" xml:space="preserve">
-        <value>X Scale %</value>
+        <value>X-Skalierung %</value>
     </data>
   <data name="StyleEditor_Label_ScaleY" xml:space="preserve">
-        <value>Y Scale %</value>
+        <value>Y-Skalierung %</value>
     </data>
   <data name="StyleEditor_Label_Rotation" xml:space="preserve">
         <value>Rotation (deg)</value>
@@ -159,7 +159,7 @@
         <value>Spacing</value>
     </data>
   <data name="ColorDialog_WindowTitle" xml:space="preserve">
-        <value>Colors</value>
+        <value>Farben</value>
     </data>
   <data name="ColorDialog_CheckBox_UseRing" xml:space="preserve">
         <value>Ring</value>

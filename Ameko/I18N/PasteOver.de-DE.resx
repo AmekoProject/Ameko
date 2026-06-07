@@ -24,22 +24,22 @@
         <value>Select fields to paste over:</value>
     </data>
   <data name="PasteOver_CB_Comment" xml:space="preserve">
-        <value>Comment</value>
+        <value>Kommentar</value>
     </data>
   <data name="PasteOver_CB_Layer" xml:space="preserve">
-        <value>Layer</value>
+        <value>Ebene</value>
     </data>
   <data name="PasteOver_CB_StartTime" xml:space="preserve">
-        <value>Start Time</value>
+        <value>Startzeit</value>
     </data>
   <data name="PasteOver_CB_EndTime" xml:space="preserve">
-        <value>End Time</value>
+        <value>Endzeit</value>
     </data>
   <data name="PasteOver_CB_Style" xml:space="preserve">
-        <value>Style</value>
+        <value>Stil</value>
     </data>
   <data name="PasteOver_CB_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Sprecher</value>
     </data>
   <data name="PasteOver_CB_MarginLeft" xml:space="preserve">
         <value>Left Margin</value>
@@ -51,36 +51,36 @@
         <value>Vertical Margin</value>
     </data>
   <data name="PasteOver_CB_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Effekt</value>
     </data>
   <data name="PasteOver_CB_Text" xml:space="preserve">
         <value>Text</value>
     </data>
   <data name="PasteOver_Button_All" xml:space="preserve">
-        <value>All</value>
+        <value>Alle</value>
     </data>
   <data name="PasteOver_Button_None" xml:space="preserve">
-        <value>None</value>
+        <value>Keine</value>
     </data>
   <data name="PasteOver_Button_Times" xml:space="preserve">
-        <value>Times</value>
+        <value>Zeiten</value>
     </data>
   <data name="PasteOver_Button_Text" xml:space="preserve">
         <value>Text</value>
     </data>
   <data name="PasteOver_Button_Confirm" xml:space="preserve">
-        <value>OK</value>
+        <value>Ok</value>
     </data>
   <data name="PasteOver_Button_All_ToolTip" xml:space="preserve">
-        <value>Select all fields</value>
+        <value>Alle Felder auswählen</value>
     </data>
   <data name="PasteOver_Button_None_ToolTip" xml:space="preserve">
-        <value>Select no fields</value>
+        <value>Keine Felder auswählen</value>
     </data>
   <data name="PasteOver_Button_Times_ToolTip" xml:space="preserve">
-        <value>Select only start and end time</value>
+        <value>Nur Start- und Endzeit auswählen</value>
     </data>
   <data name="PasteOver_Button_Text_ToolTip" xml:space="preserve">
-        <value>Select only text</value>
+        <value>Nur Text auswählen</value>
     </data>
 </root>

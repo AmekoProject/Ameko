@@ -18,63 +18,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SearchWindow_Title" xml:space="preserve">
-        <value>Search</value>
+        <value>Tìm kiếm</value>
     </data>
   <data name="Search_Label_Find" xml:space="preserve">
-        <value>Find:</value>
+        <value>Tìm:</value>
     </data>
   <data name="Search_QueryBox_Watermark" xml:space="preserve">
-        <value>Query...</value>
+        <value>Nhập từ khoá...</value>
     </data>
   <data name="Search_Button_Find" xml:space="preserve">
-        <value>Find</value>
+        <value>Tìm</value>
     </data>
   <data name="Search_RB_Text" xml:space="preserve">
-        <value>Text</value>
+        <value>Văn bản</value>
     </data>
   <data name="Search_RB_Style" xml:space="preserve">
         <value>Style</value>
     </data>
   <data name="Search_RB_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Nhân vật</value>
     </data>
   <data name="Search_RB_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Hiệu ứng</value>
     </data>
   <data name="Search_RB_TextStripped" xml:space="preserve">
         <value>Text (stripped)</value>
     </data>
   <data name="SelectWindow_Title" xml:space="preserve">
-        <value>Select</value>
+        <value>Chọn</value>
     </data>
   <data name="Select_Button_Select" xml:space="preserve">
-        <value>Select</value>
+        <value>Chọn</value>
     </data>
   <data name="SortWindow_Title" xml:space="preserve">
-        <value>Sort</value>
+        <value>Sắp xếp</value>
     </data>
   <data name="Sort_Button_Sort" xml:space="preserve">
-        <value>Sort</value>
+        <value>Sắp xếp</value>
     </data>
   <data name="Search_RB_Comment" xml:space="preserve">
-        <value>Is Comment</value>
+        <value>Là bình luận</value>
     </data>
   <data name="Search_RB_Start" xml:space="preserve">
-        <value>Start Time</value>
+        <value>Thời gian bắt đầu</value>
     </data>
   <data name="Search_RB_End" xml:space="preserve">
-        <value>End Time</value>
+        <value>Thời gian kết thúc</value>
     </data>
   <data name="Search_RB_None" xml:space="preserve">
-        <value>None</value>
+        <value>Không</value>
     </data>
   <data name="Sort_Label_Descending" xml:space="preserve">
-        <value>Descending?</value>
+        <value>Giảm dần?</value>
     </data>
   <data name="Sort_Label_SortBy" xml:space="preserve">
-        <value>Sort By:</value>
+        <value>Sắp xếp theo:</value>
     </data>
   <data name="Sort_Label_ThenBy" xml:space="preserve">
-        <value>Then By:</value>
+        <value>Sau đó theo:</value>
     </data>
 </root>

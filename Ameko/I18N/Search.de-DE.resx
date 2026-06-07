@@ -18,31 +18,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SearchWindow_Title" xml:space="preserve">
-        <value>Search</value>
+        <value>Suchen</value>
     </data>
   <data name="Search_Label_Find" xml:space="preserve">
-        <value>Find:</value>
+        <value>Suche nach:</value>
     </data>
   <data name="Search_QueryBox_Watermark" xml:space="preserve">
-        <value>Query...</value>
+        <value>Suchanfrage...</value>
     </data>
   <data name="Search_Button_Find" xml:space="preserve">
-        <value>Find</value>
+        <value>Finden</value>
     </data>
   <data name="Search_RB_Text" xml:space="preserve">
         <value>Text</value>
     </data>
   <data name="Search_RB_Style" xml:space="preserve">
-        <value>Style</value>
+        <value>Stil</value>
     </data>
   <data name="Search_RB_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Sprecher</value>
     </data>
   <data name="Search_RB_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Effekt</value>
     </data>
   <data name="Search_RB_TextStripped" xml:space="preserve">
-        <value>Text (plain)</value>
+        <value>Text (Plain-Text)</value>
     </data>
   <data name="SelectWindow_Title" xml:space="preserve">
         <value>Select</value>
@@ -51,10 +51,10 @@
         <value>Select</value>
     </data>
   <data name="SortWindow_Title" xml:space="preserve">
-        <value>Sort</value>
+        <value>Sortieren</value>
     </data>
   <data name="Sort_Button_Sort" xml:space="preserve">
-        <value>Sort</value>
+        <value>Sortieren</value>
     </data>
   <data name="Search_RB_Comment" xml:space="preserve">
         <value>Is Comment</value>
@@ -69,12 +69,12 @@
         <value>None</value>
     </data>
   <data name="Sort_Label_Descending" xml:space="preserve">
-        <value>Descending?</value>
+        <value>Absteigend?</value>
     </data>
   <data name="Sort_Label_SortBy" xml:space="preserve">
-        <value>Sort By:</value>
+        <value>Sortiere nach:</value>
     </data>
   <data name="Sort_Label_ThenBy" xml:space="preserve">
-        <value>Then By:</value>
+        <value>Dann nach:</value>
     </data>
 </root>

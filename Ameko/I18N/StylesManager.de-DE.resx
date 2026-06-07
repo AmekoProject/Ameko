@@ -18,43 +18,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StylesManager_Title" xml:space="preserve">
-        <value>Styles Manager</value>
+        <value>Stil-Manager</value>
     </data>
   <data name="StylesManager_GlobalStyles" xml:space="preserve">
-        <value>Global Styles</value>
+        <value>Globale Stile</value>
     </data>
   <data name="StylesManager_ProjectStyles" xml:space="preserve">
-        <value>Project Styles</value>
+        <value>Projektstile</value>
     </data>
   <data name="StylesManager_DocumentStyles" xml:space="preserve">
-        <value>Document Styles</value>
+        <value>Dokumentenstile</value>
     </data>
   <data name="StylesManager_Button_Delete" xml:space="preserve">
-        <value>Delete</value>
+        <value>Löschen</value>
     </data>
   <data name="StylesManager_Button_Duplicate" xml:space="preserve">
-        <value>Duplicate</value>
+        <value>Duplizieren</value>
     </data>
   <data name="StylesManager_Button_Edit" xml:space="preserve">
-        <value>Edit</value>
+        <value>Bearbeiten</value>
     </data>
   <data name="StylesManager_Button_New" xml:space="preserve">
-        <value>New</value>
+        <value>Neu</value>
     </data>
   <data name="StylesManager_Button_CopyToProject" xml:space="preserve">
-        <value>Copy to Project</value>
+        <value>Ins Projekt kopieren</value>
     </data>
   <data name="StylesManager_Button_CopyToGlobal" xml:space="preserve">
         <value>Copy to Global</value>
     </data>
   <data name="StylesManager_Button_CopyToDocument" xml:space="preserve">
-        <value>Copy to Document</value>
+        <value>Ins Dokument kopieren</value>
     </data>
   <data name="StylesManager_CopyAppendage" xml:space="preserve">
-        <value>Copy</value>
+        <value>Kopieren</value>
     </data>
   <data name="StylesManager_Button_Duplicate_ToolTip" xml:space="preserve">
-        <value>Make a copy of the selected style</value>
+        <value>Eine Kopie des ausgewählten Stils erstellen</value>
     </data>
   <data name="StylesManager_Button_Delete_ToolTip" xml:space="preserve">
         <value>Delete the selected style</value>
@@ -63,7 +63,7 @@
         <value>Open the selected style in the Style Editor</value>
     </data>
   <data name="StylesManager_Button_New_ToolTip" xml:space="preserve">
-        <value>Add a new style</value>
+        <value>Neuen Stil hinzufügen</value>
     </data>
   <data name="StylesManager_Button_CopyToDocument_ToolTip" xml:space="preserve">
         <value>Copy the selected style to the open Document</value>

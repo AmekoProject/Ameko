@@ -18,60 +18,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StylesManager_Title" xml:space="preserve">
-        <value>Styles Manager</value>
+        <value>Trình quản lý Style</value>
     </data>
   <data name="StylesManager_GlobalStyles" xml:space="preserve">
-        <value>Global Styles</value>
+        <value>Style Toàn cục</value>
     </data>
   <data name="StylesManager_ProjectStyles" xml:space="preserve">
-        <value>Project Styles</value>
+        <value>Style của Dự án</value>
     </data>
   <data name="StylesManager_DocumentStyles" xml:space="preserve">
-        <value>Document Styles</value>
+        <value>Style trong Tài liệu</value>
     </data>
   <data name="StylesManager_Button_Delete" xml:space="preserve">
-        <value>Delete</value>
+        <value>Xoá</value>
     </data>
   <data name="StylesManager_Button_Duplicate" xml:space="preserve">
-        <value>Duplicate</value>
+        <value>Tạo bản sao</value>
     </data>
   <data name="StylesManager_Button_Edit" xml:space="preserve">
-        <value>Edit</value>
+        <value>Sửa</value>
     </data>
   <data name="StylesManager_Button_New" xml:space="preserve">
-        <value>New</value>
+        <value>Tạo mới</value>
     </data>
   <data name="StylesManager_Button_CopyToProject" xml:space="preserve">
-        <value>Copy to Project</value>
+        <value>Chép sang Dự án</value>
     </data>
   <data name="StylesManager_Button_CopyToGlobal" xml:space="preserve">
-        <value>Copy to Global</value>
+        <value>Chép sang Toàn cục</value>
     </data>
   <data name="StylesManager_Button_CopyToDocument" xml:space="preserve">
-        <value>Copy to Document</value>
+        <value>Chép sang Tài liệu</value>
     </data>
   <data name="StylesManager_CopyAppendage" xml:space="preserve">
-        <value>Copy</value>
+        <value>Bản sao</value>
     </data>
   <data name="StylesManager_Button_Duplicate_ToolTip" xml:space="preserve">
-        <value>Make a copy of the selected style</value>
+        <value>Tạo bản sao của style đang chọn</value>
     </data>
   <data name="StylesManager_Button_Delete_ToolTip" xml:space="preserve">
-        <value>Delete the selected style</value>
+        <value>Xoá style đang chọn</value>
     </data>
   <data name="StylesManager_Button_Edit_ToolTip" xml:space="preserve">
-        <value>Open the selected style in the Style Editor</value>
+        <value>Mở style đang chọn trong Trình chỉnh sửa</value>
     </data>
   <data name="StylesManager_Button_New_ToolTip" xml:space="preserve">
-        <value>Add a new style</value>
+        <value>Thêm một style mới</value>
     </data>
   <data name="StylesManager_Button_CopyToDocument_ToolTip" xml:space="preserve">
-        <value>Copy the selected style to the open Document</value>
+        <value>Sao chép style đang chọn sang Tài liệu hiện tại</value>
     </data>
   <data name="StylesManager_Button_CopyToGlobal_ToolTip" xml:space="preserve">
-        <value>Copy the selected style to your global styles list</value>
+        <value>Sao chép style đang chọn sang danh sách Toàn cục</value>
     </data>
   <data name="StylesManager_Button_CopyToProject_ToolTip" xml:space="preserve">
-        <value>Copy the selected style to the open Project</value>
+        <value>Sao chép style đang chọn sang Dự án hiện tại</value>
     </data>
 </root>

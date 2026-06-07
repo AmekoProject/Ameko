@@ -47,10 +47,10 @@
   <data name="Config_Theme_Dark" xml:space="preserve">
         <value>Ciemny</value>
     </data>
-    <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
+  <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
         <value>Z wideo</value>
     </data>
-    <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
+  <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
         <value>Z napisami</value>
     </data>
   <data name="Config_Label_CpsWarnThreshold" xml:space="preserve">

@@ -4,16 +4,24 @@ Ameko ist um Projekte herum konzipiert. Es ist zwar nicht notwendig, Projekte zu
 
 ![](../assets/project-explorer-empty.png)
 
-When you first open Ameko, the Project Explorer will be on the left, listing the currently-open documents. When a
-project file isn't loaded, the Default Project serves as a dumping ground for the files you open during the session. You
-can save the project to a file if you want to leverage the benefits of using a project file.
+When you first open Ameko, the Project Explorer will be on the left, listing the currently-open documents. Wenn keine Projektdatei geladen ist, dient das Standardprojekt als Ablageort für die Dateien, die du während der Sitzung öffnest. Du kannst das Projekt als Datei speichern, wenn du die Vorteile einer Projektdatei nutzen möchtest.
 
 ## Öffnen eines Ordners als Projekt
 
 Wenn du bereits eingerichteten Projektordner hast, kannst du die Struktur in Ameko importieren, indem du den Ordner als Projekt öffnest.
 Dadurch werden alle Unterordner und Untertiteldateien in den Projekt-Explorer geladen, wo du den Inhalt anpassen und das resultierende Projekt als Datei speichern kannst.
 
-## Display Names and You
+## Key Names and Phrases
+
+Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
+Names & Phrases (KNP) bible to help keep everyone on track:
+
+![](../assets/knp-window.png)
+
+Terms that appear in the script or reference files will appear in the Editing Area. See the User Interface tab for more
+details.
+
+## Anzeigenamen und du
 
 Zwar _können_ Projektstruktur und -namen den Dateien auf deiner Festplatte entsprechen, jedoch kannst du sie auch problemlos neu ordnen und umbenennen, ohne Auswirkung auf die zugrundeliegenden Dateien. Betrachte beispielsweise die folgende flache Hierarchie mit wortreichen Dateinamen:
 
@@ -44,25 +52,21 @@ Mithilfe von Anzeigenamen kann man das innerhalb des Projektes neu organisieren 
   Captions.srt
 ```
 
-## Project Configuration
+## Projekteinstellungen
 
 ![](../assets/project-config.png)
 
-One of the key benefits of using Projects when working in a team is synced configuration. Options set in the Project
-Configuration will override user preferences while the project is loaded. This is great for keeping everyone's CPS warn
-threshold is the same, and critically, keeping a shared spellcheck dictionary and making sure everyone is using the same
-spellcheck language. If the project is set to use English (GB), for example, _everyone_ will be using English (GB), and
-that extra u in colour won't be missed.
+Wenn man im Team arbeitet, ist einer der wichtigsten Vorteile von Projekten die synchronisierten Einstellungen. Einstellungen, die in den Projekteinstellungen getroffen wurden, werden die Einstellungen des Nutzers, wenn das Projekt geladen ist, überschreiben. So kann sichergestellt werden, dass alle dieselbe Warnschwelle für die CPS (Zeichen pro Sekunde) haben, und vor allem, um ein gemeinsames Wörterbuch zur Rechtschreibüberprüfung zu führen und sicherzustellen, dass alle dieselbe Sprache für die Rechtschreibprüfung verwenden. Wenn das Projekt also beispielsweise britisches Englisch, also „English (GB)“, als Sprache konfiguriert hat, wird _jeder_ „English (GB)“ verwenden. So wird das zusätzliche „u“ aus der britischen Schreibweise „colour“ nicht vergessen.
 
 ![](../assets/project-install-dictionary.png)
 
-Users will be prompted to download the appropriate dictionary if they don't already have it.
+Sollte der Nutzer das entsprechende Wörterbuch noch nicht haben, wird er dazu aufgefordert, es herunterzuladen.
 
 ![](../assets/spellcheck.png)
 
-Words can be added to the project dictionary directly from the spellchecker.
+Wörter können direkt aus der Rechtschreibprüfung zum Projektwörterbuch hinzugefügt werden.
 
-## Git Integration
+## Git-Integration
 
 ![](../assets/git-toolbox.png)
 

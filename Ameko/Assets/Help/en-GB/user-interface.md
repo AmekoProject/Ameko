@@ -6,9 +6,13 @@ overview of Ameko's user interface.
 ![](../assets/editing-area.png)
 
 Most users will probably spend the bulk of their time in the editing area. The editing area is linked to the active
-line, and consists of a large textbox for the line's text content, and a host of auxiliary buttons and textboxes for
+line, and consists of a large textbox for the line's text content (1), and a host of auxiliary buttons and textboxes for
 adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
-reference will be displayed in an additional box below the main textbox.
+reference will be displayed in an additional box below the main textbox (2).
+
+If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
+the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
+Alternate forms are present in the reference file lines (2).
 
 A brief overview of each item and its function:
 

@@ -18,48 +18,48 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ShiftTimes_WindowTitle" xml:space="preserve">
-        <value>Shift Times</value>
+        <value>Dịch chuyển Thời gian</value>
     </data>
   <data name="ShiftTimes_Header_ShiftBy" xml:space="preserve">
-        <value>Shift By</value>
+        <value>Cách dịch chuyển</value>
     </data>
   <data name="ShiftTimes_RB_Time" xml:space="preserve">
-        <value>Time</value>
+        <value>Thời gian</value>
     </data>
   <data name="ShiftTimes_RB_Frames" xml:space="preserve">
-        <value>Frames</value>
+        <value>Khung hình</value>
     </data>
   <data name="ShiftTimes_RB_TowardEnd" xml:space="preserve">
-        <value>Toward End</value>
+        <value>Về phía sau</value>
     </data>
   <data name="ShiftTimes_RB_TowardStart" xml:space="preserve">
-        <value>Toward Start</value>
+        <value>Về phía trước</value>
     </data>
   <data name="ShiftTimes_Header_Affect" xml:space="preserve">
-        <value>Affect</value>
+        <value>Áp dụng cho</value>
     </data>
   <data name="ShiftTimes_RB_AllEvents" xml:space="preserve">
-        <value>All Rows</value>
+        <value>Tất cả các dòng</value>
     </data>
   <data name="ShiftTimes_RB_SelectedEvents" xml:space="preserve">
-        <value>Selected Rows</value>
+        <value>Các dòng đang chọn</value>
     </data>
   <data name="ShiftTimes_Header_Times" xml:space="preserve">
-        <value>Times</value>
+        <value>Mốc thời gian</value>
     </data>
   <data name="ShiftTimes_RB_Both" xml:space="preserve">
-        <value>Both</value>
+        <value>Cả hai</value>
     </data>
   <data name="ShiftTimes_RB_Start" xml:space="preserve">
-        <value>Start</value>
+        <value>Bắt đầu</value>
     </data>
   <data name="ShiftTimes_RB_End" xml:space="preserve">
-        <value>End</value>
+        <value>Kết thúc</value>
     </data>
   <data name="ShiftTimes_Button_Ok" xml:space="preserve">
         <value>OK</value>
     </data>
   <data name="ShiftTimes_RB_Milliseconds" xml:space="preserve">
-        <value>Milliseconds</value>
+        <value>Mili-giây</value>
     </data>
 </root>

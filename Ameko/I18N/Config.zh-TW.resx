@@ -18,16 +18,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfigDialog_Title" xml:space="preserve">
-        <value>Configuration</value>
+        <value>設定</value>
     </data>
   <data name="Config_RpcLevel_Disabled" xml:space="preserve">
-        <value>Disabled</value>
+        <value>停用</value>
     </data>
   <data name="Config_RpcLevel_Enabled" xml:space="preserve">
-        <value>Enabled</value>
+        <value>啟用</value>
     </data>
   <data name="Config_RpcLevel_TimeOnly" xml:space="preserve">
-        <value>Time Only</value>
+        <value>僅限時間</value>
     </data>
   <data name="Config_PropFields_All" xml:space="preserve">
         <value>All fields</value>
@@ -39,13 +39,13 @@
         <value>Metadata fields only</value>
     </data>
   <data name="Config_Theme_Default" xml:space="preserve">
-        <value>Default</value>
+        <value>預設</value>
     </data>
   <data name="Config_Theme_Light" xml:space="preserve">
-        <value>Light</value>
+        <value>淺色</value>
     </data>
   <data name="Config_Theme_Dark" xml:space="preserve">
-        <value>Dark</value>
+        <value>深色</value>
     </data>
   <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
         <value>With Subtitles</value>
@@ -66,16 +66,16 @@
         <value>Use soft linebreaks?</value>
     </data>
   <data name="Config_Label_SoftLinebreaks_ToolTip" xml:space="preserve">
-        <value>Use \n for linebreaks instead of \N</value>
+        <value>使用 \n 換行，而非 \N</value>
     </data>
   <data name="Config_Label_DefaultLayer" xml:space="preserve">
         <value>Default layer</value>
     </data>
   <data name="Config_Label_DisplayLanguage" xml:space="preserve">
-        <value>Display language</value>
+        <value>顯示語言</value>
     </data>
   <data name="Config_Label_SpellcheckLanguage" xml:space="preserve">
-        <value>Spellcheck language</value>
+        <value>拼寫語言</value>
     </data>
   <data name="Config_Label_RichPresence" xml:space="preserve">
         <value>Rich Presence</value>
@@ -87,19 +87,19 @@
         <value>Controls how changes made to the active event's properties are replicated to other selected events</value>
     </data>
   <data name="Config_Label_AutosaveEnabled" xml:space="preserve">
-        <value>Autosave enabled?</value>
+        <value>啟用自動儲存？</value>
     </data>
   <data name="Config_Label_SaveFrames" xml:space="preserve">
         <value>Save frames</value>
     </data>
   <data name="Config_Label_AutosaveInterval" xml:space="preserve">
-        <value>Autosave interval (sec)</value>
+        <value>自動儲存間隔（秒）</value>
     </data>
   <data name="Config_Label_Theme" xml:space="preserve">
-        <value>Theme</value>
+        <value>主題</value>
     </data>
   <data name="Config_Label_EditorFs" xml:space="preserve">
-        <value>Editor font size</value>
+        <value>編輯器字體大小</value>
     </data>
   <data name="Config_Label_GridFs" xml:space="preserve">
         <value>Grid font size</value>
@@ -114,10 +114,10 @@
         <value>SubStation Alpha</value>
     </data>
   <data name="Config_Header_Behavior" xml:space="preserve">
-        <value>Behavior</value>
+        <value>功能</value>
     </data>
   <data name="Config_Header_Appearance" xml:space="preserve">
-        <value>Appearance</value>
+        <value>外觀</value>
     </data>
   <data name="Config_Label_LineWidthPunctuation" xml:space="preserve">
         <value>Line Width includes punctuation?</value>
@@ -126,25 +126,25 @@
         <value>Line Width includes whitespace?</value>
     </data>
   <data name="Config_Label_RestartRequired" xml:space="preserve">
-        <value>Restart required</value>
+        <value>需要重啟</value>
     </data>
   <data name="ProjectConfigDialog_Title" xml:space="preserve">
-        <value>Project Configuration</value>
+        <value>專案設定</value>
     </data>
   <data name="Config_Header_Spellchecking" xml:space="preserve">
-        <value>Spellchecking</value>
+        <value>拼寫檢查</value>
     </data>
   <data name="Config_Button_Add" xml:space="preserve">
-        <value>Add</value>
+        <value>添加</value>
     </data>
   <data name="Config_Button_Remove" xml:space="preserve">
-        <value>Remove</value>
+        <value>移除</value>
     </data>
   <data name="Config_CustomWordBox_Watermark" xml:space="preserve">
-        <value>Add a word to the dictionary</value>
+        <value>添加字詞至字典</value>
     </data>
   <data name="Config_Label_AutoloadAudioTracks" xml:space="preserve">
-        <value>Autoload audio tracks?</value>
+        <value>自動載入音軌？</value>
     </data>
   <data name="Config_Label_AutoloadAudioTracks_ToolTip" xml:space="preserve">
         <value>Automatically load the last-loaded track when there are multiple audio tracks available</value>

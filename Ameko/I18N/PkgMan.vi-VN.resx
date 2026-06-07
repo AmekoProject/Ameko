@@ -18,141 +18,141 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PkgManWindow_Title" xml:space="preserve">
-        <value>Ameko Package Manager</value>
-    </data>
+    <value>Trình quản lý Gói Ameko</value>
+  </data>
   <data name="PkgMan_PackageStore" xml:space="preserve">
-        <value>Package Store</value>
-    </data>
+    <value>Kho Gói</value>
+  </data>
   <data name="PkgMan_Info_Name" xml:space="preserve">
-        <value>Name</value>
-    </data>
+    <value>Tên</value>
+  </data>
   <data name="PkgMan_Info_QualifiedName" xml:space="preserve">
-        <value>Qualified Name</value>
-    </data>
+    <value>Tên định danh</value>
+  </data>
   <data name="PkgMan_Info_Version" xml:space="preserve">
-        <value>Version</value>
-    </data>
+    <value>Phiên bản</value>
+  </data>
   <data name="PkgMan_Info_Author" xml:space="preserve">
-        <value>Author</value>
-    </data>
+    <value>Tác giả</value>
+  </data>
   <data name="PkgMan_Info_Description" xml:space="preserve">
-        <value>Description</value>
-    </data>
+    <value>Mô tả</value>
+  </data>
   <data name="PkgMan_Info_Dependencies" xml:space="preserve">
-        <value>Dependencies</value>
-    </data>
+    <value>Gói phụ thuộc</value>
+  </data>
   <data name="PkgMan_Info_Type" xml:space="preserve">
-        <value>Type</value>
-    </data>
+    <value>Loại</value>
+  </data>
   <data name="PkgMan_Info_NoSelection" xml:space="preserve">
-        <value>No Selection</value>
-    </data>
+    <value>Chưa chọn</value>
+  </data>
   <data name="PkgMan_InstalledPackages" xml:space="preserve">
-        <value>Installed Packages</value>
-    </data>
+    <value>Các gói đã cài đặt</value>
+  </data>
   <data name="PkgMan_Info_Repository" xml:space="preserve">
-        <value>Repository</value>
-    </data>
+    <value>Kho chứa</value>
+  </data>
   <data name="PkgMan_RepositoriesTab" xml:space="preserve">
-        <value>Repositories</value>
-    </data>
+    <value>Kho chứa</value>
+  </data>
   <data name="PkgMan_Button_Install" xml:space="preserve">
-        <value>Install</value>
-    </data>
+    <value>Cài đặt</value>
+  </data>
   <data name="PkgMan_Button_UpdateAll" xml:space="preserve">
-        <value>Update All</value>
-    </data>
+    <value>Cập nhật tất cả</value>
+  </data>
   <data name="PkgMan_Button_Update" xml:space="preserve">
-        <value>Update</value>
-    </data>
+    <value>Cập nhật</value>
+  </data>
   <data name="PkgMan_Button_Uninstall" xml:space="preserve">
-        <value>Uninstall</value>
-    </data>
+    <value>Gỡ cài đặt</value>
+  </data>
   <data name="PkgMan_Button_Install_ToolTip" xml:space="preserve">
-        <value>Install the selected package</value>
-    </data>
+    <value>Cài đặt gói đang chọn</value>
+  </data>
   <data name="PkgMan_Button_UpdateAll_ToolTip" xml:space="preserve">
-        <value>Update all packages to their latest versions</value>
-    </data>
+    <value>Cập nhật tất cả các gói lên phiên bản mới nhất</value>
+  </data>
   <data name="PkgMan_Button_Update_ToolTip" xml:space="preserve">
-        <value>Update the selected package to its latest version</value>
-    </data>
+    <value>Cập nhật gói đang chọn lên phiên bản mới nhất</value>
+  </data>
   <data name="PkgMan_Button_Uninstall_ToolTip" xml:space="preserve">
-        <value>Uninstall the selected package</value>
-    </data>
+    <value>Gỡ bỏ gói đang chọn</value>
+  </data>
   <data name="PkgMan_Result_Success" xml:space="preserve">
-        <value>Success!</value>
-    </data>
+    <value>Thành công!</value>
+  </data>
   <data name="PkgMan_Result_Failure" xml:space="preserve">
-        <value>Failed!</value>
-    </data>
+    <value>Thất bại!</value>
+  </data>
   <data name="PkgMan_Result_DepNotFound" xml:space="preserve">
-        <value>Could not find a required dependency</value>
-    </data>
+    <value>Không tìm thấy gói phụ thuộc yêu cầu</value>
+  </data>
   <data name="PkgMan_Result_AlreadyInstalled" xml:space="preserve">
-        <value>The package is already installed!</value>
-    </data>
+    <value>Gói này đã được cài đặt!</value>
+  </data>
   <data name="PkgMan_Result_NotInstalled" xml:space="preserve">
-        <value>The package is not installed</value>
-    </data>
+    <value>Gói này chưa được cài đặt</value>
+  </data>
   <data name="PkgMan_Result_FS_Failure" xml:space="preserve">
-        <value>A filesystem error occured</value>
-    </data>
+    <value>Đã xảy ra lỗi hệ thống tập tin</value>
+  </data>
   <data name="PkgMan_Result_IsRequiredDep" xml:space="preserve">
-        <value>This package is required by other packages</value>
-    </data>
+    <value>Gói này đang được yêu cầu bởi các gói khác</value>
+  </data>
   <data name="PkgMan_Update_Available_ToolTip" xml:space="preserve">
-        <value>An update is available for this package</value>
-    </data>
+    <value>Đã có bản cập nhật cho gói này</value>
+  </data>
   <data name="PkgMan_Button_Refresh_ToolTip" xml:space="preserve">
-        <value>Refresh the Package Store</value>
-    </data>
+    <value>Làm mới Kho Gói</value>
+  </data>
   <data name="PkgMan_MsgBox_Refreshed" xml:space="preserve">
-        <value>Refresh successful</value>
-    </data>
+    <value>Làm mới thành công</value>
+  </data>
   <data name="PkgMan_PackagesTab" xml:space="preserve">
-        <value>Packages</value>
-    </data>
+    <value>Các gói</value>
+  </data>
   <data name="PkgMan_Button_RemoveRepo" xml:space="preserve">
-        <value>Remove</value>
-    </data>
+    <value>Xoá</value>
+  </data>
   <data name="PkgMan_Button_AddRepo" xml:space="preserve">
-        <value>Add</value>
-    </data>
+    <value>Thêm</value>
+  </data>
   <data name="PkgMan_Button_RemoveRepo_ToolTip" xml:space="preserve">
-        <value>Remove the selected repository</value>
-    </data>
+    <value>Xoá kho chứa đang chọn</value>
+  </data>
   <data name="PkgMan_Button_AddRepo_ToolTip" xml:space="preserve">
-        <value>Add a new repository</value>
-    </data>
+    <value>Thêm kho chứa mới</value>
+  </data>
   <data name="PkgMan_Info_Maintainer" xml:space="preserve">
-        <value>Maintainer</value>
-    </data>
+    <value>Người duy trì</value>
+  </data>
   <data name="PkgMan_Info_IsBetaChannel" xml:space="preserve">
-        <value>Beta Channel?</value>
-    </data>
+    <value>Kênh thử nghiệm (Beta)?</value>
+  </data>
   <data name="PkgMan_Info_SubRepoCount" xml:space="preserve">
-        <value>Sub-Repositories</value>
-    </data>
+    <value>Kho con</value>
+  </data>
   <data name="PkgMan_Info_PackageCount" xml:space="preserve">
-        <value>Packages</value>
-    </data>
+    <value>Số lượng gói</value>
+  </data>
   <data name="PkgMan_Info_Url" xml:space="preserve">
-        <value>Url</value>
-    </data>
+    <value>Đường dẫn (URL)</value>
+  </data>
   <data name="PkgMan_Result_Repository_NotInstalled" xml:space="preserve">
-        <value>The repository is not installed</value>
-    </data>
+    <value>Kho chứa chưa được cài đặt</value>
+  </data>
   <data name="PkgMan_Result_Repository_AlreadyInstalled" xml:space="preserve">
-        <value>The repository is already installed!</value>
-    </data>
+    <value>Kho chứa đã được cài đặt!</value>
+  </data>
   <data name="PkgMan_Result_InvalidName" xml:space="preserve">
-        <value>The package has an invalid name</value>
-    </data>
+    <value>Tên gói không hợp lệ</value>
+  </data>
   <data name="PkgMan_Button_Changelog_ToolTip" xml:space="preserve">
-        <value>Show Changelog</value>
-    </data>
+    <value>Xem nhật ký thay đổi</value>
+  </data>
   <data name="PkgMan_Info_License" xml:space="preserve">
-        <value>License</value>
-    </data>
+    <value>Giấy phép</value>
+  </data>
 </root>

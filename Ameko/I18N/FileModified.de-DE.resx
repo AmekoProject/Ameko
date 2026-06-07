@@ -27,7 +27,7 @@
         <value>Es wird empfohlen, dass du deine Arbeit speicherst, um zu vermeiden, Daten zu verlieren.</value>
     </data>
   <data name="FileModified_Header" xml:space="preserve">
-        <value>"{0}" wurde von einem anderen Programm geändert.</value>
+        <value>„{0}“ wurde von einem anderen Programm geändert.</value>
     </data>
   <data name="FileModified_Button_Ignore" xml:space="preserve">
         <value>Änderungen ignorieren</value>

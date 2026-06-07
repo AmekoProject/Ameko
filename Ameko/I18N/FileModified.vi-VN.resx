@@ -18,21 +18,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FileModified_WindowTitle" xml:space="preserve">
-        <value>File Modified</value>
+        <value>Tệp đã thay đổi</value>
     </data>
   <data name="FileModified_CallToAction" xml:space="preserve">
-        <value>You can ignore the changes or save your work to a different file.</value>
+        <value>Bạn có thể bỏ qua các thay đổi hoặc lưu công việc hiện tại sang một tệp khác.</value>
     </data>
   <data name="FileModified_Recommendation" xml:space="preserve">
-        <value>It is recommended that you save your work to avoid losing data.</value>
+        <value>Khuyên bạn nên lưu lại công việc để tránh mất dữ liệu.</value>
     </data>
   <data name="FileModified_Header" xml:space="preserve">
-        <value>"{0}" has been modified by another program.</value>
+        <value>"{0}" đã bị thay đổi bởi một chương trình khác.</value>
     </data>
   <data name="FileModified_Button_Ignore" xml:space="preserve">
-        <value>Ignore Changes</value>
+        <value>Bỏ qua thay đổi</value>
     </data>
   <data name="FileModified_Button_SaveAs" xml:space="preserve">
-        <value>Save As...</value>
+        <value>Lưu dưới dạng...</value>
     </data>
 </root>

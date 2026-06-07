@@ -18,201 +18,213 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LogWindow_Title" xml:space="preserve">
-        <value>Ameko Logs</value>
-    </data>
+    <value>Ameko Logs</value>
+  </data>
   <data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
-        <value>Remove Document?</value>
-    </data>
+    <value>Remove Document?</value>
+  </data>
   <data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
-        <value>Are you sure you want to remove this document from the project?</value>
-    </data>
+    <value>Are you sure you want to remove this document from the project?</value>
+  </data>
   <data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
-        <value>Remove Folder?</value>
-    </data>
+    <value>Remove Folder?</value>
+  </data>
   <data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
-        <value>Are you sure you want to remove this folder from the project?</value>
-    </data>
+    <value>Are you sure you want to remove this folder from the project?</value>
+  </data>
   <data name="MsgBox_NameDirectory_Title" xml:space="preserve">
-        <value>Set Folder Name</value>
-    </data>
+    <value>Set Folder Name</value>
+  </data>
   <data name="MsgBox_NameDirectory_Body" xml:space="preserve">
-        <value>Please choose a name for the folder:</value>
-    </data>
+    <value>Please choose a name for the folder:</value>
+  </data>
   <data name="MsgBox_RemoveDirectory_Disclaimer" xml:space="preserve">
-        <value>No folders will be deleted from your computer.</value>
-    </data>
+    <value>No folders will be deleted from your computer.</value>
+  </data>
   <data name="MsgBox_RemoveDocument_Disclaimer" xml:space="preserve">
-        <value>No files will be deleted from your computer.</value>
-    </data>
+    <value>No files will be deleted from your computer.</value>
+  </data>
   <data name="MsgBox_NameItem_Label" xml:space="preserve">
-        <value>Name:</value>
-    </data>
+    <value>Name:</value>
+  </data>
   <data name="MsgBox_NameDocument_Body" xml:space="preserve">
-        <value>Please choose a display name for the document:</value>
-    </data>
+    <value>Please choose a display name for the document:</value>
+  </data>
   <data name="MsgBox_NameDocument_Title" xml:space="preserve">
-        <value>Set Document Name</value>
-    </data>
+    <value>Set Document Name</value>
+  </data>
   <data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
-        <value>Service of type {0} is not registered for use by scripts</value>
-    </data>
+    <value>Service of type {0} is not registered for use by scripts</value>
+  </data>
   <data name="MsgBox_Save_Title" xml:space="preserve">
-        <value>Save work?</value>
-    </data>
+    <value>Save work?</value>
+  </data>
   <data name="MsgBox_Save_Body" xml:space="preserve">
-        <value>{0} contains unsaved work. Do you want to save?</value>
-    </data>
+    <value>{0} contains unsaved work. Do you want to save?</value>
+  </data>
   <data name="FileDialog_FileType_Project" xml:space="preserve">
-        <value>Ameko Project Files</value>
-    </data>
+    <value>Ameko Project Files</value>
+  </data>
   <data name="FileDialog_OpenProject_Title" xml:space="preserve">
-        <value>Open Project File</value>
-    </data>
+    <value>Open Project File</value>
+  </data>
   <data name="FileDialog_SaveProject_Title" xml:space="preserve">
-        <value>Save Project File</value>
-    </data>
+    <value>Save Project File</value>
+  </data>
   <data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
-        <value>Open Subtitle File</value>
-    </data>
+    <value>Open Subtitle File</value>
+  </data>
   <data name="FileDialog_FileType_Ass" xml:space="preserve">
-        <value>ASS Files</value>
-    </data>
+    <value>ASS Files</value>
+  </data>
   <data name="FileDialog_FileType_Srt" xml:space="preserve">
-        <value>SRT Files</value>
-    </data>
+    <value>SRT Files</value>
+  </data>
   <data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
-        <value>Save Subtitle File</value>
-    </data>
+    <value>Save Subtitle File</value>
+  </data>
   <data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
-        <value>Export Subtitle File</value>
-    </data>
+    <value>Export Subtitle File</value>
+  </data>
   <data name="FileDialog_FileType_Text" xml:space="preserve">
-        <value>Text Files</value>
-    </data>
+    <value>Text Files</value>
+  </data>
   <data name="MsgBox_ScriptService_Title" xml:space="preserve">
-        <value>Ameko Script Service</value>
-    </data>
+    <value>Ameko Script Service</value>
+  </data>
   <data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
-        <value>Scripts reloaded successfully</value>
-    </data>
+    <value>Scripts reloaded successfully</value>
+  </data>
   <data name="FileDialog_OpenVideo_Title" xml:space="preserve">
-        <value>Open Video File</value>
-    </data>
+    <value>Open Video File</value>
+  </data>
   <data name="FileDialog_FileType_Video" xml:space="preserve">
-        <value>Video Files</value>
-    </data>
+    <value>Video Files</value>
+  </data>
   <data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
-        <value>Open Project Folder</value>
-    </data>
+    <value>Open Project Folder</value>
+  </data>
   <data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
-        <value>Attach Reference File</value>
-    </data>
+    <value>Attach Reference File</value>
+  </data>
   <data name="CrashReporter_WindowTitle" xml:space="preserve">
-        <value>Ameko Crash Reporter</value>
-    </data>
+    <value>Ameko Crash Reporter</value>
+  </data>
   <data name="CrashReporter_Header" xml:space="preserve">
-        <value>Ameko has crashed :(</value>
-    </data>
+    <value>Ameko has crashed :(</value>
+  </data>
   <data name="CrashReporter_Info" xml:space="preserve">
-        <value>The details of the error are as follows:</value>
-    </data>
+    <value>The details of the error are as follows:</value>
+  </data>
   <data name="Message_ClipboardEmpty" xml:space="preserve">
-        <value>Clipboard was empty!</value>
-    </data>
+    <value>Clipboard was empty!</value>
+  </data>
   <data name="MsgBox_Btn_OK" xml:space="preserve">
-        <value>OK</value>
-    </data>
+    <value>OK</value>
+  </data>
   <data name="MsgBox_Btn_Cancel" xml:space="preserve">
-        <value>Cancel</value>
-    </data>
+    <value>Cancel</value>
+  </data>
   <data name="MsgBox_Btn_Yes" xml:space="preserve">
-        <value>Yes</value>
-    </data>
+    <value>Yes</value>
+  </data>
   <data name="MsgBox_Btn_No" xml:space="preserve">
-        <value>No</value>
-    </data>
+    <value>No</value>
+  </data>
   <data name="MsgBox_LoadVideo_Title" xml:space="preserve">
-        <value>Load Video</value>
-    </data>
+    <value>Load Video</value>
+  </data>
   <data name="MsgBox_LoadVideo_Body" xml:space="preserve">
-        <value>Do you want to load the associated video?</value>
-    </data>
+    <value>Do you want to load the associated video?</value>
+  </data>
   <data name="Message_VideoNotFound" xml:space="preserve">
-        <value>The associated video "{0}" was not found.</value>
-    </data>
+    <value>The associated video "{0}" was not found.</value>
+  </data>
   <data name="Message_SavedFrame" xml:space="preserve">
-        <value>Saved frame to {0}</value>
-    </data>
+    <value>Saved frame to {0}</value>
+  </data>
   <data name="Message_CopiedFrame" xml:space="preserve">
-        <value>Copied frame to clipboard</value>
-    </data>
+    <value>Copied frame to clipboard</value>
+  </data>
   <data name="FileDialog_SaveFrame_Title" xml:space="preserve">
-        <value>Save Frame</value>
-    </data>
+    <value>Save Frame</value>
+  </data>
   <data name="FileDialog_FileType_Png" xml:space="preserve">
-        <value>PNG Files</value>
-    </data>
+    <value>PNG Files</value>
+  </data>
   <data name="Message_UpdateAvailable" xml:space="preserve">
-        <value>A new version of Ameko, {0}, is available!</value>
-    </data>
+    <value>A new version of Ameko, {0}, is available!</value>
+  </data>
   <data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
-        <value>Media playback is disabled! Ffms2 or libass may be missing!</value>
-    </data>
+    <value>Media playback is disabled! Ffms2 or libass may be missing!</value>
+  </data>
   <data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
-        <value>Media Playback</value>
-    </data>
+    <value>Media Playback</value>
+  </data>
   <data name="Message_AutosaveComplete" xml:space="preserve">
-        <value>Autosave complete!</value>
-    </data>
+    <value>Autosave complete!</value>
+  </data>
   <data name="SelectTrackDialog_Title" xml:space="preserve">
-        <value>Select Track</value>
-    </data>
+    <value>Select Track</value>
+  </data>
   <data name="SelectTrackDialog_Body" xml:space="preserve">
-        <value>Select a track to load:</value>
-    </data>
+    <value>Select a track to load:</value>
+  </data>
   <data name="SelectTrackDialog_Button_Load" xml:space="preserve">
-        <value>Load</value>
-    </data>
+    <value>Load</value>
+  </data>
   <data name="FileDialog_OpenAudio_Title" xml:space="preserve">
-        <value>Open Audio File</value>
-    </data>
+    <value>Open Audio File</value>
+  </data>
   <data name="FileDialog_FileType_Audio" xml:space="preserve">
-        <value>Audio Files</value>
-    </data>
+    <value>Audio Files</value>
+  </data>
   <data name="ChangelogDialog_Title" xml:space="preserve">
-        <value>View Changelog</value>
-    </data>
+    <value>View Changelog</value>
+  </data>
   <data name="Changelog_NoChangelog" xml:space="preserve">
-        <value>No changelog available</value>
-    </data>
+    <value>No changelog available</value>
+  </data>
   <data name="Message_AudioAutoloaded" xml:space="preserve">
-        <value>Audio track {0} was autoloaded</value>
-    </data>
+    <value>Audio track {0} was autoloaded</value>
+  </data>
   <data name="Message_KeyframesNotFound" xml:space="preserve">
-        <value>The associated keyframes file "{0}" was not found.</value>
-    </data>
+    <value>The associated keyframes file "{0}" was not found.</value>
+  </data>
   <data name="FileDialog_OpenKeyframes_Title" xml:space="preserve">
-        <value>Open Keyframes File</value>
-    </data>
+    <value>Open Keyframes File</value>
+  </data>
   <data name="FileDialog_FileType_Kf" xml:space="preserve">
-        <value>Keyframe Files</value>
-    </data>
+    <value>Keyframe Files</value>
+  </data>
   <data name="SelectFolderDialog_Title" xml:space="preserve">
-        <value>Select Folder</value>
-    </data>
+    <value>Select Folder</value>
+  </data>
   <data name="SelectFolderDialog_Body" xml:space="preserve">
-        <value>Select a folder:</value>
-    </data>
+    <value>Select a folder:</value>
+  </data>
   <data name="SelectFolderDialog_Root" xml:space="preserve">
-        <value>/ (root)</value>
-    </data>
+    <value>/ (root)</value>
+  </data>
   <data name="SelectFolderDialog_Button_Select" xml:space="preserve">
-        <value>Select</value>
-    </data>
+    <value>Select</value>
+  </data>
   <data name="MsgBox_SaveProject_Body" xml:space="preserve">
-        <value>{0} has unsaved changes. Do you want to save?</value>
-    </data>
+    <value>{0} has unsaved changes. Do you want to save?</value>
+  </data>
   <data name="MsgBox_SaveProject_Title" xml:space="preserve">
-        <value>Save project?</value>
-    </data>
+    <value>Save project?</value>
+  </data>
+  <data name="MsgBox_IoError_Title" xml:space="preserve">
+    <value>I/O Error</value>
+  </data>
+  <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
+    <value>Unauthorized.</value>
+  </data>
+  <data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
+    <value>An I/O error occurred.</value>
+  </data>
+  <data name="MsgBox_IoError_Body_Json" xml:space="preserve">
+    <value>Failed to parse JSON.</value>
+  </data>
 </root>

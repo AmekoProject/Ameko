@@ -1,31 +1,34 @@
-Ameko's user interface draws heavily from Aegisub, and should feel familiar to existing Aegisub users. Here is a general
-overview of Ameko's user interface.
+Die Benutzeroberfläche von Ameko ist stark an Aegisub angelehnt und dürfte bestehenden Aegisub-Nutzern vertraut vorkommen. Hier ist eine allgemeine Übersicht über Amekos Benutzeroberfläche.
 
-## The Editing Area
+## Der Bearbeitungsbereich
 
 ![](../assets/editing-area.png)
 
-Most users will probably spend the bulk of their time in the editing area. The editing area is linked to the active
+Wahrscheinlich werden die meisten Nutzer den Großteil ihrer Zeit im Bearbeitungsbereich verbringen. The editing area is linked to the active
 line, and consists of a large textbox for the line's text content, and a host of auxiliary buttons and textboxes for
 adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
 reference will be displayed in an additional box below the main textbox.
 
-A brief overview of each item and its function:
+If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
+the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
+Alternate forms are present in the reference file lines (2).
 
-- Top row
-  - Comment toggle. When checked, the line is a comment, and will not be displayed in the video.
-  - Style selector
-  - Edit style button
-  - Name of the character speaking the line. Not displayed in the video, but can be useful for editing and automation.
-  - Effect to use on the line. Generally only used for automation scripts.
-  - The number of characters in the longest line of the subtitle.
-- Bottom row
-  - Layer (Z-index). Lines with a higher layer will be placed on top of lines with a lower layer.
-  - Time the line appears on the screen
-  - Time the line disappears from the screen
-  - Offset from style's left margin. Set to 0 to use the style's margin
-  - Offset from style's right margin. Set to 0 to use the style's margin
-  - Offset from style's vertical margin. Set to 0 to use the style's margin
+Ein kurzer Überblick über jedes Element und seine Funktion:
+
+- Obere Zeile
+  - Comment toggle. Wenn aktiviert, ist die Zeile ein Kommentar und wird nicht im Video angezeigt.
+  - Stil-Auswahl
+  - „Stil bearbeiten“-Schaltfläche
+  - Name des Charakters, der die Zeile spricht. Wird nicht im Video angezeigt, kann aber bei der Bearbeitung und für Automatisierungen nützlich sein.
+  - Effekt, der auf die Zeile angewendet werden soll. In der Regel wird diese Eigenschaft nur für Automatisierungsskripte verwendet.
+  - Die Anzahl der Zeichen in der längsten Zeile des Untertitels.
+- Untere Zeile
+  - Ebene (Z-Index). Zeilen mit einer höheren Ebene werden über Zeilen mit einer niedrigeren Ebene gelegt.
+  - Zeitpunkt, an dem die Zeile auf dem Bildschirm erscheint
+  - Zeitpunkt, an dem die Zeile vom Bildschirm verschwindet
+  - Offset from style's left margin. Offset from style's vertical margin.
+  - Offset from style's right margin. Offset from style's vertical margin.
+  - Set to 0 to use the style's margin Offset from style's vertical margin.
   - Inserts a bold `\b1` tag at the cursor position, `\b0` if the text is already bold, or both if text is selected.
   - Inserts an italic `\i1` tag at the cursor position, `\i0` if the text is already italic, or both if text is
     selected.
@@ -36,23 +39,23 @@ A brief overview of each item and its function:
   - Opens a font dialog and inserts the corresponding `\fn` tag at the cursor position.
   - Commit changes to this line and move to the next one, creating one if needed.
 
-### Editing Area Context Menu
+### Kontextmenü des Bearbeitungsbereichs
 
 ![](../assets/editing-area-context-menu.png)
 
 Right-click within the textbox to open the context menu.
 
-- Opens the spellchecking dialog to the selected line.
+- Öffnet den Rechtschreibprüfungsdialog für die ausgewählte Zeile.
 - Split the line into two at the cursor position, with estimated start and end times.
 - Split the line into two at the cursor position, both with the same start and end times.
 
-## The Subtitle Grid
+## Das Untertitelraster
 
 ![](../assets/subtitle-grid.png)
 
-The subtitle grid displays all lines in the file and an overview of their metadata (start time, actor, etc.)
+Das Untertitelraster zeigt alle Zeilen in der Datei und eine Übersicht ihrer Metadaten (Startzeit, Sprecher, etc.) an
 
-### Subtitle Grid Context Menu
+### Das Kontextmenü des Untertitelrasters
 
 ![](../assets/subtitle-grid-context-menu.png)
 
@@ -74,23 +77,20 @@ Right-click on any line in the subtitle grid to open the context menu.
   fields to replace.
 - Delete the selected lines.
 
-## The Video Area
+## Der Videobereich
 
 ![](../assets/video-area.png)
 
-When you have a video loaded, the video area serves as your preview window and media player. The video (and your
-subtitles!) will be displayed here as you edit and play back your work.
+When you have a video loaded, the video area serves as your preview window and media player. Dein Video (und deine Untertitel!) wird hier angezeigt, während du deine Arbeit bearbeitest und wiedergibst.
 
-Aegisub users will quickly realize that Ameko's zoom feature behaves completely different to how they're used to. Rather
-than scale the size of the video area to the video, shrinking the rest of the UI, Ameko scales the video _within_ the
-video area, and provides scrollbars to pan the video when it gets too big. Of course, the area is also resizable should
+Aegisub-Nutzer werden schnell erkennen, dass sich Amekos Zoom-Funktion ganz anders verhält, als sie es gewohnt sind. Anstatt die Größe des Videobereichs an das Video anzupassen und somit den Rest der Oberfläche zu verkleinern, skaliert Ameko das Video _innerhalb_ des Videobereichs und stellt Scrollleisten zur Verfügung, um das Video zu verschieben, wenn es zu groß wird. Of course, the area is also resizable should
 you want more screen real estate dedicated to the video.
 
 With that said, the other inhabitants of the video area are as follows:
 
-- Top row:
+- Obere Zeile:
   - Seek bar - Scrub through the video
-- Bottom row:
+- Untere Zeile:
   - Play/Pause - Plays to the end of the file, or pauses playback if currently playing.
   - Play Selection - Plays from the earliest start time to the latest end time of the selection.
   - Toggle Auto-Seek - Enable or disable automatic seeking to the start of the selected line. When disabled,
@@ -101,7 +101,7 @@ With that said, the other inhabitants of the video area are as follows:
   - Toggle size lock - Make Ameko's video area behave like Aegisub's (not yet implemented).
   - Display zoom
 
-### Video Area Context Menu
+### Kontextmenü des Videobereichs
 
 ![](../assets/video-area-context-menu.png)
 
@@ -114,7 +114,7 @@ Right-click on the video to open the context menu.
 - Save the current frame to disk; video only without the subtitles.
 - Save the current frame to disk; subtitles only without the video.
 
-## The Audio Area
+## Der Audiobereich
 
 ![](../assets/audio-area.png)
 
@@ -143,5 +143,4 @@ The audio playback controls, in order:
 
 ![](../assets/tabs.png)
 
-Ameko is a tabbed application. You can open multiple subtitle and video files and switch between them at will. Be
-mindful that opening multiple video files simultaneously may consume large amounts of RAM and/or lead to unstability.
+Ameko ist eine Anwendung, die mit Tabs arbeitet. Du kannst mehrere Untertitel- und Videodateien öffnen und nach Belieben zwischen ihnen wechseln. Beachte aber, dass gleichzeitig mehrere Videodateien zu öffnen zu hohem Verbrauch von Arbeitsspeicher und/oder Instabilität führen kann.

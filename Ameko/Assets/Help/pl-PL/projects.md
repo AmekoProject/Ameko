@@ -13,6 +13,16 @@ Podczas pierwszego uruchomienia Ameko, przegląd projektu będzie po lewej stron
 Jeśli masz już katalog projektu, możesz przenieść jego strukturę do Ameko, otwierając katalog jako projekt.
 Spowoduje to wczytanie wszystkich podkatalogów i plików napisów do przeglądu projektu, gdzie można je edytować i zapisać wynikowy projekt do pliku.
 
+## Key Names and Phrases
+
+Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
+Names & Phrases (KNP) bible to help keep everyone on track:
+
+![](../assets/knp-window.png)
+
+Terms that appear in the script or reference files will appear in the Editing Area. See the User Interface tab for more
+details.
+
 ## Nazwy wyświetlane i ty
 
 Chociaż struktury i nazwy w projekcie _mogą_ odpowiadać plikom na dysku, możesz je przenosić i zmieniać ich nazwy wedle woli, bez wpływu na faktyczne pliki. Spójrzmy przykładowo na następującą płaską hierarchię plików z dokładnymi nazwami:

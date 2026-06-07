@@ -18,57 +18,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Spellcheck_WindowTitle" xml:space="preserve">
-        <value>Spellcheck</value>
+        <value>拼寫檢查</value>
     </data>
   <data name="Spellcheck_Install_ProjectHeader" xml:space="preserve">
-        <value>This project is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>本專案已設定使用「{0}」作拼寫檢查，但尚未安裝所需的字典。</value>
     </data>
   <data name="Spellcheck_Install_ConfigHeader" xml:space="preserve">
-        <value>Ameko is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>Ameko 已設定使用「{0}」作拼寫檢查，但尚未安裝所需的字典。</value>
     </data>
   <data name="Spellcheck_Install_Capabilities" xml:space="preserve">
-        <value>Ameko can download the required dictionary for you.</value>
+        <value>Ameko 可為你下載所需的字典。</value>
     </data>
   <data name="Spellcheck_Install_Notice" xml:space="preserve">
-        <value>Spellcheck functionality will be unavailable without the dictionary.</value>
+        <value>如欠缺字典，拼寫檢查功能將無法運作。</value>
     </data>
   <data name="Spellcheck_Install_Button_Download" xml:space="preserve">
-        <value>Download</value>
+        <value>下載</value>
     </data>
   <data name="Spellcheck_Install_Button_Ignore" xml:space="preserve">
-        <value>Ignore</value>
+        <value>忽略</value>
     </data>
   <data name="Spellcheck_Button_Change" xml:space="preserve">
-        <value>Change</value>
+        <value>更改</value>
     </data>
   <data name="Spellcheck_Button_FindNext" xml:space="preserve">
-        <value>Find Next</value>
+        <value>尋找下一項</value>
     </data>
   <data name="Spellcheck_Label_NotFound" xml:space="preserve">
-        <value>This word was not found in the spelling dictionary.</value>
+        <value>未能在拼寫字典中找到此字詞。</value>
     </data>
   <data name="Spellcheck_Button_AddToProject" xml:space="preserve">
-        <value>Add to Project</value>
+        <value>添加至專案</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals" xml:space="preserve">
-        <value>Add to Globals</value>
+        <value>添加至全域</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth" xml:space="preserve">
-        <value>Add to Both</value>
+        <value>添加至上述兩者</value>
     </data>
   <data name="Spellcheck_Label_Dictionary" xml:space="preserve">
-        <value>Dictionary: {0}</value>
+        <value>字典：{0}</value>
     </data>
   <data name="Spellcheck_Button_AddToProject_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project's word list</value>
+        <value>儲存此字詞至本專案的字詞表</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals_ToolTip" xml:space="preserve">
-        <value>Save this word to the Global word list</value>
+        <value>儲存此字詞至全域的字詞表</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project and the Global word list</value>
+        <value>儲存此字詞至本專案及全域的字詞表</value>
     </data>
   <data name="Spellcheck_Label_NoIssues" xml:space="preserve">
-        <value>No issues found in the current document.</value>
+        <value>未有在此文件發現錯處。</value>
     </data>
 </root>

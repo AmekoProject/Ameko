@@ -18,7 +18,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Spellcheck_WindowTitle" xml:space="preserve">
-        <value>Spellcheck</value>
+        <value>Rechtschreibprüfung</value>
     </data>
   <data name="Spellcheck_Install_ProjectHeader" xml:space="preserve">
         <value>This project is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
@@ -27,16 +27,16 @@
         <value>Ameko is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
     </data>
   <data name="Spellcheck_Install_Capabilities" xml:space="preserve">
-        <value>Ameko can download the required dictionary for you.</value>
+        <value>Ameko kann das benötigte Wörterbuch für dich herunterladen.</value>
     </data>
   <data name="Spellcheck_Install_Notice" xml:space="preserve">
-        <value>Spellcheck functionality will be unavailable without the dictionary.</value>
+        <value>Rechtschreibprüfung ist ohne das Wörterbuch nicht verfügbar.</value>
     </data>
   <data name="Spellcheck_Install_Button_Download" xml:space="preserve">
-        <value>Download</value>
+        <value>Herunterladen</value>
     </data>
   <data name="Spellcheck_Install_Button_Ignore" xml:space="preserve">
-        <value>Ignore</value>
+        <value>Ignorieren</value>
     </data>
   <data name="Spellcheck_Button_Change" xml:space="preserve">
         <value>Change</value>
@@ -48,16 +48,16 @@
         <value>This word was not found in the spelling dictionary.</value>
     </data>
   <data name="Spellcheck_Button_AddToProject" xml:space="preserve">
-        <value>Add to Project</value>
+        <value>Zum Projekt hinzufügen</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals" xml:space="preserve">
         <value>Add to Globals</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth" xml:space="preserve">
-        <value>Add to Both</value>
+        <value>Zu beiden hinzufügen</value>
     </data>
   <data name="Spellcheck_Label_Dictionary" xml:space="preserve">
-        <value>Dictionary: {0}</value>
+        <value>Wörterbuch: {0}</value>
     </data>
   <data name="Spellcheck_Button_AddToProject_ToolTip" xml:space="preserve">
         <value>Save this word to the current Project's word list</value>
@@ -69,6 +69,6 @@
         <value>Save this word to the current Project and the Global word list</value>
     </data>
   <data name="Spellcheck_Label_NoIssues" xml:space="preserve">
-        <value>No issues found in the current document.</value>
+        <value>Keine Probleme im aktuellen Dokument gefunden.</value>
     </data>
 </root>

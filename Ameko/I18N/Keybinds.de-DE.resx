@@ -18,22 +18,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KeybindsWindow_Title" xml:space="preserve">
-        <value>Manage Keybinds</value>
+        <value>Tastenbelegung verwalten</value>
     </data>
   <data name="Keybinds_Header_Identifier" xml:space="preserve">
-        <value>Identifier</value>
+        <value>Bezeichnung</value>
     </data>
   <data name="Keybinds_Header_Keybind" xml:space="preserve">
-        <value>Keybind</value>
+        <value>Tastenbelegung</value>
     </data>
   <data name="Keybinds_Header_Context" xml:space="preserve">
-        <value>Context</value>
+        <value>Kontext</value>
     </data>
   <data name="KeybindContext_None" xml:space="preserve">
-        <value>None</value>
+        <value>Keiner</value>
     </data>
   <data name="KeybindContext_Global" xml:space="preserve">
-        <value>Global</value>
+        <value>Allgemein</value>
     </data>
   <data name="KeybindContext_Video" xml:space="preserve">
         <value>Video</value>
@@ -42,27 +42,27 @@
         <value>Audio</value>
     </data>
   <data name="KeybindContext_Grid" xml:space="preserve">
-        <value>Grid</value>
+        <value>Raster</value>
     </data>
   <data name="Keybinds_Button_Save" xml:space="preserve">
-        <value>Save</value>
+        <value>Speichern</value>
     </data>
   <data name="KeybindContext_Editor" xml:space="preserve">
         <value>Editor</value>
     </data>
   <data name="Keybinds_Button_Remove_ToolTip" xml:space="preserve">
-        <value>Remove</value>
+        <value>Entfernen</value>
     </data>
   <data name="Keybinds_Button_Reset" xml:space="preserve">
-        <value>Reset Defaults</value>
+        <value>Auf Standard zurücksetzen</value>
     </data>
   <data name="Keybinds_MsgBox_Conflict_Title" xml:space="preserve">
-        <value>Conflicting keybinds detected!</value>
+        <value>In Konflikt stehende Tastenbelegungen erkannt!</value>
     </data>
   <data name="Keybinds_MsgBox_Conflict_Body" xml:space="preserve">
-        <value>The following keybinds have conflicts: {0}</value>
+        <value>Die folgenden Tastenbelegungen stehen in Konflikt zueinander: {0}</value>
     </data>
   <data name="Keybinds_Button_ClearOverride_ToolTip" xml:space="preserve">
-        <value>Clear Override</value>
+        <value>Override löschen</value>
     </data>
 </root>

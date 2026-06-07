@@ -18,57 +18,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Spellcheck_WindowTitle" xml:space="preserve">
-        <value>Spellcheck</value>
+        <value>Kiểm tra chính tả</value>
     </data>
   <data name="Spellcheck_Install_ProjectHeader" xml:space="preserve">
-        <value>This project is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>Dự án này được cấu hình để sử dụng "{0}" để kiểm tra chính tả, nhưng từ điển đó chưa được cài đặt.</value>
     </data>
   <data name="Spellcheck_Install_ConfigHeader" xml:space="preserve">
-        <value>Ameko is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>Ameko được cấu hình để sử dụng "{0}" để kiểm tra chính tả, nhưng từ điển đó chưa được cài đặt.</value>
     </data>
   <data name="Spellcheck_Install_Capabilities" xml:space="preserve">
-        <value>Ameko can download the required dictionary for you.</value>
+        <value>Ameko có thể tải từ điển cần thiết cho bạn.</value>
     </data>
   <data name="Spellcheck_Install_Notice" xml:space="preserve">
-        <value>Spellcheck functionality will be unavailable without the dictionary.</value>
+        <value>Tính năng Kiểm tra chính tả sẽ không thể hoạt động nếu thiếu từ điển.</value>
     </data>
   <data name="Spellcheck_Install_Button_Download" xml:space="preserve">
-        <value>Download</value>
+        <value>Tải về</value>
     </data>
   <data name="Spellcheck_Install_Button_Ignore" xml:space="preserve">
-        <value>Ignore</value>
+        <value>Bỏ qua</value>
     </data>
   <data name="Spellcheck_Button_Change" xml:space="preserve">
-        <value>Change</value>
+        <value>Thay đổi</value>
     </data>
   <data name="Spellcheck_Button_FindNext" xml:space="preserve">
-        <value>Find Next</value>
+        <value>Tìm từ tiếp theo</value>
     </data>
   <data name="Spellcheck_Label_NotFound" xml:space="preserve">
-        <value>This word was not found in the spelling dictionary.</value>
+        <value>Từ này không được tìm thấy trong từ điển.</value>
     </data>
   <data name="Spellcheck_Button_AddToProject" xml:space="preserve">
-        <value>Add to Project</value>
+        <value>Thêm vào Dự án</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals" xml:space="preserve">
-        <value>Add to Globals</value>
+        <value>Thêm vào Toàn cục</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth" xml:space="preserve">
-        <value>Add to Both</value>
+        <value>Thêm vào Dự án và Toàn cục</value>
     </data>
   <data name="Spellcheck_Label_Dictionary" xml:space="preserve">
-        <value>Dictionary: {0}</value>
+        <value>Từ điển: {0}</value>
     </data>
   <data name="Spellcheck_Button_AddToProject_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project's word list</value>
+        <value>Lưu từ này vào Danh sách từ vựng của Dự án</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals_ToolTip" xml:space="preserve">
-        <value>Save this word to the Global word list</value>
+        <value>Lưu từ này vào Danh sách từ vựng Toàn cục</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project and the Global word list</value>
+        <value>Lưu từ này vào Danh sách từ vựng của Dự án và Toàn cục</value>
     </data>
   <data name="Spellcheck_Label_NoIssues" xml:space="preserve">
-        <value>No issues found in the current document.</value>
+        <value>Không phát hiện vấn đề nào trong tài liệu hiện tại.</value>
     </data>
 </root>
