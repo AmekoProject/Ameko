@@ -18,141 +18,141 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PkgManWindow_Title" xml:space="preserve">
-        <value>Menadżer pakietów Ameko</value>
-    </data>
+    <value>Menadżer pakietów Ameko</value>
+  </data>
   <data name="PkgMan_PackageStore" xml:space="preserve">
-        <value>Magazyn pakietów</value>
-    </data>
+    <value>Magazyn pakietów</value>
+  </data>
   <data name="PkgMan_Info_Name" xml:space="preserve">
-        <value>Nazwa</value>
-    </data>
+    <value>Nazwa</value>
+  </data>
   <data name="PkgMan_Info_QualifiedName" xml:space="preserve">
-        <value>Zatwierdzona nazwa</value>
-    </data>
+    <value>Zatwierdzona nazwa</value>
+  </data>
   <data name="PkgMan_Info_Version" xml:space="preserve">
-        <value>Wersja</value>
-    </data>
+    <value>Wersja</value>
+  </data>
   <data name="PkgMan_Info_Author" xml:space="preserve">
-        <value>Autor</value>
-    </data>
+    <value>Autor</value>
+  </data>
   <data name="PkgMan_Info_Description" xml:space="preserve">
-        <value>Opis</value>
-    </data>
+    <value>Opis</value>
+  </data>
   <data name="PkgMan_Info_Dependencies" xml:space="preserve">
-        <value>Zależności</value>
-    </data>
+    <value>Zależności</value>
+  </data>
   <data name="PkgMan_Info_Type" xml:space="preserve">
-        <value>Typ</value>
-    </data>
+    <value>Typ</value>
+  </data>
   <data name="PkgMan_Info_NoSelection" xml:space="preserve">
-        <value>Niczego nie wybrano</value>
-    </data>
+    <value>Niczego nie wybrano</value>
+  </data>
   <data name="PkgMan_InstalledPackages" xml:space="preserve">
-        <value>Zainstalowane pakiety</value>
-    </data>
+    <value>Zainstalowane pakiety</value>
+  </data>
   <data name="PkgMan_Info_Repository" xml:space="preserve">
-        <value>Repozytorium</value>
-    </data>
+    <value>Repozytorium</value>
+  </data>
   <data name="PkgMan_RepositoriesTab" xml:space="preserve">
-        <value>Repozytoria</value>
-    </data>
+    <value>Repozytoria</value>
+  </data>
   <data name="PkgMan_Button_Install" xml:space="preserve">
-        <value>Zainstaluj</value>
-    </data>
+    <value>Zainstaluj</value>
+  </data>
   <data name="PkgMan_Button_UpdateAll" xml:space="preserve">
-        <value>Zaktualizuj wszystko</value>
-    </data>
+    <value>Zaktualizuj wszystko</value>
+  </data>
   <data name="PkgMan_Button_Update" xml:space="preserve">
-        <value>Zaktualizuj</value>
-    </data>
+    <value>Zaktualizuj</value>
+  </data>
   <data name="PkgMan_Button_Uninstall" xml:space="preserve">
-        <value>Odinstaluj</value>
-    </data>
+    <value>Odinstaluj</value>
+  </data>
   <data name="PkgMan_Button_Install_ToolTip" xml:space="preserve">
-        <value>Zainstaluj zaznaczony pakiet</value>
-    </data>
+    <value>Zainstaluj zaznaczony pakiet</value>
+  </data>
   <data name="PkgMan_Button_UpdateAll_ToolTip" xml:space="preserve">
-        <value>Zaktualizuj wszystkie pakiety do najnowszej wersji</value>
-    </data>
+    <value>Zaktualizuj wszystkie pakiety do najnowszej wersji</value>
+  </data>
   <data name="PkgMan_Button_Update_ToolTip" xml:space="preserve">
-        <value>Zaktualizuj zaznaczony pakiet do najnowszej wersji</value>
-    </data>
+    <value>Zaktualizuj zaznaczony pakiet do najnowszej wersji</value>
+  </data>
   <data name="PkgMan_Button_Uninstall_ToolTip" xml:space="preserve">
-        <value>Odinstaluj zaznaczony pakiet</value>
-    </data>
+    <value>Odinstaluj zaznaczony pakiet</value>
+  </data>
   <data name="PkgMan_Result_Success" xml:space="preserve">
-        <value>Udało się!</value>
-    </data>
+    <value>Udało się!</value>
+  </data>
   <data name="PkgMan_Result_Failure" xml:space="preserve">
-        <value>Nie udało się!</value>
-    </data>
+    <value>Nie udało się!</value>
+  </data>
   <data name="PkgMan_Result_DepNotFound" xml:space="preserve">
-        <value>Nie można znaleźć wymaganej zależności</value>
-    </data>
+    <value>Nie można znaleźć wymaganej zależności</value>
+  </data>
   <data name="PkgMan_Result_AlreadyInstalled" xml:space="preserve">
-        <value>Pakiet został już zainstalowany!</value>
-    </data>
+    <value>Pakiet został już zainstalowany!</value>
+  </data>
   <data name="PkgMan_Result_NotInstalled" xml:space="preserve">
-        <value>Pakiet nie jest zainstalowany</value>
-    </data>
+    <value>Pakiet nie jest zainstalowany</value>
+  </data>
   <data name="PkgMan_Result_FS_Failure" xml:space="preserve">
-        <value>Wystąpił błąd systemu plików</value>
-    </data>
+    <value>Wystąpił błąd systemu plików</value>
+  </data>
   <data name="PkgMan_Result_IsRequiredDep" xml:space="preserve">
-        <value>Ten pakiet wymagają inne pakiety</value>
-    </data>
+    <value>Ten pakiet wymagają inne pakiety</value>
+  </data>
   <data name="PkgMan_Update_Available_ToolTip" xml:space="preserve">
-        <value>Dla tego pakietu dostępna jest aktualizacja</value>
-    </data>
+    <value>Dla tego pakietu dostępna jest aktualizacja</value>
+  </data>
   <data name="PkgMan_Button_Refresh_ToolTip" xml:space="preserve">
-        <value>Odśwież magazyn pakietów</value>
-    </data>
+    <value>Odśwież magazyn pakietów</value>
+  </data>
   <data name="PkgMan_MsgBox_Refreshed" xml:space="preserve">
-        <value>Pomyślnie odświeżono</value>
-    </data>
+    <value>Pomyślnie odświeżono</value>
+  </data>
   <data name="PkgMan_PackagesTab" xml:space="preserve">
-        <value>Pakiety</value>
-    </data>
+    <value>Pakiety</value>
+  </data>
   <data name="PkgMan_Button_RemoveRepo" xml:space="preserve">
-        <value>Usuń</value>
-    </data>
+    <value>Usuń</value>
+  </data>
   <data name="PkgMan_Button_AddRepo" xml:space="preserve">
-        <value>Dodaj</value>
-    </data>
+    <value>Dodaj</value>
+  </data>
   <data name="PkgMan_Button_RemoveRepo_ToolTip" xml:space="preserve">
-        <value>Usuń zaznaczone repozytorium</value>
-    </data>
+    <value>Usuń zaznaczone repozytorium</value>
+  </data>
   <data name="PkgMan_Button_AddRepo_ToolTip" xml:space="preserve">
-        <value>Dodaj nowe repozytorium</value>
-    </data>
+    <value>Dodaj nowe repozytorium</value>
+  </data>
   <data name="PkgMan_Info_Maintainer" xml:space="preserve">
-        <value>Konserwator</value>
-    </data>
+    <value>Konserwator</value>
+  </data>
   <data name="PkgMan_Info_IsBetaChannel" xml:space="preserve">
-        <value>Kanał Beta?</value>
-    </data>
+    <value>Kanał Beta?</value>
+  </data>
   <data name="PkgMan_Info_SubRepoCount" xml:space="preserve">
-        <value>Podrepozytorium</value>
-    </data>
+    <value>Podrepozytorium</value>
+  </data>
   <data name="PkgMan_Info_PackageCount" xml:space="preserve">
-        <value>Pakiety</value>
-    </data>
+    <value>Pakiety</value>
+  </data>
   <data name="PkgMan_Info_Url" xml:space="preserve">
-        <value>Url</value>
-    </data>
+    <value>Url</value>
+  </data>
   <data name="PkgMan_Result_Repository_NotInstalled" xml:space="preserve">
-        <value>Repozytorium nie jest zainstalowane</value>
-    </data>
+    <value>Repozytorium nie jest zainstalowane</value>
+  </data>
   <data name="PkgMan_Result_Repository_AlreadyInstalled" xml:space="preserve">
-        <value>Repozytorium zostało już zainstalowane!</value>
-    </data>
+    <value>Repozytorium zostało już zainstalowane!</value>
+  </data>
   <data name="PkgMan_Result_InvalidName" xml:space="preserve">
-        <value>Pakiet ma nieprawidłową nazwę</value>
-    </data>
+    <value>Pakiet ma nieprawidłową nazwę</value>
+  </data>
   <data name="PkgMan_Button_Changelog_ToolTip" xml:space="preserve">
-        <value>Pokaż zmiany</value>
-    </data>
+    <value>Pokaż zmiany</value>
+  </data>
   <data name="PkgMan_Info_License" xml:space="preserve">
-        <value>Licencja</value>
-    </data>
+    <value>Licencja</value>
+  </data>
 </root>

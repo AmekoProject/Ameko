@@ -18,51 +18,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KeybindsWindow_Title" xml:space="preserve">
-        <value>Manage Keybinds</value>
+        <value>Quản lý Phím tắt</value>
     </data>
   <data name="Keybinds_Header_Identifier" xml:space="preserve">
-        <value>Identifier</value>
+        <value>Định danh</value>
     </data>
   <data name="Keybinds_Header_Keybind" xml:space="preserve">
-        <value>Keybind</value>
+        <value>Phím tắt</value>
     </data>
   <data name="Keybinds_Header_Context" xml:space="preserve">
-        <value>Context</value>
+        <value>Ngữ cảnh</value>
     </data>
   <data name="KeybindContext_None" xml:space="preserve">
-        <value>None</value>
+        <value>Không</value>
     </data>
   <data name="KeybindContext_Global" xml:space="preserve">
-        <value>Global</value>
+        <value>Toàn cục</value>
     </data>
   <data name="KeybindContext_Video" xml:space="preserve">
         <value>Video</value>
     </data>
   <data name="KeybindContext_Audio" xml:space="preserve">
-        <value>Audio</value>
+        <value>Âm thanh</value>
     </data>
   <data name="KeybindContext_Grid" xml:space="preserve">
-        <value>Grid</value>
+        <value>Lưới</value>
     </data>
   <data name="Keybinds_Button_Save" xml:space="preserve">
-        <value>Save</value>
+        <value>Lưu</value>
     </data>
   <data name="KeybindContext_Editor" xml:space="preserve">
-        <value>Editor</value>
+        <value>Trình biên tập</value>
     </data>
   <data name="Keybinds_Button_Remove_ToolTip" xml:space="preserve">
-        <value>Remove</value>
+        <value>Xoá</value>
     </data>
   <data name="Keybinds_Button_Reset" xml:space="preserve">
-        <value>Reset Defaults</value>
+        <value>Khôi phục mặc định</value>
     </data>
   <data name="Keybinds_MsgBox_Conflict_Title" xml:space="preserve">
-        <value>Conflicting keybinds detected!</value>
+        <value>Phát hiện xung đột phím tắt!</value>
     </data>
   <data name="Keybinds_MsgBox_Conflict_Body" xml:space="preserve">
-        <value>The following keybinds have conflicts: {0}</value>
+        <value>Các phím tắt sau đang bị xung đột: {0}</value>
     </data>
   <data name="Keybinds_Button_ClearOverride_ToolTip" xml:space="preserve">
-        <value>Clear Override</value>
+        <value>Xoá ghi đè</value>
     </data>
 </root>

@@ -425,4 +425,7 @@
   <data name="Editor_MarginBottom_ToolTip" xml:space="preserve">
         <value>Margines dolny (0 = margines stylu)</value>
     </data>
+  <data name="Menu_OpenKnp" xml:space="preserve">
+        <value>_Key Names &amp; Terms...</value>
+    </data>
 </root>

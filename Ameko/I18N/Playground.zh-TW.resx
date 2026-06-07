@@ -18,21 +18,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Playground_WindowTitle" xml:space="preserve">
-        <value>Scripting Playground</value>
+        <value>指令碼測試區</value>
     </data>
   <data name="Playground_Status_Ready" xml:space="preserve">
-        <value>Ready</value>
+        <value>就緒</value>
     </data>
   <data name="Playground_Status_Success" xml:space="preserve">
-        <value>Success</value>
+        <value>成功</value>
     </data>
   <data name="Playground_Status_Failure" xml:space="preserve">
-        <value>Failure: {0}</value>
+        <value>失敗：{0}</value>
     </data>
   <data name="Playground_Button_Execute" xml:space="preserve">
-        <value>Execute</value>
+        <value>執行</value>
     </data>
   <data name="Playground_Button_Reset" xml:space="preserve">
-        <value>Reset</value>
+        <value>重置</value>
     </data>
 </root>

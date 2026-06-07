@@ -10,6 +10,10 @@ line, and consists of a large textbox for the line's text content, and a host of
 adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
 reference will be displayed in an additional box below the main textbox.
 
+If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
+the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
+Alternate forms are present in the reference file lines (2).
+
 A brief overview of each item and its function:
 
 - Top row
@@ -23,9 +27,9 @@ A brief overview of each item and its function:
   - Layer (Z-index). Lines with a higher layer will be placed on top of lines with a lower layer.
   - Time the line appears on the screen
   - Time the line disappears from the screen
-  - Offset from style's left margin. Set to 0 to use the style's margin
-  - Offset from style's right margin. Set to 0 to use the style's margin
-  - Offset from style's vertical margin. Set to 0 to use the style's margin
+  - Offset from style's left margin. Offset from style's vertical margin.
+  - Offset from style's right margin. Offset from style's vertical margin.
+  - Set to 0 to use the style's margin Offset from style's vertical margin.
   - Inserts a bold `\b1` tag at the cursor position, `\b0` if the text is already bold, or both if text is selected.
   - Inserts an italic `\i1` tag at the cursor position, `\i0` if the text is already italic, or both if text is
     selected.

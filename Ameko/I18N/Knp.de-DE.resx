@@ -27,7 +27,7 @@
         <value>Add Term</value>
     </data>
   <data name="Knp_Header_Category" xml:space="preserve">
-        <value>Category</value>
+        <value>Kategorie</value>
     </data>
   <data name="Knp_Header_Context" xml:space="preserve">
         <value>Context</value>

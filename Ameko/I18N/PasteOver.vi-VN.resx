@@ -18,69 +18,69 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PasteOver_WindowTitle" xml:space="preserve">
-        <value>Paste Over</value>
+        <value>Dán đè</value>
     </data>
   <data name="PasteOver_Label_SelectFields" xml:space="preserve">
-        <value>Select fields to paste over:</value>
+        <value>Chọn các trường cần dán đè:</value>
     </data>
   <data name="PasteOver_CB_Comment" xml:space="preserve">
-        <value>Comment</value>
+        <value>Bình luận</value>
     </data>
   <data name="PasteOver_CB_Layer" xml:space="preserve">
         <value>Layer</value>
     </data>
   <data name="PasteOver_CB_StartTime" xml:space="preserve">
-        <value>Start Time</value>
+        <value>Thời gian bắt đầu</value>
     </data>
   <data name="PasteOver_CB_EndTime" xml:space="preserve">
-        <value>End Time</value>
+        <value>Thời gian kết thúc</value>
     </data>
   <data name="PasteOver_CB_Style" xml:space="preserve">
         <value>Style</value>
     </data>
   <data name="PasteOver_CB_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Nhân vật</value>
     </data>
   <data name="PasteOver_CB_MarginLeft" xml:space="preserve">
-        <value>Left Margin</value>
+        <value>Lề trái</value>
     </data>
   <data name="PasteOver_CB_MarginRight" xml:space="preserve">
-        <value>Right Margin</value>
+        <value>Lề phải</value>
     </data>
   <data name="PasteOver_CB_MarginVertical" xml:space="preserve">
-        <value>Vertical Margin</value>
+        <value>Lề dọc</value>
     </data>
   <data name="PasteOver_CB_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Hiệu ứng</value>
     </data>
   <data name="PasteOver_CB_Text" xml:space="preserve">
-        <value>Text</value>
+        <value>Văn bản</value>
     </data>
   <data name="PasteOver_Button_All" xml:space="preserve">
-        <value>All</value>
+        <value>Tất cả</value>
     </data>
   <data name="PasteOver_Button_None" xml:space="preserve">
-        <value>None</value>
+        <value>Bỏ chọn</value>
     </data>
   <data name="PasteOver_Button_Times" xml:space="preserve">
-        <value>Times</value>
+        <value>Thời gian</value>
     </data>
   <data name="PasteOver_Button_Text" xml:space="preserve">
-        <value>Text</value>
+        <value>Văn bản</value>
     </data>
   <data name="PasteOver_Button_Confirm" xml:space="preserve">
         <value>OK</value>
     </data>
   <data name="PasteOver_Button_All_ToolTip" xml:space="preserve">
-        <value>Select all fields</value>
+        <value>Chọn tất cả các trường</value>
     </data>
   <data name="PasteOver_Button_None_ToolTip" xml:space="preserve">
-        <value>Select no fields</value>
+        <value>Bỏ chọn tất cả các trường</value>
     </data>
   <data name="PasteOver_Button_Times_ToolTip" xml:space="preserve">
-        <value>Select only start and end time</value>
+        <value>Chỉ chọn thời gian bắt đầu và kết thúc</value>
     </data>
   <data name="PasteOver_Button_Text_ToolTip" xml:space="preserve">
-        <value>Select only text</value>
+        <value>Chỉ chọn văn bản</value>
     </data>
 </root>

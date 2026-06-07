@@ -27,31 +27,31 @@
         <value>Tắt</value>
     </data>
   <data name="Config_RpcLevel_TimeOnly" xml:space="preserve">
-        <value>Time Only</value>
+        <value>Chỉ hiển thị thời gian</value>
     </data>
   <data name="Config_PropFields_All" xml:space="preserve">
-        <value>All fields</value>
+        <value>Tất cả các trường</value>
     </data>
   <data name="Config_PropFields_None" xml:space="preserve">
-        <value>No fields</value>
+        <value>Không hiển thị trường nào</value>
     </data>
   <data name="Config_PropFields_NonText" xml:space="preserve">
-        <value>Metadata fields only</value>
+        <value>Chỉ các trường Metadata</value>
     </data>
   <data name="Config_Theme_Default" xml:space="preserve">
-        <value>Default</value>
+        <value>Mặc định</value>
     </data>
   <data name="Config_Theme_Light" xml:space="preserve">
-        <value>Light</value>
+        <value>Sáng</value>
     </data>
   <data name="Config_Theme_Dark" xml:space="preserve">
-        <value>Dark</value>
+        <value>Tối</value>
     </data>
-    <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
-        <value>With Video</value>
+  <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
+        <value>Kèm Video</value>
     </data>
-    <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
-        <value>With Subtitles</value>
+  <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
+        <value>Kèm Phụ đề</value>
     </data>
   <data name="Config_Label_CpsWarnThreshold" xml:space="preserve">
         <value>Ngưỡng cảnh báo CPS</value>
@@ -63,93 +63,93 @@
         <value>CPS bao gồm dấu câu?</value>
     </data>
   <data name="Config_Label_SoftLinebreaks" xml:space="preserve">
-        <value>Use soft linebreaks?</value>
+        <value>Sử dụng ngắt dòng?</value>
     </data>
   <data name="Config_Label_SoftLinebreaks_ToolTip" xml:space="preserve">
-        <value>Use \n for linebreaks instead of \N</value>
+        <value>Dùng ký tự \n để ngắt dòng thay vì \N</value>
     </data>
   <data name="Config_Label_DefaultLayer" xml:space="preserve">
-        <value>Default layer</value>
+        <value>Layer mặc định</value>
     </data>
   <data name="Config_Label_DisplayLanguage" xml:space="preserve">
-        <value>Display language</value>
+        <value>Ngôn ngữ hiển thị</value>
     </data>
   <data name="Config_Label_SpellcheckLanguage" xml:space="preserve">
-        <value>Spellcheck language</value>
+        <value>Ngôn ngữ kiểm tra chính tả</value>
     </data>
   <data name="Config_Label_RichPresence" xml:space="preserve">
         <value>Rich Presence</value>
     </data>
   <data name="Config_Label_PropagateChanges" xml:space="preserve">
-        <value>Propagate changes for</value>
+        <value>Đồng bộ thay đổi cho</value>
     </data>
   <data name="Config_Label_PropagateChanges_ToolTip" xml:space="preserve">
-        <value>Controls how changes made to the active event's properties are replicated to other selected events</value>
+        <value>Kiểm soát cách các thay đổi thuộc tính của sự kiện hiện tại được áp dụng sang các sự kiện khác đã chọn</value>
     </data>
   <data name="Config_Label_AutosaveEnabled" xml:space="preserve">
-        <value>Autosave enabled?</value>
+        <value>Bật tự động lưu?</value>
     </data>
   <data name="Config_Label_SaveFrames" xml:space="preserve">
-        <value>Save frames</value>
+        <value>Lưu khung hình</value>
     </data>
   <data name="Config_Label_AutosaveInterval" xml:space="preserve">
-        <value>Autosave interval (sec)</value>
+        <value>Khoảng thời gian tự động lưu (giây)</value>
     </data>
   <data name="Config_Label_Theme" xml:space="preserve">
-        <value>Theme</value>
+        <value>Chủ đề</value>
     </data>
   <data name="Config_Label_EditorFs" xml:space="preserve">
-        <value>Editor font size</value>
+        <value>Cỡ chữ trình biên tập</value>
     </data>
   <data name="Config_Label_GridFs" xml:space="preserve">
-        <value>Grid font size</value>
+        <value>Cỡ chữ lưới hiển thị</value>
     </data>
   <data name="Config_Label_ReferenceFs" xml:space="preserve">
-        <value>Reference file font size</value>
+        <value>Cỡ chữ file tham chiếu</value>
     </data>
   <data name="Config_Label_GridPadding" xml:space="preserve">
-        <value>Grid padding</value>
+        <value>Khoảng đệm của lưới</value>
     </data>
   <data name="Config_Header_Ssa" xml:space="preserve">
         <value>SubStation Alpha</value>
     </data>
   <data name="Config_Header_Behavior" xml:space="preserve">
-        <value>Behavior</value>
+        <value>Hành vi</value>
     </data>
   <data name="Config_Header_Appearance" xml:space="preserve">
-        <value>Appearance</value>
+        <value>Giao diện</value>
     </data>
   <data name="Config_Label_LineWidthPunctuation" xml:space="preserve">
-        <value>Line Width includes punctuation?</value>
+        <value>Độ rộng dòng bao gồm dấu câu?</value>
     </data>
   <data name="Config_Label_LineWidthWhitespace" xml:space="preserve">
-        <value>Line Width includes whitespace?</value>
+        <value>Độ rộng dòng bao gồm khoảng trắng?</value>
     </data>
   <data name="Config_Label_RestartRequired" xml:space="preserve">
         <value>Cần khởi động lại</value>
     </data>
   <data name="ProjectConfigDialog_Title" xml:space="preserve">
-        <value>Project Configuration</value>
+        <value>Cấu hình Dự án</value>
     </data>
   <data name="Config_Header_Spellchecking" xml:space="preserve">
-        <value>Spellchecking</value>
+        <value>Kiểm tra chính tả</value>
     </data>
   <data name="Config_Button_Add" xml:space="preserve">
-        <value>Add</value>
+        <value>Thêm</value>
     </data>
   <data name="Config_Button_Remove" xml:space="preserve">
-        <value>Remove</value>
+        <value>Xoá</value>
     </data>
   <data name="Config_CustomWordBox_Watermark" xml:space="preserve">
         <value>Thêm từ vào từ điển</value>
     </data>
   <data name="Config_Label_AutoloadAudioTracks" xml:space="preserve">
-        <value>Autoload audio tracks?</value>
+        <value>Tự động tải track âm thanh?</value>
     </data>
   <data name="Config_Label_AutoloadAudioTracks_ToolTip" xml:space="preserve">
-        <value>Automatically load the last-loaded track when there are multiple audio tracks available</value>
+        <value>Tự động tải lại track âm thanh gần nhất khi có nhiều track</value>
     </data>
   <data name="Config_Label_IndexCacheExpiration" xml:space="preserve">
-        <value>Index cache expiration (days)</value>
+        <value>Thời hạn cache chỉ mục (ngày)</value>
     </data>
 </root>

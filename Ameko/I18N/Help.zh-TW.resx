@@ -32,4 +32,7 @@
   <data name="Help_Section_Projects" xml:space="preserve">
         <value>專案</value>
     </data>
+  <data name="Help_Empty" xml:space="preserve">
+        <value>No scripts with help documentation installed</value>
+    </data>
 </root>

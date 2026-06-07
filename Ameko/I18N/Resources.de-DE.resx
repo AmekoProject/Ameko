@@ -45,46 +45,46 @@
         <value>_Logs anzeigen...</value>
     </data>
   <data name="ProjectExplorer_Header" xml:space="preserve">
-        <value>Project Explorer</value>
+        <value>Projekt-Explorer</value>
     </data>
   <data name="Toolbox_Header" xml:space="preserve">
-        <value>Toolbox</value>
+        <value>Werkzeuge</value>
     </data>
   <data name="EventsGrid_Header_Start" xml:space="preserve">
         <value>Start</value>
     </data>
   <data name="EventsGrid_Header_End" xml:space="preserve">
-        <value>End</value>
+        <value>Ende</value>
     </data>
   <data name="EventsGrid_Header_Cps" xml:space="preserve">
         <value>CPS</value>
     </data>
   <data name="EventsGrid_Header_Style" xml:space="preserve">
-        <value>Style</value>
+        <value>Stil</value>
     </data>
   <data name="EventsGrid_Header_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Sprecher</value>
     </data>
   <data name="EventsGrid_Header_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Effekt</value>
     </data>
   <data name="EventsGrid_Header_Content" xml:space="preserve">
-        <value>Content</value>
+        <value>Inhalt</value>
     </data>
   <data name="EventsGrid_Menu_Duplicate" xml:space="preserve">
-        <value>Duplicate</value>
+        <value>Duplizieren</value>
     </data>
   <data name="EventsGrid_Menu_MergeLines" xml:space="preserve">
-        <value>Merge Lines</value>
+        <value>Zeilen zusammenführen</value>
     </data>
   <data name="EventsGrid_Menu_SplitLine" xml:space="preserve">
-        <value>Split Lines on Linebreaks</value>
+        <value>Zeilen an Zeilenumbrüchen trennen</value>
     </data>
   <data name="EventsGrid_Menu_InsertBefore" xml:space="preserve">
-        <value>Insert Before</value>
+        <value>Davor einfügen</value>
     </data>
   <data name="EventsGrid_Menu_InsertAfter" xml:space="preserve">
-        <value>Insert After</value>
+        <value>Danach einfügen</value>
     </data>
   <data name="EventsGrid_Menu_Copy" xml:space="preserve">
         <value>Kopieren</value>
@@ -102,40 +102,40 @@
         <value>Ausschneiden</value>
     </data>
   <data name="Editor_IsComment_Label" xml:space="preserve">
-        <value>Comment</value>
+        <value>Kommentar</value>
     </data>
   <data name="Editor_IsComment_ToolTip" xml:space="preserve">
         <value>Diese Zeile als Kommentar markieren</value>
     </data>
   <data name="Editor_StyleBox_ToolTip" xml:space="preserve">
-        <value>Style for this line</value>
+        <value>Stil dieser Zeile</value>
     </data>
   <data name="Editor_EditStyle_ToolTip" xml:space="preserve">
-        <value>Edit the current style</value>
+        <value>Den aktuellen Stil bearbeiten</value>
     </data>
   <data name="Editor_ActorAcBox_Watermark" xml:space="preserve">
-        <value>Actor</value>
+        <value>Sprecher</value>
     </data>
   <data name="Editor_ActorAcBox_ToolTip" xml:space="preserve">
-        <value>Actor for this line</value>
+        <value>Sprecher dieser Zeile</value>
     </data>
   <data name="Editor_EffectAcBox_Watermark" xml:space="preserve">
-        <value>Effect</value>
+        <value>Effekt</value>
     </data>
   <data name="Editor_EffectAcBox_ToolTip" xml:space="preserve">
-        <value>Effect for this line</value>
+        <value>Effekt dieser Zeile</value>
     </data>
   <data name="Editor_MaxLineWidth_ToolTip" xml:space="preserve">
-        <value>Maximum width of this line</value>
+        <value>Maximale Breite dieser Zeile</value>
     </data>
   <data name="Editor_LayerUpDown_ToolTip" xml:space="preserve">
-        <value>Layer</value>
+        <value>Ebene</value>
     </data>
   <data name="Editor_StartBox_ToolTip" xml:space="preserve">
-        <value>Start time</value>
+        <value>Startzeit</value>
     </data>
   <data name="Editor_EndBox_ToolTip" xml:space="preserve">
-        <value>End time</value>
+        <value>Endzeit</value>
     </data>
   <data name="Editor_MarginLeft_ToolTip" xml:space="preserve">
         <value>Left Margin (0 is style default)</value>
@@ -168,100 +168,100 @@
         <value>_Neu</value>
     </data>
   <data name="Menu_OpenSubtitle" xml:space="preserve">
-        <value>_Open Subtitle...</value>
+        <value>Untertitel _öffnen...</value>
     </data>
   <data name="Menu_SaveSubtitle" xml:space="preserve">
-        <value>_Save Subtitle...</value>
+        <value>Untertitel _speichern...</value>
     </data>
   <data name="Menu_SaveSubtitleAs" xml:space="preserve">
-        <value>Save Subtitle _As...</value>
+        <value>Untertitel speichern _unter...</value>
     </data>
   <data name="Menu_ExportSubtitles" xml:space="preserve">
-        <value>_Export Subtitle as Text...</value>
+        <value>Untertitel als Text _exportieren...</value>
     </data>
   <data name="Menu_OpenProject" xml:space="preserve">
-        <value>Open _Project...</value>
+        <value>_Projekt öffnen...</value>
     </data>
   <data name="Menu_SaveProject" xml:space="preserve">
-        <value>Save Proj_ect...</value>
+        <value>Proj_ekt speichern...</value>
     </data>
   <data name="Menu_Quit" xml:space="preserve">
-        <value>_Quit</value>
+        <value>_Beenden</value>
     </data>
   <data name="Menu_Undo" xml:space="preserve">
-        <value>_Undo</value>
+        <value>_Rückgängig</value>
     </data>
   <data name="Menu_Redo" xml:space="preserve">
-        <value>_Redo</value>
+        <value>_Wiederherstellen</value>
     </data>
   <data name="Menu_Search" xml:space="preserve">
-        <value>_Search...</value>
+        <value>_Suchen...</value>
     </data>
   <data name="Menu_StylesManager" xml:space="preserve">
-        <value>_Styles Manager...</value>
+        <value>_Stil-Manager...</value>
     </data>
   <data name="Menu_ScriptProperties" xml:space="preserve">
-        <value>Script _Properties...</value>
+        <value>Skript-_Eigenschaften...</value>
     </data>
   <data name="Menu_Project" xml:space="preserve">
-        <value>Pro_ject</value>
+        <value>Pro_jekt</value>
     </data>
   <data name="Menu_ProjectConfig" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>_Einstellungen...</value>
     </data>
   <data name="Menu_ShiftTimes" xml:space="preserve">
-        <value>S_hift Times...</value>
+        <value>Zeiten versc_hieben...</value>
     </data>
   <data name="Menu_OpenVideo" xml:space="preserve">
-        <value>_Open Video...</value>
+        <value>Video _öffnen...</value>
     </data>
   <data name="Menu_JumpTo" xml:space="preserve">
-        <value>_Jump To...</value>
+        <value>_Springe zu...</value>
     </data>
   <data name="Menu_Configuration" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>_Einstellungen...</value>
     </data>
   <data name="Menu_Keybinds" xml:space="preserve">
-        <value>_Keybinds...</value>
+        <value>_Tastenbelegung...</value>
     </data>
   <data name="Menu_About" xml:space="preserve">
-        <value>_About Ameko...</value>
+        <value>_Über Ameko...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Remove" xml:space="preserve">
-        <value>Remove from Project</value>
+        <value>Aus dem Projekt entfernen</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Open" xml:space="preserve">
-        <value>Open</value>
+        <value>Öffnen</value>
     </data>
   <data name="Menu_CloseTab" xml:space="preserve">
-        <value>_Close Tab</value>
+        <value>Tab s_chließen</value>
     </data>
   <data name="Menu_CloseProject" xml:space="preserve">
-        <value>Close Projec_t</value>
+        <value>Projek_t schließen</value>
     </data>
   <data name="Tab_CloseButton_ToolTip" xml:space="preserve">
-        <value>Close Tab</value>
+        <value>Tab schließen</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_ChangeDisplayName" xml:space="preserve">
-        <value>Change Display Name...</value>
+        <value>Anzeigenamen ändern...</value>
     </data>
   <data name="Menu_ReloadScripts" xml:space="preserve">
-        <value>_Reload Scripts</value>
+        <value>Sk_ripte neu laden</value>
     </data>
   <data name="Menu_PackageManager" xml:space="preserve">
-        <value>Open _Package Manager...</value>
+        <value>_Paketmanager öffnen...</value>
     </data>
   <data name="Menu_OpenProjectFolder" xml:space="preserve">
-        <value>Open _Folder as Project...</value>
+        <value>_Ordner als Projekt öffnen...</value>
     </data>
   <data name="Menu_ReloadLayouts" xml:space="preserve">
-        <value>_Reload Layouts</value>
+        <value>Layouts _neu laden</value>
     </data>
   <data name="Video_Button_PlayPause_ToolTip" xml:space="preserve">
-        <value>Play/Pause</value>
+        <value>Wiedergabe/Pause</value>
     </data>
   <data name="Video_Button_PlaySelection_ToolTip" xml:space="preserve">
-        <value>Play Selection</value>
+        <value>Auswahl abspielen</value>
     </data>
   <data name="Video_Button_EnableAutoSeek_ToolTip" xml:space="preserve">
         <value>Enable auto seek to selected event's start time</value>
@@ -270,88 +270,88 @@
         <value>Disable auto seek to selected event's start time</value>
     </data>
   <data name="Video_Time_ToolTip" xml:space="preserve">
-        <value>Current Time</value>
+        <value>Aktuelle Zeit</value>
     </data>
   <data name="Video_Frame_ToolTip" xml:space="preserve">
-        <value>Current Frame</value>
+        <value>Aktuelles Frame</value>
     </data>
   <data name="Video_LockAR" xml:space="preserve">
-        <value>Lock</value>
+        <value>Sperren</value>
     </data>
   <data name="Video_LockAR_ToolTip" xml:space="preserve">
-        <value>Lock aspect ratio</value>
+        <value>Seitenverhältnis sperren</value>
     </data>
   <data name="Menu_ReferenceFile_Attach" xml:space="preserve">
-        <value>_Attach Reference File...</value>
+        <value>Referenzdatei _anhängen...</value>
     </data>
   <data name="Menu_ReferenceFile_Detach" xml:space="preserve">
-        <value>_Detach Reference File</value>
+        <value>Referenz_datei entfernen</value>
     </data>
   <data name="Menu_Spellcheck" xml:space="preserve">
-        <value>Spell_check...</value>
+        <value>Re_chtschreibprüfung...</value>
     </data>
   <data name="Menu_Playground" xml:space="preserve">
-        <value>Open Play_ground...</value>
+        <value>Play_ground öffnen...</value>
     </data>
   <data name="Message_Welcome" xml:space="preserve">
-        <value>Welcome to Ameko!</value>
+        <value>Willkommen bei Ameko!</value>
     </data>
   <data name="EventsGrid_Menu_SplitLineKeepTimes" xml:space="preserve">
-        <value>Split Lines on Linebreaks (Keep Times)</value>
+        <value>Zeilen an Zeilenumbrüchen aufteilen (Zeiten beibehalten)</value>
     </data>
   <data name="Tab_NothingLoaded" xml:space="preserve">
-        <value>Open an existing subtitle file or create a new one to begin.</value>
+        <value>Öffne eine vorhandene Untertiteldatei oder erstelle eine neue, um anzufangen.</value>
     </data>
   <data name="EventsGrid_Menu_CopyPlaintext" xml:space="preserve">
-        <value>Copy (Plain Text)</value>
+        <value>Kopieren (Plain-Text)</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_AttachAsReference" xml:space="preserve">
-        <value>Attach as Reference</value>
+        <value>Als Referenz anhängen</value>
     </data>
   <data name="Video_Angle" xml:space="preserve">
-        <value>Angle:</value>
+        <value>Winkel:</value>
     </data>
   <data name="Error" xml:space="preserve">
-        <value>Error</value>
+        <value>Fehler</value>
     </data>
   <data name="Error_FailedToParse" xml:space="preserve">
-        <value>Failed to parse file:</value>
+        <value>Fehler beim Parsen der Datei:</value>
     </data>
   <data name="Video_ContextMenu_Copy_Frame" xml:space="preserve">
-        <value>Copy Frame to Clipboard</value>
+        <value>Frame in die Zwischenablage kopieren</value>
     </data>
   <data name="Video_ContextMenu_Copy_VideoOnly" xml:space="preserve">
-        <value>Copy Frame to Clipboard (Video Only)</value>
+        <value>Frame in die Zwischenablage kopieren (Nur Video)</value>
     </data>
   <data name="Video_ContextMenu_Copy_SubsOnly" xml:space="preserve">
-        <value>Copy Frame to Clipboard (Subtitles Only)</value>
+        <value>Frame in die Zwischenablage kopieren (Nur Untertitel)</value>
     </data>
   <data name="Video_ContextMenu_Save_Frame" xml:space="preserve">
-        <value>Save Frame</value>
+        <value>Frame speichern</value>
     </data>
   <data name="Video_ContextMenu_Save_VideoOnly" xml:space="preserve">
-        <value>Save Frame (Video Only)</value>
+        <value>Frame speichern (Nur Video)</value>
     </data>
   <data name="Video_ContextMenu_Save_SubsOnly" xml:space="preserve">
-        <value>Save Frame (Subtitles Only)</value>
+        <value>Frame speichern (Nur Untertitel)</value>
     </data>
   <data name="Video_Indexing" xml:space="preserve">
-        <value>Indexing...</value>
+        <value>Indiziere...</value>
     </data>
   <data name="Menu_CloseVideo" xml:space="preserve">
-        <value>_Close Video</value>
+        <value>Video s_chließen</value>
     </data>
   <data name="Menu_IssueTracker" xml:space="preserve">
-        <value>_Issue Tracker</value>
+        <value>_Issue-Tracker</value>
     </data>
   <data name="Editor_Menu_SplitLineAtCursor" xml:space="preserve">
-        <value>Split Line at Cursor</value>
+        <value>Zeile am Cursor aufteilen</value>
     </data>
   <data name="Editor_Menu_SplitLineAtCursorKeepTimes" xml:space="preserve">
-        <value>Split Line at Cursor (Keep Times)</value>
+        <value>Zeile am Cursor aufteilen (Zeiten beibehalten)</value>
     </data>
   <data name="Editor_Menu_SpellcheckLine" xml:space="preserve">
-        <value>Spellcheck This Line</value>
+        <value>Überprüfe die Rechtschreibung in dieser Zeile</value>
     </data>
   <data name="EventsGrid_Menu_InsertBeforeAtVideoTime" xml:space="preserve">
         <value>Insert Before at Video Time</value>
@@ -369,22 +369,22 @@
         <value>_Audio</value>
     </data>
   <data name="Menu_OpenAudio" xml:space="preserve">
-        <value>_Open Audio...</value>
+        <value>Video _öffnen...</value>
     </data>
   <data name="Menu_CloseAudio" xml:space="preserve">
-        <value>_Close Audio</value>
+        <value>Audio s_chließen</value>
     </data>
   <data name="Menu_ChangeTracks" xml:space="preserve">
         <value>Change _Tracks...</value>
     </data>
   <data name="Menu_RecentSubtitles" xml:space="preserve">
-        <value>Recent Subtitl_es</value>
+        <value>Kürzlich geöffnete Unt_ertitel</value>
     </data>
   <data name="Menu_RecentProjects" xml:space="preserve">
-        <value>Recent Proje_cts</value>
+        <value>Kürzlich geöffnete Proje_kte</value>
     </data>
   <data name="Menu_RecentClear" xml:space="preserve">
-        <value>Clear</value>
+        <value>Leeren</value>
     </data>
   <data name="Menu_SnapKf_Start" xml:space="preserve">
         <value>Snap _Start to Nearest Keyframe</value>
@@ -393,13 +393,13 @@
         <value>Snap _End to Nearest Keyframe</value>
     </data>
   <data name="Menu_OpenKeyframes" xml:space="preserve">
-        <value>Open _Keyframes...</value>
+        <value>_Keyframes öffnen...</value>
     </data>
   <data name="Menu_SelectLines" xml:space="preserve">
-        <value>Select _Lines...</value>
+        <value>Zei_len auswählen...</value>
     </data>
   <data name="Menu_Sort_Lines" xml:space="preserve">
-        <value>Sor_t Lines...</value>
+        <value>Zeilen sor_tieren...</value>
     </data>
   <data name="Menu_SnapFrame_End" xml:space="preserve">
         <value>Snap End to Current F_rame</value>
@@ -408,21 +408,24 @@
         <value>Snap Start to _Current Frame</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Root" xml:space="preserve">
-        <value>Create New Root Folder...</value>
+        <value>Neuen Root-Ordner erstellen...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Folder" xml:space="preserve">
-        <value>Create New Folder Here...</value>
+        <value>Neuen Ordner hier erstellen...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_MoveToFolder" xml:space="preserve">
-        <value>Move to Folder...</value>
+        <value>In Ordner verschieben...</value>
     </data>
   <data name="Video_Button_Mute_ToolTip" xml:space="preserve">
-        <value>Play audio with video</value>
+        <value>Audio mit Video wiedergeben</value>
     </data>
   <data name="Editor_MarginTop_ToolTip" xml:space="preserve">
         <value>Top Margin (0 is style default)</value>
     </data>
   <data name="Editor_MarginBottom_ToolTip" xml:space="preserve">
         <value>Bottom Margin (0 is style default)</value>
+    </data>
+  <data name="Menu_OpenKnp" xml:space="preserve">
+        <value>_Key Names &amp; Terms...</value>
     </data>
 </root>

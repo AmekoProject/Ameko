@@ -18,54 +18,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Git_NotInRepo" xml:space="preserve">
-        <value>No Git repository detected.</value>
+        <value>Không tìm thấy kho lưu trữ Git nào.</value>
     </data>
   <data name="Git_NotInRepo_Tutorial" xml:space="preserve">
-        <value>To use Git features, open a Project in a folder containing a repository.</value>
+        <value>Để sử dụng các tính năng của Git, hãy mở một Dự án trong thư mục chứa kho lưu trữ.</value>
     </data>
   <data name="Git_StagedChanges" xml:space="preserve">
-        <value>Staged Changes</value>
+        <value>Các thay đổi đã được đánh dấu</value>
     </data>
   <data name="Git_UnstagedChanges" xml:space="preserve">
-        <value>Unstaged Changes</value>
+        <value>Các thay đổi chưa được đánh dấu</value>
     </data>
   <data name="Git_Button_Unstage_ToolTip" xml:space="preserve">
-        <value>Unstage changes</value>
+        <value>Huỷ đánh dấu các thay đổi</value>
     </data>
   <data name="Git_Button_Stage_ToolTip" xml:space="preserve">
-        <value>Stage changes</value>
+        <value>Đánh dấu các thay đổi</value>
     </data>
   <data name="Git_Button_Commit" xml:space="preserve">
-        <value>Commit</value>
+        <value>Ghi nhận</value>
     </data>
   <data name="Git_Button_Stash" xml:space="preserve">
-        <value>Stash</value>
+        <value>Tạm lưu</value>
     </data>
   <data name="Git_Button_Commit_ToolTip" xml:space="preserve">
-        <value>Commit changes on {0}</value>
+        <value>Ghi nhận các thay đổi trên {0}</value>
     </data>
   <data name="Git_Button_Stash_ToolTip" xml:space="preserve">
-        <value>Stash changes</value>
+        <value>Tạm lưu các thay đổi</value>
     </data>
   <data name="Git_Button_Refresh_ToolTip" xml:space="preserve">
-        <value>Refresh</value>
+        <value>Tải lại</value>
     </data>
   <data name="Git_CommitBox_Watermark" xml:space="preserve">
-        <value>Commit Message</value>
+        <value>Thông điệp ghi nhận</value>
     </data>
   <data name="Git_PotentialOwnershipIssue" xml:space="preserve">
-        <value>A .git directory was detected, but libgit2 is unable to process it. Make sure this repository is marked as "safe" in your .gitconfig.</value>
+        <value>Đã phát hiện thư mục .git, nhưng libgit2 không thể xử lý. Hãy đảm bảo repository này được đánh dấu là "safe" trong .gitconfig của bạn.</value>
     </data>
   <data name="Git_NothingToCommit" xml:space="preserve">
-        <value>There's nothing to commit at this time.</value>
+        <value>Không có gì để ghi nhận lúc này.</value>
     </data>
   <data name="Git_Button_Pull_ToolTip" xml:space="preserve">
-        <value>Pull</value>
+        <value>Kéo về</value>
     </data>
   <data name="Git_LatestCommits" xml:space="preserve">
-        <value>Latest commits on {0}:</value>
+        <value>Các ghi nhận mới nhất trên {0}:</value>
     </data>
   <data name="Git_Button_Push_ToolTip" xml:space="preserve">
-        <value>Push</value>
+        <value>Đẩy lên</value>
     </data>
 </root>

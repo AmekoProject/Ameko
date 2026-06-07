@@ -18,18 +18,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="JumpDialog_Title" xml:space="preserve">
-        <value>Jump</value>
+        <value>Nhảy đến</value>
     </data>
   <data name="Jump_Frame" xml:space="preserve">
-        <value>Frame:</value>
+        <value>Khung hình:</value>
     </data>
   <data name="Jump_Time" xml:space="preserve">
-        <value>Time:</value>
+        <value>Thời gian:</value>
     </data>
   <data name="Jump_Button_Jump" xml:space="preserve">
-        <value>Jump</value>
+        <value>Đi tới</value>
     </data>
   <data name="Jump_Line" xml:space="preserve">
-        <value>Line:</value>
+        <value>Dòng số:</value>
     </data>
 </root>

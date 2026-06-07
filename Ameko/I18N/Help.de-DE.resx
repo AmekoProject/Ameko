@@ -18,18 +18,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Help_WindowTitle" xml:space="preserve">
-        <value>Help</value>
+        <value>Hilfe</value>
     </data>
   <data name="Help_Tab_Ameko" xml:space="preserve">
         <value>Ameko</value>
     </data>
   <data name="Help_Tab_Scripts" xml:space="preserve">
-        <value>Scripts</value>
+        <value>Skripte</value>
     </data>
   <data name="Help_Section_UserInterface" xml:space="preserve">
-        <value>User Interface</value>
+        <value>Benutzeroberfläche</value>
     </data>
   <data name="Help_Section_Projects" xml:space="preserve">
-        <value>Projects</value>
+        <value>Projekte</value>
+    </data>
+  <data name="Help_Empty" xml:space="preserve">
+        <value>Es sind keine Skripte mit Hilfsdokumentation installiert</value>
     </data>
 </root>

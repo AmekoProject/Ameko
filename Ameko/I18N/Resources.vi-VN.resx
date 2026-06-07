@@ -18,411 +18,414 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Menu_File" xml:space="preserve">
-        <value>_File</value>
+        <value>_Tệp</value>
     </data>
   <data name="Menu_Edit" xml:space="preserve">
-        <value>_Edit</value>
+        <value>_Chỉnh sửa</value>
     </data>
   <data name="Menu_Subtitle" xml:space="preserve">
-        <value>_Subtitle</value>
+        <value>_Phụ đề</value>
     </data>
   <data name="Menu_Timing" xml:space="preserve">
-        <value>_Timing</value>
+        <value>_Thời gian</value>
     </data>
   <data name="Menu_Video" xml:space="preserve">
         <value>_Video</value>
     </data>
   <data name="Menu_Scripts" xml:space="preserve">
-        <value>Scri_pts</value>
+        <value>_Script</value>
     </data>
   <data name="Menu_Layouts" xml:space="preserve">
-        <value>_Layouts</value>
+        <value>_Bố cục</value>
     </data>
   <data name="Menu_Help" xml:space="preserve">
-        <value>_Help</value>
+        <value>_Trợ giúp</value>
     </data>
   <data name="Menu_ShowLogs" xml:space="preserve">
-        <value>Show _Logs...</value>
+        <value>_Hiện_nhật_ký</value>
     </data>
   <data name="ProjectExplorer_Header" xml:space="preserve">
-        <value>Project Explorer</value>
+        <value>Trình duyệt Dự án</value>
     </data>
   <data name="Toolbox_Header" xml:space="preserve">
-        <value>Toolbox</value>
+        <value>Hộp công cụ</value>
     </data>
   <data name="EventsGrid_Header_Start" xml:space="preserve">
-        <value>Start</value>
+        <value>Bắt đầu</value>
     </data>
   <data name="EventsGrid_Header_End" xml:space="preserve">
-        <value>End</value>
+        <value>Kết thúc</value>
     </data>
   <data name="EventsGrid_Header_Cps" xml:space="preserve">
-        <value>CPS</value>
+        <value>Số ký tự / giây</value>
     </data>
   <data name="EventsGrid_Header_Style" xml:space="preserve">
         <value>Style</value>
     </data>
   <data name="EventsGrid_Header_Actor" xml:space="preserve">
-        <value>Actor</value>
+        <value>Nhân vật</value>
     </data>
   <data name="EventsGrid_Header_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Hiệu ứng</value>
     </data>
   <data name="EventsGrid_Header_Content" xml:space="preserve">
-        <value>Content</value>
+        <value>Nội dung</value>
     </data>
   <data name="EventsGrid_Menu_Duplicate" xml:space="preserve">
-        <value>Duplicate</value>
+        <value>Tạo bản sao</value>
     </data>
   <data name="EventsGrid_Menu_MergeLines" xml:space="preserve">
-        <value>Merge Lines</value>
+        <value>Gộp dòng</value>
     </data>
   <data name="EventsGrid_Menu_SplitLine" xml:space="preserve">
-        <value>Split Lines on Linebreaks</value>
+        <value>Tách dòng tại dấu ngắt</value>
     </data>
   <data name="EventsGrid_Menu_InsertBefore" xml:space="preserve">
-        <value>Insert Before</value>
+        <value>Chèn dòng phía trước</value>
     </data>
   <data name="EventsGrid_Menu_InsertAfter" xml:space="preserve">
-        <value>Insert After</value>
+        <value>Chèn dòng phía sau</value>
     </data>
   <data name="EventsGrid_Menu_Copy" xml:space="preserve">
-        <value>Copy</value>
+        <value>Sao chép</value>
     </data>
   <data name="EventsGrid_Menu_Paste" xml:space="preserve">
-        <value>Paste</value>
+        <value>Dán</value>
     </data>
   <data name="EventsGrid_Menu_PasteOver" xml:space="preserve">
-        <value>Paste Over...</value>
+        <value>Dán đè...</value>
     </data>
   <data name="EventsGrid_Menu_Delete" xml:space="preserve">
-        <value>Delete</value>
+        <value>Xoá</value>
     </data>
   <data name="EventsGrid_Menu_Cut" xml:space="preserve">
-        <value>Cut</value>
+        <value>Cắt</value>
     </data>
   <data name="Editor_IsComment_Label" xml:space="preserve">
-        <value>Comment</value>
+        <value>Bình luận</value>
     </data>
   <data name="Editor_IsComment_ToolTip" xml:space="preserve">
-        <value>Mark this line as a comment</value>
+        <value>Đánh dấu dòng này là bình luận</value>
     </data>
   <data name="Editor_StyleBox_ToolTip" xml:space="preserve">
-        <value>Style for this line</value>
+        <value>Style cho dòng này</value>
     </data>
   <data name="Editor_EditStyle_ToolTip" xml:space="preserve">
-        <value>Edit the current style</value>
+        <value>Chỉnh sửa style hiện tại</value>
     </data>
   <data name="Editor_ActorAcBox_Watermark" xml:space="preserve">
-        <value>Actor</value>
+        <value>Nhân vật</value>
     </data>
   <data name="Editor_ActorAcBox_ToolTip" xml:space="preserve">
-        <value>Actor for this line</value>
+        <value>Nhân vật cho dòng này</value>
     </data>
   <data name="Editor_EffectAcBox_Watermark" xml:space="preserve">
-        <value>Effect</value>
+        <value>Hiệu ứng</value>
     </data>
   <data name="Editor_EffectAcBox_ToolTip" xml:space="preserve">
-        <value>Effect for this line</value>
+        <value>Hiệu ứng cho dòng này</value>
     </data>
   <data name="Editor_MaxLineWidth_ToolTip" xml:space="preserve">
-        <value>Maximum width of this line</value>
+        <value>Độ rộng tối đa của dòng này</value>
     </data>
   <data name="Editor_LayerUpDown_ToolTip" xml:space="preserve">
         <value>Layer</value>
     </data>
   <data name="Editor_StartBox_ToolTip" xml:space="preserve">
-        <value>Start time</value>
+        <value>Thời gian bắt đầu</value>
     </data>
   <data name="Editor_EndBox_ToolTip" xml:space="preserve">
-        <value>End time</value>
+        <value>Thời gian kết thúc</value>
     </data>
   <data name="Editor_MarginLeft_ToolTip" xml:space="preserve">
-        <value>Left Margin (0 is style default)</value>
+        <value>Lề trái (0 là mặc định theo style)</value>
     </data>
   <data name="Editor_MarginRight_ToolTip" xml:space="preserve">
-        <value>Right Margin (0 is style default)</value>
+        <value>Lề phải (0 là mặc định theo style)</value>
     </data>
   <data name="Editor_MarginVertical_ToolTip" xml:space="preserve">
-        <value>Vertical Margin (0 is style default)</value>
+        <value>Lề dọc (0 là mặc định theo style)</value>
     </data>
   <data name="Editor_ToggleBold_ToolTip" xml:space="preserve">
-        <value>Toggle Bold \b at cursor position</value>
+        <value>Bật/tắt In đậm \b tại vị trí con trỏ</value>
     </data>
   <data name="Editor_ToggleItalics_ToolTip" xml:space="preserve">
-        <value>Toggle Italics \i at cursor position</value>
+        <value>Bật/tắt In nghiêng \i tại vị trí con trỏ</value>
     </data>
   <data name="Editor_ToggleUnderline_ToolTip" xml:space="preserve">
-        <value>Toggle Underline \u at cursor position</value>
+        <value>Bật/tắt Gạch chân \u tại vị trí con trỏ</value>
     </data>
   <data name="Editor_ToggleStrikethrough_ToolTip" xml:space="preserve">
-        <value>Toggle Strikethrough \s at cursor position</value>
+        <value>Bật/tắt Gạch ngang \s tại vị trí con trỏ</value>
     </data>
   <data name="Editor_SetFont_ToolTip" xml:space="preserve">
-        <value>Set Font \fn at cursor position</value>
+        <value>Đặt phông chữ \fn tại vị trí con trỏ</value>
     </data>
   <data name="Editor_NextOrCreate_ToolTip" xml:space="preserve">
-        <value>Move to the next line, creating a new one if needed</value>
+        <value>Chuyển sang dòng kế, tạo mới nếu cần</value>
     </data>
   <data name="Menu_New" xml:space="preserve">
-        <value>_New</value>
+        <value>_Mới</value>
     </data>
   <data name="Menu_OpenSubtitle" xml:space="preserve">
-        <value>_Open Subtitle...</value>
+        <value>Mở phụ đề...</value>
     </data>
   <data name="Menu_SaveSubtitle" xml:space="preserve">
-        <value>_Save Subtitle...</value>
+        <value>Lưu phụ đề...</value>
     </data>
   <data name="Menu_SaveSubtitleAs" xml:space="preserve">
-        <value>Save Subtitle _As...</value>
+        <value>Lưu phụ đề thành...</value>
     </data>
   <data name="Menu_ExportSubtitles" xml:space="preserve">
-        <value>_Export Subtitle as Text...</value>
+        <value>Xuất phụ đề ra văn bản...</value>
     </data>
   <data name="Menu_OpenProject" xml:space="preserve">
-        <value>Open _Project...</value>
+        <value>Mở dự án...</value>
     </data>
   <data name="Menu_SaveProject" xml:space="preserve">
-        <value>Save Proj_ect...</value>
+        <value>Lưu dự án...</value>
     </data>
   <data name="Menu_Quit" xml:space="preserve">
-        <value>_Quit</value>
+        <value>Thoát</value>
     </data>
   <data name="Menu_Undo" xml:space="preserve">
-        <value>_Undo</value>
+        <value>Hoàn tác</value>
     </data>
   <data name="Menu_Redo" xml:space="preserve">
-        <value>_Redo</value>
+        <value>Làm lại</value>
     </data>
   <data name="Menu_Search" xml:space="preserve">
-        <value>_Search...</value>
+        <value>Tìm kiếm...</value>
     </data>
   <data name="Menu_StylesManager" xml:space="preserve">
-        <value>_Styles Manager...</value>
+        <value>Quản lý Style...</value>
     </data>
   <data name="Menu_ScriptProperties" xml:space="preserve">
-        <value>Script _Properties...</value>
+        <value>Thuộc tính kịch bản...</value>
     </data>
   <data name="Menu_Project" xml:space="preserve">
-        <value>Pro_ject</value>
+        <value>Dự án</value>
     </data>
   <data name="Menu_ProjectConfig" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>Cấu hình...</value>
     </data>
   <data name="Menu_ShiftTimes" xml:space="preserve">
-        <value>S_hift Times...</value>
+        <value>Dịch chuyển thời gian...</value>
     </data>
   <data name="Menu_OpenVideo" xml:space="preserve">
-        <value>_Open Video...</value>
+        <value>Mở video...</value>
     </data>
   <data name="Menu_JumpTo" xml:space="preserve">
-        <value>_Jump To...</value>
+        <value>Nhảy tới...</value>
     </data>
   <data name="Menu_Configuration" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>Cấu hình...</value>
     </data>
   <data name="Menu_Keybinds" xml:space="preserve">
-        <value>_Keybinds...</value>
+        <value>Phím tắt...</value>
     </data>
   <data name="Menu_About" xml:space="preserve">
-        <value>_About Ameko...</value>
+        <value>Giới thiệu về Ameko...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Remove" xml:space="preserve">
-        <value>Remove from Project</value>
+        <value>Xoá khỏi dự án</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Open" xml:space="preserve">
-        <value>Open</value>
+        <value>Mở</value>
     </data>
   <data name="Menu_CloseTab" xml:space="preserve">
-        <value>_Close Tab</value>
+        <value>Đóng thẻ</value>
     </data>
   <data name="Menu_CloseProject" xml:space="preserve">
-        <value>Close Projec_t</value>
+        <value>Đóng dự án</value>
     </data>
   <data name="Tab_CloseButton_ToolTip" xml:space="preserve">
-        <value>Close Tab</value>
+        <value>Đóng thẻ</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_ChangeDisplayName" xml:space="preserve">
-        <value>Change Display Name...</value>
+        <value>Đổi tên hiển thị...</value>
     </data>
   <data name="Menu_ReloadScripts" xml:space="preserve">
-        <value>_Reload Scripts</value>
+        <value>Tải lại kịch bản</value>
     </data>
   <data name="Menu_PackageManager" xml:space="preserve">
-        <value>Open _Package Manager...</value>
+        <value>Mở trình quản lý gói...</value>
     </data>
   <data name="Menu_OpenProjectFolder" xml:space="preserve">
-        <value>Open _Folder as Project...</value>
+        <value>Mở thư mục như dự án...</value>
     </data>
   <data name="Menu_ReloadLayouts" xml:space="preserve">
-        <value>_Reload Layouts</value>
+        <value>Tải lại bố cục</value>
     </data>
   <data name="Video_Button_PlayPause_ToolTip" xml:space="preserve">
-        <value>Play/Pause</value>
+        <value>Phát/Tạm dừng</value>
     </data>
   <data name="Video_Button_PlaySelection_ToolTip" xml:space="preserve">
-        <value>Play Selection</value>
+        <value>Phát vùng chọn</value>
     </data>
   <data name="Video_Button_EnableAutoSeek_ToolTip" xml:space="preserve">
-        <value>Enable auto seek to selected event's start time</value>
+        <value>Bật chức năng tự động tua tới thời gian bắt đầu của sự kiện được chọn</value>
     </data>
   <data name="Video_Button_DisableAutoSeek_ToolTip" xml:space="preserve">
-        <value>Disable auto seek to selected event's start time</value>
+        <value>Tắt chức năng tự động tua tới thời gian bắt đầu của sự kiện được chọn</value>
     </data>
   <data name="Video_Time_ToolTip" xml:space="preserve">
-        <value>Current Time</value>
+        <value>Thời gian hiện tại</value>
     </data>
   <data name="Video_Frame_ToolTip" xml:space="preserve">
-        <value>Current Frame</value>
+        <value>Khung hình hiện tại</value>
     </data>
   <data name="Video_LockAR" xml:space="preserve">
-        <value>Lock</value>
+        <value>Khoá</value>
     </data>
   <data name="Video_LockAR_ToolTip" xml:space="preserve">
-        <value>Lock aspect ratio</value>
+        <value>Khóa tỉ lệ khung hình</value>
     </data>
   <data name="Menu_ReferenceFile_Attach" xml:space="preserve">
-        <value>_Attach Reference File...</value>
+        <value>Đính kèm tệp tham chiếu...</value>
     </data>
   <data name="Menu_ReferenceFile_Detach" xml:space="preserve">
-        <value>_Detach Reference File</value>
+        <value>Gỡ tệp tham chiếu</value>
     </data>
   <data name="Menu_Spellcheck" xml:space="preserve">
-        <value>Spell_check...</value>
+        <value>Kiểm tra chính tả...</value>
     </data>
   <data name="Menu_Playground" xml:space="preserve">
-        <value>Open Play_ground...</value>
+        <value>Mở khu vực thử nghiệm</value>
     </data>
   <data name="Message_Welcome" xml:space="preserve">
-        <value>Welcome to Ameko!</value>
+        <value>Chào mừng đến với Ameko!</value>
     </data>
   <data name="EventsGrid_Menu_SplitLineKeepTimes" xml:space="preserve">
-        <value>Split Lines on Linebreaks (Keep Times)</value>
+        <value>Tách dòng tại dấu ngắt (Giữ nguyên thời gian)</value>
     </data>
   <data name="Tab_NothingLoaded" xml:space="preserve">
-        <value>Open an existing subtitle file or create a new one to begin.</value>
+        <value>Mở tệp phụ đề có sẵn hoặc tạo mới để bắt đầu.</value>
     </data>
   <data name="EventsGrid_Menu_CopyPlaintext" xml:space="preserve">
-        <value>Copy (Plain Text)</value>
+        <value>Sao chép (Văn bản thuần)</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_AttachAsReference" xml:space="preserve">
-        <value>Attach as Reference</value>
+        <value>Đính kèm làm tham chiếu</value>
     </data>
   <data name="Video_Angle" xml:space="preserve">
-        <value>Angle:</value>
+        <value>Góc:</value>
     </data>
   <data name="Error" xml:space="preserve">
-        <value>Error</value>
+        <value>Lỗi</value>
     </data>
   <data name="Error_FailedToParse" xml:space="preserve">
-        <value>Failed to parse file:</value>
+        <value>Lỗi đọc tệp:</value>
     </data>
   <data name="Video_ContextMenu_Copy_Frame" xml:space="preserve">
-        <value>Copy Frame to Clipboard</value>
+        <value>Sao chép khung hình</value>
     </data>
   <data name="Video_ContextMenu_Copy_VideoOnly" xml:space="preserve">
-        <value>Copy Frame to Clipboard (Video Only)</value>
+        <value>Sao chép khung hình (Chỉ Video)</value>
     </data>
   <data name="Video_ContextMenu_Copy_SubsOnly" xml:space="preserve">
-        <value>Copy Frame to Clipboard (Subtitles Only)</value>
+        <value>Sao chép khung hình (Chỉ Phụ đề)</value>
     </data>
   <data name="Video_ContextMenu_Save_Frame" xml:space="preserve">
-        <value>Save Frame</value>
+        <value>Lưu khung hình</value>
     </data>
   <data name="Video_ContextMenu_Save_VideoOnly" xml:space="preserve">
-        <value>Save Frame (Video Only)</value>
+        <value>Lưu khung hình (Chỉ Video)</value>
     </data>
   <data name="Video_ContextMenu_Save_SubsOnly" xml:space="preserve">
-        <value>Save Frame (Subtitles Only)</value>
+        <value>Lưu khung hình (Chỉ Phụ đề)</value>
     </data>
   <data name="Video_Indexing" xml:space="preserve">
-        <value>Indexing...</value>
+        <value>Đang lập chỉ mục...</value>
     </data>
   <data name="Menu_CloseVideo" xml:space="preserve">
-        <value>_Close Video</value>
+        <value>_Đóng Video</value>
     </data>
   <data name="Menu_IssueTracker" xml:space="preserve">
-        <value>_Issue Tracker</value>
+        <value>_Báo lỗi</value>
     </data>
   <data name="Editor_Menu_SplitLineAtCursor" xml:space="preserve">
-        <value>Split Line at Cursor</value>
+        <value>Tách dòng tại con trỏ</value>
     </data>
   <data name="Editor_Menu_SplitLineAtCursorKeepTimes" xml:space="preserve">
-        <value>Split Line at Cursor (Keep Times)</value>
+        <value>Tách dòng tại con trỏ (Giữ thời gian)</value>
     </data>
   <data name="Editor_Menu_SpellcheckLine" xml:space="preserve">
-        <value>Spellcheck This Line</value>
+        <value>Kiểm tra chính tả dòng này</value>
     </data>
   <data name="EventsGrid_Menu_InsertBeforeAtVideoTime" xml:space="preserve">
-        <value>Insert Before at Video Time</value>
+        <value>Chèn dòng trước tại thời gian Video</value>
     </data>
   <data name="EventsGrid_Menu_InsertAfterAtVideoTime" xml:space="preserve">
-        <value>Insert After at Video Time</value>
+        <value>Chèn dòng trước tại thời gian Video</value>
     </data>
   <data name="Audio_HorizontalScale_ToolTip" xml:space="preserve">
-        <value>Horizontal Scale</value>
+        <value>Tỷ lệ ngang</value>
     </data>
   <data name="Audio_VerticalScale_ToolTip" xml:space="preserve">
-        <value>Vertical Scale</value>
+        <value>Tỷ lệ dọc</value>
     </data>
   <data name="Menu_Audio" xml:space="preserve">
-        <value>_Audio</value>
+        <value>_Âm thanh</value>
     </data>
   <data name="Menu_OpenAudio" xml:space="preserve">
-        <value>_Open Audio...</value>
+        <value>_Mở âm thanh</value>
     </data>
   <data name="Menu_CloseAudio" xml:space="preserve">
-        <value>_Close Audio</value>
+        <value>_Đóng âm thanh</value>
     </data>
   <data name="Menu_ChangeTracks" xml:space="preserve">
-        <value>Change _Tracks...</value>
+        <value>Đổi track...</value>
     </data>
   <data name="Menu_RecentSubtitles" xml:space="preserve">
-        <value>Recent Subtitl_es</value>
+        <value>Phụ đề gần đây</value>
     </data>
   <data name="Menu_RecentProjects" xml:space="preserve">
-        <value>Recent Proje_cts</value>
+        <value>Dự án gần đây</value>
     </data>
   <data name="Menu_RecentClear" xml:space="preserve">
-        <value>Clear</value>
+        <value>Xoá danh sách</value>
     </data>
   <data name="Menu_SnapKf_Start" xml:space="preserve">
-        <value>Snap _Start to Nearest Keyframe</value>
+        <value>Khớp _Bắt đầu vào Keyframe gần nhất</value>
     </data>
   <data name="Menu_SnapKf_End" xml:space="preserve">
-        <value>Snap _End to Nearest Keyframe</value>
+        <value>Khớp _Kết thúc vào Keyframe gần nhất</value>
     </data>
   <data name="Menu_OpenKeyframes" xml:space="preserve">
-        <value>Open _Keyframes...</value>
+        <value>Mở Keyframes...</value>
     </data>
   <data name="Menu_SelectLines" xml:space="preserve">
-        <value>Select _Lines...</value>
+        <value>Chọn Dòng...</value>
     </data>
   <data name="Menu_Sort_Lines" xml:space="preserve">
-        <value>Sor_t Lines...</value>
+        <value>_Sắp xếp dòng...</value>
     </data>
   <data name="Menu_SnapFrame_End" xml:space="preserve">
-        <value>Snap End to Current F_rame</value>
+        <value>Khớp Kết thúc vào Khung hình hiện tại</value>
     </data>
   <data name="Menu_SnapFrame_Start" xml:space="preserve">
-        <value>Snap Start to _Current Frame</value>
+        <value>Khớp Bắt đầu vào Khung hình hiện tại</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Root" xml:space="preserve">
-        <value>Create New Root Folder...</value>
+        <value>Tạo thư mục gốc mới...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Folder" xml:space="preserve">
-        <value>Create New Folder Here...</value>
+        <value>Tạo thư mục mới tại đây...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_MoveToFolder" xml:space="preserve">
-        <value>Move to Folder...</value>
+        <value>Di chuyển đến thư mục...</value>
     </data>
   <data name="Video_Button_Mute_ToolTip" xml:space="preserve">
-        <value>Play audio with video</value>
+        <value>Phát âm thanh cùng video</value>
     </data>
   <data name="Editor_MarginTop_ToolTip" xml:space="preserve">
-        <value>Top Margin (0 is style default)</value>
+        <value>Lề trên (0 là mặc định theo style)</value>
     </data>
   <data name="Editor_MarginBottom_ToolTip" xml:space="preserve">
-        <value>Bottom Margin (0 is style default)</value>
+        <value>Lề dưới (0 là mặc định theo style)</value>
+    </data>
+  <data name="Menu_OpenKnp" xml:space="preserve">
+        <value>_Key Names &amp; Terms...</value>
     </data>
 </root>

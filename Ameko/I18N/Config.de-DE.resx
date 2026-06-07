@@ -18,7 +18,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfigDialog_Title" xml:space="preserve">
-        <value>Configuration</value>
+        <value>Einstellungen</value>
     </data>
   <data name="Config_RpcLevel_Disabled" xml:space="preserve">
         <value>Deaktiviert</value>
@@ -30,16 +30,16 @@
         <value>Nur die Zeit</value>
     </data>
   <data name="Config_PropFields_All" xml:space="preserve">
-        <value>All fields</value>
+        <value>Alle Felder</value>
     </data>
   <data name="Config_PropFields_None" xml:space="preserve">
-        <value>No fields</value>
+        <value>Keine Felder</value>
     </data>
   <data name="Config_PropFields_NonText" xml:space="preserve">
-        <value>Metadata fields only</value>
+        <value>Nur Metadatenfelder</value>
     </data>
   <data name="Config_Theme_Default" xml:space="preserve">
-        <value>Default</value>
+        <value>Standard</value>
     </data>
   <data name="Config_Theme_Light" xml:space="preserve">
         <value>Hell</value>
@@ -47,14 +47,14 @@
   <data name="Config_Theme_Dark" xml:space="preserve">
         <value>Dunkel</value>
     </data>
-    <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
-        <value>With Video</value>
+  <data name="Config_SaveFrames_WithVideo" xml:space="preserve">
+        <value>Mit Video</value>
     </data>
-    <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
-        <value>With Subtitles</value>
+  <data name="Config_SaveFrames_WithSubtitles" xml:space="preserve">
+        <value>Mit Untertiteln</value>
     </data>
   <data name="Config_Label_CpsWarnThreshold" xml:space="preserve">
-        <value>CPS warn threshold</value>
+        <value>Warnschwelle für die CPS (Zeichen pro Sekunde)</value>
     </data>
   <data name="Config_Label_CpsWhitespace" xml:space="preserve">
         <value>CPS includes whitespace?</value>
@@ -66,16 +66,16 @@
         <value>Use soft linebreaks?</value>
     </data>
   <data name="Config_Label_SoftLinebreaks_ToolTip" xml:space="preserve">
-        <value>Use \n for linebreaks instead of \N</value>
+        <value>Verwende \n für Zeilenumbrüche statt \N</value>
     </data>
   <data name="Config_Label_DefaultLayer" xml:space="preserve">
-        <value>Default layer</value>
+        <value>Standardebene</value>
     </data>
   <data name="Config_Label_DisplayLanguage" xml:space="preserve">
-        <value>Display language</value>
+        <value>Sprache der Oberfläche</value>
     </data>
   <data name="Config_Label_SpellcheckLanguage" xml:space="preserve">
-        <value>Spellcheck language</value>
+        <value>Sprache der Rechtschreibprüfung</value>
     </data>
   <data name="Config_Label_RichPresence" xml:space="preserve">
         <value>Rich Presence</value>
@@ -87,25 +87,25 @@
         <value>Controls how changes made to the active event's properties are replicated to other selected events</value>
     </data>
   <data name="Config_Label_AutosaveEnabled" xml:space="preserve">
-        <value>Autosave enabled?</value>
+        <value>Automatisches Speichern aktivieren?</value>
     </data>
   <data name="Config_Label_SaveFrames" xml:space="preserve">
-        <value>Save frames</value>
+        <value>Frames speichern</value>
     </data>
   <data name="Config_Label_AutosaveInterval" xml:space="preserve">
         <value>Autosave interval (sec)</value>
     </data>
   <data name="Config_Label_Theme" xml:space="preserve">
-        <value>Theme</value>
+        <value>Farbschema</value>
     </data>
   <data name="Config_Label_EditorFs" xml:space="preserve">
-        <value>Editor font size</value>
+        <value>Schriftgröße im Editor</value>
     </data>
   <data name="Config_Label_GridFs" xml:space="preserve">
-        <value>Grid font size</value>
+        <value>Schriftgröße im Raster</value>
     </data>
   <data name="Config_Label_ReferenceFs" xml:space="preserve">
-        <value>Reference file font size</value>
+        <value>Schriftgröße der Referenzdatei</value>
     </data>
   <data name="Config_Label_GridPadding" xml:space="preserve">
         <value>Grid padding</value>
@@ -114,10 +114,10 @@
         <value>SubStation Alpha</value>
     </data>
   <data name="Config_Header_Behavior" xml:space="preserve">
-        <value>Behavior</value>
+        <value>Verhalten</value>
     </data>
   <data name="Config_Header_Appearance" xml:space="preserve">
-        <value>Appearance</value>
+        <value>Erscheinungsbild</value>
     </data>
   <data name="Config_Label_LineWidthPunctuation" xml:space="preserve">
         <value>Line Width includes punctuation?</value>
@@ -129,19 +129,19 @@
         <value>Neustart erforderlich</value>
     </data>
   <data name="ProjectConfigDialog_Title" xml:space="preserve">
-        <value>Project Configuration</value>
+        <value>Projekteinstellungen</value>
     </data>
   <data name="Config_Header_Spellchecking" xml:space="preserve">
-        <value>Spellchecking</value>
+        <value>Rechtschreibprüfung</value>
     </data>
   <data name="Config_Button_Add" xml:space="preserve">
-        <value>Add</value>
+        <value>Hinzufügen</value>
     </data>
   <data name="Config_Button_Remove" xml:space="preserve">
-        <value>Remove</value>
+        <value>Entfernen</value>
     </data>
   <data name="Config_CustomWordBox_Watermark" xml:space="preserve">
-        <value>Add a word to the dictionary</value>
+        <value>Wort zum Wörterbuch hinzufügen</value>
     </data>
   <data name="Config_Label_AutoloadAudioTracks" xml:space="preserve">
         <value>Audiospuren automatisch laden?</value>
@@ -150,6 +150,6 @@
         <value>Automatically load the last-loaded track when there are multiple audio tracks available</value>
     </data>
   <data name="Config_Label_IndexCacheExpiration" xml:space="preserve">
-        <value>Index cache expiration (days)</value>
+        <value>Ablaufdatum des Indexcache (Tage)</value>
     </data>
 </root>
