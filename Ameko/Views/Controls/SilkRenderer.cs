@@ -130,6 +130,7 @@ public class SilkRenderer : OpenGlControlBase
         _gl.Clear(ClearBufferMask.ColorBufferBit);
         _gl.Viewport(0, 0, vpWidth, vpHeight);
 
+        _shader.Use();
         _vao.Bind();
 
         _shader.SetUniform("texture0", 0);
@@ -140,14 +141,16 @@ public class SilkRenderer : OpenGlControlBase
         var texHeight = (uint)frame->VideoFrame->Height;
 
         _textureV.Bind(TextureUnit.Texture0);
-        _textureV.SetTexture(texWidth, texHeight, frame->VideoFrame->Data);
+        // _textureV.SetTexture(texWidth, texHeight, frame->VideoFrame->Data);
+
+        var transparentPixel = stackalloc byte[4] { 0, 0, 0, 0 };
+        _textureV.SetTexture(1, 1, transparentPixel);
 
         _textureS.Bind(TextureUnit.Texture1);
-        _textureS.SetTexture(texWidth, texHeight, frame->SubtitleFrame->Data);
+        // _textureS.SetTexture(texWidth, texHeight, frame->SubtitleFrame->Data);
+        _textureS.SetTexture(1, 1, transparentPixel);
 
         Interlocked.Decrement(ref frame->Refcount);
-
-        _shader.Use();
 
         _gl.DrawElements(
             PrimitiveType.Triangles,
@@ -171,6 +174,6 @@ public class SilkRenderer : OpenGlControlBase
 
     private void OnFrameReady()
     {
-        Dispatcher.UIThread.Post(RequestNextFrameRendering);
+        Dispatcher.UIThread.Post(RequestNextFrameRendering, DispatcherPriority.Render);
     }
 }

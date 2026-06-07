@@ -126,6 +126,7 @@ public class Visualizer : OpenGlControlBase
         _gl.Clear(ClearBufferMask.ColorBufferBit);
         _gl.Viewport(0, 0, vpWidth, vpHeight);
 
+        _shader.Use();
         _vao.Bind();
 
         _shader.SetUniform("texture0", 0);
@@ -140,8 +141,6 @@ public class Visualizer : OpenGlControlBase
         _texture.Bind(TextureUnit.Texture0);
         _texture.SetTexture(texWidth, texHeight, frame->Data);
         Interlocked.Decrement(ref frame->Refcount);
-
-        _shader.Use();
 
         _gl.DrawElements(
             PrimitiveType.Triangles,
@@ -173,6 +172,6 @@ public class Visualizer : OpenGlControlBase
 
     private void OnFrameReady()
     {
-        Dispatcher.UIThread.Post(RequestNextFrameRendering);
+        Dispatcher.UIThread.Post(RequestNextFrameRendering, DispatcherPriority.Render);
     }
 }
