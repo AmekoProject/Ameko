@@ -85,7 +85,6 @@ pub const BuffersContext = struct {
     audio_frame: ?*frames.AudioFrame,
     viz_buffers: ?std.ArrayList(*frames.Bitmap),
     max_viz_buffers: usize = 16,
-    viz_mutex: std.Thread.Mutex,
 
     pub fn Init() BuffersContext {
         return BuffersContext{
@@ -95,7 +94,6 @@ pub const BuffersContext = struct {
             .audio_buffer = null,
             .audio_frame = null,
             .viz_buffers = null,
-            .viz_mutex = std.Thread.Mutex{},
         };
     }
 };

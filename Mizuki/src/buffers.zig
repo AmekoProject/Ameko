@@ -164,10 +164,6 @@ pub fn ProcVizualizationFrame(
 fn GetOrCreateVisualizationFrame(ctx: *context.BuffersContext, width: c_int, height: c_int) !*frames.Bitmap {
     var buffers = &ctx.viz_buffers.?;
 
-    // Mutex, just in case™
-    ctx.viz_mutex.lock();
-    defer ctx.viz_mutex.unlock();
-
     // Check if there's room to add a new buffer
     if (buffers.items.len < ctx.max_viz_buffers) {
         const new_buffer = try AllocateVisualizationFrame(@intCast(width), @intCast(height));

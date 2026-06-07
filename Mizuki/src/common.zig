@@ -4,11 +4,15 @@ const std = @import("std");
 
 pub var gpa: std.heap.DebugAllocator(.{ .safety = true }) = undefined;
 pub var allocator: std.mem.Allocator = undefined;
+pub var io: std.Io = undefined;
 
 /// Initialize the global allocator
 pub fn InitAllocator() void {
     gpa = .init;
     allocator = gpa.allocator();
+
+    var threaded: std.Io.Threaded = .init(allocator, .{});
+    io = threaded.io();
 }
 
 /// Version of a backing library

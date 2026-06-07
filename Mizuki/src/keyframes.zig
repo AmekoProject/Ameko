@@ -21,10 +21,10 @@ pub fn Load(file_name: [*c]u8, g_ctx: *context.GlobalContext) KeyframesError!voi
     var ctx = &g_ctx.*.ffms;
 
     const path: []const u8 = std.mem.span(file_name);
-    const file = std.fs.cwd().openFile(path, .{ .mode = .read_only }) catch return KeyframesError.IoFailure;
-    defer file.close();
+    const file = std.Io.Dir.openFile(std.Io.Dir.cwd(), common.io, path, .{ .mode = .read_only }) catch return KeyframesError.IoFailure;
+    defer file.close(common.io);
     var read_buf: [1024]u8 = undefined; // 1kb buffer
-    var f_reader: std.fs.File.Reader = file.reader(&read_buf);
+    var f_reader: std.Io.File.Reader = file.reader(common.io, &read_buf);
 
     var line = std.Io.Writer.Allocating.init(common.allocator);
     defer line.deinit();
@@ -82,7 +82,7 @@ pub fn Load(file_name: [*c]u8, g_ctx: *context.GlobalContext) KeyframesError!voi
     }
 }
 
-fn ProcessAegisubKeyframes(f_reader: *std.fs.File.Reader, g_ctx: *context.GlobalContext) !void {
+fn ProcessAegisubKeyframes(f_reader: *std.Io.File.Reader, g_ctx: *context.GlobalContext) !void {
     var ctx = &g_ctx.*.ffms;
 
     var keyframes_list: std.ArrayList(c_int) = .empty;
@@ -123,7 +123,7 @@ fn ProcessAegisubKeyframes(f_reader: *std.fs.File.Reader, g_ctx: *context.Global
     ctx.keyframes = keyframes_list.toOwnedSlice(common.allocator) catch unreachable;
 }
 
-fn ProcessXvidKeyframes(f_reader: *std.fs.File.Reader, g_ctx: *context.GlobalContext) !void {
+fn ProcessXvidKeyframes(f_reader: *std.Io.File.Reader, g_ctx: *context.GlobalContext) !void {
     var ctx = &g_ctx.*.ffms;
 
     var keyframes_list: std.ArrayList(c_int) = .empty;
@@ -165,7 +165,7 @@ fn ProcessXvidKeyframes(f_reader: *std.fs.File.Reader, g_ctx: *context.GlobalCon
     ctx.keyframes = keyframes_list.toOwnedSlice(common.allocator) catch unreachable;
 }
 
-fn ProcessWwxdKeyframes(f_reader: *std.fs.File.Reader, g_ctx: *context.GlobalContext) !void {
+fn ProcessWwxdKeyframes(f_reader: *std.Io.File.Reader, g_ctx: *context.GlobalContext) !void {
     var ctx = &g_ctx.*.ffms;
 
     var keyframes_list: std.ArrayList(c_int) = .empty;

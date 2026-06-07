@@ -200,7 +200,7 @@ pub fn LoadVideo(
     const pitch_frame = c.FFMS_GetFrame(ctx.video_source, 0, &err_info);
     ctx.frame_width = @intCast(pitch_frame.*.EncodedWidth);
     ctx.frame_height = @intCast(pitch_frame.*.EncodedHeight);
-    ctx.frame_pitch = @intCast(pitch_frame.*.Linesize[0]);
+    ctx.frame_pitch = @intCast(pitch_frame[0].Linesize[0]);
 
     // Frame information
     const track = c.FFMS_GetTrackFromVideo(ctx.video_source);
@@ -406,9 +406,9 @@ pub fn GetFrame(g_ctx: *context.GlobalContext, frame_number: c_int, out: *frames
         return FfmsError.VideoDecodeError;
     }
 
-    const src_ptr = frame.*.Data[0];
+    const src_ptr = frame[0].Data[0];
 
-    const pitch: usize = @intCast(frame.*.Linesize[0]);
+    const pitch: usize = @intCast(frame[0].Linesize[0]);
     const height: usize = @intCast(frame.*.EncodedHeight);
     const total_bytes = pitch * height;
 
