@@ -32,6 +32,7 @@
               CanUserResizeColumns="True"
               CanUserReorderColumns="False"
               SelectionMode="Extended"
+              GridLinesVisibility="All"
               VerticalScrollBarVisibility="Auto"
               HorizontalScrollBarVisibility="Disabled"
               FontSize="{Binding Configuration.GridFontSize}"
