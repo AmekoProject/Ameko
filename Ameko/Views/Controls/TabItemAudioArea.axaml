@@ -124,7 +124,7 @@
         <Panel Background="Transparent"
                PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
                IsVisible="{Binding Workspace.MediaController.IsAudioLoaded}">
-            <c:Visualizer MediaController="{Binding Workspace.MediaController}" />
+            <c:Visualizer Workspace="{Binding Workspace}" />
         </Panel>
     </DockPanel>
 </UserControl>

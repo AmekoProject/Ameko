@@ -19,14 +19,19 @@ namespace Ameko.Views.Controls;
 
 public class Visualizer : OpenGlControlBase
 {
-    public static readonly StyledProperty<MediaController?> MediaControllerProperty =
-        AvaloniaProperty.Register<SilkRenderer, MediaController?>(nameof(MediaController));
+    public static readonly StyledProperty<Workspace?> WorkspaceProperty = AvaloniaProperty.Register<
+        Visualizer,
+        Workspace?
+    >(nameof(Workspace));
 
-    public MediaController? MediaController
+    public Workspace? Workspace
     {
-        get => GetValue(MediaControllerProperty);
-        set => SetValue(MediaControllerProperty, value);
+        get => GetValue(WorkspaceProperty);
+        set => SetValue(WorkspaceProperty, value);
     }
+
+    private MediaController? MediaController => Workspace?.MediaController;
+    private SelectionManager? SelectionManager => Workspace?.SelectionManager;
 
     [MemberNotNullWhen(true, nameof(_gl))]
     [MemberNotNullWhen(true, nameof(_vbo))]
