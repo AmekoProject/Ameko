@@ -132,7 +132,7 @@ pub fn Deinit(g_ctx: *context.GlobalContext) void {
     }
 }
 
-pub fn ProcVizualizationFrame(
+pub fn ProcVisualizationFrame(
     g_ctx: *context.GlobalContext,
     width: c_int,
     height: c_int,
