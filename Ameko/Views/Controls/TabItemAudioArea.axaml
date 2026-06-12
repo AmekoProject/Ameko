@@ -123,6 +123,7 @@
         <!-- Visualizer Target -->
         <Panel Background="Transparent"
                PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
+               PointerPressed="AudioTarget_OnPointerPressed"
                IsVisible="{Binding Workspace.MediaController.IsAudioLoaded}">
             <c:Visualizer MediaController="{Binding Workspace.MediaController}" />
         </Panel>

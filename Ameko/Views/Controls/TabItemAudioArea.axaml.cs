@@ -4,6 +4,8 @@ using System;
 using System.Reactive.Disposables.Fluent;
 using Ameko.Renderers;
 using Ameko.ViewModels.Controls;
+using AssCS;
+using AssCS.History;
 using Avalonia;
 using Avalonia.Input;
 using Holo.Models;
@@ -54,5 +56,55 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         if (e.Delta.Y < 0)
             ViewModel.Workspace.MediaController.VisualizerPositionMs += 250;
         e.Handled = true;
+    }
+
+    private void AudioTarget_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        e.Handled = true;
+        var wsp = ViewModel?.Workspace;
+        if (wsp is null || !wsp.MediaController.IsVideoLoaded || !wsp.MediaController.IsAudioLoaded)
+            return;
+
+        var x = e.GetPosition(this).X;
+
+        var mc = wsp.MediaController;
+        var time = Time.FromMillis(
+            Convert.ToInt64(x * mc.VisualizerScaleX + mc.VisualizerPositionMs)
+        );
+
+        var frame = mc.VideoInfo.FrameFromTime(time);
+        time = mc.VideoInfo.TimeFromMidpoint(frame - 1, frame);
+        var @event = wsp.SelectionManager.ActiveEvent;
+
+        switch (e.Properties.PointerUpdateKind)
+        {
+            case PointerUpdateKind.LeftButtonPressed:
+                if (time < @event.End)
+                {
+                    @event.Start = time;
+                }
+                else
+                {
+                    @event.Start = @event.End;
+                    @event.End = time;
+                }
+                wsp.Commit(@event, ChangeType.ModifyEventMeta);
+                break;
+            case PointerUpdateKind.RightButtonPressed:
+                if (time > @event.Start)
+                {
+                    @event.End = time;
+                }
+                else
+                {
+                    @event.End = @event.Start;
+                    @event.Start = time;
+                }
+                wsp.Commit(@event, ChangeType.ModifyEventMeta);
+                break;
+            case PointerUpdateKind.MiddleButtonPressed:
+                wsp.MediaController.SeekTo(frame);
+                break;
+        }
     }
 }
