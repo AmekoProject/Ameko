@@ -70,33 +70,39 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         var mc = wsp.MediaController;
         var ms = Convert.ToInt64(x * mc.VisualizerScaleX + mc.VisualizerPositionMs);
 
-        var midpoint = Time.FromMillis(mc.VideoInfo.MidpointFromMillis(ms));
-        var frame = mc.VideoInfo.FrameFromTime(midpoint);
+        // When shift is pressed, don't snap
+        // TODO: Add a config option for this
+        var time =
+            (e.KeyModifiers & KeyModifiers.Shift) == 0
+                ? Time.FromMillis(mc.VideoInfo.MidpointFromMillis(ms))
+                : Time.FromMillis(ms);
+
+        var frame = mc.VideoInfo.FrameFromTime(time);
         var @event = wsp.SelectionManager.ActiveEvent;
 
         switch (e.Properties.PointerUpdateKind)
         {
             case PointerUpdateKind.LeftButtonPressed:
-                if (midpoint < @event.End)
+                if (time < @event.End)
                 {
-                    @event.Start = midpoint;
+                    @event.Start = time;
                 }
                 else
                 {
                     @event.Start = @event.End;
-                    @event.End = midpoint;
+                    @event.End = time;
                 }
                 wsp.Commit(@event, ChangeType.ModifyEventMeta);
                 break;
             case PointerUpdateKind.RightButtonPressed:
-                if (midpoint > @event.Start)
+                if (time > @event.Start)
                 {
-                    @event.End = midpoint;
+                    @event.End = time;
                 }
                 else
                 {
                     @event.End = @event.Start;
-                    @event.Start = midpoint;
+                    @event.Start = time;
                 }
                 wsp.Commit(@event, ChangeType.ModifyEventMeta);
                 break;
