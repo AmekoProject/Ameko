@@ -866,5 +866,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Menu_OpenKnp", resourceCulture);
             }
         }
+        
+        public static string Video_NothingLoaded {
+            get {
+                return ResourceManager.GetString("Video_NothingLoaded", resourceCulture);
+            }
+        }
+        
+        public static string Audio_NothingLoaded {
+            get {
+                return ResourceManager.GetString("Audio_NothingLoaded", resourceCulture);
+            }
+        }
     }
 }

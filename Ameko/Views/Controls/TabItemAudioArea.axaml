@@ -17,10 +17,10 @@
     <Control.Resources>
         <converters:IsMediaIndexingConverter x:Key="IndexingConverter" />
     </Control.Resources>
-    <DockPanel Margin="2"
-               IsEnabled="{Binding Workspace.MediaController.IsAudioLoaded}">
+    <DockPanel Margin="2">
         <Grid DockPanel.Dock="Bottom"
-              RowDefinitions="Auto, Auto">
+              RowDefinitions="Auto, Auto"
+              IsEnabled="{Binding Workspace.MediaController.IsAudioLoaded}">
             <StackPanel Grid.Row="0">
                 <!-- Indexing Indicator -->
                 <Grid Margin="2"
@@ -99,7 +99,8 @@
         
         <!-- Zoom Controls -->
         <StackPanel DockPanel.Dock="Right"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    IsEnabled="{Binding Workspace.MediaController.IsAudioLoaded}">
             <Slider Orientation="Vertical"
                     Classes="Small"
                     Padding="1"
@@ -121,10 +122,17 @@
         </StackPanel>
         
         <!-- Visualizer Target -->
-        <Panel Background="Transparent"
-               PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
-               IsVisible="{Binding Workspace.MediaController.IsAudioLoaded}">
-            <c:Visualizer MediaController="{Binding Workspace.MediaController}" />
-        </Panel>
+        <Grid>
+            <TextBlock Text="{x:Static i18n:Resources.Audio_NothingLoaded}"
+                       IsVisible="{Binding !Workspace.MediaController.IsAudioLoaded}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Opacity="0.5" />
+            <Panel Background="Transparent"
+                   PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
+                   IsVisible="{Binding Workspace.MediaController.IsAudioLoaded}">
+                <c:Visualizer MediaController="{Binding Workspace.MediaController}" />
+            </Panel>
+        </Grid>
     </DockPanel>
 </UserControl>
