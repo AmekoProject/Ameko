@@ -21,7 +21,7 @@
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="CS-Script" Version="4.14.9" />
+    <PackageVersion Include="CS-Script" Version="4.14.10" />
     <PackageVersion Include="CSharpier.MsBuild" Version="1.2.6" />
     <PackageVersion Include="DiscordRichPresence" Version="1.6.1.70" />
     <PackageVersion Include="FuzzySharp" Version="2.0.2" />
