@@ -641,6 +641,7 @@ public class MediaController : BindableBase
                     frameCount: _provider.FrameCount,
                     sar: new Rational { Numerator = 1, Denominator = 1 },
                     frameTimes: _provider.GetTimecodes(),
+                    frameMidpoints: _provider.GetMidcodes(),
                     frameIntervals: _provider.GetFrameIntervals(),
                     keyframes: _provider.GetKeyframes(),
                     testFrame->VideoFrame->Width,
@@ -999,7 +1000,7 @@ public class MediaController : BindableBase
             _subtitlesChanged = false;
         }
 
-        var videoTime = VideoInfo?.MillisecondsFromFrame(frameToFetch) ?? 0;
+        var videoTime = VideoInfo?.MidpointFromFrame(frameToFetch) ?? 0;
         var audioTime = VideoInfo?.MillisecondsFromFrame(_currentAudioFrame) ?? -1;
 
         // Get audio visualization

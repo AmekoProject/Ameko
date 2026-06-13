@@ -68,37 +68,35 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         var x = e.GetPosition(this).X;
 
         var mc = wsp.MediaController;
-        var time = Time.FromMillis(
-            Convert.ToInt64(x * mc.VisualizerScaleX + mc.VisualizerPositionMs)
-        );
+        var ms = Convert.ToInt64(x * mc.VisualizerScaleX + mc.VisualizerPositionMs);
 
-        var frame = mc.VideoInfo.FrameFromTime(time);
-        time = mc.VideoInfo.TimeFromMidpoint(frame - 1, frame);
+        var midpoint = Time.FromMillis(mc.VideoInfo.MidpointFromMillis(ms));
+        var frame = mc.VideoInfo.FrameFromTime(midpoint);
         var @event = wsp.SelectionManager.ActiveEvent;
 
         switch (e.Properties.PointerUpdateKind)
         {
             case PointerUpdateKind.LeftButtonPressed:
-                if (time < @event.End)
+                if (midpoint < @event.End)
                 {
-                    @event.Start = time;
+                    @event.Start = midpoint;
                 }
                 else
                 {
                     @event.Start = @event.End;
-                    @event.End = time;
+                    @event.End = midpoint;
                 }
                 wsp.Commit(@event, ChangeType.ModifyEventMeta);
                 break;
             case PointerUpdateKind.RightButtonPressed:
-                if (time > @event.Start)
+                if (midpoint > @event.Start)
                 {
-                    @event.End = time;
+                    @event.End = midpoint;
                 }
                 else
                 {
                     @event.End = @event.Start;
-                    @event.Start = time;
+                    @event.Start = midpoint;
                 }
                 wsp.Commit(@event, ChangeType.ModifyEventMeta);
                 break;

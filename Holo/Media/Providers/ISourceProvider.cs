@@ -160,6 +160,12 @@ public interface ISourceProvider
     long[] GetTimecodes();
 
     /// <summary>
+    /// Time of the middle of each frame
+    /// </summary>
+    /// <returns></returns>
+    long[] GetMidcodes();
+
+    /// <summary>
     /// How long each frame is displayed for
     /// </summary>
     /// <returns></returns>

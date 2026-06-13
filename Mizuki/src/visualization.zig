@@ -85,7 +85,7 @@ pub fn RenderWaveform(
         );
 
         // Draw keyframe indicators behind the spectrum
-        if (g_ctx.*.ffms.kf_timecodes) |timecodes| {
+        if (g_ctx.*.ffms.kf_midcodes) |timecodes| {
             DrawKeyframes(
                 bmp,
                 bmp_width_f,

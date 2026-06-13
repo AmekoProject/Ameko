@@ -217,6 +217,14 @@ pub export fn GetTimecodes(g_ctx: *context.GlobalContext) common.LongArray {
     };
 }
 
+/// Get array of midcodes
+pub export fn GetMidcodes(g_ctx: *context.GlobalContext) common.LongArray {
+    return .{
+        .ptr = g_ctx.*.ffms.midcodes.?.ptr,
+        .len = g_ctx.*.ffms.midcodes.?.len,
+    };
+}
+
 /// Get array of frame intervals
 pub export fn GetFrameIntervals(g_ctx: *context.GlobalContext) common.LongArray {
     return .{
