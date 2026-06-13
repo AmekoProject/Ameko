@@ -98,7 +98,7 @@ public class VideoInfo(
             return bs;
 
         // ~bs → Index of the first greater element.
-        return ~bs;
+        return ~bs - 1;
     }
 
     /// <summary>
