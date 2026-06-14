@@ -38,6 +38,10 @@ public partial class TabItemViewModel : ViewModelBase
         FileModifiedDialogClosedMessage?
     > ShowFileModifiedDialog { get; }
     public Interaction<SpellcheckDialogViewModel, Unit> ShowSpellcheckDialog { get; }
+    public Interaction<
+        StyleEditorDialogViewModel,
+        StyleEditorDialogClosedMessage?
+    > ShowStyleEditorWindow { get; }
     public Interaction<Event, Unit> ScrollToAndSelectEvent { get; }
     public Interaction<IList<Event>, Unit> SelectEvents { get; }
     public Interaction<Unit, Uri?> SaveFrameAs { get; }
@@ -107,6 +111,7 @@ public partial class TabItemViewModel : ViewModelBase
 
     [Command("ameko.event.spellcheck", "Shift+F7", KeybindContext.Editor)]
     public ICommand SpellcheckEventCommand { get; }
+    public ICommand EditStyleCommand { get; }
 
     // Video
     [Command("ameko.video.play", KeybindContext.Video)]
@@ -319,6 +324,8 @@ public partial class TabItemViewModel : ViewModelBase
         ShowFileModifiedDialog =
             new Interaction<FileModifiedDialogViewModel, FileModifiedDialogClosedMessage?>();
         ShowSpellcheckDialog = new Interaction<SpellcheckDialogViewModel, Unit>();
+        ShowStyleEditorWindow =
+            new Interaction<StyleEditorDialogViewModel, StyleEditorDialogClosedMessage?>();
         ScrollToAndSelectEvent = new Interaction<Event, Unit>();
         SelectEvents = new Interaction<IList<Event>, Unit>();
         SaveFrameAs = new Interaction<Unit, Uri?>();
@@ -354,6 +361,7 @@ public partial class TabItemViewModel : ViewModelBase
         SplitEventsAtCursorCommand = CreateSplitEventsAtCursorCommand();
         SplitEventsAtCursorKeepTimesCommand = CreateSplitEventsAtCursorKeepTimesCommand();
         SpellcheckEventCommand = CreateSpellcheckEventCommand();
+        EditStyleCommand = CreateEditStyleCommand();
 
         // Video
         PlayPauseCommand = CreatePlayPauseCommand();
