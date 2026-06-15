@@ -90,7 +90,10 @@ public class PersistenceTests
             "ScalesForRes": {},
             "AudioTrackForVideo": {},
             "RecentDocuments": [],
-            "RecentProjects": []
+            "RecentProjects": [],
+            "WindowWidth": 1280.0,
+            "WindowHeight": 720.0,
+            "WindowState": "Normal"
         }
         """;
 }

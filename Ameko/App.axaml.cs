@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Ameko;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -79,6 +79,12 @@ public partial class App : Application
         desktop.MainWindow = provider.GetRequiredService<MainWindow>();
         DataContext = vm;
         desktop.MainWindow.DataContext = vm;
+
+        // Load window state
+        var persist = provider.GetRequiredService<IPersistence>();
+        desktop.MainWindow.Width = persist.WindowWidth;
+        desktop.MainWindow.Height = persist.WindowHeight;
+        desktop.MainWindow.WindowState = persist.WindowState.ToAvaloniaWindowState();
 
         base.OnFrameworkInitializationCompleted();
 

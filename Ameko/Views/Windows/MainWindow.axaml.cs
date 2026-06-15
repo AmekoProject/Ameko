@@ -9,6 +9,7 @@ using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.Messages;
 using Ameko.Services;
+using Ameko.Utilities;
 using Ameko.ViewModels;
 using Ameko.ViewModels.Dialogs;
 using Ameko.ViewModels.Windows;
@@ -17,7 +18,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
-using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using DynamicData;
 using Holo.Configuration;
@@ -920,6 +920,14 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     private void OnWindowClosed(object? sender, EventArgs e)
     {
+        // Save window state
+        ViewModel?.Persistence.WindowState = WindowState.ToPersistentWindowState();
+        if (WindowState is WindowState.Normal)
+        {
+            ViewModel?.Persistence.WindowWidth = Width;
+            ViewModel?.Persistence.WindowHeight = Height;
+        }
+
         // Save configuration, etc.
         ViewModel?.Configuration.Save();
         ViewModel?.Persistence.Save();

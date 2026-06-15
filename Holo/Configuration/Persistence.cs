@@ -40,6 +40,9 @@ public class Persistence : BindableBase, IPersistence
     private Dictionary<string, int> _audioTrackForVideo;
     private List<Uri> _recentDocuments;
     private List<Uri> _recentProjects;
+    private double _windowWidth;
+    private double _windowHeight;
+    private PersistentWindowState _windowState;
 
     /// <inheritdoc />
     public string LayoutName
@@ -88,6 +91,27 @@ public class Persistence : BindableBase, IPersistence
 
     /// <inheritdoc />
     public IReadOnlyList<Uri> RecentProjects => _recentProjects;
+
+    /// <inheritdoc />
+    public double WindowWidth
+    {
+        get => _windowWidth;
+        set => SetProperty(ref _windowWidth, value);
+    }
+
+    /// <inheritdoc />
+    public double WindowHeight
+    {
+        get => _windowHeight;
+        set => SetProperty(ref _windowHeight, value);
+    }
+
+    /// <inheritdoc />
+    public PersistentWindowState WindowState
+    {
+        get => _windowState;
+        set => SetProperty(ref _windowState, value);
+    }
 
     /// <inheritdoc />
     public void SetScaleForRes(int height, ScaleFactor scaleFactor)
@@ -167,7 +191,7 @@ public class Persistence : BindableBase, IPersistence
 
             var model = new PersistenceModel
             {
-                Version = PersistenceModel.CurrentApiVersion,
+                Version = PersistenceModelBase.CurrentApiVersion,
                 LayoutName = _layoutName,
                 UseColorRing = _useColorRing,
                 VisualizationScaleX = _visualizationScaleX,
@@ -178,6 +202,9 @@ public class Persistence : BindableBase, IPersistence
                 AudioTrackForVideo = new Dictionary<string, int>(_audioTrackForVideo),
                 RecentDocuments = [.. _recentDocuments],
                 RecentProjects = [.. _recentProjects],
+                WindowWidth = _windowWidth,
+                WindowHeight = _windowHeight,
+                WindowState = _windowState,
             };
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
@@ -238,6 +265,9 @@ public class Persistence : BindableBase, IPersistence
                 _audioTrackForVideo = new Dictionary<string, int>(model.AudioTrackForVideo),
                 _recentDocuments = [.. model.RecentDocuments],
                 _recentProjects = [.. model.RecentProjects],
+                _windowWidth = model.WindowWidth,
+                _windowHeight = model.WindowHeight,
+                _windowState = model.WindowState,
             };
             logger.LogInformation("Done!");
             return result;
@@ -270,6 +300,9 @@ public class Persistence : BindableBase, IPersistence
         _visualizationScaleY = 2d;
         _playgroundCs = string.Empty;
         _playgroundJs = string.Empty;
+        _windowWidth = 1350;
+        _windowHeight = 650;
+        _windowState = PersistentWindowState.Normal;
     }
 
     /// <inheritdoc />
