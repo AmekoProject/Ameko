@@ -144,10 +144,10 @@ public partial class TabItemViewModel : ViewModelBase
     [Command("ameko.video.keyframe.previous", KeybindContext.Video)]
     public ICommand PreviousKeyframeCommand { get; }
 
-    [Command("ameko.video.active.start", "Ctrl+D1", KeybindContext.Video)]
+    [Command("ameko.video.active.start", "Ctrl+D1", KeybindContext.Global)]
     public ICommand ActiveStartCommand { get; }
 
-    [Command("ameko.video.active.end", "Ctrl+D2", KeybindContext.Video)]
+    [Command("ameko.video.active.end", "Ctrl+D2", KeybindContext.Global)]
     public ICommand ActiveEndCommand { get; }
 
     [Command("ameko.video.zoom.in", "Ctrl+OemPlus", KeybindContext.Video)]
