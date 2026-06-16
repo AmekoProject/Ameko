@@ -11,6 +11,7 @@ namespace Holo.Media;
 /// <param name="frameCount">Number of frames in the source</param>
 /// <param name="sar">Screen aspect ratio</param>
 /// <param name="frameTimes">List of frame times, in milliseconds</param>
+/// <param name="frameMidpoints">List of frame midpoints, in milliseconds</param>
 /// <param name="frameIntervals">List of frame intervals, in milliseconds</param>
 /// <param name="keyframes">List of keyframe indexes</param>
 /// <param name="width">Width of the video, in pixels</param>
