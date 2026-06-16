@@ -315,15 +315,15 @@ namespace Ameko.I18N {
             }
         }
         
-        public static string Config_Label_TimingSnapMode {
+        public static string Config_Label_TimingMode {
             get {
-                return ResourceManager.GetString("Config_Label_TimingSnapMode", resourceCulture);
+                return ResourceManager.GetString("Config_Label_TimingMode", resourceCulture);
             }
         }
         
-        public static string Config_Label_TimingSnapMode_ToolTip {
+        public static string Config_Label_TimingMode_ToolTip {
             get {
-                return ResourceManager.GetString("Config_Label_TimingSnapMode_ToolTip", resourceCulture);
+                return ResourceManager.GetString("Config_Label_TimingMode_ToolTip", resourceCulture);
             }
         }
         

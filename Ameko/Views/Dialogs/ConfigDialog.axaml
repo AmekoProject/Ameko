@@ -207,8 +207,8 @@
                 <Label Grid.Column="0"
                        Grid.Row="9"
                        VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_TimingSnapMode}"
-                       ToolTip.Tip="{x:Static i18n:Config.Config_Label_TimingSnapMode_ToolTip}" />
+                       Content="{x:Static i18n:Config.Config_Label_TimingMode}"
+                       ToolTip.Tip="{x:Static i18n:Config.Config_Label_TimingMode_ToolTip}" />
                 <StackPanel Grid.Column="1"
                             Grid.Row="9">
                     <RadioButton VerticalAlignment="Center"

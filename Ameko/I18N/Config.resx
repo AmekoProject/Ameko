@@ -153,14 +153,14 @@
     <data name="Config_Label_IndexCacheExpiration" xml:space="preserve">
         <value>Index cache expiration (days)</value>
     </data>
-    <data name="Config_Label_TimingSnapMode" xml:space="preserve">
-        <value>Timing snap mode</value>
+    <data name="Config_Label_TimingMode" xml:space="preserve">
+        <value>Timing mode</value>
     </data>
-    <data name="Config_Label_TimingSnapMode_ToolTip" xml:space="preserve">
+    <data name="Config_Label_TimingMode_ToolTip" xml:space="preserve">
         <value>Controls whether times should be snapped to the nearest frame midpoint by default</value>
     </data>
     <data name="Config_RadioButton_SnapToFrame" xml:space="preserve">
-        <value>Snap to frame (Shift to bypass)</value>
+        <value>Snap to frame (Shift to place freely)</value>
     </data>
     <data name="Config_RadioButton_FreePlacement" xml:space="preserve">
         <value>Free placement (Shift to snap)</value>
