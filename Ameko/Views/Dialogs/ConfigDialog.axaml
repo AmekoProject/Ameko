@@ -6,6 +6,7 @@
 
         xmlns:c="clr-namespace:Ameko.Views.Controls"
         xmlns:converters="clr-namespace:Ameko.Converters"
+        xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
         xmlns:i18n="clr-namespace:Ameko.I18N"
         xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
 
@@ -20,6 +21,7 @@
         Icon="/Assets/Ameko-Simplified-BG-64.ico"
         Title="{x:Static i18n:Config.ConfigDialog_Title}">
     <Window.Resources>
+        <converters:EnumConverter x:Key="EnumConverter" />
         <converters:HccBorderConverter x:Key="BorderConverter" />
     </Window.Resources>
     <StackPanel Margin="2">
@@ -97,7 +99,7 @@
         <!-- Ameko Behavior -->
         <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Behavior}">
             <Grid ColumnDefinitions="Auto, Auto, Auto"
-                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                   ColumnSpacing="10"
                   RowSpacing="2">
                 <Label Grid.Column="0"
@@ -202,6 +204,28 @@
                 <CheckBox Grid.Column="1"
                           Grid.Row="8"
                           IsChecked="{Binding Config.AutoloadAudioTracks}" />
+                <Label Grid.Column="0"
+                       Grid.Row="9"
+                       VerticalAlignment="Center"
+                       Content="{x:Static i18n:Config.Config_Label_TimingSnapMode}"
+                       ToolTip.Tip="{x:Static i18n:Config.Config_Label_TimingSnapMode_ToolTip}" />
+                <StackPanel Grid.Column="1"
+                            Grid.Row="9">
+                    <RadioButton VerticalAlignment="Center"
+                                 GroupName="TimingMode"
+                                 Content="{x:Static i18n:Config.Config_RadioButton_SnapToFrame}"
+                                 ToolTip.Tip="{x:Static i18n:Config.Config_RadioButton_SnapToFrame_ToolTip}"
+                                 IsChecked="{Binding Config.TimingMode,
+                                             Converter={StaticResource EnumConverter},
+                                             ConverterParameter={x:Static holo:TimingMode.SnapToFrame}}" />
+                    <RadioButton VerticalAlignment="Center"
+                                 GroupName="TimingMode"
+                                 Content="{x:Static i18n:Config.Config_RadioButton_FreePlacement}"
+                                 ToolTip.Tip="{x:Static i18n:Config.Config_RadioButton_FreePlacement_ToolTip}"
+                                 IsChecked="{Binding Config.TimingMode,
+                                             Converter={StaticResource EnumConverter},
+                                             ConverterParameter={x:Static holo:TimingMode.FreePlacement}}" />
+                </StackPanel>
             </Grid>
         </HeaderedContentControl>
         
