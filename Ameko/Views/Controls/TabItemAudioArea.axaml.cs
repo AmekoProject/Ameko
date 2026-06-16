@@ -244,17 +244,16 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
 
     private Time PositionToTime(double x, KeyModifiers modifiers)
     {
-        // When shift is pressed, don't snap
-        // TODO: Add a config option for this
-
         var mc = ViewModel!.Workspace.MediaController;
 
         var startMs = GetClampedPositionMs(mc);
         var ms = Convert.ToInt64(x * mc.VisualizerScaleX + startMs);
 
-        return (modifiers & KeyModifiers.Shift) == 0
-            ? Time.FromMillis(mc.VideoInfo!.MidpointFromMillis(ms))
-            : Time.FromMillis(ms);
+        var mode = ViewModel.Configuration.TimingMode;
+        var shift = (modifiers & KeyModifiers.Shift) != 0;
+        var snap = mode is TimingMode.SnapToFrame ? !shift : shift;
+
+        return snap ? Time.FromMillis(mc.VideoInfo!.MidpointFromMillis(ms)) : Time.FromMillis(ms);
     }
 
     private double TimeToPosition(Time time)
