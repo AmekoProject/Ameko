@@ -43,6 +43,11 @@ public interface IConfiguration
     int DefaultLayer { get; set; }
 
     /// <summary>
+    /// Timing behavior
+    /// </summary>
+    TimingMode TimingMode { get; set; }
+
+    /// <summary>
     /// Whether autosave is enabled
     /// </summary>
     bool AutosaveEnabled { get; set; }

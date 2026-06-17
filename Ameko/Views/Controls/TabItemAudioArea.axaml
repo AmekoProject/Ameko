@@ -130,6 +130,9 @@
                        Opacity="0.5" />
             <Panel Background="Transparent"
                    PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
+                   PointerPressed="AudioTarget_OnPointerPressed"
+                   PointerMoved="AudioTarget_OnPointerMoved"
+                   PointerReleased="AudioTarget_OnPointerReleased"
                    IsVisible="{Binding Workspace.MediaController.IsAudioLoaded}">
                 <c:Visualizer MediaController="{Binding Workspace.MediaController}" />
             </Panel>

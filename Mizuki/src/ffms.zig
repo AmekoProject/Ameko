@@ -218,7 +218,9 @@ pub fn LoadVideo(
     // Allocate ArrayLists
     var keyframes_list: std.ArrayList(c_int) = .empty;
     var timecodes_list: std.ArrayList(c_longlong) = .empty;
+    var midcodes_list: std.ArrayList(c_longlong) = .empty;
     var kf_timecodes_list: std.ArrayList(c_longlong) = .empty;
+    var kf_midcodes_list: std.ArrayList(c_longlong) = .empty;
     var intervals_list: std.ArrayList(c_longlong) = .empty;
 
     errdefer timecodes_list.deinit(common.allocator);
@@ -248,6 +250,35 @@ pub fn LoadVideo(
     ctx.keyframes = keyframes_list.toOwnedSlice(common.allocator) catch unreachable;
     ctx.timecodes = timecodes_list.toOwnedSlice(common.allocator) catch unreachable;
     ctx.kf_timecodes = kf_timecodes_list.toOwnedSlice(common.allocator) catch unreachable;
+
+    // Calculate the midcodes
+    frame_number = 0;
+    while (frame_number < ctx.frame_count) : (frame_number += 1) {
+        const frame1: usize = @intCast(frame_number);
+        const frame2 = frame1 + 1;
+
+        // Use the midpoint delta between frame1 and the previous frame
+        // to calculate the midpoint of frame2 and the end of the video
+        if (frame2 >= ctx.frame_count) {
+            const frame3 = frame1 - 1;
+            const ms3 = ctx.timecodes.?[frame3];
+            const ms1 = ctx.timecodes.?[frame1];
+            try midcodes_list.append(common.allocator, @divTrunc(ms1 - ms3, 2) + ms1);
+        } else { // Normal midpoint
+            const ms1 = ctx.timecodes.?[frame1];
+            const ms2 = ctx.timecodes.?[frame2];
+            try midcodes_list.append(common.allocator, @divTrunc(ms2 - ms1, 2) + ms1);
+        }
+    }
+    ctx.midcodes = midcodes_list.toOwnedSlice(common.allocator) catch unreachable;
+
+    // Get the keyframe midcodes
+
+    for (ctx.keyframes.?) |kf| {
+        const kf_u: usize = @intCast(kf);
+        try kf_midcodes_list.append(common.allocator, ctx.midcodes.?[kf_u]);
+    }
+    ctx.kf_midcodes = kf_midcodes_list.toOwnedSlice(common.allocator) catch unreachable;
 
     // Calculate frame intervals
     var i: usize = 0;

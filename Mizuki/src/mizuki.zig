@@ -180,7 +180,7 @@ pub export fn GetVisualization(
     event_bounds: [*]i64,
     event_bounds_len: c_int,
 ) ?*frames.Bitmap {
-    return buffers.ProcVizualizationFrame(
+    return buffers.ProcVisualizationFrame(
         g_ctx,
         width,
         height,
@@ -214,6 +214,14 @@ pub export fn GetTimecodes(g_ctx: *context.GlobalContext) common.LongArray {
     return .{
         .ptr = g_ctx.*.ffms.timecodes.?.ptr,
         .len = g_ctx.*.ffms.timecodes.?.len,
+    };
+}
+
+/// Get array of midcodes
+pub export fn GetMidcodes(g_ctx: *context.GlobalContext) common.LongArray {
+    return .{
+        .ptr = g_ctx.*.ffms.midcodes.?.ptr,
+        .len = g_ctx.*.ffms.midcodes.?.len,
     };
 }
 

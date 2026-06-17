@@ -132,6 +132,12 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
+    public long[] GetMidcodes()
+    {
+        return [];
+    }
+
+    /// <inheritdoc />
     public long[] GetFrameIntervals()
     {
         return [];

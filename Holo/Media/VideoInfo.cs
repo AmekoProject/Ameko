@@ -11,6 +11,7 @@ namespace Holo.Media;
 /// <param name="frameCount">Number of frames in the source</param>
 /// <param name="sar">Screen aspect ratio</param>
 /// <param name="frameTimes">List of frame times, in milliseconds</param>
+/// <param name="frameMidpoints">List of frame midpoints, in milliseconds</param>
 /// <param name="frameIntervals">List of frame intervals, in milliseconds</param>
 /// <param name="keyframes">List of keyframe indexes</param>
 /// <param name="width">Width of the video, in pixels</param>
@@ -20,6 +21,7 @@ public class VideoInfo(
     int frameCount,
     Rational sar,
     long[] frameTimes,
+    long[] frameMidpoints,
     long[] frameIntervals,
     int[] keyframes,
     int width,
@@ -45,6 +47,11 @@ public class VideoInfo(
     /// List of frame times, in milliseconds
     /// </summary>
     public long[] FrameTimes { get; } = frameTimes;
+
+    /// <summary>
+    /// List of frame mid-times, in milliseconds
+    /// </summary>
+    public long[] FrameMidpoints { get; } = frameMidpoints;
 
     /// <summary>
     /// List of frame intervals, in milliseconds
@@ -92,7 +99,7 @@ public class VideoInfo(
             return bs;
 
         // ~bs → Index of the first greater element.
-        return ~bs;
+        return ~bs - 1;
     }
 
     /// <summary>
@@ -106,6 +113,46 @@ public class VideoInfo(
     public long MillisecondsFromFrame(int frameNumber)
     {
         return FrameTimes[Math.Clamp(frameNumber, 0, FrameTimes.Length - 1)];
+    }
+
+    /// <summary>
+    /// Gets the midpoint in milliseconds of the provided <paramref name="frameNumber"/>
+    /// </summary>
+    /// <remarks>
+    /// If the frame number is out of bounds, returns the closest time
+    /// </remarks>
+    /// <param name="frameNumber">Frame number</param>
+    /// <returns>Time in milliseconds</returns>
+    public long MidpointFromFrame(int frameNumber)
+    {
+        return FrameMidpoints[Math.Clamp(frameNumber, 0, FrameTimes.Length - 1)];
+    }
+
+    /// <summary>
+    /// Gets the closest frame midpoint to <paramref name="millis"/> in milliseconds.
+    /// </summary>
+    /// <remarks>
+    /// If the time is out of bounds, returns the closest midpoint (frame 0 or <see cref="FrameCount"/>)
+    /// </remarks>
+    /// <param name="millis">Time in milliseconds</param>
+    /// <returns>Midpoint in milliseconds</returns>
+    public long MidpointFromMillis(long millis)
+    {
+        if (millis < FrameMidpoints[0])
+            return FrameMidpoints[0];
+        if (millis > FrameMidpoints[^1])
+            return FrameMidpoints[^1];
+
+        var bs = Array.BinarySearch(FrameMidpoints, millis);
+
+        if (bs >= 0)
+            return FrameMidpoints[bs];
+
+        var idx = ~bs;
+        var lo = FrameMidpoints[idx - 1];
+        var hi = FrameMidpoints[idx];
+
+        return (millis - lo) <= (hi - millis) ? lo : hi;
     }
 
     /// <summary>

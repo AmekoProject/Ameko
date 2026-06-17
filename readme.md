@@ -13,16 +13,18 @@ Ameko is a subtitle editing suite for Advanced Substation Alpha (ASS) subtitles.
 
 <h2 align="center">Features</h2>
 
-- **Core Subtitle Editing:** Create, manipulate, and style subtitles.
+- **Subtitle Editing:** Create, manipulate, and style subtitles.
 - **Audio and Video Playback:** Preview your work with the integrated video player powered
   by [FFMS2](https://github.com/FFMS/ffms2) and [libass](https://github.com/libass/libass/).
 - **Reference Files:** Load an additional subtitle file (e.g. closed captions) to use as a reference. When editing a
   line, any lines from the reference file that overlap in time are automatically shown in a panel below the editor.
 - **Tabs:** Ameko is a tabbed editor, allowing you to easily switch between multiple open workspaces, each with their
   own subtitle, audio, and video files.
-- **Projects:** Ameko is introducing *Project Files*, which enable logical grouping and organization of subtitle files
+- **Projects:** Ameko introduces *Project Files*, which enable logical grouping and organization of subtitle files
   independent of the physical filesystem structure. They also provide a centralized place for team-shared configuration,
   spellchecking, styles, colors, and more.
+- **Key Names & Phrases:** Keep you and your team's terminology aligned! Projects have full-featured KNP support,
+  keeping you aware of names and terms in the file and keeping them out of the spellchecker.
 - **Integrated Git Support:** Ameko features basic Git features, like commiting, pulling, pushing, and blaming.
 - **Scripting:** Ameko includes robust support for C# scripts and libraries. The integrated package manager and the vast
   NuGet ecosystem are at your fingertips! In addition, Ameko features a scripting playground for quick-and-dirty
@@ -37,8 +39,6 @@ Ameko is a subtitle editing suite for Advanced Substation Alpha (ASS) subtitles.
 Potential features on Ameko's roadmap include:
 
 - **Audio Spectrum View:** Add a spectrum visualization option to complement the existing waveform one.
-- **Audio Text Rendering:** View timestamps and more on the audio visualization.
-- **Interactive Audio Tools:** Click and drag on the audio view to re-time lines.
 - **Graphical Tools:** Tools for visually manipulating subtitles on the video.
 
 The inclusion of these features will likely rely on support from viewers like you! If you're interested in contributing
@@ -46,29 +46,22 @@ to the project, please reach out!
 
 <h2 align="center">Running</h2>
 
-### Windows
+### Windows & macOS
 
-Ameko will run out-of-the-box on Windows.
-
-### macOS
-
-Ameko will run out-of-the-box on macOS, but you will need to run `xattr -cr Ameko.app` before macOS will let you run it
-for the first time.
+- Ameko will run out-of-the-box on Windows and macOS.
+- You may need to run `xattr -cr Ameko.app` before macOS will let you open Ameko for the first time.
 
 ### Linux
 
-To open videos, ffms2 and libass will need to be installed.
-A [PKGBUILD](https://github.com/AmekoProject/Ameko/blob/master/Packaging/PKGBUILD) is provided for Arch distributions.
-
-To use an IME, you may need to set the `XMODIFIERS` environment variable; e.g: `XMODIFIERS=@im=fcitx`
+- To open media files, ffms2 and libass will need to be installed.
+- A [PKGBUILD](https://github.com/AmekoProject/Ameko/blob/master/Packaging/PKGBUILD) is provided for Arch distributions.
+- To use an IME, you may need to set the `XMODIFIERS` environment variable; e.g: `XMODIFIERS=@im=fcitx`
 
 <h2 align="center">Development</h2>
 
-### Bob the Builder
+I strongly recommend using Jetbrains Rider or Visual Studio for development.
 
-I would strongly recommend using Jetbrains Rider or Visual Studio for development.
-
-#### C#
+### C#
 
 - Make sure you have the .NET SDK installed.
 - Run `dotnet restore` to collect required NuGet packages.
@@ -77,7 +70,7 @@ I would strongly recommend using Jetbrains Rider or Visual Studio for developmen
 - To build a release binary, use `dotnet publish`.
 - The final output for debugging and running is the `Ameko` project.
 
-#### Zig
+### Zig
 
 - Make sure you have Zig installed.
 - You may need to build FFMS2 and libass yourself.
@@ -85,23 +78,6 @@ I would strongly recommend using Jetbrains Rider or Visual Studio for developmen
 - To build, run `zig build`. To run, use `zig build run`.
 - To test, run `zig test`.
 - To build a release binary, use `zig build --release=safe`.
-
-### Project Components
-
-I wasn't sure where to put this section, so under "development" it goes! The Ameko project is currently comprised of 4
-components working in tandem.
-
-- **AssCS:** The backbone of the operation. AssCS is responsible for everything involving the subtitle document itself.
-  Managing events and styles, parsing tags, and reading/writing files are just part of what AssCS does. Eventually,
-  AssCS will likely be split into its own project so anyone can use it for their C# projects.
-- **Holo:** The middleware layer, primarily linking the GUI to AssCS and Mizuki. It also manages the Package Manager,
-  projects, configuration, and pretty much everything that's not immediately GUI-related.
-- **Mizuki:** A high-performance interop library. Mizuki facilitates communication between Holo and A/V libraries like
-  FFMS and libass. By doing most of the work in a low-level language like Zig, Mizuki is able to reduce the amount of
-  calls across the managed-unmanaged border.
-- **Ameko:** Despite being the namesake of the project, effort has been made to make Ameko a thin GUI. Theoretically,
-  one should be able to build their own GUI and plug it right into Holo. Ameko's primary purpose is to facilitate data
-  transfer between the user and Holo.
 
 <h2 align="center">Contributing</h2>
 
@@ -125,9 +101,9 @@ which is quite limited, such as lacking support for plurals.
 
 Before submitting a pull request, please make sure your code is properly formatted:
 
-- **C# code** is automatically formatted using [CSharpier](https://github.com/belav/csharpier) as part of the build
+- **C#** is automatically formatted using [CSharpier](https://github.com/belav/csharpier) as part of the build
   process.
-- **Zig code** should be formatted using `zig fmt`.
+- **Zig** should be formatted using `zig fmt`.
 
 Additionally, there are some testing guidelines:
 
@@ -138,11 +114,11 @@ Additionally, there are some testing guidelines:
 
 - Contributions that are primarily or wholly generated by AI tools will not be accepted.
 - Inclusion of any AI-generated code must be disclosed.
-  - Use of `Co-Authored-By` for attribution is encouraged, but not required.
+    - Use of `Co-Authored-By` for attribution is encouraged, but not required.
 - AI-generated unit tests are not permitted.
 
 <h2 align="center">Licensing</h2>
 
-- The Ameko application is licensed under the GNU GPL v3 license.
+- The Ameko application and binaries are licensed under the GNU GPL v3 license.
 - Libraries developed for Ameko are licensed under the Mozilla Public License 2.0.
 - For more information, see the LICENSE files.

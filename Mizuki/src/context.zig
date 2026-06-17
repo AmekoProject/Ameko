@@ -21,7 +21,9 @@ pub const FFMSContext = struct {
     // Public
     keyframes: ?[]c_int,
     timecodes: ?[]c_longlong,
+    midcodes: ?[]c_longlong,
     kf_timecodes: ?[]c_longlong,
+    kf_midcodes: ?[]c_longlong,
     frame_intervals: ?[]c_longlong,
     frame_count: c_int,
 
@@ -46,7 +48,9 @@ pub const FFMSContext = struct {
             .video_color_range = -1,
             .keyframes = null,
             .timecodes = null,
+            .midcodes = null,
             .kf_timecodes = null,
+            .kf_midcodes = null,
             .frame_intervals = null,
             .frame_count = undefined,
             .frame_width = 0,

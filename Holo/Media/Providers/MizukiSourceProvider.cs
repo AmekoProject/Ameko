@@ -269,6 +269,13 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
+    public long[] GetMidcodes()
+    {
+        var ptr = External.GetMidcodes(_context);
+        return ptr.ToLongArray();
+    }
+
+    /// <inheritdoc />
     public long[] GetFrameIntervals()
     {
         var ptr = External.GetFrameIntervals(_context);
@@ -476,6 +483,9 @@ internal static unsafe partial class External
 
     [LibraryImport("mizuki")]
     internal static partial UnmanagedArray GetTimecodes(GlobalContext* context);
+
+    [LibraryImport("mizuki")]
+    internal static partial UnmanagedArray GetMidcodes(GlobalContext* context);
 
     [LibraryImport("mizuki")]
     internal static partial int GetChannelCount(GlobalContext* context);

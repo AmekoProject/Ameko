@@ -24,7 +24,7 @@ namespace Holo.Configuration;
 /// project's value is <see langword="null"/>.
 /// </para>
 /// </remarks>
-public partial class Configuration : BindableBase, IConfiguration
+public class Configuration : BindableBase, IConfiguration
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -50,6 +50,7 @@ public partial class Configuration : BindableBase, IConfiguration
     private bool _lineWidthIncludesPunctuation;
     private RichPresenceLevel _richPresenceLevel;
     private SaveFrames _saveFrames;
+    private TimingMode _timingMode;
     private int _defaultLayer;
     private string _culture;
     private string _spellcheckCulture;
@@ -95,6 +96,13 @@ public partial class Configuration : BindableBase, IConfiguration
     {
         get => _defaultLayer;
         set => SetProperty(ref _defaultLayer, value);
+    }
+
+    /// <inheritdoc />
+    public TimingMode TimingMode
+    {
+        get => _timingMode;
+        set => SetProperty(ref _timingMode, value);
     }
 
     /// <inheritdoc />
@@ -280,6 +288,7 @@ public partial class Configuration : BindableBase, IConfiguration
                 LineWidthIncludesPunctuation = _lineWidthIncludesPunctuation,
                 RichPresenceLevel = _richPresenceLevel,
                 SaveFrames = _saveFrames,
+                TimingMode = _timingMode,
                 DefaultLayer = _defaultLayer,
                 Culture = _culture,
                 SpellcheckCulture = _spellcheckCulture,
@@ -366,6 +375,7 @@ public partial class Configuration : BindableBase, IConfiguration
                 _lineWidthIncludesPunctuation = model.LineWidthIncludesPunctuation,
                 _richPresenceLevel = model.RichPresenceLevel,
                 _saveFrames = model.SaveFrames,
+                _timingMode = model.TimingMode,
                 _defaultLayer = model.DefaultLayer,
                 _culture = model.Culture,
                 _spellcheckCulture = model.SpellcheckCulture,
@@ -414,6 +424,7 @@ public partial class Configuration : BindableBase, IConfiguration
         _autosaveInterval = 60;
         _indexCacheExpiration = 8;
         _autoloadAudioTracks = true;
+        _timingMode = TimingMode.SnapToFrame;
         _culture = "en-US";
         _spellcheckCulture = "en_US";
         _theme = Theme.Default;

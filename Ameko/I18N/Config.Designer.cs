@@ -314,5 +314,41 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Config_Label_IndexCacheExpiration", resourceCulture);
             }
         }
+        
+        public static string Config_Label_TimingMode {
+            get {
+                return ResourceManager.GetString("Config_Label_TimingMode", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_TimingMode_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_TimingMode_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_RadioButton_SnapToFrame {
+            get {
+                return ResourceManager.GetString("Config_RadioButton_SnapToFrame", resourceCulture);
+            }
+        }
+        
+        public static string Config_RadioButton_FreePlacement {
+            get {
+                return ResourceManager.GetString("Config_RadioButton_FreePlacement", resourceCulture);
+            }
+        }
+        
+        public static string Config_RadioButton_FreePlacement_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_RadioButton_FreePlacement_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_RadioButton_SnapToFrame_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_RadioButton_SnapToFrame_ToolTip", resourceCulture);
+            }
+        }
     }
 }
