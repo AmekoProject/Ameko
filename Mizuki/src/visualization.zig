@@ -14,6 +14,8 @@ const color_a_playhead: u32 = 0xff00aeff;
 const color_qseconds: u32 = 0xffd0d0d0;
 const color_seconds: u32 = 0xfff85797;
 const color_event: u32 = 0xff937df8;
+const color_event_start: u32 = 0xff61e7b4;
+const color_event_end: u32 = 0xffe76194;
 const color_kf: u32 = 0xffe1e1e1;
 
 /// Render a waveform representation of the audio
@@ -296,18 +298,27 @@ fn DrawEventBounds(
         if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
             continue;
 
-        const start_x = (evt_start_ms - start_ms) / pixels_per_ms;
+        const start_x = ((evt_start_ms - start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
         const end_x = (evt_end_ms - start_ms) / pixels_per_ms;
 
-        // Draw posts
+        // Draw starting post
         if (start_x >= 0) {
-            DrawLine(bmp, @intFromFloat(start_x), gutter_half, bmp_height - gutter_half, color_event);
+            DrawLine(bmp, @intFromFloat(start_x), gutter_half, bmp_height - gutter_half, color_event_start);
+        }
+        // Make thicker if we can
+        if (start_x + 1 >= 0 and start_x + 1 < bmp_width_f and start_x + 1 < end_x) {
+            DrawLine(bmp, @intFromFloat(start_x + 1), gutter_half, bmp_height - gutter_half, color_event_start);
         }
 
-        if (evt_start_ms == evt_end_ms) continue; // Stop here if 0-duration
+        if (evt_start_ms == evt_end_ms or start_x == end_x) continue; // Stop here if 0-duration or 0-width
 
+        // Draw ending post
         if (end_x < bmp_width_f) {
-            DrawLine(bmp, @intFromFloat(end_x), gutter_half, bmp_height - gutter_half, color_event);
+            DrawLine(bmp, @intFromFloat(end_x), gutter_half, bmp_height - gutter_half, color_event_end);
+        }
+        // Make thicker if we can
+        if (end_x >= 1 and end_x - 1 > start_x + 1) {
+            DrawLine(bmp, @intFromFloat(end_x - 1), gutter_half, bmp_height - gutter_half, color_event_end);
         }
 
         const start_x_u: usize = @intFromFloat(@max(0, start_x));
