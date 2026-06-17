@@ -41,11 +41,11 @@ pub fn RenderWaveform(
     const bmp_height: u32 = @intCast(bmp_height_u);
     const bmp_mid: u32 = @divFloor(bmp_height, 2);
     const bmp_mid_i: i32 = @intCast(bmp_mid);
-    const wfv_height: u32 = @divFloor(bmp_height * 8, 10); // 80% height
-    const wvf_mid: u32 = @divFloor(wfv_height, 2);
-    const gutter_height: u32 = @divFloor(bmp_height, 10); // 10% height
+    const gutter_height: u32 = if (bmp_height >= 64) 16 else if (bmp_height >= 32) 12 else 0;
     const gutter_half: u32 = @divFloor(gutter_height, 2);
     const gutter_quarter: u32 = @divFloor(gutter_height, 4);
+    const wfv_height: u32 = bmp_height - (gutter_height * 2);
+    const wvf_mid: u32 = @divFloor(wfv_height, 2);
 
     if (bmp_height_u < 1 or bmp_width_u < 1 or bmp_pitch_u < 1) return;
 
@@ -205,7 +205,7 @@ fn DrawTimeScale(
 
     // Only draw if there's enough room
     const can_draw_qsecs = pixels_per_sec > 50;
-    const can_draw_labels = gutter_height > font.glyph_height;
+    const can_draw_labels = gutter_half > font.glyph_height;
     const can_draw_qlabels = can_draw_labels and pixels_per_sec > 115;
 
     var label_buf: [16]u8 = undefined;
