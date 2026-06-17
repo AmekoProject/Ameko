@@ -91,7 +91,7 @@ jobs:
         shell: pwsh
         run: |
           pushd Ameko
-          dotnet publish -c Release -p:SolutionDir=..\ -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesInSingleFile=true
+          dotnet publish -c Release -p:SolutionDir=..\ -r win-x64 --self-contained true
           popd
           cp "Mizuki/zig-out/bin/mizuki.dll" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/win-x64/publish"
           cp -Force "Mizuki/lib/*" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/win-x64/publish/"
@@ -136,7 +136,7 @@ jobs:
         shell: bash
         run: |
           pushd Ameko
-          dotnet publish -c Release -p:SolutionDir=../ -r osx-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesInSingleFile=true
+          dotnet publish -c Release -p:SolutionDir=../ -r osx-arm64 --self-contained true
           popd
           cp "Mizuki/zig-out/lib/libmizuki.dylib" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish"
           chmod +x Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish/Ameko
@@ -210,7 +210,7 @@ jobs:
         shell: bash
         run: |
           pushd Ameko
-          dotnet publish -c Release -p:SolutionDir=../ -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesInSingleFile=true
+          dotnet publish -c Release -p:SolutionDir=../ -r linux-x64 --self-contained true
           popd
           cp "Mizuki/zig-out/lib/libmizuki.so" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish"
           cat << EOF > "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish/DEPENDENCIES.txt"

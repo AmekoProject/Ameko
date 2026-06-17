@@ -172,6 +172,7 @@ public static class ScriptMenuService
             Header = I18N.Resources.Menu_Playground,
             Command = playgroundCommand,
             Icon = new MaterialIcon { Kind = MaterialIconKind.PinwheelOutline },
+            IsEnabled = false,
         };
     }
 
@@ -181,6 +182,7 @@ public static class ScriptMenuService
         {
             Header = I18N.Resources.Menu_Playground,
             Command = playgroundCommand,
+            IsEnabled = false,
         };
     }
 

@@ -429,4 +429,10 @@
     <data name="Menu_OpenKnp" xml:space="preserve">
         <value>_Key Names &amp; Terms...</value>
     </data>
+    <data name="Video_NothingLoaded" xml:space="preserve">
+        <value>No video loaded</value>
+    </data>
+    <data name="Audio_NothingLoaded" xml:space="preserve">
+        <value>No audio loaded</value>
+    </data>
 </root>

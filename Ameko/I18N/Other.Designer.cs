@@ -464,5 +464,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("MsgBox_IoError_Body_Json", resourceCulture);
             }
         }
+        
+        public static string Message_StyleNotFound {
+            get {
+                return ResourceManager.GetString("Message_StyleNotFound", resourceCulture);
+            }
+        }
     }
 }

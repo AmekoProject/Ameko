@@ -232,6 +232,22 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         await window.Clipboard!.SetFileAsync(file);
     }
 
+    private async Task DoShowStyleEditor(
+        IInteractionContext<StyleEditorDialogViewModel, StyleEditorDialogClosedMessage?> interaction
+    )
+    {
+        var window = TopLevel.GetTopLevel(this);
+        if (window is null)
+        {
+            interaction.SetOutput(null);
+            return;
+        }
+
+        var editor = new StyleEditorDialog { DataContext = interaction.Input };
+        var result = await editor.ShowDialog<StyleEditorDialogClosedMessage?>((Window)window);
+        interaction.SetOutput(result);
+    }
+
     public TabItem()
     {
         InitializeComponent();
@@ -266,6 +282,7 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
                     vm.ShowPasteOverDialog.RegisterHandler(DoShowPasteOverDialogAsync);
                     vm.ShowFileModifiedDialog.RegisterHandler(DoShowFileModifiedDialogAsync);
                     vm.ShowSpellcheckDialog.RegisterHandler(DoShowDialogAsync<SpellcheckDialog, SpellcheckDialogViewModel>);
+                    vm.ShowStyleEditorWindow.RegisterHandler(DoShowStyleEditor);
                     vm.SaveFrameAs.RegisterHandler(DoShowSaveFrameAsDialogAsync);
                     vm.CopyFrame.RegisterHandler(DoCopyFrameAsync);
                     // csharpier-ignore-end

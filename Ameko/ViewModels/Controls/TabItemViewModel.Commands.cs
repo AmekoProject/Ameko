@@ -477,6 +477,41 @@ public partial class TabItemViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Edit the current event's style
+    /// </summary>
+    private ReactiveCommand<Unit, Unit> CreateEditStyleCommand()
+    {
+        return ReactiveCommand.CreateFromTask(async () =>
+        {
+            var @event = Workspace.SelectionManager.ActiveEvent;
+            if (!Workspace.Document.StyleManager.TryGet(@event.Style, out var style))
+            {
+                var content = string.Format(I18N.Other.Message_StyleNotFound, @event.Style);
+                _messageService.Enqueue(content, TimeSpan.FromSeconds(4));
+                return;
+            }
+
+            var vm = _vmFactory.Create<StyleEditorDialogViewModel>(
+                style,
+                Workspace.Document.StyleManager,
+                Workspace.Document
+            );
+
+            var clone = style.Clone();
+
+            var result = await ShowStyleEditorWindow.Handle(vm);
+
+            // Revert if aborted
+            if (result is null)
+            {
+                style.SetFields(StyleField.All, clone);
+                return;
+            }
+            Workspace.Document.HistoryManager.Commit(ChangeType.ModifyStyle);
+        });
+    }
+
+    /// <summary>
     /// Get or Create the next event in the document
     /// </summary>
     private ReactiveCommand<Unit, Unit> CreateGetOrCreateAfterCommand()

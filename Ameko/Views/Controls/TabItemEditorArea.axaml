@@ -94,7 +94,8 @@
                         Padding="2 0"
                         Classes="Small"
                         ToolTip.Tip="{x:Static i18n:Resources.Editor_EditStyle_ToolTip}"
-                        Content="{icons:MaterialIconExt Kind=TagEditOutline}" />
+                        Content="{icons:MaterialIconExt Kind=TagEditOutline}"
+                        Command="{Binding EditStyleCommand}" />
                 <AutoCompleteBox Name="ActorAcBox"
                                  Grid.Column="3"
                                  Margin="1"

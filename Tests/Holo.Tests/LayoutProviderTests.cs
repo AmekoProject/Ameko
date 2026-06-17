@@ -90,6 +90,9 @@ file class MockPersistence : IPersistence
 {
     private double _visualizationScaleX;
     private double _visualizationScaleY;
+    private double _windowWidth;
+    private double _windowHeight;
+    private PersistentWindowState _windowState;
     public string LayoutName { get; set; } = "ThunderClan Camp";
     public bool UseColorRing { get; set; } = true;
 
@@ -118,6 +121,27 @@ file class MockPersistence : IPersistence
 
     /// <inheritdoc />
     public IReadOnlyList<Uri> RecentProjects { get; } = [];
+
+    /// <inheritdoc />
+    public double WindowWidth
+    {
+        get => _windowWidth;
+        set => _windowWidth = value;
+    }
+
+    /// <inheritdoc />
+    public double WindowHeight
+    {
+        get => _windowHeight;
+        set => _windowHeight = value;
+    }
+
+    /// <inheritdoc />
+    public PersistentWindowState WindowState
+    {
+        get => _windowState;
+        set => _windowState = value;
+    }
 
     /// <inheritdoc />
     public void SetScaleForRes(int height, ScaleFactor scaleFactor) { }

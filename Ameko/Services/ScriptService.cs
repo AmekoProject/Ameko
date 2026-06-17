@@ -300,5 +300,6 @@ public class ScriptService : IScriptService
         _scriptMap = [];
         _scriptletMap = [];
         Scripts = new AssCS.Utilities.ReadOnlyObservableCollection<IHoloExecutable>(_scripts);
+        CSScripting.Globals.DefaultRoslynCompilationToScript = true;
     }
 }

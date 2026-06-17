@@ -165,41 +165,48 @@
             </StackPanel>
         </Grid>
         
-        <!-- Video Target -->
-        <ScrollViewer IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
-                      IsVisible="{Binding Workspace.MediaController.IsVideoLoaded}"
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto"
-                      IsScrollChainingEnabled="False"
-                      AllowAutoHide="False"
-                      Classes="InsetContent">
-            <Panel Name="VideoTarget"
-                   Width="{Binding Workspace.MediaController.DisplayWidth, FallbackValue=0, Mode=OneWay}"
-                   Height="{Binding Workspace.MediaController.DisplayHeight, FallbackValue=0, Mode=OneWay}"
-                   Background="Gray"
-                   PointerWheelChanged="VideoTarget_OnPointerWheelChanged">
-                <c:SilkRenderer MediaController="{Binding Workspace.MediaController}" />
-                <Panel.RenderTransform>
-                    <RotateTransform Angle="{Binding Workspace.MediaController.DisplayAngle, FallbackValue=0, Mode=OneWay}" />
-                </Panel.RenderTransform>
-            </Panel>
-            <ScrollViewer.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_Frame}"
-                              Command="{Binding CopyFrameCommand}" />
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_VideoOnly}"
-                              Command="{Binding CopyFrameVideoOnlyCommand}" />
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_SubsOnly}"
-                              Command="{Binding CopyFrameVideoOnlyCommand}" />
-                    <Separator />
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_Frame}"
-                              Command="{Binding SaveFrameCommand}" />
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_VideoOnly}"
-                              Command="{Binding SaveFrameVideoOnlyCommand}" />
-                    <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_SubsOnly}"
-                              Command="{Binding SaveFrameSubtitlesOnlyCommand}" />
-                </ContextMenu>
-            </ScrollViewer.ContextMenu>
-        </ScrollViewer>
+        <Grid>
+            <TextBlock Text="{x:Static i18n:Resources.Video_NothingLoaded}"
+                       IsVisible="{Binding !Workspace.MediaController.IsVideoLoaded}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Opacity="0.5" />
+            <!-- Video Target -->
+            <ScrollViewer IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+                          IsVisible="{Binding Workspace.MediaController.IsVideoLoaded}"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          IsScrollChainingEnabled="False"
+                          AllowAutoHide="False"
+                          Classes="InsetContent">
+                <Panel Name="VideoTarget"
+                       Width="{Binding Workspace.MediaController.DisplayWidth, FallbackValue=0, Mode=OneWay}"
+                       Height="{Binding Workspace.MediaController.DisplayHeight, FallbackValue=0, Mode=OneWay}"
+                       Background="Gray"
+                       PointerWheelChanged="VideoTarget_OnPointerWheelChanged">
+                    <c:SilkRenderer MediaController="{Binding Workspace.MediaController}" />
+                    <Panel.RenderTransform>
+                        <RotateTransform Angle="{Binding Workspace.MediaController.DisplayAngle, FallbackValue=0, Mode=OneWay}" />
+                    </Panel.RenderTransform>
+                </Panel>
+                <ScrollViewer.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_Frame}"
+                                  Command="{Binding CopyFrameCommand}" />
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_VideoOnly}"
+                                  Command="{Binding CopyFrameVideoOnlyCommand}" />
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_SubsOnly}"
+                                  Command="{Binding CopyFrameVideoOnlyCommand}" />
+                        <Separator />
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_Frame}"
+                                  Command="{Binding SaveFrameCommand}" />
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_VideoOnly}"
+                                  Command="{Binding SaveFrameVideoOnlyCommand}" />
+                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_SubsOnly}"
+                                  Command="{Binding SaveFrameSubtitlesOnlyCommand}" />
+                    </ContextMenu>
+                </ScrollViewer.ContextMenu>
+            </ScrollViewer>
+        </Grid>
     </DockPanel>
 </UserControl>

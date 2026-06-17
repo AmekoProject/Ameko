@@ -5,12 +5,15 @@ using Holo.Media;
 
 namespace Holo.Configuration;
 
-internal class PersistenceModel
+internal record PersistenceModelBase
 {
     [JsonIgnore]
-    internal const double CurrentApiVersion = 1.0d;
+    internal const int CurrentApiVersion = 2;
+    public required int Version;
+}
 
-    public required double Version;
+internal record PersistenceModel : PersistenceModelBase
+{
     public required string LayoutName;
     public required bool UseColorRing;
     public required double VisualizationScaleX;
@@ -21,4 +24,25 @@ internal class PersistenceModel
     public required Dictionary<string, int> AudioTrackForVideo;
     public required List<Uri> RecentDocuments;
     public required List<Uri> RecentProjects;
+    public required double WindowWidth;
+    public required double WindowHeight;
+    public required PersistentWindowState WindowState;
+}
+
+/// <summary>
+/// Window State options
+/// </summary>
+public enum PersistentWindowState
+{
+    /// <summary>The window is neither minimized nor maximized.</summary>
+    Normal,
+
+    /// <summary>The window is minimized.</summary>
+    Minimized,
+
+    /// <summary>The window is maximized.</summary>
+    Maximized,
+
+    /// <summary>The window is fullscreen.</summary>
+    FullScreen,
 }

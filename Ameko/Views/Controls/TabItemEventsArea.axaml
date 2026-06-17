@@ -31,6 +31,7 @@
               Background="Transparent"
               CanUserResizeColumns="True"
               CanUserReorderColumns="False"
+              CanUserSortColumns="False"
               SelectionMode="Extended"
               GridLinesVisibility="All"
               VerticalScrollBarVisibility="Auto"

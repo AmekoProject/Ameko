@@ -52,6 +52,21 @@ public interface IPersistence
     IReadOnlyList<Uri> RecentProjects { get; }
 
     /// <summary>
+    /// Width of the main window
+    /// </summary>
+    double WindowWidth { get; set; }
+
+    /// <summary>
+    /// Height of the main window
+    /// </summary>
+    double WindowHeight { get; set; }
+
+    /// <summary>
+    /// State of the main window
+    /// </summary>
+    PersistentWindowState WindowState { get; set; }
+
+    /// <summary>
     /// Set the scale for a video resolution
     /// </summary>
     /// <param name="height">Height of the video in pixels</param>
