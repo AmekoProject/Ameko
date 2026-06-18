@@ -301,6 +301,13 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
+    public ProfilePoint[] ProfileSubtitles(int fromFrame, int toFrame, int width, int height)
+    {
+        var ptr = External.ProfileSubtitles(_context, fromFrame, toFrame, width, height);
+        return ptr.ToProfilePointArray();
+    }
+
+    /// <inheritdoc />
     public void CleanCache(uint days)
     {
         // Delete all indexes that haven't been accessed in 8 days
@@ -500,6 +507,15 @@ internal static unsafe partial class External
     internal static partial UnmanagedArray GetFrameIntervals(GlobalContext* context);
 
     [LibraryImport("mizuki")]
+    internal static partial UnmanagedArray ProfileSubtitles(
+        GlobalContext* context,
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height
+    );
+
+    [LibraryImport("mizuki")]
     internal static partial void SetLoggerCallback(LogCallback callback);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -515,7 +531,7 @@ internal static unsafe partial class External
 internal struct GlobalContext;
 
 /// <summary>
-/// An unmanaged integer array
+/// An unmanaged array
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 internal struct UnmanagedArray
@@ -564,6 +580,23 @@ internal static class UnmanagedArrayExtensions
             {
                 var ptr = array.Pointer + (i * size);
                 managed[i] = Marshal.PtrToStructure<TrackInfo>(ptr);
+            }
+            return managed;
+        }
+
+        /// <summary>
+        /// Copy an unmanaged <see cref="UnmanagedArray"/> to a managed <c>ProfilePoint[]</c>
+        /// </summary>
+        /// <returns>Managed array</returns>
+        public ProfilePoint[] ToProfilePointArray()
+        {
+            var managed = new ProfilePoint[array.Length];
+            var size = Marshal.SizeOf<ProfilePoint>();
+
+            for (var i = 0; i < (int)array.Length; i++)
+            {
+                var ptr = array.Pointer + (i * size);
+                managed[i] = Marshal.PtrToStructure<ProfilePoint>(ptr);
             }
             return managed;
         }

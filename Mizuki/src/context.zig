@@ -72,11 +72,14 @@ pub const LibassContext = struct {
     track: ?*c.ass_track,
     current_hash: u32,
 
+    profile_points: ?[]common.AssProfilePoint,
+
     pub fn Init() LibassContext {
         return LibassContext{
             .renderer = null,
             .track = null,
             .current_hash = 0,
+            .profile_points = null,
         };
     }
 };

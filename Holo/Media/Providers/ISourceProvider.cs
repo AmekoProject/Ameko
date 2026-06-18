@@ -190,6 +190,16 @@ public interface ISourceProvider
     long GetSampleCount();
 
     /// <summary>
+    /// Profile the subtitles
+    /// </summary>
+    /// <param name="fromFrame">Frame to start profiling at</param>
+    /// <param name="toFrame">Frame to end profiling at</param>
+    /// <param name="width">Width of the rendering frame</param>
+    /// <param name="height">Height of the rendering frame</param>
+    /// <returns>Array of profile points</returns>
+    ProfilePoint[] ProfileSubtitles(int fromFrame, int toFrame, int width, int height);
+
+    /// <summary>
     /// Clear the cache
     /// </summary>
     /// <param name="days">Expiration time</param>

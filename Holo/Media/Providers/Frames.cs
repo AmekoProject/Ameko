@@ -70,3 +70,13 @@ public struct Bitmap
     public unsafe byte* Data;
     public int Refcount;
 }
+
+[StructLayout(LayoutKind.Sequential)]
+public struct ProfilePoint
+{
+    public int Frame;
+    public long Timestamp;
+    public double RenderTimeMs;
+    public int ImageSize;
+    public int ImageCount;
+}
