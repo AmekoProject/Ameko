@@ -50,6 +50,15 @@ public class MediaController : BindableBase
     private long[] _eventBounds = [];
 
     /// <summary>
+    /// If modifications are disabled
+    /// </summary>
+    public bool IsLocked
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
+
+    /// <summary>
     /// If media operations are to be enabled
     /// </summary>
     public bool IsEnabled { get; init; }
@@ -324,6 +333,9 @@ public class MediaController : BindableBase
     /// </summary>
     public void Stop()
     {
+        if (IsLocked)
+            return;
+
         _logger.LogDebug("Stopping playback");
         if (!IsVideoPlaying && !IsAudioPlaying)
             return;
@@ -364,6 +376,8 @@ public class MediaController : BindableBase
     {
         if (!IsVideoLoaded)
             throw new InvalidOperationException("Video is not loaded");
+        if (IsLocked)
+            return;
 
         Stop();
         _logger.LogDebug("Playing to end");
@@ -392,6 +406,8 @@ public class MediaController : BindableBase
     {
         if (!IsVideoLoaded)
             throw new InvalidOperationException("Video is not loaded");
+        if (IsLocked)
+            return;
 
         Stop();
         var startTime = selection.Min(e => e.Start);
@@ -944,7 +960,7 @@ public class MediaController : BindableBase
     /// <exception cref="InvalidOperationException">If the provider isn't initialized</exception>
     public void SetSubtitles(Document document)
     {
-        if (!_provider.IsInitialized || !IsVideoLoaded)
+        if (!_provider.IsInitialized || !IsVideoLoaded || IsLocked)
             return;
 
         // TODO: preferably not create a new writer on each change
@@ -969,6 +985,159 @@ public class MediaController : BindableBase
         }
 
         RequestFrame(CurrentFrame);
+    }
+
+    /// <summary>
+    /// Profile the <paramref name="document"/> at video resolution
+    /// </summary>
+    /// <param name="document">Document to profile</param>
+    /// <returns>Graph-friendly profile data</returns>
+    /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
+    public async Task<ProfileResult> ProfileSubtitlesAsync(Document document)
+    {
+        if (!_provider.IsInitialized)
+            throw new InvalidOperationException("Provider is not initialized");
+        if (!IsVideoLoaded)
+            throw new InvalidOperationException("Video is not loaded");
+
+        return await ProfileSubtitlesAsync(document, VideoInfo.Width, VideoInfo.Height);
+    }
+
+    /// <summary>
+    /// Profile a <paramref name="selection"/> of the <paramref name="document"/> at video resolution
+    /// </summary>
+    /// <param name="document">Document to profile</param>
+    /// <param name="selection">Selection to profile</param>
+    /// <returns>Graph-friendly profile data</returns>
+    /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
+    public async Task<ProfileResult> ProfileSubtitlesAsync(
+        Document document,
+        IList<Event> selection
+    )
+    {
+        if (!_provider.IsInitialized)
+            throw new InvalidOperationException("Provider is not initialized");
+        if (!IsVideoLoaded)
+            throw new InvalidOperationException("Video is not loaded");
+
+        return await ProfileSubtitlesAsync(document, selection, VideoInfo.Width, VideoInfo.Height);
+    }
+
+    /// <summary>
+    /// Profile the <paramref name="document"/> at a specific resolution
+    /// </summary>
+    /// <param name="document">Document to profile</param>
+    /// <param name="viewWidth">Width to render at</param>
+    /// <param name="viewHeight">Height to render at</param>
+    /// <returns>Graph-friendly profile data</returns>
+    /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
+    public async Task<ProfileResult> ProfileSubtitlesAsync(
+        Document document,
+        int viewWidth,
+        int viewHeight
+    )
+    {
+        if (!_provider.IsInitialized)
+            throw new InvalidOperationException("Provider is not initialized");
+        if (!IsVideoLoaded)
+            throw new InvalidOperationException("Video is not loaded");
+
+        if (_isVideoPlaying || _isAudioPlaying)
+            Stop();
+        IsLocked = true;
+
+        var selection = document.EventManager.Events;
+        var fromFrame = VideoInfo.FrameFromTime(selection.Select(e => e.Start).Min() ?? Time.Zero);
+        var toFrame = VideoInfo.FrameFromTime(selection.Select(e => e.End).Max() ?? Time.Zero);
+
+        var points = await Task.Run(() =>
+            _provider.ProfileSubtitles(fromFrame, toFrame, viewWidth, viewHeight)
+        );
+
+        IsLocked = false;
+        return ComputeProfileResult(points);
+    }
+
+    /// <summary>
+    /// Profile a <paramref name="selection"/> of the <paramref name="document"/> at a specific resolution
+    /// </summary>
+    /// <param name="document">Document to profile</param>
+    /// <param name="selection">Selection to profile</param>
+    /// <param name="viewWidth">Width to render at</param>
+    /// <param name="viewHeight">Height to render at</param>
+    /// <returns>Graph-friendly profile data</returns>
+    /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
+    public async Task<ProfileResult> ProfileSubtitlesAsync(
+        Document document,
+        IList<Event> selection,
+        int viewWidth,
+        int viewHeight
+    )
+    {
+        if (!_provider.IsInitialized)
+            throw new InvalidOperationException("Provider is not initialized");
+        if (!IsVideoLoaded)
+            throw new InvalidOperationException("Video is not loaded");
+
+        if (_isVideoPlaying || _isAudioPlaying)
+            Stop();
+        IsLocked = true;
+
+        var selectionDoc = new Document(false);
+        foreach (var style in document.StyleManager.Styles)
+            selectionDoc.StyleManager.AddOrReplace(style);
+        foreach (var @event in selection)
+            selectionDoc.EventManager.AddLast(@event);
+
+        var fromFrame = VideoInfo.FrameFromTime(selection.Select(e => e.Start).Min() ?? Time.Zero);
+        var toFrame = VideoInfo.FrameFromTime(selection.Select(e => e.End).Max() ?? Time.Zero);
+
+        var writer = new AssWriter(selectionDoc, new ConsumerInfo("", "", ""));
+        lock (_requestLock)
+        {
+            var content = writer.Write();
+            _provider.SetSubtitles(content, null);
+            _subtitlesChanged = true;
+        }
+
+        var points = await Task.Run(() =>
+            _provider.ProfileSubtitles(fromFrame, toFrame, viewWidth, viewHeight)
+        );
+
+        IsLocked = false;
+
+        // Reset subtitles
+        SetSubtitles(document);
+        return ComputeProfileResult(points);
+    }
+
+    /// <summary>
+    /// Construct a <see cref="ProfileResult"/> object from a list of <see cref="ProfilePoint"/>s
+    /// </summary>
+    /// <param name="points">Values for each frame</param>
+    /// <returns>Graph-friendly data</returns>
+    private static ProfileResult ComputeProfileResult(ProfilePoint[] points)
+    {
+        var frames = new List<int>(points.Length);
+        var renderTimes = new List<double>(points.Length);
+        var imageSizes = new List<double>(points.Length);
+        var imageCounts = new List<int>(points.Length);
+
+        foreach (var r in points)
+        {
+            frames.Add(r.Frame);
+            renderTimes.Add(r.RenderTimeMs);
+            imageSizes.Add(r.ImageSize / 1000.0d);
+            imageCounts.Add(r.ImageCount);
+        }
+
+        return new ProfileResult
+        {
+            Frames = frames,
+            RenderTimeMs = renderTimes,
+            ImageSizeKp = imageSizes,
+            ImageCount = imageCounts,
+        };
     }
 
     /// <summary>
