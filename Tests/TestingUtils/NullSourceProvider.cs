@@ -162,5 +162,11 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
+    public ProfilePoint[] ProfileSubtitles(int fromFrame, int toFrame, int width, int height)
+    {
+        return [];
+    }
+
+    /// <inheritdoc />
     public void CleanCache(uint days) { }
 }
