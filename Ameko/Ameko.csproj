@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <EmbeddedResource Include="Assets/Text/WittyComments.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" />
