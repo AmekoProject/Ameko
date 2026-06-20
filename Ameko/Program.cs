@@ -37,7 +37,14 @@ internal sealed class Program
         Args = args;
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-        // Star
+        if (args is ["--display-crash-report", _])
+        {
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
+            return;
+        }
+        
+        // Start as monitor process
         if (!Debugger.IsAttached && !args.Contains("--monitored"))
         {
             LaunchMonitoredInstance(args);
