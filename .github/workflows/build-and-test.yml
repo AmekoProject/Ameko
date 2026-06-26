@@ -41,11 +41,15 @@ jobs:
         id: ver
         shell: bash
         run: |
-          version="$(git describe --long --abbrev=7 2>/dev/null | sed -E 's/^v//; s/([0-9]+)\.([0-9]+)\.[0-9]+-([A-Za-z0-9]+)-([0-9]+)-g/ \1.\2.\4.\3.g/; s/ //; s/-/./g' || git rev-parse --short HEAD)"
+          version="$(git describe --long --abbrev=7 2>/dev/null \
+            | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g([A-Za-z0-9]+)/\1.\2.\3.\4/' \
+            | sed -E 's/-/./g' \
+            || git rev-parse --short HEAD)"
           echo Version: $version
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
-          patch="$(git describe --long --abbrev=7 | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-.+-([0-9]+)-g.*/\1.\2.\3/')"
+          patch="$(git describe --long --abbrev=7 \
+            | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g.*/\1.\2.\3/')"
           echo "patch=$patch" >> "$GITHUB_OUTPUT"
 
   build-windows:
