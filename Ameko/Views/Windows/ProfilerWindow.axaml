@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="900"
+        d:DesignHeight="525"
+
+        xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
+        xmlns:converters="clr-namespace:Ameko.Converters"
+        xmlns:holo="clr-namespace:Holo;assembly=Holo"
+        xmlns:i18n="clr-namespace:Ameko.I18N"
+        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:sp="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+
+        x:Class="Ameko.Views.Windows.ProfilerWindow"
+        x:DataType="vm:ProfilerWindowViewModel"
+
+        Focusable="True"
+        Width="900"
+        Height="525"
+        CanResize="False"
+        Icon="/Assets/Ameko-Simplified-BG-64.ico"
+        Title="{x:Static i18n:Profiler.Profiler_Title}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <!-- Select workspace here -->
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <!-- Export button here -->
+        </StackPanel>
+        <sp:AvaPlot Name="ProfilePlot" />
+    </DockPanel>
+</Window>

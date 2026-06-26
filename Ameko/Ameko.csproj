@@ -54,6 +54,7 @@
     <PackageReference Include="NLog" />
     <PackageReference Include="NLog.Extensions.Logging" />
     <PackageReference Include="ReactiveUI.Avalonia" />
+    <PackageReference Include="ScottPlot.Avalonia" />
     <PackageReference Include="Semi.Avalonia" />
     <PackageReference Include="Semi.Avalonia.AvaloniaEdit" />
     <PackageReference Include="Semi.Avalonia.ColorPicker" />
@@ -237,6 +238,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Knp.resx</DependentUpon>
+    </Compile>
+    <Compile Update="I18N\Profiler.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Profiler.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -660,6 +666,10 @@
     <EmbeddedResource Update="I18N\Knp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Knp.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Profiler.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profiler.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -44,6 +44,7 @@
     <PackageVersion Include="ReactiveUI.Avalonia" Version="12.0.2" />
     <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageVersion Include="Samboy063.Tomlet" Version="6.2.0" />
+    <PackageVersion Include="ScottPlot.Avalonia" Version="5.1.58" />
     <PackageVersion Include="Semi.Avalonia" Version="12.0.3" />
     <PackageVersion Include="Semi.Avalonia.AvaloniaEdit" Version="12.0.0" />
     <PackageVersion Include="Semi.Avalonia.ColorPicker" Version="12.0.3" />
