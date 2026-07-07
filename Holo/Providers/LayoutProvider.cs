@@ -99,6 +99,7 @@ public class LayoutProvider : BindableBase, ILayoutProvider
                 (VideoOnlyLayout, "video-only"),
                 (PetzkuLayout, "petzku"),
                 (VerticalLayout, "vertical"),
+                (TikTokLayout, "tiktok"),
             }
         )
         {
@@ -456,6 +457,65 @@ public class LayoutProvider : BindableBase, ILayoutProvider
                     IsVertical = false,
                     Column = 0,
                     Row = 5,
+                },
+            ],
+        };
+
+    private static Layout TikTokLayout =>
+        new()
+        {
+            Name = "TikTok",
+            Author = "9volt",
+            ColumnDefinitions = "*, 2, 2*",
+            RowDefinitions = "0.7*, 2, *, 2, *",
+            Window = new WindowSection { IsProjectExplorerOnLeft = true },
+            Video = new TabSection
+            {
+                IsVisible = true,
+                Column = 0,
+                Row = 0,
+                RowSpan = 5,
+            },
+            Audio = new TabSection
+            {
+                IsVisible = true,
+                Column = 2,
+                Row = 0,
+            },
+            Editor = new TabSection
+            {
+                IsVisible = true,
+                Column = 2,
+                Row = 3,
+            },
+            Events = new TabSection
+            {
+                IsVisible = true,
+                Column = 2,
+                Row = 4,
+            },
+            Splitters =
+            [
+                new Splitter
+                {
+                    IsVertical = true,
+                    Column = 1,
+                    Row = 0,
+                    RowSpan = 5,
+                },
+                new Splitter
+                {
+                    IsVertical = false,
+                    Column = 2,
+                    Row = 1,
+                },
+                new Splitter
+                {
+                    IsVertical = false,
+                    Column = 2,
+                    Row = 3,
+                    ColumnSpan = 1,
+                    RowSpan = 1,
                 },
             ],
         };

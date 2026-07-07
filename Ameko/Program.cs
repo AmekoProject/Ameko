@@ -43,7 +43,7 @@ internal sealed class Program
                 .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
             return;
         }
-        
+
         // Start as monitor process
         if (!Debugger.IsAttached && !args.Contains("--monitored"))
         {
