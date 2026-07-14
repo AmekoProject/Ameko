@@ -142,7 +142,7 @@ jobs:
           pushd Ameko
           dotnet publish -c Release -p:SolutionDir=../ -r osx-arm64 --self-contained true
           popd
-          cp "Mizuki/zig-out/lib/*" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish"
+          cp Mizuki/zig-out/lib/* "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish"
           chmod +x Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish/Ameko
 
           mkdir -p publish/Ameko.app/Contents/MacOS
@@ -216,7 +216,7 @@ jobs:
           pushd Ameko
           dotnet publish -c Release -p:SolutionDir=../ -r linux-x64 --self-contained true
           popd
-          cp "Mizuki/zig-out/lib/*" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish"
+          cp Mizuki/zig-out/lib/* "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish"
           cat << EOF > "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish/DEPENDENCIES.txt"
           You will need to install libass and ffms2 to run Ameko. Example: sudo apt install libass ffms2.
           
