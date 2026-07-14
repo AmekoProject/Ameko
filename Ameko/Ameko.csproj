@@ -46,7 +46,6 @@
     </PackageReference>
     <PackageReference Include="Jint" />
     <PackageReference Include="Markdig" />
-    <PackageReference Include="Markdown.Avalonia.Tight" />
     <PackageReference Include="Markdown.ColorCode" />
     <PackageReference Include="Material.Icons.Avalonia" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
