@@ -11,13 +11,11 @@ public class AssParserTests
     [Test]
     public async Task Parse()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.ass");
-        fs.AddFile(path.LocalPath, new MockFileData(File1));
+        var reader = new StringReader(File1);
 
         var ap = new AssParser();
 
-        var doc = ap.Parse(fs, path);
+        var doc = ap.Parse(reader);
 
         await Assert.That(doc).IsNotNull();
         await Assert.That(doc.Version).IsEqualTo(AssVersion.V400P);

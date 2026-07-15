@@ -11,13 +11,11 @@ public class SrtParserTests
     [Test]
     public async Task Parse()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.srt");
-        fs.AddFile(path.LocalPath, new MockFileData(File1));
+        var reader = new StringReader(File1);
 
         var sp = new SrtParser();
 
-        var doc = sp.Parse(fs, path);
+        var doc = sp.Parse(reader);
 
         await Assert.That(doc).IsNotNull();
         await Assert.That(doc.StyleManager.Styles.Count).IsEqualTo(1);
@@ -37,13 +35,11 @@ public class SrtParserTests
     [Test]
     public async Task ParseWithTags()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.srt");
-        fs.AddFile(path.LocalPath, new MockFileData(File2));
+        var reader = new StringReader(File2);
 
         var sp = new SrtParser();
 
-        var doc = sp.Parse(fs, path);
+        var doc = sp.Parse(reader);
 
         await Assert.That(doc).IsNotNull();
         await Assert.That(doc.EventManager.Events.Count).IsEqualTo(1);
@@ -59,14 +55,12 @@ public class SrtParserTests
     [Test]
     public async Task ExpectedSubtitleIndex()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.srt");
-        fs.AddFile(path.LocalPath, new MockFileData("Hello"));
+        var reader = new StringReader("Hello");
 
         var sp = new SrtParser();
 
         await Assert
-            .That(() => sp.Parse(fs, path))
+            .That(() => sp.Parse(reader))
             .Throws<FormatException>()
             .WithMessage("Expected subtitle index at line 1");
     }
@@ -74,14 +68,12 @@ public class SrtParserTests
     [Test]
     public async Task ExpectedTimestamps()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.srt");
-        fs.AddFile(path.LocalPath, new MockFileData("1\nHello"));
+        var reader = new StringReader("1\nHello");
 
         var sp = new SrtParser();
 
         await Assert
-            .That(() => sp.Parse(fs, path))
+            .That(() => sp.Parse(reader))
             .Throws<FormatException>()
             .WithMessage("Expected timestamps at line 2");
     }
@@ -89,14 +81,12 @@ public class SrtParserTests
     [Test]
     public async Task UnexpectedEndOfFile()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.srt");
-        fs.AddFile(path.LocalPath, new MockFileData("1\n00:00:00,620 --> 00:00:05,630"));
+        var reader = new StringReader("1\n00:00:00,620 --> 00:00:05,630");
 
         var sp = new SrtParser();
 
         await Assert
-            .That(() => sp.Parse(fs, path))
+            .That(() => sp.Parse(reader))
             .Throws<FormatException>()
             .WithMessage("Unexpected end of SRT file");
     }
