@@ -11,18 +11,18 @@ public class AssWriterTests
     [Test]
     public async Task Write()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.ass");
+        var writer = new StringWriter();
+
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
         var aw = new AssWriter(CreateDoc(), consumer);
 
-        var result = aw.Write(fs, path);
+        var result = aw.Write(writer);
 
         await Assert.That(result).IsTrue();
-        await Assert.That(fs.FileExists(path.LocalPath)).IsTrue();
 
         // Validate the written file
-        var recreation = new AssParser().Parse(fs, path);
+        var reader = new StringReader(writer.ToString());
+        var recreation = new AssParser().Parse(reader);
 
         await Assert.That(recreation).IsNotNull();
         await Assert
@@ -41,18 +41,18 @@ public class AssWriterTests
     [Test]
     public async Task Write_Export()
     {
-        var fs = new MockFileSystem();
-        var path = MakeTestableUri(fs, "test.ass");
+        var writer = new StringWriter();
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
         var aw = new AssWriter(CreateDoc(), consumer);
 
-        var result = aw.Write(fs, path, true);
+        var result = aw.Write(writer, true);
 
         await Assert.That(result).IsTrue();
-        await Assert.That(fs.FileExists(path.LocalPath)).IsTrue();
 
         // Validate the written file
-        var recreation = new AssParser().Parse(fs, path);
+        var reader = new StringReader(writer.ToString());
+
+        var recreation = new AssParser().Parse(reader);
 
         await Assert.That(recreation).IsNotNull();
         await Assert
