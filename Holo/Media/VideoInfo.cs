@@ -88,18 +88,17 @@ public class VideoInfo(
     /// <returns>Frame number</returns>
     public int FrameFromMillis(int millis)
     {
-        if (millis < FrameTimes[0])
+        if (millis <= FrameMidpoints[0])
             return 0;
-        if (millis > FrameTimes[^1])
-            return FrameTimes.Length - 1;
+        if (millis >= FrameMidpoints[^1])
+            return FrameMidpoints.Length - 1;
 
-        var bs = Array.BinarySearch(FrameTimes, millis);
+        var bs = Array.BinarySearch(FrameMidpoints, millis);
 
         if (bs >= 0)
             return bs;
 
-        // ~bs → Index of the first greater element.
-        return ~bs - 1;
+        return ~bs;
     }
 
     /// <summary>
