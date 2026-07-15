@@ -80,13 +80,14 @@ public class IoService(
 
         try
         {
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
             wsp.SavePath = uri;
             wsp.IsSaved = true;
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
         }
         catch (Exception ex)
         {
+            wsp.IsSaved = false;
             return await DisplayIoErrorMessageBox(ex, uri);
         }
         logger.LogInformation("Saved subtitle file {WspTitle}", wsp.Title);
@@ -166,13 +167,14 @@ public class IoService(
 
         try
         {
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
             wsp.SavePath = uri;
             wsp.IsSaved = true;
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
         }
         catch (Exception ex)
         {
+            wsp.IsSaved = false;
             return await DisplayIoErrorMessageBox(ex, uri);
         }
 
