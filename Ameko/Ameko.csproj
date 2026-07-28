@@ -244,6 +244,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Profiler.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Dialogs\ProfilerDialog.axaml.cs">
+      <DependentUpon>ProfilerWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="I18N\Resources.resx">

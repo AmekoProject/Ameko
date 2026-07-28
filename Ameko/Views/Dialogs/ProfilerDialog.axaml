@@ -13,9 +13,10 @@
         xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:sp="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+        xmlns:dialogs="clr-namespace:Ameko.ViewModels.Dialogs"
 
-        x:Class="Ameko.Views.Windows.ProfilerWindow"
-        x:DataType="vm:ProfilerWindowViewModel"
+        x:Class="Ameko.Views.Dialogs.ProfilerDialog"
+        x:DataType="dialogs:ProfilerDialogViewModel"
 
         Focusable="True"
         Width="900"
@@ -24,9 +25,6 @@
         Icon="/Assets/Ameko-Simplified-BG-64.ico"
         Title="{x:Static i18n:Profiler.Profiler_Title}">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top">
-            <!-- Select workspace here -->
-        </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
             <!-- Export button here -->
         </StackPanel>
