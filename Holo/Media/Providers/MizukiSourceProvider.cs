@@ -100,10 +100,7 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public int LoadVideo(
-        string filename,
-        ISourceProvider.IndexingProgressCallback? progressCallback
-    )
+    public int LoadVideo(string filename, ISourceProvider.ProgressCallback? progressCallback)
     {
         if (_context != null)
             CloseVideo();
@@ -209,7 +206,7 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public AudioFrame* GetAudio(ISourceProvider.IndexingProgressCallback? progressCallback = null)
+    public AudioFrame* GetAudio(ISourceProvider.ProgressCallback? progressCallback = null)
     {
         External.IndexingProgressCallback? nativeCb = null;
         if (progressCallback != null)
@@ -301,9 +298,28 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public ProfilePoint[] ProfileSubtitles(int fromFrame, int toFrame, int width, int height)
+    public ProfilePoint[] ProfileSubtitles(
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        ISourceProvider.ProgressCallback? progressCallback = null
+    )
     {
-        var ptr = External.ProfileSubtitles(_context, fromFrame, toFrame, width, height);
+        External.IndexingProgressCallback? nativeCb = null;
+        if (progressCallback != null)
+        {
+            nativeCb = (current, total, _) =>
+            {
+                progressCallback(current, total);
+                return 0;
+            };
+            _progressHandle = GCHandle.Alloc(nativeCb);
+        }
+
+        var ptr = External.ProfileSubtitles(_context, fromFrame, toFrame, width, height, nativeCb);
+
+        _progressHandle?.Free();
         return ptr.ToProfilePointArray();
     }
 
@@ -512,7 +528,8 @@ internal static unsafe partial class External
         int fromFrame,
         int toFrame,
         int width,
-        int height
+        int height,
+        IndexingProgressCallback? progressCallback
     );
 
     [LibraryImport("mizuki")]

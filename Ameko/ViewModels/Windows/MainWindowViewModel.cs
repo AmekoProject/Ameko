@@ -308,7 +308,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (wsp is null)
             return;
 
-        ISourceProvider.IndexingProgressCallback? callback = null;
+        ISourceProvider.ProgressCallback? callback = null;
         if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
         {
             callback = (current, total) =>

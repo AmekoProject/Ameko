@@ -558,7 +558,7 @@ public class IoService(
     public async Task<bool> ProcessProjectGarbageAsync(
         Workspace workspace,
         Project project,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var doc = workspace.Document;
@@ -644,7 +644,7 @@ public class IoService(
     public async Task<bool> OpenVideoFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var uri = await interaction.Handle(Unit.Default);
@@ -658,7 +658,7 @@ public class IoService(
     public async Task<bool> OpenVideoFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!workspace.MediaController.IsEnabled)
@@ -699,7 +699,7 @@ public class IoService(
     public async Task<bool> OpenAudioFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var uri = await interaction.Handle(Unit.Default);
@@ -713,7 +713,7 @@ public class IoService(
     public async Task<bool> OpenAudioFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null,
+        ISourceProvider.ProgressCallback? progressCallback = null,
         bool allowAutoload = true
     )
     {

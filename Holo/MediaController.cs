@@ -618,7 +618,7 @@ public class MediaController : BindableBase
     /// <exception cref="InvalidOperationException">If the provider isn't initialized</exception>
     public async Task<bool> OpenVideoAsync(
         string filePath,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!_provider.IsInitialized)
@@ -699,7 +699,7 @@ public class MediaController : BindableBase
         string filePath,
         int trackNumber,
         int totalTracks,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!_provider.IsInitialized)
@@ -995,6 +995,7 @@ public class MediaController : BindableBase
     /// <param name="viewWidth">Width to render at, defaults to video width</param>
     /// <param name="viewHeight">Height to render at, defaults to video height</param>
     /// <param name="target">Target to profile, defaults to entire document</param>
+    /// <param name="progressCallback">Profiling progress callback (optional)</param>
     /// <returns>Graph-friendly profile data</returns>
     /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
     public async Task<ProfileResult> ProfileSubtitlesAsync(
@@ -1002,7 +1003,8 @@ public class MediaController : BindableBase
         IList<Event> selection,
         int viewWidth = -1,
         int viewHeight = -1,
-        ProfileTarget target = ProfileTarget.All
+        ProfileTarget target = ProfileTarget.All,
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!_provider.IsInitialized)
@@ -1054,7 +1056,7 @@ public class MediaController : BindableBase
 
         // Do the profiling
         var points = await Task.Run(() =>
-            _provider.ProfileSubtitles(fromFrame, toFrame, viewWidth, viewHeight)
+            _provider.ProfileSubtitles(fromFrame, toFrame, viewWidth, viewHeight, progressCallback)
         );
 
         IsLocked = false;

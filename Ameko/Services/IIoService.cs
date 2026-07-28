@@ -139,7 +139,7 @@ public interface IIoService
     Task<bool> ProcessProjectGarbageAsync(
         Workspace workspace,
         Project project,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     );
 
     /// <summary>
@@ -152,7 +152,7 @@ public interface IIoService
     Task<bool> OpenVideoFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     );
 
     /// <summary>
@@ -164,7 +164,7 @@ public interface IIoService
     Task<bool> OpenVideoFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     );
 
     /// <summary>
@@ -177,7 +177,7 @@ public interface IIoService
     Task<bool> OpenAudioFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     );
 
     /// <summary>
@@ -190,7 +190,7 @@ public interface IIoService
     Task<bool> OpenAudioFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null,
+        ISourceProvider.ProgressCallback? progressCallback = null,
         bool allowAutoload = true
     );
 

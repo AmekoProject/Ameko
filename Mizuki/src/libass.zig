@@ -164,6 +164,7 @@ pub fn ProfileSubtitles(
     to_frame: usize,
     width: usize,
     height: usize,
+    progress_cb: common.ProgressCallback,
 ) common.AssProfilePointArray {
     const ctx = &g_ctx.*.libass;
 
@@ -205,6 +206,11 @@ pub fn ProfileSubtitles(
             .image_size = image_size,
             .image_count = image_count,
         }) catch unreachable;
+
+        // Call progress callback, if provided
+        if (progress_cb) |cb| {
+            _ = cb(@intCast(frame - from_frame), @intCast(to_frame - from_frame), null);
+        }
     }
 
     ctx.profile_points = profile_point_list.toOwnedSlice(common.allocator) catch unreachable;

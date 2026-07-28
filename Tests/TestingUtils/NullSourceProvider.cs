@@ -29,10 +29,7 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public int LoadVideo(
-        string filename,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
-    )
+    public int LoadVideo(string filename, ISourceProvider.ProgressCallback? progressCallback = null)
     {
         return 0;
     }
@@ -98,7 +95,7 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public AudioFrame* GetAudio(ISourceProvider.IndexingProgressCallback? progressCallback = null)
+    public AudioFrame* GetAudio(ISourceProvider.ProgressCallback? progressCallback = null)
     {
         return null;
     }
@@ -162,7 +159,13 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public ProfilePoint[] ProfileSubtitles(int fromFrame, int toFrame, int width, int height)
+    public ProfilePoint[] ProfileSubtitles(
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        ISourceProvider.ProgressCallback? progressCallback
+    )
     {
         return [];
     }

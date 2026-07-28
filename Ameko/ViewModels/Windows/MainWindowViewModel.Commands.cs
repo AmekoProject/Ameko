@@ -52,7 +52,7 @@ public partial class MainWindowViewModel
 
             foreach (var wsp in workspaces)
             {
-                ISourceProvider.IndexingProgressCallback? callback = null;
+                ISourceProvider.ProgressCallback? callback = null;
                 if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                 {
                     callback = (current, total) =>
@@ -90,7 +90,7 @@ public partial class MainWindowViewModel
             {
                 if (await IoService.OpenSubtitleFileAsync(uri, ProjectProvider.Current) is { } wsp)
                 {
-                    ISourceProvider.IndexingProgressCallback? callback = null;
+                    ISourceProvider.ProgressCallback? callback = null;
                     if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                     {
                         callback = (current, total) =>
@@ -133,7 +133,7 @@ public partial class MainWindowViewModel
                 );
                 foreach (var wsp in workspaces)
                 {
-                    ISourceProvider.IndexingProgressCallback? callback = null;
+                    ISourceProvider.ProgressCallback? callback = null;
                     if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                     {
                         callback = (current, total) =>
@@ -816,7 +816,7 @@ public partial class MainWindowViewModel
                 ProjectProvider.Current.WorkingSpace = wsp = ProjectProvider.Current.AddWorkspace();
             }
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>
@@ -940,7 +940,7 @@ public partial class MainWindowViewModel
                 ProjectProvider.Current.WorkingSpace = wsp = ProjectProvider.Current.AddWorkspace();
             }
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>
@@ -991,7 +991,7 @@ public partial class MainWindowViewModel
             if (path is null)
                 return;
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>

@@ -255,8 +255,16 @@ pub export fn ProfileSubtitles(
     to_frame: c_int,
     width: c_int,
     height: c_int,
+    progress_cb: common.ProgressCallback,
 ) common.AssProfilePointArray {
-    return libass.ProfileSubtitles(g_ctx, @intCast(from_frame), @intCast(to_frame), @intCast(width), @intCast(height));
+    return libass.ProfileSubtitles(
+        g_ctx,
+        @intCast(from_frame),
+        @intCast(to_frame),
+        @intCast(width),
+        @intCast(height),
+        progress_cb,
+    );
 }
 
 /// Set the logging callback
