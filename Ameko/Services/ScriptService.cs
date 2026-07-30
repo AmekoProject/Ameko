@@ -153,6 +153,13 @@ public class ScriptService : IScriptService
     /// <inheritdoc />
     public async Task Reload(bool isManual)
     {
+        if (Program.IsInSafeMode)
+        {
+            _logger.LogInformation("Script loading skipped due to Ameko running in Safe Mode");
+            await Dispatcher.UIThread.InvokeAsync(() => Reloaded?.Invoke(this, EventArgs.Empty));
+            return;
+        }
+
         _logger.LogInformation("Reloading scripts...");
         if (!Directory.Exists(ScriptsRoot.LocalPath))
             Directory.CreateDirectory(ScriptsRoot.LocalPath);

@@ -27,6 +27,7 @@ internal sealed class Program
     private const int ManagedCrashExitCode = -25565;
 
     internal static string[] Args { get; private set; } = null!;
+    internal static bool IsInSafeMode { get; private set; } = false;
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -43,6 +44,9 @@ internal sealed class Program
                 .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
             return;
         }
+
+        if (args.Contains("--safe"))
+            IsInSafeMode = true;
 
         // Start as monitor process
         if (!Debugger.IsAttached && !args.Contains("--monitored"))
