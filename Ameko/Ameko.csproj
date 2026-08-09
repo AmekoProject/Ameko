@@ -675,6 +675,24 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Profiler.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.de-DE.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.en-GB.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.es-419.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.pl-PL.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.vi-VN.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.zh-TW.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <ItemGroup>

@@ -50,5 +50,41 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Profiler_Title", resourceCulture);
             }
         }
+        
+        public static string Profiler_Button_Export {
+            get {
+                return ResourceManager.GetString("Profiler_Button_Export", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_Button_Start {
+            get {
+                return ResourceManager.GetString("Profiler_Button_Start", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_RB_All {
+            get {
+                return ResourceManager.GetString("Profiler_RB_All", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_RB_SelectedTimeRange {
+            get {
+                return ResourceManager.GetString("Profiler_RB_SelectedTimeRange", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_RB_SelectedEvents {
+            get {
+                return ResourceManager.GetString("Profiler_RB_SelectedEvents", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_CheckBox_UseVideoRes {
+            get {
+                return ResourceManager.GetString("Profiler_CheckBox_UseVideoRes", resourceCulture);
+            }
+        }
     }
 }

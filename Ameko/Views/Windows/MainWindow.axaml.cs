@@ -575,6 +575,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
                 ViewModel.ShowStylesManager.RegisterHandler(DoShowWindow<StylesManagerWindow, StylesManagerWindowViewModel>);
                 ViewModel.AttachReferenceFile.RegisterHandler(DoShowAttachReferenceFileDialogAsync);
                 ViewModel.ShowScriptInfoDialog.RegisterHandler(DoShowDialogAsync<ScriptInfoDialog, ScriptInfoDialogViewModel>);
+                ViewModel.ShowProfilerDialog.RegisterHandler(DoShowDialogAsync<ProfilerDialog, ProfilerDialogViewModel>);
                 ViewModel.ShowSortDialog.RegisterHandler(DoShowDialogAsync<SortDialog, SortDialogViewModel>);
                 ViewModel.ShowSelectDialog.RegisterHandler(DoShowDialogAsync<SelectDialog, SelectDialogViewModel>);
                 // Project

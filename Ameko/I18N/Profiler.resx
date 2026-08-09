@@ -21,4 +21,22 @@
     <data name="Profiler_Title" xml:space="preserve">
         <value>Profile Subtitles</value>
     </data>
+    <data name="Profiler_Button_Export" xml:space="preserve">
+        <value>Export</value>
+    </data>
+    <data name="Profiler_Button_Start" xml:space="preserve">
+        <value>Start</value>
+    </data>
+    <data name="Profiler_RB_All" xml:space="preserve">
+        <value>All Events</value>
+    </data>
+    <data name="Profiler_RB_SelectedTimeRange" xml:space="preserve">
+        <value>Selected Time Range</value>
+    </data>
+    <data name="Profiler_RB_SelectedEvents" xml:space="preserve">
+        <value>Selected Events</value>
+    </data>
+    <data name="Profiler_CheckBox_UseVideoRes" xml:space="preserve">
+        <value>Use Video Resolution</value>
+    </data>
 </root>

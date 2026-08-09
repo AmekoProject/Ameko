@@ -6,13 +6,11 @@
         d:DesignWidth="900"
         d:DesignHeight="525"
 
-        xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
+        xmlns:c="clr-namespace:Ameko.Views.Controls"
         xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:holo="clr-namespace:Holo;assembly=Holo"
+        xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
         xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:sp="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
         xmlns:dialogs="clr-namespace:Ameko.ViewModels.Dialogs"
 
         x:Class="Ameko.Views.Dialogs.ProfilerDialog"
@@ -21,13 +19,103 @@
         Focusable="True"
         Width="900"
         Height="525"
-        CanResize="False"
+        CanResize="True"
         Icon="/Assets/Ameko-Simplified-BG-64.ico"
         Title="{x:Static i18n:Profiler.Profiler_Title}">
+    <Window.Resources>
+        <converters:EnumConverter x:Key="EnumConverter" />
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+    </Window.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom">
-            <!-- Export button here -->
+        <Grid ColumnDefinitions="*, Auto"
+              ColumnSpacing="2"
+              DockPanel.Dock="Bottom">
+            <ProgressBar Grid.Column="0"
+                         Minimum="0"
+                         Maximum="1"
+                         Classes="Success"
+                         ShowProgressText="True"
+                         Value="{Binding CurrentProgress}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch" />
+            <Button Grid.Column="1"
+                    Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
+                    IsEnabled="{Binding Result,
+                                        Converter={StaticResource NullToBoolConverter},
+                                        ConverterParameter=.}" />
+            
+        </Grid>
+        <StackPanel>
+            <!-- Output -->
+            <sp:AvaPlot Name="ProfilePlot"
+                        IsVisible="{Binding Result,
+                                            Converter={StaticResource NullToBoolConverter},
+                                            ConverterParameter=.}" />
+            <!-- Configuration -->
+            <Grid ColumnDefinitions="*, Auto, *"
+                  RowDefinitions="Auto, Auto, Auto"
+                  RowSpacing="2"
+                  IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter}}">
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0"
+                            Spacing="2"
+                            Orientation="Horizontal">
+                    <RadioButton GroupName="Target"
+                                 Content="{x:Static i18n:Profiler.Profiler_RB_All}"
+                                 IsChecked="{Binding SelectedTarget,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:ProfileTarget.All}}" />
+                    <RadioButton GroupName="Target"
+                                 Content="{x:Static i18n:Profiler.Profiler_RB_SelectedEvents}"
+                                 IsChecked="{Binding SelectedTarget,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:ProfileTarget.SelectedEvents}}" />
+                    <RadioButton GroupName="Target"
+                                 Content="{x:Static i18n:Profiler.Profiler_RB_SelectedTimeRange}"
+                                 IsChecked="{Binding SelectedTarget,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:ProfileTarget.SelectedTimes}}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Grid.Row="1"
+                            Spacing="2"
+                            Orientation="Horizontal">
+                    <!-- Inverted checkbox because it's more logical to present this way -->
+                    <CheckBox IsChecked="{Binding !OverrideViewportSize}"
+                              Content="{x:Static i18n:Profiler.Profiler_CheckBox_UseVideoRes}" />
+                    <c:NumberTextBox IsEnabled="{Binding OverrideViewportSize}"
+                                     Classes="Small"
+                                     MinWidth="30"
+                                     AcceptsReturn="False"
+                                     AcceptsTab="False"
+                                     Minimum="256"
+                                     Maximum="7680"
+                                     Increment="1"
+                                     FormatString="0"
+                                     TextAlignment="Center"
+                                     Value="{Binding ViewportWidth}" />
+                    <Label Content="×" />
+                    <c:NumberTextBox IsEnabled="{Binding OverrideViewportSize}"
+                                     Classes="Small"
+                                     MinWidth="30"
+                                     AcceptsReturn="False"
+                                     AcceptsTab="False"
+                                     Minimum="144"
+                                     Maximum="4320"
+                                     Increment="1"
+                                     FormatString="0"
+                                     TextAlignment="Center"
+                                     Value="{Binding ViewportHeight}" />
+                </StackPanel>
+                <Button Grid.Column="1"
+                        Grid.Row="2"
+                        Content="{x:Static i18n:Profiler.Profiler_Button_Start}"
+                        IsVisible="{Binding Result,
+                                            Converter={StaticResource NullToBoolConverter}}"
+                        IsEnabled="{Binding IsStartButtonEnabled}"
+                        Command="{Binding StartCommand}" />
+            </Grid>
         </StackPanel>
-        <sp:AvaPlot Name="ProfilePlot" />
     </DockPanel>
 </Window>

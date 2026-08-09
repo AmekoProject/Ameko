@@ -587,6 +587,21 @@ public partial class MainWindowViewModel
     }
 
     /// <summary>
+    /// Show Profile Subtitles dialog
+    /// </summary>
+    private ReactiveCommand<Unit, Unit> CreateShowProfileSubtitlesDialogCommand()
+    {
+        return ReactiveCommand.CreateFromTask(async () =>
+        {
+            var wsp = ProjectProvider.Current.WorkingSpace;
+            if (wsp is null || !wsp.MediaController.IsVideoLoaded)
+                return;
+            var vm = _vmFactory.Create<ProfilerDialogViewModel>(wsp);
+            await ShowProfilerDialog.Handle(vm);
+        });
+    }
+
+    /// <summary>
     /// Show sort lines dialog
     /// </summary>
     private ReactiveCommand<Unit, Unit> CreateShowSortDialogCommand()
