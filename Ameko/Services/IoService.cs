@@ -898,6 +898,61 @@ public class IoService(
         return true;
     }
 
+    /// <inheritdoc />
+    public async Task<bool> SaveProfileResult(
+        Interaction<string, Uri?> interaction,
+        Workspace wsp,
+        ProfileResult result
+    )
+    {
+        logger.LogDebug("Preparing to save profile result for workspace {WspTitle}", wsp.Title);
+
+        var uri = await interaction.Handle(wsp.Title);
+        if (uri is null)
+        {
+            logger.LogInformation("Saving profile result for {WspTitle} cancelled", wsp.Title);
+            return false;
+        }
+
+        try
+        {
+            const string Header = "Frame,RenderTimeMs,ImageSizeKp,ImageCount";
+            var sb = new StringBuilder();
+            sb.AppendLine(Header);
+
+            for (var i = 0; i < result.Frames.Length; i++)
+            {
+                sb.AppendLine(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0:F0},{1},{2},{3:F0}",
+                        result.Frames[i],
+                        result.RenderTimeMs[i],
+                        result.ImageSizeKp[i],
+                        result.ImageCount[i]
+                    )
+                );
+            }
+
+            await using var fs = fileSystem.FileStream.New(
+                uri.LocalPath,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None
+            );
+            await using var writer = new StreamWriter(fs);
+            await writer.WriteAsync(sb.ToString());
+            await writer.FlushAsync();
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
+        logger.LogInformation("Saved profile result file for {WspTitle}", wsp.Title);
+        return true;
+    }
+
     /// <summary>
     /// Get the SKData needed for saving or copying a frame
     /// </summary>

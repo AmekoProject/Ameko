@@ -470,5 +470,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Message_StyleNotFound", resourceCulture);
             }
         }
+        
+        public static string FileDialog_FileType_Csv {
+            get {
+                return ResourceManager.GetString("FileDialog_FileType_Csv", resourceCulture);
+            }
+        }
+        
+        public static string FileDialog_SaveProfileResult_Title {
+            get {
+                return ResourceManager.GetString("FileDialog_SaveProfileResult_Title", resourceCulture);
+            }
+        }
     }
 }

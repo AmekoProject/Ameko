@@ -4,9 +4,9 @@ using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Ameko.Services;
 using Avalonia.Threading;
 using Holo;
-using Holo.Media.Providers;
 using Holo.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
@@ -16,6 +16,7 @@ namespace Ameko.ViewModels.Dialogs;
 public class ProfilerDialogViewModel : ViewModelBase
 {
     public Interaction<ProfileResult, Unit> DisplayProfileResult { get; }
+    public Interaction<string, Uri?> SaveProfileAs { get; }
 
     /// <summary>
     /// Specify the width/height to render at instead of using the video resolution
@@ -80,7 +81,11 @@ public class ProfilerDialogViewModel : ViewModelBase
     public ICommand StartCommand { get; }
     public ICommand ExportCommand { get; }
 
-    public ProfilerDialogViewModel(ILogger<ProfilerDialogViewModel> logger, Workspace workspace)
+    public ProfilerDialogViewModel(
+        ILogger<ProfilerDialogViewModel> logger,
+        IIoService ioService,
+        Workspace workspace
+    )
     {
         // Should be a given
         if (!workspace.MediaController.IsVideoLoaded)
@@ -90,6 +95,7 @@ public class ProfilerDialogViewModel : ViewModelBase
         ViewportHeight = workspace.MediaController.VideoInfo.Height;
 
         DisplayProfileResult = new Interaction<ProfileResult, Unit>();
+        SaveProfileAs = new Interaction<string, Uri?>();
 
         StartCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -129,6 +135,14 @@ public class ProfilerDialogViewModel : ViewModelBase
             {
                 logger.LogError(ex, "Failed to profile subtitles!");
             }
+        });
+
+        ExportCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (!Result.HasValue)
+                return;
+
+            await ioService.SaveProfileResult(SaveProfileAs, workspace, Result.Value);
         });
     }
 }

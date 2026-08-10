@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
+using System;
+using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 using Ameko.ViewModels.Dialogs;
+using Avalonia.Platform.Storage;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
 using ScottPlot;
@@ -12,6 +16,35 @@ namespace Ameko.Views.Dialogs;
 
 public partial class ProfilerDialog : ReactiveWindow<ProfilerDialogViewModel>
 {
+    private async Task DoShowSaveAsDialogAsync(IInteractionContext<string, Uri?> interaction)
+    {
+        var file = await StorageProvider.SaveFilePickerAsync(
+            new FilePickerSaveOptions
+            {
+                Title = I18N.Other.FileDialog_SaveProfileResult_Title,
+                FileTypeChoices =
+                [
+                    new FilePickerFileType(I18N.Other.FileDialog_FileType_Csv)
+                    {
+                        Patterns = ["*.csv"],
+                    },
+                ],
+                SuggestedFileName = interaction.Input,
+            }
+        );
+
+        if (file is not null)
+        {
+            var path = file.Path;
+            if (!Path.HasExtension(path.LocalPath))
+                path = new Uri(Path.ChangeExtension(path.LocalPath, ".csv"));
+
+            interaction.SetOutput(path);
+            return;
+        }
+        interaction.SetOutput(null);
+    }
+
     public ProfilerDialog()
     {
         InitializeComponent();
@@ -20,6 +53,7 @@ public partial class ProfilerDialog : ReactiveWindow<ProfilerDialogViewModel>
         {
             if (ViewModel is not null)
             {
+                ViewModel.SaveProfileAs.RegisterHandler(DoShowSaveAsDialogAsync);
                 ViewModel.DisplayProfileResult.RegisterHandler(context =>
                 {
                     context.SetOutput(Unit.Default);

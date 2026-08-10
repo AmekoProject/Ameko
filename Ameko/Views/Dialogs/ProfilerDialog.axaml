@@ -111,7 +111,10 @@
             <Button Grid.Column="1"
                     Grid.Row="1"
                     Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
-                    IsEnabled="False" />
+                    IsEnabled="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter},
+                                         ConverterParameter=.}"
+                    Command="{Binding ExportCommand}" />
             
         </Grid>
         <sp:AvaPlot Name="ProfilePlot"

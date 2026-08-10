@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Ameko.DataModels;
 using Holo;
 using Holo.Media.Providers;
+using Holo.Models;
 using ReactiveUI;
 
 namespace Ameko.Services;
@@ -226,5 +227,18 @@ public interface IIoService
         Interaction<string, Unit> interaction,
         Workspace workspace,
         SaveFrameMode mode
+    );
+
+    /// <summary>
+    /// Save a profile result, displaying a SaveFileDialog
+    /// </summary>
+    /// <param name="interaction">Interaction to use for displaying the dialog</param>
+    /// <param name="wsp">Workspace the result is for</param>
+    /// <param name="result">Profile result</param>
+    /// <returns><see langword="true"/> if the file was saved</returns>
+    Task<bool> SaveProfileResult(
+        Interaction<string, Uri?> interaction,
+        Workspace wsp,
+        ProfileResult result
     );
 }
