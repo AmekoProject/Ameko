@@ -6,7 +6,6 @@
         d:DesignWidth="900"
         d:DesignHeight="525"
 
-        xmlns:c="clr-namespace:Ameko.Views.Controls"
         xmlns:converters="clr-namespace:Ameko.Converters"
         xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
         xmlns:i18n="clr-namespace:Ameko.I18N"
@@ -67,28 +66,27 @@
                     <!-- Inverted checkbox because it's more logical to present this way -->
                     <CheckBox IsChecked="{Binding !OverrideViewportSize}"
                               Content="{x:Static i18n:Profiler.Profiler_CheckBox_UseVideoRes}" />
-                    <c:NumberTextBox IsEnabled="{Binding OverrideViewportSize}"
+                    <!-- TODO: re-investigate NumberTextBox -->
+                    <NumericUpDown IsEnabled="{Binding OverrideViewportSize}"
                                      Classes="Small"
                                      MinWidth="30"
-                                     AcceptsReturn="False"
-                                     AcceptsTab="False"
                                      Minimum="256"
                                      Maximum="7680"
                                      Increment="1"
                                      FormatString="0"
                                      TextAlignment="Center"
+                                     ShowButtonSpinner="False"
                                      Value="{Binding ViewportWidth}" />
                     <Label Content="×" />
-                    <c:NumberTextBox IsEnabled="{Binding OverrideViewportSize}"
+                    <NumericUpDown IsEnabled="{Binding OverrideViewportSize}"
                                      Classes="Small"
                                      MinWidth="30"
-                                     AcceptsReturn="False"
-                                     AcceptsTab="False"
                                      Minimum="144"
                                      Maximum="4320"
                                      Increment="1"
                                      FormatString="0"
                                      TextAlignment="Center"
+                                     ShowButtonSpinner="False"
                                      Value="{Binding ViewportHeight}" />
                 </StackPanel>
                 <Button Grid.Column="1"
