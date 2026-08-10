@@ -1,9 +1,12 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia.Threading;
 using Holo;
+using Holo.Media.Providers;
 using Holo.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
@@ -12,7 +15,7 @@ namespace Ameko.ViewModels.Dialogs;
 
 public class ProfilerDialogViewModel : ViewModelBase
 {
-    public Workspace Workspace { get; }
+    public Interaction<ProfileResult, Unit> DisplayProfileResult { get; }
 
     /// <summary>
     /// Specify the width/height to render at instead of using the video resolution
@@ -79,8 +82,6 @@ public class ProfilerDialogViewModel : ViewModelBase
 
     public ProfilerDialogViewModel(ILogger<ProfilerDialogViewModel> logger, Workspace workspace)
     {
-        Workspace = workspace;
-
         // Should be a given
         if (!workspace.MediaController.IsVideoLoaded)
             throw new InvalidOperationException("Video must be loaded to profile subtitles");
@@ -88,12 +89,16 @@ public class ProfilerDialogViewModel : ViewModelBase
         ViewportWidth = workspace.MediaController.VideoInfo.Width;
         ViewportHeight = workspace.MediaController.VideoInfo.Height;
 
+        DisplayProfileResult = new Interaction<ProfileResult, Unit>();
+
         StartCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             try
             {
                 Dispatcher.UIThread.Post(() => IsStartButtonEnabled = false);
                 logger.LogInformation("Starting profile operation!");
+
+                var lastPercent = -1;
 
                 Result = await workspace.MediaController.ProfileSubtitlesAsync(
                     document: workspace.Document,
@@ -104,11 +109,21 @@ public class ProfilerDialogViewModel : ViewModelBase
                     progressCallback: (current, total) =>
                     {
                         var progress = (double)current / total;
+                        var percent = (int)(100.0d * progress);
+
+                        if (percent == lastPercent)
+                            return;
+
+                        lastPercent = percent;
                         Dispatcher.UIThread.Post(() => CurrentProgress = progress);
                     }
                 );
 
                 Dispatcher.UIThread.Post(() => CurrentProgress = 1d); // Make sure progress displays as 100%
+
+                if (Result is null)
+                    throw new InvalidOperationException("Received a null profile result!");
+                await DisplayProfileResult.Handle(Result.Value);
             }
             catch (Exception ex)
             {

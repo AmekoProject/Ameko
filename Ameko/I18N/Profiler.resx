@@ -39,4 +39,16 @@
     <data name="Profiler_CheckBox_UseVideoRes" xml:space="preserve">
         <value>Use Video Resolution</value>
     </data>
+    <data name="Profiler_Axis_RenderTime" xml:space="preserve">
+        <value>Render Time (ms)</value>
+    </data>
+    <data name="Profiler_Axis_ImageSize" xml:space="preserve">
+        <value>Image Size (KP)</value>
+    </data>
+    <data name="Profiler_Axis_ImageCount" xml:space="preserve">
+        <value>Image Count</value>
+    </data>
+    <data name="Profiler_Axis_Frame" xml:space="preserve">
+        <value>Frame</value>
+    </data>
 </root>

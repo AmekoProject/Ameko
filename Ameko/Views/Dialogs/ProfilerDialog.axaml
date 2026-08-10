@@ -28,31 +28,14 @@
     </Window.Resources>
     <DockPanel>
         <Grid ColumnDefinitions="*, Auto"
+              RowDefinitions="Auto, Auto"
               ColumnSpacing="2"
               DockPanel.Dock="Bottom">
-            <ProgressBar Grid.Column="0"
-                         Minimum="0"
-                         Maximum="1"
-                         Classes="Success"
-                         ShowProgressText="True"
-                         Value="{Binding CurrentProgress}"
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Stretch" />
-            <Button Grid.Column="1"
-                    Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
-                    IsEnabled="{Binding Result,
-                                        Converter={StaticResource NullToBoolConverter},
-                                        ConverterParameter=.}" />
-            
-        </Grid>
-        <StackPanel>
-            <!-- Output -->
-            <sp:AvaPlot Name="ProfilePlot"
-                        IsVisible="{Binding Result,
-                                            Converter={StaticResource NullToBoolConverter},
-                                            ConverterParameter=.}" />
             <!-- Configuration -->
-            <Grid ColumnDefinitions="*, Auto, *"
+            <Grid Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.ColumnSpan="2"
+                  ColumnDefinitions="*, Auto, *"
                   RowDefinitions="Auto, Auto, Auto"
                   RowSpacing="2"
                   IsVisible="{Binding Result,
@@ -116,6 +99,24 @@
                         IsEnabled="{Binding IsStartButtonEnabled}"
                         Command="{Binding StartCommand}" />
             </Grid>
-        </StackPanel>
+            <ProgressBar Grid.Column="0"
+                         Grid.Row="1"
+                         Minimum="0"
+                         Maximum="1"
+                         Classes="Success"
+                         ShowProgressText="True"
+                         Value="{Binding CurrentProgress}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch" />
+            <Button Grid.Column="1"
+                    Grid.Row="1"
+                    Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
+                    IsEnabled="False" />
+            
+        </Grid>
+        <sp:AvaPlot Name="ProfilePlot"
+                    IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter},
+                                         ConverterParameter=.}" />
     </DockPanel>
 </Window>

@@ -1073,10 +1073,10 @@ public class MediaController : BindableBase
     /// <returns>Graph-friendly data</returns>
     private static ProfileResult ComputeProfileResult(ProfilePoint[] points)
     {
-        var frames = new List<int>(points.Length);
+        var frames = new List<double>(points.Length);
         var renderTimes = new List<double>(points.Length);
         var imageSizes = new List<double>(points.Length);
-        var imageCounts = new List<int>(points.Length);
+        var imageCounts = new List<double>(points.Length);
 
         foreach (var r in points)
         {
@@ -1088,10 +1088,10 @@ public class MediaController : BindableBase
 
         return new ProfileResult
         {
-            Frames = frames,
-            RenderTimeMs = renderTimes,
-            ImageSizeKp = imageSizes,
-            ImageCount = imageCounts,
+            Frames = frames.ToArray(),
+            RenderTimeMs = renderTimes.ToArray(),
+            ImageSizeKp = imageSizes.ToArray(),
+            ImageCount = imageCounts.ToArray(),
         };
     }
 

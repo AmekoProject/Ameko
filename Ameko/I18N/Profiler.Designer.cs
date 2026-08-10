@@ -86,5 +86,29 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Profiler_CheckBox_UseVideoRes", resourceCulture);
             }
         }
+        
+        public static string Profiler_Axis_RenderTime {
+            get {
+                return ResourceManager.GetString("Profiler_Axis_RenderTime", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_Axis_ImageSize {
+            get {
+                return ResourceManager.GetString("Profiler_Axis_ImageSize", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_Axis_ImageCount {
+            get {
+                return ResourceManager.GetString("Profiler_Axis_ImageCount", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_Axis_Frame {
+            get {
+                return ResourceManager.GetString("Profiler_Axis_Frame", resourceCulture);
+            }
+        }
     }
 }
