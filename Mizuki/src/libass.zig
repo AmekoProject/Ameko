@@ -162,11 +162,19 @@ pub fn ProfileSubtitles(
     g_ctx: *context.GlobalContext,
     from_frame: usize,
     to_frame: usize,
-    width: usize,
-    height: usize,
+    frame_width: usize,
+    frame_height: usize,
     progress_cb: common.ProgressCallback,
 ) common.AssProfilePointArray {
     const ctx = &g_ctx.*.libass;
+
+    // Set up a dedicated ass_renderer
+    const renderer = c.ass_renderer_init(library);
+    c.ass_set_frame_size(renderer, @intCast(frame_width), @intCast(frame_height));
+    c.ass_set_storage_size(renderer, @intCast(frame_width), @intCast(frame_height));
+    c.ass_set_font_scale(renderer, 1.0);
+
+    c.ass_set_fonts(renderer, null, "Sans", 1, null, 1);
 
     // Reset previous data if it exists
     if (ctx.profile_points) |profile_points| {
@@ -176,18 +184,22 @@ pub fn ProfileSubtitles(
 
     var profile_point_list: std.ArrayList(common.AssProfilePoint) = .empty;
 
-    c.ass_set_frame_size(ctx.renderer, @intCast(width), @intCast(height));
-    c.ass_set_storage_size(ctx.renderer, @intCast(width), @intCast(height));
+    var progress: i64 = 0;
+    const max_progress: i64 = @intCast(to_frame - from_frame);
 
     var frame = from_frame;
-    while (frame < to_frame) : (frame += 1) {
+    while (frame < to_frame) : ({
+        frame += 1;
+        progress += 1;
+    }) {
         const timestamp = g_ctx.*.ffms.timecodes.?[frame];
         var image_count: c_int = 0;
         var image_size: c_int = 0;
 
         const start_time = std.Io.Clock.real.now(common.io).toMicroseconds();
 
-        var img: ?*c.ASS_Image = c.ass_render_frame(ctx.renderer, ctx.track, timestamp, 0);
+        // Uses the global track from SetSubtitles
+        var img: ?*c.ASS_Image = c.ass_render_frame(renderer, ctx.track, timestamp, 0);
 
         const finish_time = std.Io.Clock.real.now(common.io).toMicroseconds();
         const elapsed_ms: f64 = @as(f64, @floatFromInt(finish_time - start_time)) / std.time.us_per_ms;
@@ -209,9 +221,12 @@ pub fn ProfileSubtitles(
 
         // Call progress callback, if provided
         if (progress_cb) |cb| {
-            _ = cb(@intCast(frame - from_frame), @intCast(to_frame - from_frame), null);
+            _ = cb(progress, max_progress, null);
         }
     }
+
+    // Dispose of the dedicated renderer
+    c.ass_renderer_done(renderer);
 
     ctx.profile_points = profile_point_list.toOwnedSlice(common.allocator) catch unreachable;
     return .{ .ptr = ctx.profile_points.?.ptr, .len = ctx.profile_points.?.len };
