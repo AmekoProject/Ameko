@@ -21,9 +21,6 @@
     <data name="CommandPalette_Title" xml:space="preserve">
         <value>Command Palette</value>
     </data>
-    <data name="CmdP_Label" xml:space="preserve">
-        <value />
-    </data>
     <data name="CmdP_Button" xml:space="preserve">
         <value>Go</value>
     </data>

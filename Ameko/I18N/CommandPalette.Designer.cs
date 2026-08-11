@@ -51,12 +51,6 @@ namespace Ameko.I18N {
             }
         }
         
-        public static string CmdP_Label {
-            get {
-                return ResourceManager.GetString("CmdP_Label", resourceCulture);
-            }
-        }
-        
         public static string CmdP_Button {
             get {
                 return ResourceManager.GetString("CmdP_Button", resourceCulture);
