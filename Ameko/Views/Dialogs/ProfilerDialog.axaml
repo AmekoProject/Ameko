@@ -25,7 +25,7 @@
         <converters:EnumConverter x:Key="EnumConverter" />
         <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
     </Window.Resources>
-    <DockPanel>
+    <DockPanel Margin="2">
         <Grid ColumnDefinitions="*, Auto"
               RowDefinitions="Auto, Auto"
               ColumnSpacing="2"
@@ -37,6 +37,7 @@
                   ColumnDefinitions="*, Auto, *"
                   RowDefinitions="Auto, Auto, Auto"
                   RowSpacing="2"
+                  IsEnabled="{Binding !IsProcessing}"
                   IsVisible="{Binding Result,
                                          Converter={StaticResource NullToBoolConverter}}">
                 <StackPanel Grid.Column="1"
@@ -92,9 +93,6 @@
                 <Button Grid.Column="1"
                         Grid.Row="2"
                         Content="{x:Static i18n:Profiler.Profiler_Button_Start}"
-                        IsVisible="{Binding Result,
-                                            Converter={StaticResource NullToBoolConverter}}"
-                        IsEnabled="{Binding IsStartButtonEnabled}"
                         Command="{Binding StartCommand}" />
             </Grid>
             <ProgressBar Grid.Column="0"
@@ -105,7 +103,15 @@
                          ShowProgressText="True"
                          Value="{Binding CurrentProgress}"
                          VerticalAlignment="Center"
-                         HorizontalAlignment="Stretch" />
+                         HorizontalAlignment="Stretch"
+                         IsVisible="{Binding IsProcessing}" />
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1"
+                       Text="{Binding Description}"
+                       VerticalAlignment="Center"
+                       IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter},
+                                         ConverterParameter=.}" />
             <Button Grid.Column="1"
                     Grid.Row="1"
                     Content="{x:Static i18n:Profiler.Profiler_Button_Export}"

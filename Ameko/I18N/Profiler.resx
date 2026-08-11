@@ -51,4 +51,7 @@
     <data name="Profiler_Axis_Frame" xml:space="preserve">
         <value>Frame</value>
     </data>
+    <data name="Profiler_Description" xml:space="preserve">
+        <value>Viewing results for "{0}"</value>
+    </data>
 </root>

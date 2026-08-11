@@ -54,11 +54,11 @@ public class ProfilerDialogViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = ProfileTarget.All;
 
-    public bool IsStartButtonEnabled
+    public bool IsProcessing
     {
         get;
         set => this.RaiseAndSetIfChanged(ref field, value);
-    } = true;
+    } = false;
 
     /// <summary>
     /// Profiling progress between 0 and 1
@@ -68,6 +68,8 @@ public class ProfilerDialogViewModel : ViewModelBase
         get;
         private set => this.RaiseAndSetIfChanged(ref field, value);
     }
+
+    public string Description { get; }
 
     /// <summary>
     /// Result to display
@@ -91,6 +93,8 @@ public class ProfilerDialogViewModel : ViewModelBase
         if (!workspace.MediaController.IsVideoLoaded)
             throw new InvalidOperationException("Video must be loaded to profile subtitles");
 
+        Description = string.Format(I18N.Profiler.Profiler_Description, workspace.Title);
+
         ViewportWidth = workspace.MediaController.VideoInfo.Width;
         ViewportHeight = workspace.MediaController.VideoInfo.Height;
 
@@ -101,7 +105,7 @@ public class ProfilerDialogViewModel : ViewModelBase
         {
             try
             {
-                Dispatcher.UIThread.Post(() => IsStartButtonEnabled = false);
+                Dispatcher.UIThread.Post(() => IsProcessing = true);
                 logger.LogInformation("Starting profile operation!");
 
                 var lastPercent = -1;
@@ -125,7 +129,7 @@ public class ProfilerDialogViewModel : ViewModelBase
                     }
                 );
 
-                Dispatcher.UIThread.Post(() => CurrentProgress = 1d); // Make sure progress displays as 100%
+                Dispatcher.UIThread.Post(() => IsProcessing = false);
 
                 if (Result is null)
                     throw new InvalidOperationException("Received a null profile result!");

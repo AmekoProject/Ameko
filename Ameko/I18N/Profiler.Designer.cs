@@ -110,5 +110,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Profiler_Axis_Frame", resourceCulture);
             }
         }
+        
+        public static string Profiler_Description {
+            get {
+                return ResourceManager.GetString("Profiler_Description", resourceCulture);
+            }
+        }
     }
 }
