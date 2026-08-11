@@ -88,12 +88,12 @@ public class VideoInfo(
     /// <returns>Frame number</returns>
     public int FrameFromMillis(int millis)
     {
-        if (millis <= FrameMidpoints[0])
+        if (millis <= FrameTimes[0])
             return 0;
-        if (millis >= FrameMidpoints[^1])
-            return FrameMidpoints.Length - 1;
+        if (millis >= FrameTimes[^1])
+            return FrameTimes.Length - 1;
 
-        var bs = Array.BinarySearch(FrameMidpoints, millis);
+        var bs = Array.BinarySearch(FrameTimes, millis);
 
         if (bs >= 0)
             return bs;
@@ -135,23 +135,24 @@ public class VideoInfo(
     /// </remarks>
     /// <param name="millis">Time in milliseconds</param>
     /// <returns>Midpoint in milliseconds</returns>
-    public long MidpointFromMillis(long millis)
+    public long RoundMillisToNearestFrame(long millis)
     {
         if (millis < FrameMidpoints[0])
-            return FrameMidpoints[0];
+            return FrameTimes[0];
         if (millis > FrameMidpoints[^1])
-            return FrameMidpoints[^1];
+            return FrameTimes[^1];
 
         var bs = Array.BinarySearch(FrameMidpoints, millis);
 
         if (bs >= 0)
-            return FrameMidpoints[bs];
+            return FrameTimes[bs];
 
         var idx = ~bs;
         var lo = FrameMidpoints[idx - 1];
         var hi = FrameMidpoints[idx];
 
-        return (millis - lo) <= (hi - millis) ? lo : hi;
+        var nearestFrame = (millis - lo) <= (hi - millis) ? idx - 1 : idx;
+        return FrameTimes[nearestFrame];
     }
 
     /// <summary>

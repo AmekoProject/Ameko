@@ -247,13 +247,15 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         var mc = ViewModel!.Workspace.MediaController;
 
         var startMs = GetClampedPositionMs(mc);
-        var ms = Convert.ToInt64(x * mc.VisualizerScaleX + startMs);
+        var ms = Convert.ToInt32(x * mc.VisualizerScaleX + startMs);
 
         var mode = ViewModel.Configuration.TimingMode;
         var shift = (modifiers & KeyModifiers.Shift) != 0;
         var snap = mode is TimingMode.SnapToFrame ? !shift : shift;
 
-        return snap ? Time.FromMillis(mc.VideoInfo!.MidpointFromMillis(ms)) : Time.FromMillis(ms);
+        return snap
+            ? Time.FromMillis(mc.VideoInfo!.RoundMillisToNearestFrame(ms))
+            : Time.FromMillis(ms);
     }
 
     private double TimeToPosition(Time time)

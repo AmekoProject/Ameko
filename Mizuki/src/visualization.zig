@@ -16,7 +16,7 @@ const color_seconds: u32 = 0xfff85797;
 const color_event: u32 = 0xff937df8;
 const color_event_start: u32 = 0xff61e7b4;
 const color_event_end: u32 = 0xffe76194;
-const color_kf: u32 = 0xffe1e1e1;
+const color_kf: u32 = 0xffffb300;
 
 /// Render a waveform representation of the audio
 pub fn RenderWaveform(
@@ -87,7 +87,7 @@ pub fn RenderWaveform(
         );
 
         // Draw keyframe indicators behind the spectrum
-        if (g_ctx.*.ffms.kf_midcodes) |timecodes| {
+        if (g_ctx.*.ffms.kf_timecodes) |timecodes| {
             DrawKeyframes(
                 bmp,
                 bmp_width_f,

@@ -1124,7 +1124,8 @@ public class MediaController : BindableBase
             _subtitlesChanged = false;
         }
 
-        var videoTime = VideoInfo?.MidpointFromFrame(frameToFetch) ?? 0;
+        var videoMid = VideoInfo?.MidpointFromFrame(frameToFetch) ?? 0; // For audio drawing
+        var videoTime = VideoInfo?.MillisecondsFromFrame(frameToFetch) ?? 0;
         var audioTime = VideoInfo?.MillisecondsFromFrame(_currentAudioFrame) ?? -1;
 
         // Get audio visualization
@@ -1143,7 +1144,7 @@ public class MediaController : BindableBase
                         VisualizerScaleX,
                         VisualizerScaleY,
                         VisualizerPositionMs,
-                        videoTime,
+                        videoMid,
                         audioTime,
                         ptr,
                         _eventBounds.Length
