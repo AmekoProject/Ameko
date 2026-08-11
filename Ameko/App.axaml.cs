@@ -55,6 +55,13 @@ public class App : Application
     {
         var provider = AmekoServiceProvider.Build();
 
+        if (Program.IsInSafeMode)
+        {
+            provider
+                .GetRequiredService<ILogger<App>>()
+                .LogWarning("Ameko is running in safe mode! Some features may be unavailable.");
+        }
+
         // Activate some key services
         _ = provider.GetRequiredService<ThemeService>();
         // May have to move this if it gets too resource-intensive

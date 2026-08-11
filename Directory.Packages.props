@@ -29,7 +29,6 @@
     <PackageVersion Include="Jint" Version="4.9.3" />
     <PackageVersion Include="LibGit2Sharp" Version="0.31.0" />
     <PackageVersion Include="Markdig" Version="1.2.0" />
-    <PackageVersion Include="Markdown.Avalonia.Tight" Version="11.0.3" />
     <PackageVersion Include="Markdown.ColorCode" Version="3.0.1" />
     <PackageVersion Include="Material.Icons" Version="3.0.2" />
     <PackageVersion Include="Material.Icons.Avalonia" Version="3.0.2" />

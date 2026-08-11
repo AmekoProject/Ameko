@@ -293,7 +293,10 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// WindowSection title
     /// </summary>
-    public string WindowTitle { get; } = $"Ameko {VersionService.FullLabel}";
+    public string WindowTitle { get; } =
+        !Program.IsInSafeMode
+            ? $"Ameko {VersionService.FullLabel}"
+            : $"Ameko {VersionService.FullLabel} [Safe Mode]";
 
     /// <summary>
     /// Set the <see cref="Project.WorkingSpace"/> to the selected workspace, opening it if needed

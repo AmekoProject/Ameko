@@ -23,6 +23,7 @@ fn linkLibraries(b: *std.Build, obj: *std.Build.Step.Compile, target: std.Build.
         obj.root_module.linkSystemLibrary("ass", .{});
     }
     obj.root_module.link_libc = true;
+    obj.root_module.strip = false;
 }
 
 // Although this function looks imperative, note that its job is to

@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <EmbeddedResource Include="Assets/Text/WittyComments.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" />
@@ -45,7 +46,6 @@
     </PackageReference>
     <PackageReference Include="Jint" />
     <PackageReference Include="Markdig" />
-    <PackageReference Include="Markdown.Avalonia.Tight" />
     <PackageReference Include="Markdown.ColorCode" />
     <PackageReference Include="Material.Icons.Avalonia" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />

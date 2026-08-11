@@ -1,8 +1,5 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 
-using System.IO.Abstractions;
-using System.Text;
-
 namespace AssCS.IO;
 
 /// <summary>
@@ -16,31 +13,4 @@ public abstract class FileParser
     /// <param name="reader">Data to parse</param>
     /// <returns><see cref="Document"/> represented by the <paramref name="reader"/></returns>
     public abstract Document Parse(TextReader reader);
-
-    /// <summary>
-    /// Parse a file into a <see cref="Document"/>
-    /// </summary>
-    /// <param name="fileSystem">FileSystem to use</param>
-    /// <param name="savePath">Path to the file to open</param>
-    /// <returns><see cref="Document"/> at the <paramref name="savePath"/></returns>
-    public Document Parse(IFileSystem fileSystem, Uri savePath)
-    {
-        var path = savePath.LocalPath;
-
-        if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
-            fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
-
-        if (!fileSystem.File.Exists(path))
-            throw new FileNotFoundException("Document not found", path);
-
-        using var fs = fileSystem.FileStream.New(
-            path,
-            FileMode.Open,
-            FileAccess.Read,
-            FileShare.ReadWrite
-        );
-        using var reader = new StreamReader(fs, encoding: Encoding.UTF8);
-
-        return Parse(reader);
-    }
 }

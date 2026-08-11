@@ -9,7 +9,6 @@
         d:DesignHeight="600"
 
         xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
         xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
 
         x:Class="Ameko.Views.Windows.AboutWindow"
@@ -40,16 +39,16 @@
         </StackPanel>
         <TabControl TabStripPlacement="Bottom">
             <TabItem Header="{x:Static i18n:About.AboutWindow_GeneralTab}">
-                <md:MarkdownScrollViewer Margin="5"
-                                         Source="avares://Ameko/Assets/Text/About.md" />
+                <HtmlPanel Margin="5"
+                           Text="{Binding GeneralContent, FallbackValue='Section content loading failed!'}" />         
             </TabItem>
             <TabItem Header="{x:Static i18n:About.AboutWindow_AssetsTab}">
-                <md:MarkdownScrollViewer Margin="5"
-                                         Source="avares://Ameko/Assets/Text/Assets.md" />
+                <HtmlPanel Margin="5"
+                           Text="{Binding AssetsContent, FallbackValue='Section content loading failed!'}" />    
             </TabItem>
             <TabItem Header="{x:Static i18n:About.AboutWindow_LibrariesTab}">
-                <md:MarkdownScrollViewer Margin="5"
-                                         Source="avares://Ameko/Assets/Text/Libraries.md" />
+                <HtmlPanel Margin="5"
+                           Text="{Binding LibrariesContent, FallbackValue='Section content loading failed!'}" />    
             </TabItem>
         </TabControl>
     </DockPanel>

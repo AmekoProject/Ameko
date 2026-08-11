@@ -1,7 +1,7 @@
 # Maintainer: 9volt <ninevult@gmail.com>
 
 pkgname='ameko-git'
-pkgver=0.0.1.alpha.r545.gdcb9906
+pkgver=1.1.0.3ee0753
 pkgrel=1
 pkgdesc='Cross-platform editor for Advanced Substation Alpha (ASS) subtitles'
 arch=('x86_64')
@@ -25,7 +25,10 @@ sha256sums=('SKIP')
 
 pkgver() {
   cd "Ameko"
-  git describe --long --abbrev=7 | sed -E 's/^v//; s/([0-9]+)\.([0-9]+)\.[0-9]+-([A-Za-z0-9]+)-([0-9]+)-g/ \1.\2.\4.\3.g/; s/ //; s/-/./g'
+  git describe --long --abbrev=7 2>/dev/null \
+    | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g([A-Za-z0-9]+)/\1.\2.\3.\4/' \
+    | sed -E 's/-/./g' \
+    || git rev-parse --short HEAD
 }
 
 build() {

@@ -41,11 +41,15 @@ jobs:
         id: ver
         shell: bash
         run: |
-          version="$(git describe --long --abbrev=7 2>/dev/null | sed -E 's/^v//; s/([0-9]+)\.([0-9]+)\.[0-9]+-([A-Za-z0-9]+)-([0-9]+)-g/ \1.\2.\4.\3.g/; s/ //; s/-/./g' || git rev-parse --short HEAD)"
+          version="$(git describe --long --abbrev=7 2>/dev/null \
+            | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g([A-Za-z0-9]+)/\1.\2.\3.\4/' \
+            | sed -E 's/-/./g' \
+            || git rev-parse --short HEAD)"
           echo Version: $version
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
-          patch="$(git describe --long --abbrev=7 | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-.+-([0-9]+)-g.*/\1.\2.\3/')"
+          patch="$(git describe --long --abbrev=7 \
+            | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g.*/\1.\2.\3/')"
           echo "patch=$patch" >> "$GITHUB_OUTPUT"
 
   build-windows:
@@ -83,7 +87,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet build
-          cp "Mizuki/zig-out/bin/mizuki.dll" "Tests/Holo.Tests/bin/Debug/net${{ env.DOTNET_VERSION }}/"
+          cp -Force "Mizuki/zig-out/bin/*" "Tests/Holo.Tests/bin/Debug/net${{ env.DOTNET_VERSION }}/"
           cp -Force "Mizuki/lib/*" "Tests/Holo.Tests/bin/Debug/net${{ env.DOTNET_VERSION }}/"
           dotnet test
 
@@ -138,7 +142,7 @@ jobs:
           pushd Ameko
           dotnet publish -c Release -p:SolutionDir=../ -r osx-arm64 --self-contained true
           popd
-          cp "Mizuki/zig-out/lib/libmizuki.dylib" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish"
+          cp Mizuki/zig-out/lib/* "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish"
           chmod +x Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/osx-arm64/publish/Ameko
 
           mkdir -p publish/Ameko.app/Contents/MacOS
@@ -212,7 +216,7 @@ jobs:
           pushd Ameko
           dotnet publish -c Release -p:SolutionDir=../ -r linux-x64 --self-contained true
           popd
-          cp "Mizuki/zig-out/lib/libmizuki.so" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish"
+          cp Mizuki/zig-out/lib/* "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish"
           cat << EOF > "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish/DEPENDENCIES.txt"
           You will need to install libass and ffms2 to run Ameko. Example: sudo apt install libass ffms2.
           

@@ -9,6 +9,19 @@ namespace Ameko.ViewModels.Windows;
 
 public partial class AboutWindowViewModel : ViewModelBase
 {
-    // TODO: Migrate to MarkdownViewer.Core when it is out of beta
     public static string Version => VersionService.FullLabel;
+
+    public static string GeneralContent =>
+        LoadSectionContent("avares://Ameko/Assets/Text/About.html");
+
+    public static string AssetsContent =>
+        LoadSectionContent("avares://Ameko/Assets/Text/Assets.html");
+
+    public static string LibrariesContent =>
+        LoadSectionContent("avares://Ameko/Assets/Text/Libraries.html");
+
+    private static string LoadSectionContent(string path)
+    {
+        return new StreamReader(AssetLoader.Open(new Uri(path))).ReadToEnd();
+    }
 }
