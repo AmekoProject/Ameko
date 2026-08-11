@@ -35,9 +35,6 @@ public unsafe class MizukiSourceProvider(
     public int FrameCount { get; private set; }
 
     /// <inheritdoc />
-    public Rational Sar { get; }
-
-    /// <inheritdoc />
     public bool ValidateDependencies()
     {
         string[] ffms2Candidates =

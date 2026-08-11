@@ -20,11 +20,6 @@ public interface ISourceProvider
     int FrameCount { get; }
 
     /// <summary>
-    /// Screen Aspect Ratio of the loaded video
-    /// </summary>
-    Rational Sar { get; }
-
-    /// <summary>
     /// Validate that native dependencies are available for use
     /// </summary>
     /// <returns><see langword="true"/> if dependencies are available</returns>

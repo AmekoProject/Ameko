@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MPL-2.0
 
-using Holo.Media;
 using Holo.Media.Providers;
 
 namespace TestingUtils;
@@ -12,9 +11,6 @@ public unsafe class NullSourceProvider : ISourceProvider
 
     /// <inheritdoc />
     public int FrameCount => 0;
-
-    /// <inheritdoc />
-    public Rational Sar => new();
 
     /// <inheritdoc />
     public bool ValidateDependencies()
