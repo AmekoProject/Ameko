@@ -54,6 +54,7 @@
     <PackageReference Include="NLog" />
     <PackageReference Include="NLog.Extensions.Logging" />
     <PackageReference Include="ReactiveUI.Avalonia" />
+    <PackageReference Include="ScottPlot.Avalonia" />
     <PackageReference Include="Semi.Avalonia" />
     <PackageReference Include="Semi.Avalonia.AvaloniaEdit" />
     <PackageReference Include="Semi.Avalonia.ColorPicker" />
@@ -237,6 +238,15 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Knp.resx</DependentUpon>
+    </Compile>
+    <Compile Update="I18N\Profiler.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Profiler.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dialogs\ProfilerDialog.axaml.cs">
+      <DependentUpon>ProfilerWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -660,6 +670,28 @@
     <EmbeddedResource Update="I18N\Knp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Knp.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Profiler.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profiler.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.de-DE.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.en-GB.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.es-419.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.pl-PL.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.vi-VN.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="I18N\Knp.zh-TW.resx">
+      <DependentUpon>Knp.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -80,13 +80,14 @@ public class IoService(
 
         try
         {
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
             wsp.SavePath = uri;
             wsp.IsSaved = true;
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
         }
         catch (Exception ex)
         {
+            wsp.IsSaved = false;
             return await DisplayIoErrorMessageBox(ex, uri);
         }
         logger.LogInformation("Saved subtitle file {WspTitle}", wsp.Title);
@@ -166,13 +167,14 @@ public class IoService(
 
         try
         {
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
             wsp.SavePath = uri;
             wsp.IsSaved = true;
+            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
+            writer.Write(fileSystem, uri);
         }
         catch (Exception ex)
         {
+            wsp.IsSaved = false;
             return await DisplayIoErrorMessageBox(ex, uri);
         }
 
@@ -556,7 +558,7 @@ public class IoService(
     public async Task<bool> ProcessProjectGarbageAsync(
         Workspace workspace,
         Project project,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var doc = workspace.Document;
@@ -642,7 +644,7 @@ public class IoService(
     public async Task<bool> OpenVideoFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var uri = await interaction.Handle(Unit.Default);
@@ -656,7 +658,7 @@ public class IoService(
     public async Task<bool> OpenVideoFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!workspace.MediaController.IsEnabled)
@@ -697,7 +699,7 @@ public class IoService(
     public async Task<bool> OpenAudioFileAsync(
         Interaction<Unit, Uri?> interaction,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         var uri = await interaction.Handle(Unit.Default);
@@ -711,7 +713,7 @@ public class IoService(
     public async Task<bool> OpenAudioFileAsync(
         Uri uri,
         Workspace workspace,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null,
+        ISourceProvider.ProgressCallback? progressCallback = null,
         bool allowAutoload = true
     )
     {
@@ -893,6 +895,61 @@ public class IoService(
         await interaction.Handle(path);
 
         messageService.Enqueue(I18N.Other.Message_CopiedFrame, TimeSpan.FromSeconds(5));
+        return true;
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> SaveProfileResult(
+        Interaction<string, Uri?> interaction,
+        Workspace wsp,
+        ProfileResult result
+    )
+    {
+        logger.LogDebug("Preparing to save profile result for workspace {WspTitle}", wsp.Title);
+
+        var uri = await interaction.Handle(wsp.Title);
+        if (uri is null)
+        {
+            logger.LogInformation("Saving profile result for {WspTitle} cancelled", wsp.Title);
+            return false;
+        }
+
+        try
+        {
+            const string Header = "Frame,RenderTimeMs,ImageSizeKp,ImageCount";
+            var sb = new StringBuilder();
+            sb.AppendLine(Header);
+
+            for (var i = 0; i < result.Frames.Length; i++)
+            {
+                sb.AppendLine(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0:F0},{1},{2},{3:F0}",
+                        result.Frames[i],
+                        result.RenderTimeMs[i],
+                        result.ImageSizeKp[i],
+                        result.ImageCount[i]
+                    )
+                );
+            }
+
+            await using var fs = fileSystem.FileStream.New(
+                uri.LocalPath,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None
+            );
+            await using var writer = new StreamWriter(fs);
+            await writer.WriteAsync(sb.ToString());
+            await writer.FlushAsync();
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, uri);
+        }
+
+        logger.LogInformation("Saved profile result file for {WspTitle}", wsp.Title);
         return true;
     }
 

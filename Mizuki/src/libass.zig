@@ -87,6 +87,10 @@ pub fn CloseVideo(g_ctx: *context.GlobalContext) void {
         c.ass_free_track(track);
         ctx.track = null;
     }
+    if (ctx.profile_points) |profile_points| {
+        common.allocator.free(profile_points);
+        ctx.profile_points = null;
+    }
 }
 
 /// Verify a frame's hash
@@ -149,6 +153,83 @@ pub fn GetFrame(g_ctx: *context.GlobalContext, timestamp: c_longlong, out: *fram
 
         img = i.*.next;
     }
+}
+
+// Profile the current subtitle file
+//
+// Assumes the frame range is valid
+pub fn ProfileSubtitles(
+    g_ctx: *context.GlobalContext,
+    from_frame: usize,
+    to_frame: usize,
+    frame_width: usize,
+    frame_height: usize,
+    progress_cb: common.ProgressCallback,
+) common.AssProfilePointArray {
+    const ctx = &g_ctx.*.libass;
+
+    // Set up a dedicated ass_renderer
+    const renderer = c.ass_renderer_init(library);
+    c.ass_set_frame_size(renderer, @intCast(frame_width), @intCast(frame_height));
+    c.ass_set_storage_size(renderer, @intCast(frame_width), @intCast(frame_height));
+    c.ass_set_font_scale(renderer, 1.0);
+
+    c.ass_set_fonts(renderer, null, "Sans", 1, null, 1);
+
+    // Reset previous data if it exists
+    if (ctx.profile_points) |profile_points| {
+        common.allocator.free(profile_points);
+        ctx.profile_points = null;
+    }
+
+    var profile_point_list: std.ArrayList(common.AssProfilePoint) = .empty;
+
+    var progress: i64 = 0;
+    const max_progress: i64 = @intCast(to_frame - from_frame);
+
+    var frame = from_frame;
+    while (frame < to_frame) : ({
+        frame += 1;
+        progress += 1;
+    }) {
+        const timestamp = g_ctx.*.ffms.timecodes.?[frame];
+        var image_count: c_int = 0;
+        var image_size: c_int = 0;
+
+        const start_time = std.Io.Clock.real.now(common.io).toMicroseconds();
+
+        // Uses the global track from SetSubtitles
+        var img: ?*c.ASS_Image = c.ass_render_frame(renderer, ctx.track, timestamp, 0);
+
+        const finish_time = std.Io.Clock.real.now(common.io).toMicroseconds();
+        const elapsed_ms: f64 = @as(f64, @floatFromInt(finish_time - start_time)) / std.time.us_per_ms;
+
+        // TODO: Do we want to draw this to a frame and add a time for that as well?
+        while (img) |i| {
+            image_count += 1;
+            image_size += (i.w * i.h);
+            img = i.*.next;
+        }
+
+        profile_point_list.append(common.allocator, .{
+            .frame = @intCast(frame),
+            .timestamp = timestamp,
+            .render_ms = elapsed_ms,
+            .image_size = image_size,
+            .image_count = image_count,
+        }) catch unreachable;
+
+        // Call progress callback, if provided
+        if (progress_cb) |cb| {
+            _ = cb(progress, max_progress, null);
+        }
+    }
+
+    // Dispose of the dedicated renderer
+    c.ass_renderer_done(renderer);
+
+    ctx.profile_points = profile_point_list.toOwnedSlice(common.allocator) catch unreachable;
+    return .{ .ptr = ctx.profile_points.?.ptr, .len = ctx.profile_points.?.len };
 }
 
 /// Callback for handling logs emitted by libass

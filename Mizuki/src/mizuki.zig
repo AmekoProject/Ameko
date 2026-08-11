@@ -248,6 +248,25 @@ pub export fn GetSampleCount(g_ctx: *context.GlobalContext) c_longlong {
     return @intCast(g_ctx.*.ffms.sample_count);
 }
 
+/// Get array of profiling data
+pub export fn ProfileSubtitles(
+    g_ctx: *context.GlobalContext,
+    from_frame: c_int,
+    to_frame: c_int,
+    width: c_int,
+    height: c_int,
+    progress_cb: common.ProgressCallback,
+) common.AssProfilePointArray {
+    return libass.ProfileSubtitles(
+        g_ctx,
+        @intCast(from_frame),
+        @intCast(to_frame),
+        @intCast(width),
+        @intCast(height),
+        progress_cb,
+    );
+}
+
 /// Set the logging callback
 pub export fn SetLoggerCallback(callback: logger.LogCallback) void {
     logger.SetCallback(callback);

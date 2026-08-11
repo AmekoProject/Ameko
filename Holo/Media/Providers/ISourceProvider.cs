@@ -20,11 +20,6 @@ public interface ISourceProvider
     int FrameCount { get; }
 
     /// <summary>
-    /// Screen Aspect Ratio of the loaded video
-    /// </summary>
-    Rational Sar { get; }
-
-    /// <summary>
     /// Validate that native dependencies are available for use
     /// </summary>
     /// <returns><see langword="true"/> if dependencies are available</returns>
@@ -42,7 +37,7 @@ public interface ISourceProvider
     /// <param name="filename">Path to the video file to load</param>
     /// <param name="progressCallback">Indexing progress callback</param>
     /// <returns>0 on success</returns>
-    int LoadVideo(string filename, IndexingProgressCallback? progressCallback = null);
+    int LoadVideo(string filename, ProgressCallback? progressCallback = null);
 
     /// <summary>
     /// Load a video
@@ -120,7 +115,7 @@ public interface ISourceProvider
     /// </summary>
     /// <param name="progressCallback">Indexing progress callback</param>
     /// <returns>Audio frame</returns>
-    unsafe AudioFrame* GetAudio(IndexingProgressCallback? progressCallback = null);
+    unsafe AudioFrame* GetAudio(ProgressCallback? progressCallback = null);
 
     /// <summary>
     /// Get a waveform bitmap for the specified time
@@ -190,16 +185,33 @@ public interface ISourceProvider
     long GetSampleCount();
 
     /// <summary>
+    /// Profile the subtitles
+    /// </summary>
+    /// <param name="fromFrame">Frame to start profiling at</param>
+    /// <param name="toFrame">Frame to end profiling at</param>
+    /// <param name="width">Width of the rendering frame</param>
+    /// <param name="height">Height of the rendering frame</param>
+    /// <param name="progressCallback">Profiling progress callback</param>
+    /// <returns>Array of profile points</returns>
+    ProfilePoint[] ProfileSubtitles(
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        ProgressCallback? progressCallback = null
+    );
+
+    /// <summary>
     /// Clear the cache
     /// </summary>
     /// <param name="days">Expiration time</param>
     void CleanCache(uint days);
 
     /// <summary>
-    /// Indexing progress
+    /// Generic progress callback
     /// </summary>
     /// <param name="current">Current progress</param>
     /// <param name="total">Goal progress</param>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void IndexingProgressCallback(long current, long total);
+    delegate void ProgressCallback(long current, long total);
 }

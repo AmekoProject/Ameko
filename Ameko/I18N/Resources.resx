@@ -435,4 +435,7 @@
     <data name="Audio_NothingLoaded" xml:space="preserve">
         <value>No audio loaded</value>
     </data>
+    <data name="Menu_Profile_Subtitles" xml:space="preserve">
+        <value>Pro_file Subtitles...</value>
+    </data>
 </root>

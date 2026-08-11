@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MPL-2.0
 
-using Holo.Media;
 using Holo.Media.Providers;
 
 namespace TestingUtils;
@@ -12,9 +11,6 @@ public unsafe class NullSourceProvider : ISourceProvider
 
     /// <inheritdoc />
     public int FrameCount => 0;
-
-    /// <inheritdoc />
-    public Rational Sar => new();
 
     /// <inheritdoc />
     public bool ValidateDependencies()
@@ -29,10 +25,7 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public int LoadVideo(
-        string filename,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
-    )
+    public int LoadVideo(string filename, ISourceProvider.ProgressCallback? progressCallback = null)
     {
         return 0;
     }
@@ -98,7 +91,7 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public AudioFrame* GetAudio(ISourceProvider.IndexingProgressCallback? progressCallback = null)
+    public AudioFrame* GetAudio(ISourceProvider.ProgressCallback? progressCallback = null)
     {
         return null;
     }
@@ -159,6 +152,18 @@ public unsafe class NullSourceProvider : ISourceProvider
     public long GetSampleCount()
     {
         return 1;
+    }
+
+    /// <inheritdoc />
+    public ProfilePoint[] ProfileSubtitles(
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        ISourceProvider.ProgressCallback? progressCallback
+    )
+    {
+        return [];
     }
 
     /// <inheritdoc />

@@ -91,7 +91,6 @@ public class Project : BindableBase
     /// The path the <see cref="Document"/> is saved to,
     /// or <see langword="null"/> if the document has not been saved.
     /// </summary>
-    [MemberNotNullWhen(true, nameof(IsFile))]
     public Uri? SavePath
     {
         get => _savePath;
@@ -110,6 +109,7 @@ public class Project : BindableBase
     /// <summary>
     /// <see langword="true"/> if the <see cref="Project"/> has a save path
     /// </summary>
+    [MemberNotNullWhen(true, nameof(SavePath))]
     public bool IsFile => _savePath is not null;
 
     /// <summary>

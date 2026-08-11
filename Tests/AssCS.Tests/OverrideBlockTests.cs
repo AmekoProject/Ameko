@@ -831,6 +831,7 @@ public class OverrideBlockTests
 
         var c1 = await Assert.That(block.Tags[0]).IsTypeOf<OverrideTag.C1>();
         await Assert.That(c1).IsNotNull();
+        await Assert.That(c1.Value).IsNotNull();
         await Assert.That(c1.Value.Blue).IsEqualTo((byte)0xFF);
         await Assert.That(c1.Value.Green).IsEqualTo((byte)0x00);
         await Assert.That(c1.Value.Red).IsEqualTo((byte)0xBB);
@@ -847,6 +848,7 @@ public class OverrideBlockTests
 
         var a1 = await Assert.That(block.Tags[0]).IsTypeOf<OverrideTag.A1>();
         await Assert.That(a1).IsNotNull();
+        await Assert.That(a1.Value).IsNotNull();
         await Assert.That(a1.Value.Alpha).IsEqualTo((byte)0x11);
 
         await Assert.That(a1.ToString()).IsEqualTo(body);

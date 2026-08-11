@@ -878,5 +878,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Audio_NothingLoaded", resourceCulture);
             }
         }
+        
+        public static string Menu_Profile_Subtitles {
+            get {
+                return ResourceManager.GetString("Menu_Profile_Subtitles", resourceCulture);
+            }
+        }
     }
 }

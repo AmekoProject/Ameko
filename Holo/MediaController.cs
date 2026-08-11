@@ -50,6 +50,15 @@ public class MediaController : BindableBase
     private long[] _eventBounds = [];
 
     /// <summary>
+    /// If modifications are disabled
+    /// </summary>
+    public bool IsLocked
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
+
+    /// <summary>
     /// If media operations are to be enabled
     /// </summary>
     public bool IsEnabled { get; init; }
@@ -324,6 +333,9 @@ public class MediaController : BindableBase
     /// </summary>
     public void Stop()
     {
+        if (IsLocked)
+            return;
+
         _logger.LogDebug("Stopping playback");
         if (!IsVideoPlaying && !IsAudioPlaying)
             return;
@@ -364,6 +376,8 @@ public class MediaController : BindableBase
     {
         if (!IsVideoLoaded)
             throw new InvalidOperationException("Video is not loaded");
+        if (IsLocked)
+            return;
 
         Stop();
         _logger.LogDebug("Playing to end");
@@ -392,6 +406,8 @@ public class MediaController : BindableBase
     {
         if (!IsVideoLoaded)
             throw new InvalidOperationException("Video is not loaded");
+        if (IsLocked)
+            return;
 
         Stop();
         var startTime = selection.Min(e => e.Start);
@@ -602,7 +618,7 @@ public class MediaController : BindableBase
     /// <exception cref="InvalidOperationException">If the provider isn't initialized</exception>
     public async Task<bool> OpenVideoAsync(
         string filePath,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!_provider.IsInitialized)
@@ -683,7 +699,7 @@ public class MediaController : BindableBase
         string filePath,
         int trackNumber,
         int totalTracks,
-        ISourceProvider.IndexingProgressCallback? progressCallback = null
+        ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
         if (!_provider.IsInitialized)
@@ -944,7 +960,7 @@ public class MediaController : BindableBase
     /// <exception cref="InvalidOperationException">If the provider isn't initialized</exception>
     public void SetSubtitles(Document document)
     {
-        if (!_provider.IsInitialized || !IsVideoLoaded)
+        if (!_provider.IsInitialized || !IsVideoLoaded || IsLocked)
             return;
 
         // TODO: preferably not create a new writer on each change
@@ -969,6 +985,114 @@ public class MediaController : BindableBase
         }
 
         RequestFrame(CurrentFrame);
+    }
+
+    /// <summary>
+    /// Profile a <paramref name="selection"/> of the <paramref name="document"/> at a specific resolution
+    /// </summary>
+    /// <param name="document">Document to profile</param>
+    /// <param name="selection">Selected events in the document</param>
+    /// <param name="viewWidth">Width to render at, defaults to video width</param>
+    /// <param name="viewHeight">Height to render at, defaults to video height</param>
+    /// <param name="target">Target to profile, defaults to entire document</param>
+    /// <param name="progressCallback">Profiling progress callback (optional)</param>
+    /// <returns>Graph-friendly profile data</returns>
+    /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
+    public async Task<ProfileResult> ProfileSubtitlesAsync(
+        Document document,
+        IList<Event> selection,
+        int viewWidth = -1,
+        int viewHeight = -1,
+        ProfileTarget target = ProfileTarget.All,
+        ISourceProvider.ProgressCallback? progressCallback = null
+    )
+    {
+        if (!_provider.IsInitialized)
+            throw new InvalidOperationException("Provider is not initialized");
+        if (!IsVideoLoaded)
+            throw new InvalidOperationException("Video is not loaded");
+
+        if (_isVideoPlaying || _isAudioPlaying)
+            Stop();
+        IsLocked = true;
+
+        viewWidth = viewWidth >= 0 ? viewWidth : VideoInfo.Width;
+        viewHeight = viewHeight >= 0 ? viewHeight : VideoInfo.Height;
+
+        var selectionDoc = document;
+        if (target is ProfileTarget.SelectedEvents)
+        {
+            selectionDoc = new Document(false);
+            foreach (var style in document.StyleManager.Styles)
+                selectionDoc.StyleManager.AddOrReplace(style);
+            foreach (var @event in selection)
+                selectionDoc.EventManager.AddLast(@event);
+        }
+
+        // Set subtitles
+        var writer = new AssWriter(selectionDoc, new ConsumerInfo("", "", ""));
+        lock (_requestLock)
+        {
+            var content = writer.Write();
+            _provider.SetSubtitles(content, null);
+            _subtitlesChanged = true;
+        }
+
+        var fromTime =
+            target switch
+            {
+                ProfileTarget.All => document.EventManager.Events.Select(e => e.Start).Min(),
+                _ => selection.Select(e => e.Start).Min(),
+            } ?? Time.Zero;
+        var toTime =
+            target switch
+            {
+                ProfileTarget.All => document.EventManager.Events.Select(e => e.End).Max(),
+                _ => selection.Select(e => e.End).Max(),
+            } ?? Time.Zero;
+
+        var fromFrame = VideoInfo.FrameFromTime(fromTime);
+        var toFrame = VideoInfo.FrameFromTime(toTime);
+
+        // Do the profiling
+        var points = await Task.Run(() =>
+            _provider.ProfileSubtitles(fromFrame, toFrame, viewWidth, viewHeight, progressCallback)
+        );
+
+        IsLocked = false;
+
+        // Reset subtitles
+        SetSubtitles(document);
+        return ComputeProfileResult(points);
+    }
+
+    /// <summary>
+    /// Construct a <see cref="ProfileResult"/> object from a list of <see cref="ProfilePoint"/>s
+    /// </summary>
+    /// <param name="points">Values for each frame</param>
+    /// <returns>Graph-friendly data</returns>
+    private static ProfileResult ComputeProfileResult(ProfilePoint[] points)
+    {
+        var frames = new List<double>(points.Length);
+        var renderTimes = new List<double>(points.Length);
+        var imageSizes = new List<double>(points.Length);
+        var imageCounts = new List<double>(points.Length);
+
+        foreach (var r in points)
+        {
+            frames.Add(r.Frame);
+            renderTimes.Add(r.RenderTimeMs);
+            imageSizes.Add(r.ImageSize / 1000.0d);
+            imageCounts.Add(r.ImageCount);
+        }
+
+        return new ProfileResult
+        {
+            Frames = frames.ToArray(),
+            RenderTimeMs = renderTimes.ToArray(),
+            ImageSizeKp = imageSizes.ToArray(),
+            ImageCount = imageCounts.ToArray(),
+        };
     }
 
     /// <summary>

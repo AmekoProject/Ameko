@@ -35,9 +35,6 @@ public unsafe class MizukiSourceProvider(
     public int FrameCount { get; private set; }
 
     /// <inheritdoc />
-    public Rational Sar { get; }
-
-    /// <inheritdoc />
     public bool ValidateDependencies()
     {
         string[] ffms2Candidates =
@@ -100,10 +97,7 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public int LoadVideo(
-        string filename,
-        ISourceProvider.IndexingProgressCallback? progressCallback
-    )
+    public int LoadVideo(string filename, ISourceProvider.ProgressCallback? progressCallback)
     {
         if (_context != null)
             CloseVideo();
@@ -209,7 +203,7 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public AudioFrame* GetAudio(ISourceProvider.IndexingProgressCallback? progressCallback = null)
+    public AudioFrame* GetAudio(ISourceProvider.ProgressCallback? progressCallback = null)
     {
         External.IndexingProgressCallback? nativeCb = null;
         if (progressCallback != null)
@@ -298,6 +292,32 @@ public unsafe class MizukiSourceProvider(
     public long GetSampleCount()
     {
         return External.GetSampleCount(_context);
+    }
+
+    /// <inheritdoc />
+    public ProfilePoint[] ProfileSubtitles(
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        ISourceProvider.ProgressCallback? progressCallback = null
+    )
+    {
+        External.IndexingProgressCallback? nativeCb = null;
+        if (progressCallback != null)
+        {
+            nativeCb = (current, total, _) =>
+            {
+                progressCallback(current, total);
+                return 0;
+            };
+            _progressHandle = GCHandle.Alloc(nativeCb);
+        }
+
+        var ptr = External.ProfileSubtitles(_context, fromFrame, toFrame, width, height, nativeCb);
+
+        _progressHandle?.Free();
+        return ptr.ToProfilePointArray();
     }
 
     /// <inheritdoc />
@@ -500,6 +520,16 @@ internal static unsafe partial class External
     internal static partial UnmanagedArray GetFrameIntervals(GlobalContext* context);
 
     [LibraryImport("mizuki")]
+    internal static partial UnmanagedArray ProfileSubtitles(
+        GlobalContext* context,
+        int fromFrame,
+        int toFrame,
+        int width,
+        int height,
+        IndexingProgressCallback? progressCallback
+    );
+
+    [LibraryImport("mizuki")]
     internal static partial void SetLoggerCallback(LogCallback callback);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -515,7 +545,7 @@ internal static unsafe partial class External
 internal struct GlobalContext;
 
 /// <summary>
-/// An unmanaged integer array
+/// An unmanaged array
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 internal struct UnmanagedArray
@@ -564,6 +594,23 @@ internal static class UnmanagedArrayExtensions
             {
                 var ptr = array.Pointer + (i * size);
                 managed[i] = Marshal.PtrToStructure<TrackInfo>(ptr);
+            }
+            return managed;
+        }
+
+        /// <summary>
+        /// Copy an unmanaged <see cref="UnmanagedArray"/> to a managed <c>ProfilePoint[]</c>
+        /// </summary>
+        /// <returns>Managed array</returns>
+        public ProfilePoint[] ToProfilePointArray()
+        {
+            var managed = new ProfilePoint[array.Length];
+            var size = Marshal.SizeOf<ProfilePoint>();
+
+            for (var i = 0; i < (int)array.Length; i++)
+            {
+                var ptr = array.Pointer + (i * size);
+                managed[i] = Marshal.PtrToStructure<ProfilePoint>(ptr);
             }
             return managed;
         }

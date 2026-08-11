@@ -52,12 +52,19 @@ public partial class MainWindowViewModel
 
             foreach (var wsp in workspaces)
             {
-                ISourceProvider.IndexingProgressCallback? callback = null;
+                var lastPercent = -1;
+                ISourceProvider.ProgressCallback? callback = null;
                 if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                 {
                     callback = (current, total) =>
                     {
                         var progress = (double)current / total;
+                        var percent = (int)(100.0d * progress);
+
+                        if (percent == lastPercent)
+                            return;
+
+                        lastPercent = percent;
                         Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                     };
                 }
@@ -90,12 +97,19 @@ public partial class MainWindowViewModel
             {
                 if (await IoService.OpenSubtitleFileAsync(uri, ProjectProvider.Current) is { } wsp)
                 {
-                    ISourceProvider.IndexingProgressCallback? callback = null;
+                    var lastPercent = -1;
+                    ISourceProvider.ProgressCallback? callback = null;
                     if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                     {
                         callback = (current, total) =>
                         {
                             var progress = (double)current / total;
+                            var percent = (int)(100.0d * progress);
+
+                            if (percent == lastPercent)
+                                return;
+
+                            lastPercent = percent;
                             Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                         };
                     }
@@ -133,12 +147,19 @@ public partial class MainWindowViewModel
                 );
                 foreach (var wsp in workspaces)
                 {
-                    ISourceProvider.IndexingProgressCallback? callback = null;
+                    var lastPercent = -1;
+                    ISourceProvider.ProgressCallback? callback = null;
                     if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
                     {
                         callback = (current, total) =>
                         {
                             var progress = (double)current / total;
+                            var percent = (int)(100.0d * progress);
+
+                            if (percent == lastPercent)
+                                return;
+
+                            lastPercent = percent;
                             Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                         };
                     }
@@ -587,6 +608,21 @@ public partial class MainWindowViewModel
     }
 
     /// <summary>
+    /// Show Profile Subtitles dialog
+    /// </summary>
+    private ReactiveCommand<Unit, Unit> CreateShowProfileSubtitlesDialogCommand()
+    {
+        return ReactiveCommand.CreateFromTask(async () =>
+        {
+            var wsp = ProjectProvider.Current.WorkingSpace;
+            if (wsp is null || !wsp.MediaController.IsVideoLoaded)
+                return;
+            var vm = _vmFactory.Create<ProfilerDialogViewModel>(wsp);
+            await ShowProfilerDialog.Handle(vm);
+        });
+    }
+
+    /// <summary>
     /// Show sort lines dialog
     /// </summary>
     private ReactiveCommand<Unit, Unit> CreateShowSortDialogCommand()
@@ -816,12 +852,19 @@ public partial class MainWindowViewModel
                 ProjectProvider.Current.WorkingSpace = wsp = ProjectProvider.Current.AddWorkspace();
             }
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            var lastPercent = -1;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>
                 {
                     var progress = (double)current / total;
+                    var percent = (int)(100.0d * progress);
+
+                    if (percent == lastPercent)
+                        return;
+
+                    lastPercent = percent;
                     Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                 };
             }
@@ -940,12 +983,19 @@ public partial class MainWindowViewModel
                 ProjectProvider.Current.WorkingSpace = wsp = ProjectProvider.Current.AddWorkspace();
             }
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            var lastPercent = -1;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>
                 {
                     var progress = (double)current / total;
+                    var percent = (int)(100.0d * progress);
+
+                    if (percent == lastPercent)
+                        return;
+
+                    lastPercent = percent;
                     Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                 };
             }
@@ -991,12 +1041,19 @@ public partial class MainWindowViewModel
             if (path is null)
                 return;
 
-            ISourceProvider.IndexingProgressCallback? callback = null;
+            var lastPercent = -1;
+            ISourceProvider.ProgressCallback? callback = null;
             if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
             {
                 callback = (current, total) =>
                 {
                     var progress = (double)current / total;
+                    var percent = (int)(100.0d * progress);
+
+                    if (percent == lastPercent)
+                        return;
+
+                    lastPercent = percent;
                     Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
                 };
             }

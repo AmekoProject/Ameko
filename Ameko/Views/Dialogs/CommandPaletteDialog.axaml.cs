@@ -52,7 +52,10 @@ public partial class CommandPaletteDialog : ReactiveWindow<CommandPaletteDialogV
             ViewModel?.GenerateCommandSuggestions();
             Disposable.Create(() => { }).DisposeWith(disposables);
 
-            LostFocus += (_, _) => Close();
+            Deactivated += (_, _) =>
+            {
+                Close();
+            };
         });
     }
 

@@ -102,6 +102,11 @@
             <MenuItem Header="{x:Static i18n:Resources.Menu_ScriptProperties}"
                       Icon="{icons:MaterialIconExt Kind=ListBoxOutline}"
                       Command="{Binding ShowScriptInfoDialogCommand}" />
+            <MenuItem Header="{x:Static i18n:Resources.Menu_Profile_Subtitles}"
+                      Icon="{icons:MaterialIconExt Kind=Speedometer}"
+                      Command="{Binding ShowProfileSubtitlesCommand}"
+                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+                                          FallbackValue=false}" />
             <Separator />
             <MenuItem Header="{x:Static i18n:Resources.Menu_Sort_Lines}"
                       Icon="{icons:MaterialIconExt Kind=Sort}"

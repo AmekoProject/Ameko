@@ -60,6 +60,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public Interaction<StylesManagerWindowViewModel, Unit> ShowStylesManager { get; }
     public Interaction<Unit, Uri?> AttachReferenceFile { get; }
     public Interaction<ScriptInfoDialogViewModel, Unit> ShowScriptInfoDialog { get; }
+    public Interaction<ProfilerDialogViewModel, Unit> ShowProfilerDialog { get; }
     public Interaction<SortDialogViewModel, Unit> ShowSortDialog { get; }
     public Interaction<SelectDialogViewModel, Unit> ShowSelectDialog { get; }
 
@@ -165,6 +166,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [Command("ameko.document.properties", KeybindContext.Global)]
     public ICommand ShowScriptInfoDialogCommand { get; }
+
+    [Command("ameko.document.profile", KeybindContext.Global)]
+    public ICommand ShowProfileSubtitlesCommand { get; }
 
     [Command("ameko.document.sort", KeybindContext.Global)]
     public ICommand ShowSortDialogCommand { get; }
@@ -311,12 +315,19 @@ public partial class MainWindowViewModel : ViewModelBase
         if (wsp is null)
             return;
 
-        ISourceProvider.IndexingProgressCallback? callback = null;
+        var lastPercent = -1;
+        ISourceProvider.ProgressCallback? callback = null;
         if (_tabFactory.TryGetViewModel(wsp, out var tabVm))
         {
             callback = (current, total) =>
             {
                 var progress = (double)current / total;
+                var percent = (int)(100.0d * progress);
+
+                if (percent == lastPercent)
+                    return;
+
+                lastPercent = percent;
                 Dispatcher.UIThread.Post(() => tabVm.IndexingProgress = progress);
             };
         }
@@ -449,6 +460,7 @@ public partial class MainWindowViewModel : ViewModelBase
         ShowStylesManager = new Interaction<StylesManagerWindowViewModel, Unit>();
         AttachReferenceFile = new Interaction<Unit, Uri?>();
         ShowScriptInfoDialog = new Interaction<ScriptInfoDialogViewModel, Unit>();
+        ShowProfilerDialog = new Interaction<ProfilerDialogViewModel, Unit>();
         ShowSortDialog = new Interaction<SortDialogViewModel, Unit>();
         ShowSelectDialog = new Interaction<SelectDialogViewModel, Unit>();
         // Project
@@ -508,6 +520,7 @@ public partial class MainWindowViewModel : ViewModelBase
         AttachReferenceFileCommand = CreateAttachReferenceFileCommand();
         DetachReferenceFileCommand = CreateDetachReferenceFileCommand();
         ShowScriptInfoDialogCommand = CreateShowScriptInfoDialogCommand();
+        ShowProfileSubtitlesCommand = CreateShowProfileSubtitlesDialogCommand();
         ShowSortDialogCommand = CreateShowSortDialogCommand();
         ShowSelectDialogCommand = CreateShowSelectDialogCommand();
         // Project

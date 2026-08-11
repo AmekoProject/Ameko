@@ -43,6 +43,12 @@ pub const LongArray = extern struct {
     len: usize,
 };
 
+/// Interoperable array of profile points
+pub const AssProfilePointArray = extern struct {
+    ptr: [*c]AssProfilePoint,
+    len: usize,
+};
+
 /// Basic information about a track
 pub const TrackInfo = extern struct {
     index: usize,
@@ -63,3 +69,12 @@ pub const ProgressCallback = ?*const fn (
     total: i64,
     userdata: ?*anyopaque,
 ) callconv(.c) c_int;
+
+/// Profiling information for a frame
+pub const AssProfilePoint = extern struct {
+    frame: c_int,
+    timestamp: c_longlong,
+    render_ms: f64,
+    image_size: c_int,
+    image_count: c_int,
+};
