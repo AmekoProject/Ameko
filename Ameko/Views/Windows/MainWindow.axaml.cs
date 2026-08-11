@@ -858,7 +858,22 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             return;
 
         var files = transfer.TryGetFiles() ?? [];
-        foreach (var file in files)
+
+        // Order the incoming files in project → script → media order.
+        // This should ensure that dropping in a script and video at the same time loads in the correct order
+        var prioritizedFiles = files.OrderBy(file =>
+        {
+            var ext = Path.GetExtension(file.Path.LocalPath);
+            if (ext == ProjectExtension)
+                return 0;
+            if (ScriptExtensions.Contains(ext))
+                return 1;
+            if (VideoExtensions.Contains(ext))
+                return 2;
+            return 3;
+        });
+
+        foreach (var file in prioritizedFiles)
         {
             var ext = Path.GetExtension(file.Path.LocalPath);
 

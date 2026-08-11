@@ -578,65 +578,62 @@ public class IoService(
             Path.Combine(Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/", relVideoPath)
         );
 
-        if (fileSystem.File.Exists(videoPath))
+        if (!fileSystem.File.Exists(videoPath))
         {
-            var result = await messageBoxService.ShowAsync(
-                I18N.Other.MsgBox_LoadVideo_Title,
-                $"{I18N.Other.MsgBox_LoadVideo_Body}\n\n{relVideoPath}",
-                MsgBoxButtonSet.YesNo,
-                MsgBoxButton.Yes
+            messageService.Enqueue(
+                string.Format(I18N.Other.Message_VideoNotFound, Path.GetFileName(videoPath)),
+                TimeSpan.FromSeconds(7)
             );
-            if (result != MsgBoxButton.Yes)
-                return true;
+        }
 
-            await OpenVideoFileAsync(
-                new Uri(videoPath, UriKind.Absolute),
-                workspace,
-                progressCallback
+        // Stop here if media loading is ongoing (maybe video was drag-n-dropped in at the same time?)
+        if (workspace.MediaController.IsLoadingFile)
+        {
+            logger.LogWarning(
+                "Skipping referenced video load prompt because another video is already being loaded!"
             );
-
-            if (doc.GarbageManager.TryGetInt("Video Position", out var frame))
-                workspace.MediaController.SeekTo(frame.Value); // Seek for clamp safety
-
-            // Keyframes
-            if (doc.GarbageManager.TryGetString("Keyframes File", out var relKfPath))
-            {
-                var kfPath = Path.GetFullPath(
-                    Path.Combine(
-                        Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/",
-                        relKfPath
-                    )
-                );
-                if (fileSystem.File.Exists(kfPath))
-                {
-                    try
-                    {
-                        workspace.MediaController.OpenKeyframes(kfPath);
-                    }
-                    catch (Exception ex)
-                    {
-                        return await DisplayIoErrorMessageBox(ex, new Uri(kfPath));
-                    }
-                }
-                else
-                {
-                    messageService.Enqueue(
-                        string.Format(
-                            I18N.Other.Message_KeyframesNotFound,
-                            Path.GetFileName(kfPath)
-                        ),
-                        TimeSpan.FromSeconds(7)
-                    );
-                }
-            }
             return true;
         }
 
-        // Video not found
-        messageService.Enqueue(
-            string.Format(I18N.Other.Message_VideoNotFound, Path.GetFileName(videoPath)),
-            TimeSpan.FromSeconds(7)
+        // Ask the user if they want to open the video
+        var result = await messageBoxService.ShowAsync(
+            I18N.Other.MsgBox_LoadVideo_Title,
+            $"{I18N.Other.MsgBox_LoadVideo_Body}\n\n{relVideoPath}",
+            MsgBoxButtonSet.YesNo,
+            MsgBoxButton.Yes
         );
+        if (result != MsgBoxButton.Yes)
+            return true;
+
+        await OpenVideoFileAsync(new Uri(videoPath, UriKind.Absolute), workspace, progressCallback);
+
+        if (doc.GarbageManager.TryGetInt("Video Position", out var frame))
+            workspace.MediaController.SeekTo(frame.Value); // Seek for clamp safety
+
+        // Keyframes
+        if (!doc.GarbageManager.TryGetString("Keyframes File", out var relKfPath))
+            return true;
+        var kfPath = Path.GetFullPath(
+            Path.Combine(Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/", relKfPath)
+        );
+        if (!fileSystem.File.Exists(kfPath))
+        {
+            messageService.Enqueue(
+                string.Format(I18N.Other.Message_KeyframesNotFound, Path.GetFileName(kfPath)),
+                TimeSpan.FromSeconds(7)
+            );
+            return true;
+        }
+
+        try
+        {
+            workspace.MediaController.OpenKeyframes(kfPath);
+        }
+        catch (Exception ex)
+        {
+            return await DisplayIoErrorMessageBox(ex, new Uri(kfPath));
+        }
+
         return true;
     }
 

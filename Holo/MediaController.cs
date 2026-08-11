@@ -50,6 +50,11 @@ public class MediaController : BindableBase
     private long[] _eventBounds = [];
 
     /// <summary>
+    /// If a video or audio file is currently being loaded
+    /// </summary>
+    public bool IsLoadingFile { get; private set; }
+
+    /// <summary>
     /// If modifications are disabled
     /// </summary>
     public bool IsLocked
@@ -61,7 +66,7 @@ public class MediaController : BindableBase
     /// <summary>
     /// If media operations are to be enabled
     /// </summary>
-    public bool IsEnabled { get; init; }
+    public bool IsEnabled { get; }
 
     /// <summary>
     /// Information about the loaded video
@@ -625,6 +630,7 @@ public class MediaController : BindableBase
             throw new InvalidOperationException("Provider is not initialized");
 
         _logger.LogInformation("Opening video {FilePath}", filePath);
+        IsLoadingFile = true;
 
         if (IsVideoLoaded)
             CloseVideo();
@@ -636,11 +642,13 @@ public class MediaController : BindableBase
             {
                 // TODO: Handle error
                 _logger.LogError("Load video returned error code {ErrorCode}", loadResult);
+                IsLoadingFile = false;
                 return false;
             }
 
             if (_provider.AllocateBuffers(64, 32) != 0)
             {
+                IsLoadingFile = false;
                 return false;
             }
 
@@ -682,6 +690,7 @@ public class MediaController : BindableBase
                 FrameReady?.Invoke();
             }
 
+            IsLoadingFile = false;
             return true;
         });
     }
@@ -709,17 +718,21 @@ public class MediaController : BindableBase
             CloseAudio();
 
         _logger.LogInformation("Opening audio {FilePath}", filePath);
+        IsLoadingFile = true;
+
         return await Task.Run(() =>
         {
             if (_provider.LoadAudio(filePath, trackNumber) != 0)
             {
                 // TODO: Handle error
+                IsLoadingFile = false;
                 return false;
             }
 
             // Audio time
             if (_provider.AllocateAudioBuffer() != 0)
             {
+                IsLoadingFile = false;
                 return false; // ??
             }
 
@@ -728,6 +741,7 @@ public class MediaController : BindableBase
                 _audioFrame = _provider.GetAudio(progressCallback);
                 if (_audioFrame->Valid != 1)
                 {
+                    IsLoadingFile = false;
                     return false; // ??
                 }
 
@@ -754,6 +768,7 @@ public class MediaController : BindableBase
                 );
             }
 
+            IsLoadingFile = false;
             return true;
         });
     }
