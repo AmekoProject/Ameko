@@ -7,7 +7,7 @@ using Avalonia.Platform;
 
 namespace Ameko.ViewModels.Windows;
 
-public partial class CrashReporterWindowViewModel(string content) : ViewModelBase
+public class CrashReporterWindowViewModel(string content) : ViewModelBase
 {
     public string Content { get; } = content;
 }

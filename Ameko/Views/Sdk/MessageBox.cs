@@ -16,7 +16,7 @@ namespace Ameko.Views.Sdk;
 /// <summary>
 /// A simple message box API
 /// </summary>
-public partial class MessageBox : Window
+public class MessageBox : Window
 {
     /// <summary>
     /// A box for displaying a message to the user

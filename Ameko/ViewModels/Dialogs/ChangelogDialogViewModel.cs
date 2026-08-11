@@ -8,7 +8,7 @@ using Markdown.ColorCode;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class ChangelogDialogViewModel(string changelog) : ViewModelBase
+public class ChangelogDialogViewModel(string changelog) : ViewModelBase
 {
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()

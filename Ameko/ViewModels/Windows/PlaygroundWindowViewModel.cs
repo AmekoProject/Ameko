@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace Ameko.ViewModels.Windows;
 
-public partial class PlaygroundWindowViewModel : ViewModelBase
+public class PlaygroundWindowViewModel : ViewModelBase
 {
     private string _status;
 

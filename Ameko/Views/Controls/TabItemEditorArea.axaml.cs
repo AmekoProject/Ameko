@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.ViewModels.Controls;
 using AssCS.History;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Disposables;
 
 namespace Ameko.Views.Controls;
 
@@ -127,7 +126,7 @@ public partial class TabItemEditorArea : ReactiveUserControl<TabItemViewModel>
         }
         else
         {
-            ViewModel.GetOrCreateAfterCommand.Execute(Unit.Default);
+            ViewModel.GetOrCreateAfterCommand.Execute(RxVoid.Default);
             EditBox.Focus();
         }
     }
@@ -199,25 +198,23 @@ public partial class TabItemEditorArea : ReactiveUserControl<TabItemViewModel>
 
         this.WhenActivated(disposables =>
         {
-            this.GetObservable(ViewModelProperty)
-                .WhereNotNull()
-                .Subscribe(_ =>
-                {
-                    // TODO: Keybinds
+            if (ViewModel is not { } vm)
+                return;
 
-                    EditBox.AddHandler(
-                        TextBox.TextChangedEvent,
-                        EditBox_OnTextChanged,
-                        RoutingStrategies.Bubble
-                    );
-                    EditBox.AddHandler(KeyDownEvent, EditBox_OnKeyDown, RoutingStrategies.Bubble);
-                    EditBox.AddHandler(
-                        TextBox.PastingFromClipboardEvent,
-                        EditBoxOnPastingFromClipboard,
-                        RoutingStrategies.Bubble
-                    );
-                })
-                .DisposeWith(disposables);
+            // TODO: Keybinds
+
+            EditBox.AddHandler(
+                TextBox.TextChangedEvent,
+                EditBox_OnTextChanged,
+                RoutingStrategies.Bubble
+            );
+            EditBox.AddHandler(KeyDownEvent, EditBox_OnKeyDown, RoutingStrategies.Bubble);
+            EditBox.AddHandler(
+                TextBox.PastingFromClipboardEvent,
+                EditBoxOnPastingFromClipboard,
+                RoutingStrategies.Bubble
+            );
+            new ActionDisposable(() => { }).DisposeWith(disposables);
         });
     }
 

@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using Ameko.DataModels;
 using Ameko.Messages;
 using AssCS;
@@ -11,6 +10,7 @@ using AssCS.History;
 using Holo;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
@@ -21,7 +21,7 @@ public class SortDialogViewModel : ViewModelBase
     public bool SortByDescending { get; set; }
     public bool ThenByDescending { get; set; }
 
-    public ReactiveCommand<Unit, EmptyMessage> SortCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> SortCommand { get; }
 
     public SortDialogViewModel(IProjectProvider projectProvider)
     {

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -14,6 +13,7 @@ using Holo.Models;
 using Holo.Providers;
 using Material.Icons;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
@@ -26,7 +26,7 @@ public class ScriptInfoDialogViewModel : ViewModelBase
 
     public ICommand AddCommand { get; }
     public ICommand RemoveCommand { get; }
-    public ReactiveCommand<Unit, EmptyMessage> SaveCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> SaveCommand { get; }
 
     public ScriptInfoDialogViewModel(IMessageBoxService messageBoxService, Document document)
     {

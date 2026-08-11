@@ -16,7 +16,7 @@ using ReactiveUI;
 
 namespace Ameko.ViewModels.Windows;
 
-public partial class HelpWindowViewModel(
+public class HelpWindowViewModel(
     IPackageManager packageManager,
     IFileSystem fileSystem,
     IConfiguration config

@@ -8,7 +8,7 @@ using Holo.Providers;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class ConfigDialogViewModel(
+public class ConfigDialogViewModel(
     IConfiguration config,
     IDictionaryService dictionaryService,
     ICultureService cultureService

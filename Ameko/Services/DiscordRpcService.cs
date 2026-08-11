@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
 using System.IO;
 using Ameko.Messages;
 using DiscordRPC;
@@ -9,6 +8,7 @@ using Holo.Configuration;
 using Holo.Providers;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 using LogLevel = DiscordRPC.Logging.LogLevel;
 
 namespace Ameko.Services;

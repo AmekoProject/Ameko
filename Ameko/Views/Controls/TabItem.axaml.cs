@@ -3,8 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.Messages;
 using Ameko.ViewModels;
@@ -22,6 +20,7 @@ using Holo.Configuration.Keybinds;
 using Holo.Models;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Controls;
 
@@ -34,7 +33,7 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
     /// <typeparam name="TDialog">Dialog type</typeparam>
     /// <typeparam name="TViewModel">ViewModel type</typeparam>
     private async Task DoShowDialogAsync<TDialog, TViewModel>(
-        IInteractionContext<TViewModel, Unit> interaction
+        IInteractionContext<TViewModel, RxVoid> interaction
     )
         where TDialog : Window, new()
         where TViewModel : ViewModelBase
@@ -42,12 +41,12 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         var window = TopLevel.GetTopLevel(this);
         if (window is null)
         {
-            interaction.SetOutput(Unit.Default);
+            interaction.SetOutput(RxVoid.Default);
             return;
         }
         var dialog = new TDialog { DataContext = interaction.Input };
         await dialog.ShowDialog((Window)window);
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     private async Task DoCopyEventsAsync(IInteractionContext<TabItemViewModel, string?> interaction)
@@ -181,7 +180,7 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         });
     }
 
-    private async Task DoShowSaveFrameAsDialogAsync(IInteractionContext<Unit, Uri?> interaction)
+    private async Task DoShowSaveFrameAsDialogAsync(IInteractionContext<RxVoid, Uri?> interaction)
     {
         var window = TopLevel.GetTopLevel(this);
         if (window is null)
@@ -217,9 +216,9 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoCopyFrameAsync(IInteractionContext<string, Unit> interaction)
+    private async Task DoCopyFrameAsync(IInteractionContext<string, RxVoid> interaction)
     {
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
 
         var window = TopLevel.GetTopLevel(this);
         if (window is null)
@@ -254,52 +253,48 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
 
         this.WhenActivated(disposables =>
         {
-            this.GetObservable(ViewModelProperty)
-                .WhereNotNull()
-                .Subscribe(vm =>
+            if (ViewModel is not { } vm)
+                return;
+            // Alert that the working space has changed
+            MessageBus.Current.SendMessage(new WorkingSpaceChangedMessage());
+            // Listen for scroll messages (?)
+
+            ApplyLayout(vm, vm.LayoutProvider.Current);
+            AttachKeybinds(vm);
+            TabItemEditorArea.EditBox.Focus();
+
+            Dispatcher.UIThread.Post(
+                () =>
                 {
-                    // Alert that the working space has changed
-                    MessageBus.Current.SendMessage(new WorkingSpaceChangedMessage());
-                    // Listen for scroll messages (?)
+                    vm.Workspace.SelectionManager.EndSelectionChange();
+                    vm.ProjectProvider.Current.EndSelectionChange();
+                },
+                DispatcherPriority.Background
+            );
+            // csharpier-ignore-start
+            vm.CopyEvents.RegisterHandler(DoCopyEventsAsync).DisposeWith(disposables);
+            vm.CopyPlaintextEvents.RegisterHandler(DoCopyPlaintextEventsAsync).DisposeWith(disposables);
+            vm.CutEvents.RegisterHandler(DoCutEventsAsync).DisposeWith(disposables);
+            vm.PasteEvents.RegisterHandler(DoPasteEventsAsync).DisposeWith(disposables);
+            vm.ShowPasteOverDialog.RegisterHandler(DoShowPasteOverDialogAsync).DisposeWith(disposables);
+            vm.ShowFileModifiedDialog.RegisterHandler(DoShowFileModifiedDialogAsync).DisposeWith(disposables);
+            vm.ShowSpellcheckDialog.RegisterHandler(DoShowDialogAsync<SpellcheckDialog, SpellcheckDialogViewModel>).DisposeWith(disposables);
+            vm.ShowStyleEditorWindow.RegisterHandler(DoShowStyleEditor).DisposeWith(disposables);
+            vm.SaveFrameAs.RegisterHandler(DoShowSaveFrameAsDialogAsync).DisposeWith(disposables);
+            vm.CopyFrame.RegisterHandler(DoCopyFrameAsync).DisposeWith(disposables);
+            // csharpier-ignore-end
 
-                    ApplyLayout(vm, vm.LayoutProvider.Current);
-                    AttachKeybinds(vm);
-                    TabItemEditorArea.EditBox.Focus();
+            // Register keybinds
+            vm.KeybindService.KeybindRegistrar.KeybindsChanged += (_, _) =>
+            {
+                AttachKeybinds(vm);
+            };
 
-                    Dispatcher.UIThread.Post(
-                        () =>
-                        {
-                            vm.Workspace.SelectionManager.EndSelectionChange();
-                            vm.ProjectProvider.Current.EndSelectionChange();
-                        },
-                        DispatcherPriority.Background
-                    );
-                    // csharpier-ignore-start
-                    vm.CopyEvents.RegisterHandler(DoCopyEventsAsync);
-                    vm.CopyPlaintextEvents.RegisterHandler(DoCopyPlaintextEventsAsync);
-                    vm.CutEvents.RegisterHandler(DoCutEventsAsync);
-                    vm.PasteEvents.RegisterHandler(DoPasteEventsAsync);
-                    vm.ShowPasteOverDialog.RegisterHandler(DoShowPasteOverDialogAsync);
-                    vm.ShowFileModifiedDialog.RegisterHandler(DoShowFileModifiedDialogAsync);
-                    vm.ShowSpellcheckDialog.RegisterHandler(DoShowDialogAsync<SpellcheckDialog, SpellcheckDialogViewModel>);
-                    vm.ShowStyleEditorWindow.RegisterHandler(DoShowStyleEditor);
-                    vm.SaveFrameAs.RegisterHandler(DoShowSaveFrameAsDialogAsync);
-                    vm.CopyFrame.RegisterHandler(DoCopyFrameAsync);
-                    // csharpier-ignore-end
-
-                    // Register keybinds
-                    vm.KeybindService.KeybindRegistrar.KeybindsChanged += (_, _) =>
-                    {
-                        AttachKeybinds(vm);
-                    };
-
-                    // Apply layouts
-                    vm.LayoutProvider.LayoutChanged += (_, args) =>
-                    {
-                        ApplyLayout(vm, args.Layout);
-                    };
-                })
-                .DisposeWith(disposables);
+            // Apply layouts
+            vm.LayoutProvider.LayoutChanged += (_, args) =>
+            {
+                ApplyLayout(vm, args.Layout);
+            };
         });
     }
 

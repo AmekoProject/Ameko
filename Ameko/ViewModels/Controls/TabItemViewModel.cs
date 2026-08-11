@@ -3,8 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -18,6 +16,8 @@ using Holo.Configuration.Keybinds;
 using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Controls;
 
@@ -37,15 +37,15 @@ public partial class TabItemViewModel : ViewModelBase
         FileModifiedDialogViewModel,
         FileModifiedDialogClosedMessage?
     > ShowFileModifiedDialog { get; }
-    public Interaction<SpellcheckDialogViewModel, Unit> ShowSpellcheckDialog { get; }
+    public Interaction<SpellcheckDialogViewModel, RxVoid> ShowSpellcheckDialog { get; }
     public Interaction<
         StyleEditorDialogViewModel,
         StyleEditorDialogClosedMessage?
     > ShowStyleEditorWindow { get; }
-    public Interaction<Event, Unit> ScrollToAndSelectEvent { get; }
-    public Interaction<IList<Event>, Unit> SelectEvents { get; }
-    public Interaction<Unit, Uri?> SaveFrameAs { get; }
-    public Interaction<string, Unit> CopyFrame { get; }
+    public Interaction<Event, RxVoid> ScrollToAndSelectEvent { get; }
+    public Interaction<IList<Event>, RxVoid> SelectEvents { get; }
+    public Interaction<RxVoid, Uri?> SaveFrameAs { get; }
+    public Interaction<string, RxVoid> CopyFrame { get; }
 
     #endregion
 
@@ -323,13 +323,13 @@ public partial class TabItemViewModel : ViewModelBase
             new Interaction<PasteOverDialogViewModel, PasteOverDialogClosedMessage?>();
         ShowFileModifiedDialog =
             new Interaction<FileModifiedDialogViewModel, FileModifiedDialogClosedMessage?>();
-        ShowSpellcheckDialog = new Interaction<SpellcheckDialogViewModel, Unit>();
+        ShowSpellcheckDialog = new Interaction<SpellcheckDialogViewModel, RxVoid>();
         ShowStyleEditorWindow =
             new Interaction<StyleEditorDialogViewModel, StyleEditorDialogClosedMessage?>();
-        ScrollToAndSelectEvent = new Interaction<Event, Unit>();
-        SelectEvents = new Interaction<IList<Event>, Unit>();
-        SaveFrameAs = new Interaction<Unit, Uri?>();
-        CopyFrame = new Interaction<string, Unit>();
+        ScrollToAndSelectEvent = new Interaction<Event, RxVoid>();
+        SelectEvents = new Interaction<IList<Event>, RxVoid>();
+        SaveFrameAs = new Interaction<RxVoid, Uri?>();
+        CopyFrame = new Interaction<string, RxVoid>();
         #endregion
 
         #region Commands

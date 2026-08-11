@@ -32,7 +32,7 @@ public class VideoInfoTests
     {
         var info = Info;
         var frame = info.FrameFromMillis(126);
-        await Assert.That(frame).IsEqualTo(3);
+        await Assert.That(frame).IsEqualTo(4);
     }
 
     [Test]

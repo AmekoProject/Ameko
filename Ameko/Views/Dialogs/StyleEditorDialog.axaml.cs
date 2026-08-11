@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.Messages;
 using Ameko.ViewModels.Dialogs;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 using Color = AssCS.Color;
 
 namespace Ameko.Views.Dialogs;
@@ -29,21 +27,21 @@ public partial class StyleEditorDialog : ReactiveWindow<StyleEditorDialogViewMod
 
         this.WhenActivated(disposables =>
         {
-            if (ViewModel is not null)
+            if (ViewModel is null)
+                return;
+
+            ViewModel.SaveCommand.Subscribe(Close).DisposeWith(disposables);
+            ViewModel
+                .ShowColorDialog.RegisterHandler(DoShowColorDialogAsync)
+                .DisposeWith(disposables);
+
+            Closing += (_, e) =>
             {
-                ViewModel.SaveCommand.Subscribe(Close);
-                ViewModel.ShowColorDialog.RegisterHandler(DoShowColorDialogAsync);
-
-                Closing += (_, e) =>
-                {
-                    // Try to commit the style name,
-                    // and cancel closing the window if the name is invalid
-                    if (!ViewModel.CommitNameChange() && !ViewModel.IsNewStyle)
-                        e.Cancel = true;
-                };
-            }
-
-            Disposable.Create(() => { }).DisposeWith(disposables);
+                // Try to commit the style name,
+                // and cancel closing the window if the name is invalid
+                if (!ViewModel.CommitNameChange() && !ViewModel.IsNewStyle)
+                    e.Cancel = true;
+            };
         });
     }
 }

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive.Disposables.Fluent;
 using Ameko.Renderers;
 using Ameko.ViewModels.Controls;
 using AssCS;
@@ -12,6 +11,8 @@ using Holo;
 using Holo.Models;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Disposables;
 
 namespace Ameko.Views.Controls;
 
@@ -38,26 +39,25 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         InitializeComponent();
         this.WhenActivated(disposables =>
         {
-            this.GetObservable(ViewModelProperty)
-                .WhereNotNull()
-                .Subscribe(vm =>
-                {
-                    // TODO: Don't do this!!
-                    var mc = vm.Workspace.MediaController;
-                    var renderer = new OpenAlAudioRenderer(mc);
-                    renderer.Initialize();
-                    mc.PlaybackStarted += (_, e) =>
-                    {
-                        // Always play audio target, only play video target if not muted
-                        if (e.Target is PlaybackTarget.Audio || !mc.IsMuted)
-                            renderer.Play(e.StartTime, e.GoalTime);
-                    };
-                    mc.PlaybackStopped += (_, _) =>
-                    {
-                        renderer.Stop();
-                    };
-                })
-                .DisposeWith(disposables);
+            if (ViewModel is not { } vm)
+                return;
+
+            // TODO: Don't do this!!
+            var mc = vm.Workspace.MediaController;
+            var renderer = new OpenAlAudioRenderer(mc);
+            renderer.Initialize();
+            mc.PlaybackStarted += (_, e) =>
+            {
+                // Always play audio target, only play video target if not muted
+                if (e.Target is PlaybackTarget.Audio || !mc.IsMuted)
+                    renderer.Play(e.StartTime, e.GoalTime);
+            };
+            mc.PlaybackStopped += (_, _) =>
+            {
+                renderer.Stop();
+            };
+
+            new ActionDisposable(() => { }).DisposeWith(disposables);
         });
     }
 

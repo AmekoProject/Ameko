@@ -8,6 +8,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Controls;
 

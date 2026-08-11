@@ -1,20 +1,20 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
-using System.Reactive;
 using Ameko.Messages;
 using Holo.Configuration;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class ColorDialogViewModel : ViewModelBase
+public class ColorDialogViewModel : ViewModelBase
 {
     private readonly IPersistence _persistence;
     private readonly AssCS.Color _assColor;
     private Avalonia.Media.HsvColor _hsvColor;
     private bool _useRing;
 
-    public ReactiveCommand<Unit, ColorDialogClosedMessage> SelectColorCommand { get; }
+    public ReactiveCommand<RxVoid, ColorDialogClosedMessage> SelectColorCommand { get; }
 
     public AssCS.Color Color => _assColor;
 

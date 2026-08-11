@@ -1,8 +1,6 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Ameko.Services;
 using Avalonia.Threading;
@@ -10,12 +8,14 @@ using Holo;
 using Holo.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Dialogs;
 
 public class ProfilerDialogViewModel : ViewModelBase
 {
-    public Interaction<ProfileResult, Unit> DisplayProfileResult { get; }
+    public Interaction<ProfileResult, RxVoid> DisplayProfileResult { get; }
     public Interaction<string, Uri?> SaveProfileAs { get; }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class ProfilerDialogViewModel : ViewModelBase
         ViewportWidth = workspace.MediaController.VideoInfo.Width;
         ViewportHeight = workspace.MediaController.VideoInfo.Height;
 
-        DisplayProfileResult = new Interaction<ProfileResult, Unit>();
+        DisplayProfileResult = new Interaction<ProfileResult, RxVoid>();
         SaveProfileAs = new Interaction<string, Uri?>();
 
         StartCommand = ReactiveCommand.CreateFromTask(async () =>

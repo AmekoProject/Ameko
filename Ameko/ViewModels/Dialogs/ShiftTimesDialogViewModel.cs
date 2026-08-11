@@ -2,21 +2,20 @@
 
 using System;
 using System.Linq;
-using System.Reactive;
 using Ameko.DataModels;
 using AssCS;
 using AssCS.History;
 using Holo;
-using Holo.Models;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class ShiftTimesDialogViewModel : ViewModelBase
+public class ShiftTimesDialogViewModel : ViewModelBase
 {
     private readonly Workspace _workspace;
 
-    public ReactiveCommand<Unit, object?> ConfirmCommand { get; }
+    public ReactiveCommand<RxVoid, object?> ConfirmCommand { get; }
 
     public bool CanShiftFrames { get; set; }
 

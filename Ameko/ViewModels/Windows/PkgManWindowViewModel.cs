@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Reactive;
 using System.Windows.Input;
 using Ameko.Services;
 using Ameko.Utilities;
@@ -13,6 +12,7 @@ using Holo.Scripting;
 using Holo.Scripting.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -27,7 +27,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
     private readonly ObservableCollection<Package> _updateCandidates;
     private string _repoUrlInput;
 
-    public Interaction<ChangelogDialogViewModel, Unit> ShowChangelog { get; }
+    public Interaction<ChangelogDialogViewModel, RxVoid> ShowChangelog { get; }
 
     public ICommand InstallCommand { get; }
     public ICommand UninstallCommand { get; }
@@ -122,7 +122,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
 
         _updateCandidates = new ObservableCollection<Package>(PackageManager.GetUpdateCandidates());
 
-        ShowChangelog = new Interaction<ChangelogDialogViewModel, Unit>();
+        ShowChangelog = new Interaction<ChangelogDialogViewModel, RxVoid>();
 
         InstallCommand = CreateInstallCommand();
         UninstallCommand = CreateUninstallCommand();

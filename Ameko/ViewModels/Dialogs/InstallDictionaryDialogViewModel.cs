@@ -1,15 +1,14 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
-using System.Reactive;
-using System.Windows.Input;
 using Ameko.Messages;
 using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class InstallDictionaryDialogViewModel : ViewModelBase
+public class InstallDictionaryDialogViewModel : ViewModelBase
 {
     public bool AreButtonsEnabled
     {
@@ -19,8 +18,8 @@ public partial class InstallDictionaryDialogViewModel : ViewModelBase
 
     public string Header { get; }
 
-    public ReactiveCommand<Unit, EmptyMessage> DownloadCommand { get; }
-    public ReactiveCommand<Unit, EmptyMessage> IgnoreCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> DownloadCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> IgnoreCommand { get; }
 
     public InstallDictionaryDialogViewModel(
         IDictionaryService dictionaryService,

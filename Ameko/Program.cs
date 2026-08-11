@@ -15,9 +15,8 @@ using Microsoft.Extensions.Logging;
 using ReactiveUI.Avalonia;
 using ReactiveUI.Builder;
 #if !DEBUG
-using System.Reactive;
-using System.Threading.Tasks;
 using ReactiveUI;
+using System.Threading.Tasks;
 #endif
 
 namespace Ameko;
@@ -27,7 +26,7 @@ internal sealed class Program
     private const int ManagedCrashExitCode = -25565;
 
     internal static string[] Args { get; private set; } = null!;
-    internal static bool IsInSafeMode { get; private set; } = false;
+    internal static bool IsInSafeMode { get; private set; }
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -86,15 +85,7 @@ internal sealed class Program
     private static void ConfigureReactiveUi(ReactiveUIBuilder rxBuilder)
     {
 #if !DEBUG
-        rxBuilder.WithExceptionHandler(
-            Observer.Create<Exception>(ex =>
-            {
-                HandleUnhandledException(
-                    "UI",
-                    ex is UnhandledErrorException { InnerException: { } inner } ? inner : ex
-                );
-            })
-        );
+        rxBuilder.WithExceptionHandler(new ReactiveUIExceptionObserver());
 #endif
     }
 
@@ -272,4 +263,27 @@ internal sealed class Program
 
         return comments[new Random().Next(comments.Length)];
     }
+
+#if !DEBUG
+    /// <summary>
+    /// Exception observer for ReactiveUI runtime exceptions
+    /// </summary>
+    private class ReactiveUIExceptionObserver : IObserver<Exception>
+    {
+        /// <inheritdoc />
+        public void OnNext(Exception value)
+        {
+            HandleUnhandledException(
+                "UI",
+                value is UnhandledErrorException { InnerException: { } inner } ? inner : value
+            );
+        }
+
+        /// <inheritdoc />
+        public void OnCompleted() { }
+
+        /// <inheritdoc />
+        public void OnError(Exception error) { }
+    }
+#endif
 }

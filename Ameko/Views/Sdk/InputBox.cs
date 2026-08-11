@@ -15,7 +15,7 @@ namespace Ameko.Views.Sdk;
 /// <summary>
 /// A simple input box API
 /// </summary>
-public partial class InputBox : Window
+public class InputBox : Window
 {
     public string InputText { get; private set; }
 

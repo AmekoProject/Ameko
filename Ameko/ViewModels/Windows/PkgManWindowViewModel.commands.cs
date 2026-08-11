@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
-using System.Reactive.Linq;
+using Ameko.Utilities;
 using Ameko.ViewModels.Dialogs;
-using DynamicData;
 using Holo.Models;
 using Holo.Scripting.Models;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -18,7 +18,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Install a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInstallCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInstallCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -42,7 +42,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Uninstall a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUninstallCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUninstallCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -67,7 +67,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Update a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUpdateCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUpdateCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -96,7 +96,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Update all packages
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUpdateAllCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUpdateAllCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -136,7 +136,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Refresh the Package Store
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRefreshCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRefreshCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -166,7 +166,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Add a repository
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateAddRepositoryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateAddRepositoryCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -207,7 +207,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Remove a repository
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRemoveRepositoryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRemoveRepositoryCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -262,7 +262,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Remove a repository
     /// </summary>
-    private ReactiveCommand<Package, Unit> CreateShowChangelogCommand()
+    private ReactiveCommand<Package, RxVoid> CreateShowChangelogCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Package package) =>

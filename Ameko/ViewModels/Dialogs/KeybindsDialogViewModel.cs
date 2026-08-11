@@ -3,13 +3,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Holo.Configuration.Keybinds;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
@@ -21,7 +21,7 @@ public class KeybindsDialogViewModel : ViewModelBase
 
     public RangeObservableCollection<EditableKeybind> Keybinds { get; }
 
-    public ReactiveCommand<Unit, bool> SaveCommand { get; }
+    public ReactiveCommand<RxVoid, bool> SaveCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand ClearCommand { get; }
     public ICommand ResetCommand { get; }
