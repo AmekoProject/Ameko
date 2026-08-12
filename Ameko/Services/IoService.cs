@@ -587,6 +587,7 @@ public class IoService(
                 string.Format(I18N.Other.Message_VideoNotFound, Path.GetFileName(videoPath)),
                 TimeSpan.FromSeconds(7)
             );
+            return true;
         }
 
         // Stop here if media loading is ongoing (maybe video was drag-n-dropped in at the same time?)
