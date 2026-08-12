@@ -1,83 +1,91 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="650"
-        d:DesignHeight="400"
-        
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.ScriptInfoDialog"
-        x:DataType="vm:ScriptInfoDialogViewModel"
-        
-        Focusable="True"
-        CanResize="False"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Width="650"
-        Height="400"
-        Title="{x:Static i18n:ScriptInfo.ScriptInfoWindow_Title}"
-        WindowStartupLocation="CenterScreen">
-    <Grid RowDefinitions="*, Auto">
-        <DataGrid Grid.Row="0"
-                  Margin="4"
-                  IsReadOnly="False"
-                  CanUserReorderColumns="False"
-                  CanUserResizeColumns="False"
-                  VerticalScrollBarVisibility="Auto"
-                  SelectionMode="Single"
-                  ItemsSource="{Binding Infos}">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
-                                    ToolTip.Tip="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Remove_ToolTip}"
-                                    Command="{Binding $parent[Window].((vm:ScriptInfoDialogViewModel)DataContext).RemoveCommand, FallbackValue=.}"
-                                    CommandParameter="{Binding Key}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Width="*"
-                                    Header="{x:Static i18n:ScriptInfo.ScriptInfo_Header_Name}"
-                                    Binding="{Binding Key}"
-                                    IsReadOnly="True" />
-                
-                <DataGridTemplateColumn Width="*"
-                                        Header="{x:Static i18n:ScriptInfo.ScriptInfo_Header_Value}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding Value}"
-                                     Margin="1"
-                                     Padding="0" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.Styles>
-                <Style Selector="DataGridRow">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Padding" Value="0" />
-                </Style>
-            </DataGrid.Styles>
-        </DataGrid>
-        <Grid Grid.Column="0"
-              Grid.Row="1"
-              ColumnDefinitions="0.75*, *, 0.75*"
-              Margin="2">
-            <Button Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Secondary"
-                    Content="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Add}"
-                    Command="{Binding AddCommand}" />
-            <Button Grid.Column="2"
-                    HorizontalAlignment="Stretch"
-                    Classes="Primary"
-                    Content="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Save}"
-                    Command="{Binding SaveCommand}" />
-        </Grid>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="650"
+  d:DesignHeight="400"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ScriptInfoDialog"
+  x:DataType="vm:ScriptInfoDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Width="650"
+  Height="400"
+  Title="{x:Static i18n:ScriptInfo.ScriptInfoWindow_Title}"
+  WindowStartupLocation="CenterScreen"
+>
+  <Grid RowDefinitions="*, Auto">
+    <DataGrid
+      Grid.Row="0"
+      Margin="4"
+      IsReadOnly="False"
+      CanUserReorderColumns="False"
+      CanUserResizeColumns="False"
+      VerticalScrollBarVisibility="Auto"
+      SelectionMode="Single"
+      ItemsSource="{Binding Infos}"
+    >
+      <DataGrid.Columns>
+        <DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button
+                Background="Transparent"
+                Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
+                ToolTip.Tip="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Remove_ToolTip}"
+                Command="{Binding $parent[Window].((vm:ScriptInfoDialogViewModel)DataContext).RemoveCommand, FallbackValue=.}"
+                CommandParameter="{Binding Key}"
+              />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn
+          Width="*"
+          Header="{x:Static i18n:ScriptInfo.ScriptInfo_Header_Name}"
+          Binding="{Binding Key}"
+          IsReadOnly="True"
+        />
+
+        <DataGridTemplateColumn
+          Width="*"
+          Header="{x:Static i18n:ScriptInfo.ScriptInfo_Header_Value}"
+        >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBox Text="{Binding Value}" Margin="1" Padding="0" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+      <DataGrid.Styles>
+        <Style Selector="DataGridRow">
+          <Setter Property="Background" Value="Transparent" />
+          <Setter Property="Padding" Value="0" />
+        </Style>
+      </DataGrid.Styles>
+    </DataGrid>
+    <Grid Grid.Column="0" Grid.Row="1" ColumnDefinitions="0.75*, *, 0.75*" Margin="2">
+      <Button
+        Grid.Column="0"
+        HorizontalAlignment="Stretch"
+        Classes="Secondary"
+        Content="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Add}"
+        Command="{Binding AddCommand}"
+      />
+      <Button
+        Grid.Column="2"
+        HorizontalAlignment="Stretch"
+        Classes="Primary"
+        Content="{x:Static i18n:ScriptInfo.ScriptInfo_Button_Save}"
+        Command="{Binding SaveCommand}"
+      />
     </Grid>
+  </Grid>
 </Window>

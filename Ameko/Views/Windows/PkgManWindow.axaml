@@ -1,39 +1,38 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="600"
-
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:controls="clr-namespace:Ameko.Views.Controls"
-
-        x:Class="Ameko.Views.Windows.PkgManWindow"
-        x:DataType="vm:PkgManWindowViewModel"
-
-        Focusable="True"
-        Width="800"
-        Height="600"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:PkgMan.PkgManWindow_Title}">
-    <TabControl>
-        <TabItem Header="{x:Static i18n:PkgMan.PkgMan_PackagesTab}">
-            <controls:PkgManPackagesTab />
-        </TabItem>
-        <TabItem Header="{x:Static i18n:PkgMan.PkgMan_RepositoriesTab}">
-            <controls:PkgManRepositoriesTab />
-        </TabItem>
-        <TabControl.Styles>
-            <Style Selector="TabItem">
-                <Setter Property="Padding" Value="3 2 3 2" />
-                <Setter Property="Margin" Value="0" />
-            </Style>
-        </TabControl.Styles>
-    </TabControl>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="600"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:controls="clr-namespace:Ameko.Views.Controls"
+  x:Class="Ameko.Views.Windows.PkgManWindow"
+  x:DataType="vm:PkgManWindowViewModel"
+  Focusable="True"
+  Width="800"
+  Height="600"
+  CanResize="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:PkgMan.PkgManWindow_Title}"
+>
+  <TabControl>
+    <TabItem Header="{x:Static i18n:PkgMan.PkgMan_PackagesTab}">
+      <controls:PkgManPackagesTab />
+    </TabItem>
+    <TabItem Header="{x:Static i18n:PkgMan.PkgMan_RepositoriesTab}">
+      <controls:PkgManRepositoriesTab />
+    </TabItem>
+    <TabControl.Styles>
+      <Style Selector="TabItem">
+        <Setter Property="Padding" Value="3 2 3 2" />
+        <Setter Property="Margin" Value="0" />
+      </Style>
+    </TabControl.Styles>
+  </TabControl>
 </Window>

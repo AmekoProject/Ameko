@@ -1,91 +1,122 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="350"
-             d:DesignHeight="135"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-             xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-
-             x:Class="Ameko.Views.Controls.RepositoryInformation"
-             x:DataType="holo:Repository">
-    <ScrollViewer Height="135"
-                  Margin="2"
-                  AllowAutoHide="False"
-                  VerticalScrollBarVisibility="Visible"
-                  HorizontalScrollBarVisibility="Disabled">
-        <Grid ColumnDefinitions="Auto, *"
-              RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
-            <TextBlock Grid.Column="0"
-                       Grid.Row="0"
-                       Margin="0 0 5 0"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_Name}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       Text="{Binding Name,
-                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="1"
-                       Margin="0 0 5 0"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_Maintainer}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="1"
-                       Text="{Binding Maintainer,
-                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="2"
-                       Margin="0 0 5 0"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_IsBetaChannel}" />
-            <CheckBox Grid.Column="1"
-                      Grid.Row="2"
-                      Padding="0"
-                      IsChecked="{Binding IsBetaChannel, FallbackValue=false}"
-                      IsEnabled="False" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="3"
-                       Margin="0 0 5 0"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_PackageCount}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="3"
-                       Text="{Binding Packages.Count,
-                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="4"
-                       Margin="0 0 5 0"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_SubRepoCount}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="4"
-                       Text="{Binding Repositories.Count,
-                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="5"
-                       Margin="0 0 5 0"
-                       VerticalAlignment="Center"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_Url}" />
-            <TextBox Grid.Column="1"
-                       Grid.Row="5"
-                       Padding="0"
-                       IsReadOnly="True"
-                       TextWrapping="NoWrap"
-                       Classes="Small"
-                       Text="{Binding Url,
-                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="6"
-                       Margin="0 0 5 0"
-                       VerticalAlignment="Center"
-                       Text="{x:Static i18n:PkgMan.PkgMan_Info_Description}" />
-            <TextBox Grid.Column="1"
-                     Grid.Row="6"
-                     Padding="0"
-                     Margin="0 1"
-                     IsReadOnly="True"
-                     TextWrapping="Wrap"
-                     Classes="Small"
-                     Text="{Binding Description,
-                                    FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}" />
-        </Grid>
-    </ScrollViewer>
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="135"
+  xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  x:Class="Ameko.Views.Controls.RepositoryInformation"
+  x:DataType="holo:Repository"
+>
+  <ScrollViewer
+    Height="135"
+    Margin="2"
+    AllowAutoHide="False"
+    VerticalScrollBarVisibility="Visible"
+    HorizontalScrollBarVisibility="Disabled"
+  >
+    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="0"
+        Margin="0 0 5 0"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_Name}"
+      />
+      <TextBlock
+        Grid.Column="1"
+        Grid.Row="0"
+        Text="{Binding Name,
+                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="1"
+        Margin="0 0 5 0"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_Maintainer}"
+      />
+      <TextBlock
+        Grid.Column="1"
+        Grid.Row="1"
+        Text="{Binding Maintainer,
+                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="2"
+        Margin="0 0 5 0"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_IsBetaChannel}"
+      />
+      <CheckBox
+        Grid.Column="1"
+        Grid.Row="2"
+        Padding="0"
+        IsChecked="{Binding IsBetaChannel, FallbackValue=false}"
+        IsEnabled="False"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="3"
+        Margin="0 0 5 0"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_PackageCount}"
+      />
+      <TextBlock
+        Grid.Column="1"
+        Grid.Row="3"
+        Text="{Binding Packages.Count,
+                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="4"
+        Margin="0 0 5 0"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_SubRepoCount}"
+      />
+      <TextBlock
+        Grid.Column="1"
+        Grid.Row="4"
+        Text="{Binding Repositories.Count,
+                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="5"
+        Margin="0 0 5 0"
+        VerticalAlignment="Center"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_Url}"
+      />
+      <TextBox
+        Grid.Column="1"
+        Grid.Row="5"
+        Padding="0"
+        IsReadOnly="True"
+        TextWrapping="NoWrap"
+        Classes="Small"
+        Text="{Binding Url,
+                                      FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+      <TextBlock
+        Grid.Column="0"
+        Grid.Row="6"
+        Margin="0 0 5 0"
+        VerticalAlignment="Center"
+        Text="{x:Static i18n:PkgMan.PkgMan_Info_Description}"
+      />
+      <TextBox
+        Grid.Column="1"
+        Grid.Row="6"
+        Padding="0"
+        Margin="0 1"
+        IsReadOnly="True"
+        TextWrapping="Wrap"
+        Classes="Small"
+        Text="{Binding Description,
+                                    FallbackValue={x:Static i18n:PkgMan.PkgMan_Info_NoSelection}}"
+      />
+    </Grid>
+  </ScrollViewer>
 </UserControl>

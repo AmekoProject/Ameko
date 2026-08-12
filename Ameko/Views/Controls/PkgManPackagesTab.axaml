@@ -1,189 +1,219 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="700"
-             d:DesignHeight="475"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:controls="clr-namespace:Ameko.Views.Controls"
-             xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             x:Class="Ameko.Views.Controls.PkgManPackagesTab"
-             x:DataType="vm:PkgManWindowViewModel">
-    <UserControl.Resources>
-        <converters:PkgManIconConverter x:Key="IconConverter" />
-        <converters:PkgManUpToDateConverter x:Key="UpToDateConverter" />
-    </UserControl.Resources>
-    <Grid ColumnDefinitions="*, *"
-          RowDefinitions="*, 200, Auto">
-        <!-- Package store -->
-        <DockPanel Grid.Column="0"
-                   Grid.Row="0">
-            <TextBlock DockPanel.Dock="Top"
-                       Margin="2"
-                       HorizontalAlignment="Center"
-                       FontSize="16"
-                       Text="{x:Static i18n:PkgMan.PkgMan_PackageStore}" />
-            <ListBox Margin="2"
-                     Classes="Small"
-                     VerticalAlignment="Stretch"
-                     SelectionMode="Single"
-                     SelectedItem="{Binding SelectedStorePackage}"
-                     ItemsSource="{Binding PackageManager.PackageStore, Mode=TwoWay}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="holo:Package">
-                        <Grid ColumnDefinitions="Auto, *, Auto, Auto"
-                              ColumnSpacing="2"
-                              Background="Transparent">
-                            <ToolTip.Tip>
-                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <TextBlock Text="{Binding QualifiedName}" />
-                                    <TextBlock Text="{Binding License, StringFormat='({0})'}" />
-                                </StackPanel>
-                            </ToolTip.Tip>
-                            <Image Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Source="{Binding Type, Converter={StaticResource IconConverter}}" />
-                            <TextBlock Grid.Column="1"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding DisplayName}" />
-                            <TextBlock Grid.Column="2"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Version, StringFormat='v{0}'}" />
-                            <Button Grid.Column="3"
-                                    Margin="0"
-                                    Padding="0"
-                                    Classes="Small"
-                                    VerticalAlignment="Center"
-                                    IsEnabled="{Binding HasChangelog}"
-                                    Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
-                                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
-                                    Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="700"
+  d:DesignHeight="475"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:controls="clr-namespace:Ameko.Views.Controls"
+  xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  x:Class="Ameko.Views.Controls.PkgManPackagesTab"
+  x:DataType="vm:PkgManWindowViewModel"
+>
+  <UserControl.Resources>
+    <converters:PkgManIconConverter x:Key="IconConverter" />
+    <converters:PkgManUpToDateConverter x:Key="UpToDateConverter" />
+  </UserControl.Resources>
+  <Grid ColumnDefinitions="*, *" RowDefinitions="*, 200, Auto">
+    <!-- Package store -->
+    <DockPanel Grid.Column="0" Grid.Row="0">
+      <TextBlock
+        DockPanel.Dock="Top"
+        Margin="2"
+        HorizontalAlignment="Center"
+        FontSize="16"
+        Text="{x:Static i18n:PkgMan.PkgMan_PackageStore}"
+      />
+      <ListBox
+        Margin="2"
+        Classes="Small"
+        VerticalAlignment="Stretch"
+        SelectionMode="Single"
+        SelectedItem="{Binding SelectedStorePackage}"
+        ItemsSource="{Binding PackageManager.PackageStore, Mode=TwoWay}"
+      >
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="holo:Package">
+            <Grid
+              ColumnDefinitions="Auto, *, Auto, Auto"
+              ColumnSpacing="2"
+              Background="Transparent"
+            >
+              <ToolTip.Tip>
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <TextBlock Text="{Binding QualifiedName}" />
+                  <TextBlock Text="{Binding License, StringFormat='({0})'}" />
+                </StackPanel>
+              </ToolTip.Tip>
+              <Image
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Source="{Binding Type, Converter={StaticResource IconConverter}}"
+              />
+              <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding DisplayName}" />
+              <TextBlock
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Text="{Binding Version, StringFormat='v{0}'}"
+              />
+              <Button
+                Grid.Column="3"
+                Margin="0"
+                Padding="0"
+                Classes="Small"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding HasChangelog}"
+                Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
+                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
+                Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
                                                       FallbackValue=.}"
-                                    CommandParameter="{Binding .}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </DockPanel>
-        <!-- Store selection information -->
-        <controls:PackageInformation Grid.Column="0"
-                                    Grid.Row="1"
-                                    DataContext="{Binding SelectedStorePackage}" />
-        <!-- Installed packages -->
-        <DockPanel Grid.Column="1"
-                   Grid.Row="0">
-            <TextBlock DockPanel.Dock="Top"
-                       Margin="2"
-                       HorizontalAlignment="Center"
-                       FontSize="16"
-                       Text="{x:Static i18n:PkgMan.PkgMan_InstalledPackages}" />
-            <ListBox Margin="2"
-                     Classes="Small"
-                     VerticalAlignment="Stretch"
-                     SelectionMode="Single"
-                     SelectedItem="{Binding SelectedInstalledPackage}"
-                     ItemsSource="{Binding PackageManager.InstalledPackages}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="holo:Package">
-                        <Grid ColumnDefinitions="Auto, *, Auto, Auto, Auto"
-                              ColumnSpacing="2"
-                              Background="Transparent">
-                            <ToolTip.Tip>
-                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <TextBlock Text="{Binding QualifiedName}" />
-                                    <TextBlock Text="{Binding License, StringFormat='({0})'}" />
-                                </StackPanel>
-                            </ToolTip.Tip>
-                            <Image Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Source="{Binding Type, Converter={StaticResource IconConverter}}" />
-                            <TextBlock Grid.Column="1"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding DisplayName}" />
-                            <icons:MaterialIcon Grid.Column="2"
-                                                Kind="ArrowUpThinCircleOutline"
-                                                Padding="0 0 5 0"
-                                                VerticalAlignment="Center"
-                                                IsVisible="{Binding ., Converter={StaticResource UpToDateConverter}}"
-                                                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Update_Available_ToolTip}" />
-                            <TextBlock Grid.Column="3"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Version, StringFormat='v{0}'}" />
-                            <Button Grid.Column="4"
-                                    Margin="0"
-                                    Padding="0"
-                                    Classes="Small"
-                                    VerticalAlignment="Center"
-                                    IsEnabled="{Binding HasChangelog}"
-                                    Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
-                                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
-                                    Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
+                CommandParameter="{Binding .}"
+              />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </DockPanel>
+    <!-- Store selection information -->
+    <controls:PackageInformation
+      Grid.Column="0"
+      Grid.Row="1"
+      DataContext="{Binding SelectedStorePackage}"
+    />
+    <!-- Installed packages -->
+    <DockPanel Grid.Column="1" Grid.Row="0">
+      <TextBlock
+        DockPanel.Dock="Top"
+        Margin="2"
+        HorizontalAlignment="Center"
+        FontSize="16"
+        Text="{x:Static i18n:PkgMan.PkgMan_InstalledPackages}"
+      />
+      <ListBox
+        Margin="2"
+        Classes="Small"
+        VerticalAlignment="Stretch"
+        SelectionMode="Single"
+        SelectedItem="{Binding SelectedInstalledPackage}"
+        ItemsSource="{Binding PackageManager.InstalledPackages}"
+      >
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="holo:Package">
+            <Grid
+              ColumnDefinitions="Auto, *, Auto, Auto, Auto"
+              ColumnSpacing="2"
+              Background="Transparent"
+            >
+              <ToolTip.Tip>
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <TextBlock Text="{Binding QualifiedName}" />
+                  <TextBlock Text="{Binding License, StringFormat='({0})'}" />
+                </StackPanel>
+              </ToolTip.Tip>
+              <Image
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Source="{Binding Type, Converter={StaticResource IconConverter}}"
+              />
+              <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding DisplayName}" />
+              <icons:MaterialIcon
+                Grid.Column="2"
+                Kind="ArrowUpThinCircleOutline"
+                Padding="0 0 5 0"
+                VerticalAlignment="Center"
+                IsVisible="{Binding ., Converter={StaticResource UpToDateConverter}}"
+                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Update_Available_ToolTip}"
+              />
+              <TextBlock
+                Grid.Column="3"
+                VerticalAlignment="Center"
+                Text="{Binding Version, StringFormat='v{0}'}"
+              />
+              <Button
+                Grid.Column="4"
+                Margin="0"
+                Padding="0"
+                Classes="Small"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding HasChangelog}"
+                Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
+                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
+                Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
                                                       FallbackValue=.}"
-                                    CommandParameter="{Binding .}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </DockPanel>
-        <!-- Installed selection information -->
-        <controls:PackageInformation Grid.Column="1"
-                                    Grid.Row="1"
-                                    DataContext="{Binding SelectedInstalledPackage}" />
-        <!-- Store buttons -->
-        <Grid Grid.Column="0"
-              Grid.Row="2"
-              Margin="2"
-              ColumnDefinitions="Auto, *">
-            <Button Grid.Column="0"
-                    Margin="2 0 1 0"
-                    Content="{icons:MaterialIconExt Kind=CloudRefreshOutline}"
-                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Refresh_ToolTip}"
-                    Command="{Binding RefreshCommand}" />
-            <Button Grid.Column="1"
-                    Margin="1 0 2 0"
-                    Content="{x:Static i18n:PkgMan.PkgMan_Button_Install}"
-                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Install_ToolTip}"
-                    IsEnabled="{Binding InstallButtonEnabled}"
-                    Command="{Binding InstallCommand}"
-                    HorizontalAlignment="Stretch"/>
-        </Grid>
-        <!-- Installed buttons -->
-        <Grid Grid.Column="1"
-              Grid.Row="2"
-              Margin="2"
-              ColumnDefinitions="*, Auto, Auto">
-            <Button Grid.Column="0"
-                    Margin="2 0 1 0"
-                    Content="{x:Static i18n:PkgMan.PkgMan_Button_UpdateAll}"
-                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_UpdateAll_ToolTip}"
-                    IsEnabled="{Binding UpdateAllButtonEnabled}"
-                    Command="{Binding UpdateAllCommand}"
-                    HorizontalAlignment="Stretch"/>
-            <Button Grid.Column="1"
-                    Margin="1 0"
-                    Content="{x:Static i18n:PkgMan.PkgMan_Button_Update}"
-                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Update_ToolTip}"
-                    IsEnabled="{Binding UpdateButtonEnabled}"
-                    Command="{Binding UpdateCommand}"
-                    HorizontalAlignment="Stretch"/>
-            <Button Grid.Column="2"
-                    Margin="1 0 2 0"
-                    Content="{x:Static i18n:PkgMan.PkgMan_Button_Uninstall}"
-                    ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Uninstall_ToolTip}"
-                    IsEnabled="{Binding UninstallButtonEnabled}"
-                    Command="{Binding UninstallCommand}"
-                    HorizontalAlignment="Stretch"/>
-        </Grid>
+                CommandParameter="{Binding .}"
+              />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </DockPanel>
+    <!-- Installed selection information -->
+    <controls:PackageInformation
+      Grid.Column="1"
+      Grid.Row="1"
+      DataContext="{Binding SelectedInstalledPackage}"
+    />
+    <!-- Store buttons -->
+    <Grid Grid.Column="0" Grid.Row="2" Margin="2" ColumnDefinitions="Auto, *">
+      <Button
+        Grid.Column="0"
+        Margin="2 0 1 0"
+        Content="{icons:MaterialIconExt Kind=CloudRefreshOutline}"
+        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Refresh_ToolTip}"
+        Command="{Binding RefreshCommand}"
+      />
+      <Button
+        Grid.Column="1"
+        Margin="1 0 2 0"
+        Content="{x:Static i18n:PkgMan.PkgMan_Button_Install}"
+        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Install_ToolTip}"
+        IsEnabled="{Binding InstallButtonEnabled}"
+        Command="{Binding InstallCommand}"
+        HorizontalAlignment="Stretch"
+      />
     </Grid>
-    <UserControl.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="1" />
-        </Style>
-    </UserControl.Styles>
+    <!-- Installed buttons -->
+    <Grid Grid.Column="1" Grid.Row="2" Margin="2" ColumnDefinitions="*, Auto, Auto">
+      <Button
+        Grid.Column="0"
+        Margin="2 0 1 0"
+        Content="{x:Static i18n:PkgMan.PkgMan_Button_UpdateAll}"
+        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_UpdateAll_ToolTip}"
+        IsEnabled="{Binding UpdateAllButtonEnabled}"
+        Command="{Binding UpdateAllCommand}"
+        HorizontalAlignment="Stretch"
+      />
+      <Button
+        Grid.Column="1"
+        Margin="1 0"
+        Content="{x:Static i18n:PkgMan.PkgMan_Button_Update}"
+        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Update_ToolTip}"
+        IsEnabled="{Binding UpdateButtonEnabled}"
+        Command="{Binding UpdateCommand}"
+        HorizontalAlignment="Stretch"
+      />
+      <Button
+        Grid.Column="2"
+        Margin="1 0 2 0"
+        Content="{x:Static i18n:PkgMan.PkgMan_Button_Uninstall}"
+        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Uninstall_ToolTip}"
+        IsEnabled="{Binding UninstallButtonEnabled}"
+        Command="{Binding UninstallCommand}"
+        HorizontalAlignment="Stretch"
+      />
+    </Grid>
+  </Grid>
+  <UserControl.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+  </UserControl.Styles>
 </UserControl>

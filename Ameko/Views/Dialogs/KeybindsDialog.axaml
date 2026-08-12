@@ -1,113 +1,129 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="675"
-        d:DesignHeight="400"
-        
-        xmlns:c="using:Ameko.Views.Controls"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.KeybindsDialog"
-        x:DataType="vm:KeybindsDialogViewModel"
-        
-        CanResize="True"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Width="675"
-        Height="400"
-        MinWidth="675"
-        MinHeight="400"
-        Title="{x:Static i18n:Keybinds.KeybindsWindow_Title}"
-        WindowStartupLocation="CenterScreen">
-    <Grid RowDefinitions="*, Auto">
-        <DataGrid Grid.Row="0"
-                  Margin="4"
-                  IsReadOnly="False"
-                  CanUserReorderColumns="False"
-                  CanUserResizeColumns="False"
-                  VerticalScrollBarVisibility="Auto"
-                  SelectionMode="Single"
-                  ItemsSource="{Binding Keybinds}">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button IsVisible="{Binding !IsBuiltin}"
-                                    Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
-                                    ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_Remove_ToolTip}"
-                                    Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).DeleteCommand, FallbackValue=.}"
-                                    CommandParameter="{Binding .}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridCheckBoxColumn Binding="{Binding IsEnabled}" />
-                <DataGridTextColumn Width="*"
-                                    Header="{x:Static i18n:Keybinds.Keybinds_Header_Identifier}"
-                                    Binding="{Binding QualifiedName}"
-                                    IsReadOnly="True" />
-                
-                <DataGridTemplateColumn Header="{x:Static i18n:Keybinds.Keybinds_Header_Context}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <ComboBox ItemsSource="{Binding Contexts, FallbackValue=.}"
-                                          SelectedItem="{Binding OverrideContext}"
-                                          Margin="1"
-                                          Padding="0"
-                                          HorizontalAlignment="Stretch" />
-                                </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="175"
-                                        Header="{x:Static i18n:Keybinds.Keybinds_Header_Keybind}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <c:KeybindTextbox Text="{Binding Key}"
-                                              PlaceholderText="{Binding DefaultKey, FallbackValue=''}"
-                                              Margin="1"
-                                              Padding="0" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button IsVisible="{Binding IsOverridden}"
-                                    Background="Transparent"
-                                    Content="{icons:MaterialIconExt Kind=ArrowULeftBottom, IconSize=14}"
-                                    ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_ClearOverride_ToolTip}"
-                                    Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).ClearCommand, FallbackValue=.}"
-                                    CommandParameter="{Binding .}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.Styles>
-                <Style Selector="DataGridRow">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Padding" Value="0" />
-                </Style>
-            </DataGrid.Styles>
-        </DataGrid>
-        <Grid Grid.Column="0"
-              Grid.Row="1"
-              ColumnDefinitions="0.75*, *, 0.75*"
-              Margin="2">
-            <Button Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Danger"
-                    Content="{x:Static i18n:Keybinds.Keybinds_Button_Reset}"
-                    Command="{Binding ResetCommand}" />
-            <Button Grid.Column="2"
-                    HorizontalAlignment="Stretch"
-                    Classes="Primary"
-                    Content="{x:Static i18n:Keybinds.Keybinds_Button_Save}"
-                    Command="{Binding SaveCommand}" />
-        </Grid>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="675"
+  d:DesignHeight="400"
+  xmlns:c="using:Ameko.Views.Controls"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.KeybindsDialog"
+  x:DataType="vm:KeybindsDialogViewModel"
+  CanResize="True"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Width="675"
+  Height="400"
+  MinWidth="675"
+  MinHeight="400"
+  Title="{x:Static i18n:Keybinds.KeybindsWindow_Title}"
+  WindowStartupLocation="CenterScreen"
+>
+  <Grid RowDefinitions="*, Auto">
+    <DataGrid
+      Grid.Row="0"
+      Margin="4"
+      IsReadOnly="False"
+      CanUserReorderColumns="False"
+      CanUserResizeColumns="False"
+      VerticalScrollBarVisibility="Auto"
+      SelectionMode="Single"
+      ItemsSource="{Binding Keybinds}"
+    >
+      <DataGrid.Columns>
+        <DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button
+                IsVisible="{Binding !IsBuiltin}"
+                Background="Transparent"
+                Content="{icons:MaterialIconExt Kind=MinusCircle, IconSize=12}"
+                ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_Remove_ToolTip}"
+                Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).DeleteCommand, FallbackValue=.}"
+                CommandParameter="{Binding .}"
+              />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridCheckBoxColumn Binding="{Binding IsEnabled}" />
+        <DataGridTextColumn
+          Width="*"
+          Header="{x:Static i18n:Keybinds.Keybinds_Header_Identifier}"
+          Binding="{Binding QualifiedName}"
+          IsReadOnly="True"
+        />
+
+        <DataGridTemplateColumn Header="{x:Static i18n:Keybinds.Keybinds_Header_Context}">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel>
+                <ComboBox
+                  ItemsSource="{Binding Contexts, FallbackValue=.}"
+                  SelectedItem="{Binding OverrideContext}"
+                  Margin="1"
+                  Padding="0"
+                  HorizontalAlignment="Stretch"
+                />
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn
+          Width="175"
+          Header="{x:Static i18n:Keybinds.Keybinds_Header_Keybind}"
+        >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <c:KeybindTextbox
+                Text="{Binding Key}"
+                PlaceholderText="{Binding DefaultKey, FallbackValue=''}"
+                Margin="1"
+                Padding="0"
+              />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button
+                IsVisible="{Binding IsOverridden}"
+                Background="Transparent"
+                Content="{icons:MaterialIconExt Kind=ArrowULeftBottom, IconSize=14}"
+                ToolTip.Tip="{x:Static i18n:Keybinds.Keybinds_Button_ClearOverride_ToolTip}"
+                Command="{Binding $parent[Window].((vm:KeybindsDialogViewModel)DataContext).ClearCommand, FallbackValue=.}"
+                CommandParameter="{Binding .}"
+              />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+      <DataGrid.Styles>
+        <Style Selector="DataGridRow">
+          <Setter Property="Background" Value="Transparent" />
+          <Setter Property="Padding" Value="0" />
+        </Style>
+      </DataGrid.Styles>
+    </DataGrid>
+    <Grid Grid.Column="0" Grid.Row="1" ColumnDefinitions="0.75*, *, 0.75*" Margin="2">
+      <Button
+        Grid.Column="0"
+        HorizontalAlignment="Stretch"
+        Classes="Danger"
+        Content="{x:Static i18n:Keybinds.Keybinds_Button_Reset}"
+        Command="{Binding ResetCommand}"
+      />
+      <Button
+        Grid.Column="2"
+        HorizontalAlignment="Stretch"
+        Classes="Primary"
+        Content="{x:Static i18n:Keybinds.Keybinds_Button_Save}"
+        Command="{Binding SaveCommand}"
+      />
     </Grid>
+  </Grid>
 </Window>

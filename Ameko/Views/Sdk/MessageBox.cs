@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;

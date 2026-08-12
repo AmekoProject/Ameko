@@ -1,216 +1,308 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-
-             x:Class="Ameko.Views.Controls.MenuStrip"
-             x:DataType="vm:MainWindowViewModel">
-    <UserControl.Resources>
-        <converters:TrackCountConverter x:Key="TrackCountConverter" />
-    </UserControl.Resources>
-    <Menu>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_File}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_New}"
-                      Icon="{icons:MaterialIconExt Kind=FileDocumentOutline}"
-                      Command="{Binding NewCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenSubtitle}"
-                      Icon="{icons:MaterialIconExt Kind=FolderOpenOutline}"
-                      Command="{Binding OpenSubtitleCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SaveSubtitle}"
-                      Icon="{icons:MaterialIconExt Kind=ContentSaveOutline}"
-                      Command="{Binding SaveSubtitleCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SaveSubtitleAs}"
-                      Icon="{icons:MaterialIconExt Kind=ContentSavePlusOutline}"
-                      Command="{Binding SaveSubtitleAsCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_RecentSubtitles}"
-                      Icon="{icons:MaterialIconExt Kind=History}"
-                      ItemsSource="{Binding RecentDocumentMenuItems}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ExportSubtitles}"
-                      Icon="{icons:MaterialIconExt Kind=FileExportOutline}"
-                      Command="{Binding ExportSubtitleCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenProject}"
-                      Icon="{icons:MaterialIconExt Kind=ArchiveArrowUpOutline}"
-                      Command="{Binding OpenProjectCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenProjectFolder}"
-                      Icon="{icons:MaterialIconExt Kind=ArchiveSearchOutline}"
-                      Command="{Binding OpenFolderAsProjectCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SaveProject}"
-                      Icon="{icons:MaterialIconExt Kind=ArchiveArrowDownOutline}"
-                      Command="{Binding SaveProjectCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_RecentProjects}"
-                      Icon="{icons:MaterialIconExt Kind=History}"
-                      ItemsSource="{Binding RecentProjectMenuItems}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_CloseTab}"
-                      Icon="{icons:MaterialIconExt Kind=TabRemove}"
-                      Command="{Binding CloseTabCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_CloseProject}"
-                      Icon="{icons:MaterialIconExt Kind=ArchiveRemoveOutline}"
-                      Command="{Binding CloseProjectCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Quit}"
-                      Icon="{icons:MaterialIconExt Kind=ExitRun}"
-                      Command="{Binding QuitCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Edit}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Undo}"
-                      Icon="{icons:MaterialIconExt Kind=Undo}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.Document.HistoryManager.CanUndo,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.Views.Controls.MenuStrip"
+  x:DataType="vm:MainWindowViewModel"
+>
+  <UserControl.Resources>
+    <converters:TrackCountConverter x:Key="TrackCountConverter" />
+  </UserControl.Resources>
+  <Menu>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_File}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_New}"
+        Icon="{icons:MaterialIconExt Kind=FileDocumentOutline}"
+        Command="{Binding NewCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenSubtitle}"
+        Icon="{icons:MaterialIconExt Kind=FolderOpenOutline}"
+        Command="{Binding OpenSubtitleCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SaveSubtitle}"
+        Icon="{icons:MaterialIconExt Kind=ContentSaveOutline}"
+        Command="{Binding SaveSubtitleCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SaveSubtitleAs}"
+        Icon="{icons:MaterialIconExt Kind=ContentSavePlusOutline}"
+        Command="{Binding SaveSubtitleAsCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_RecentSubtitles}"
+        Icon="{icons:MaterialIconExt Kind=History}"
+        ItemsSource="{Binding RecentDocumentMenuItems}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ExportSubtitles}"
+        Icon="{icons:MaterialIconExt Kind=FileExportOutline}"
+        Command="{Binding ExportSubtitleCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenProject}"
+        Icon="{icons:MaterialIconExt Kind=ArchiveArrowUpOutline}"
+        Command="{Binding OpenProjectCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenProjectFolder}"
+        Icon="{icons:MaterialIconExt Kind=ArchiveSearchOutline}"
+        Command="{Binding OpenFolderAsProjectCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SaveProject}"
+        Icon="{icons:MaterialIconExt Kind=ArchiveArrowDownOutline}"
+        Command="{Binding SaveProjectCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_RecentProjects}"
+        Icon="{icons:MaterialIconExt Kind=History}"
+        ItemsSource="{Binding RecentProjectMenuItems}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_CloseTab}"
+        Icon="{icons:MaterialIconExt Kind=TabRemove}"
+        Command="{Binding CloseTabCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_CloseProject}"
+        Icon="{icons:MaterialIconExt Kind=ArchiveRemoveOutline}"
+        Command="{Binding CloseProjectCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Quit}"
+        Icon="{icons:MaterialIconExt Kind=ExitRun}"
+        Command="{Binding QuitCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Edit}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Undo}"
+        Icon="{icons:MaterialIconExt Kind=Undo}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.Document.HistoryManager.CanUndo,
                                           FallbackValue=false}"
-                      Command="{Binding UndoCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Redo}"
-                      Icon="{icons:MaterialIconExt Kind=Redo}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.Document.HistoryManager.CanRedo,
+        Command="{Binding UndoCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Redo}"
+        Icon="{icons:MaterialIconExt Kind=Redo}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.Document.HistoryManager.CanRedo,
                                           FallbackValue=false}"
-                      Command="{Binding RedoCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Search}"
-                      Icon="{icons:MaterialIconExt Kind=TextSearch}"
-                      Command="{Binding ShowSearchDialogCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Spellcheck}"
-                      Icon="{icons:MaterialIconExt Kind=Spellcheck}"
-                      Command="{Binding ShowSpellcheckDialogCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Subtitle}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_StylesManager}"
-                      Icon="{icons:MaterialIconExt Kind=PaletteOutline}"
-                      Command="{Binding ShowStylesManagerCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ReferenceFile_Attach}"
-                      Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
-                      IsVisible="{Binding !ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded}"
-                      Command="{Binding AttachReferenceFileCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ReferenceFile_Detach}"
-                      Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
-                      IsVisible="{Binding ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded,
+        Command="{Binding RedoCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Search}"
+        Icon="{icons:MaterialIconExt Kind=TextSearch}"
+        Command="{Binding ShowSearchDialogCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Spellcheck}"
+        Icon="{icons:MaterialIconExt Kind=Spellcheck}"
+        Command="{Binding ShowSpellcheckDialogCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Subtitle}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_StylesManager}"
+        Icon="{icons:MaterialIconExt Kind=PaletteOutline}"
+        Command="{Binding ShowStylesManagerCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ReferenceFile_Attach}"
+        Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
+        IsVisible="{Binding !ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded}"
+        Command="{Binding AttachReferenceFileCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ReferenceFile_Detach}"
+        Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
+        IsVisible="{Binding ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded,
                                           FallbackValue=false}"
-                      Command="{Binding DetachReferenceFileCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ScriptProperties}"
-                      Icon="{icons:MaterialIconExt Kind=ListBoxOutline}"
-                      Command="{Binding ShowScriptInfoDialogCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Profile_Subtitles}"
-                      Icon="{icons:MaterialIconExt Kind=Speedometer}"
-                      Command="{Binding ShowProfileSubtitlesCommand}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
-                                          FallbackValue=false}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Sort_Lines}"
-                      Icon="{icons:MaterialIconExt Kind=Sort}"
-                      Command="{Binding ShowSortDialogCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SelectLines}"
-                      Icon="{icons:MaterialIconExt Kind=SelectionSearch}"
-                      Command="{Binding ShowSelectDialogCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Project}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenKnp}"
-                      Icon="{icons:MaterialIconExt Kind=BookAlphabet}"
-                      Command="{Binding ShowKnpWindowCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
-                      Icon="{icons:MaterialIconExt Kind=ArchiveCogOutline}"
-                      Command="{Binding ShowProjectConfigDialogCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Timing}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ShiftTimes}"
-                      Icon="{icons:MaterialIconExt Kind=SwapHorizontal}"
-                      Command="{Binding ShowShiftTimesDialogCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SnapFrame_Start}"
-                      Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
-                      Command="{Binding SnapStartToCurrentFrameCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SnapFrame_End}"
-                      Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
-                      Command="{Binding SnapEndToCurrentFrameCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SnapKf_Start}"
-                      Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
-                      Command="{Binding SnapStartToKeyframeCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_SnapKf_End}"
-                      Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
-                      Command="{Binding SnapEndToKeyframeCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Video}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenVideo}"
-                      Icon="{icons:MaterialIconExt Kind=MovieOpenPlus}"
-                      Command="{Binding OpenVideoCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_CloseVideo}"
-                      Icon="{icons:MaterialIconExt Kind=MovieOpenOff}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+        Command="{Binding DetachReferenceFileCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ScriptProperties}"
+        Icon="{icons:MaterialIconExt Kind=ListBoxOutline}"
+        Command="{Binding ShowScriptInfoDialogCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Profile_Subtitles}"
+        Icon="{icons:MaterialIconExt Kind=Speedometer}"
+        Command="{Binding ShowProfileSubtitlesCommand}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                           FallbackValue=false}"
-                      Command="{Binding CloseVideoCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenKeyframes}"
-                      Icon="{icons:MaterialIconExt Kind=FileKeyOutline}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Sort_Lines}"
+        Icon="{icons:MaterialIconExt Kind=Sort}"
+        Command="{Binding ShowSortDialogCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SelectLines}"
+        Icon="{icons:MaterialIconExt Kind=SelectionSearch}"
+        Command="{Binding ShowSelectDialogCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Project}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenKnp}"
+        Icon="{icons:MaterialIconExt Kind=BookAlphabet}"
+        Command="{Binding ShowKnpWindowCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
+        Icon="{icons:MaterialIconExt Kind=ArchiveCogOutline}"
+        Command="{Binding ShowProjectConfigDialogCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Timing}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ShiftTimes}"
+        Icon="{icons:MaterialIconExt Kind=SwapHorizontal}"
+        Command="{Binding ShowShiftTimesDialogCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SnapFrame_Start}"
+        Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
+        Command="{Binding SnapStartToCurrentFrameCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SnapFrame_End}"
+        Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
+        Command="{Binding SnapEndToCurrentFrameCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SnapKf_Start}"
+        Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
+        Command="{Binding SnapStartToKeyframeCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_SnapKf_End}"
+        Icon="{icons:MaterialIconExt Kind=ArrowHorizontalLock}"
+        Command="{Binding SnapEndToKeyframeCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Video}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenVideo}"
+        Icon="{icons:MaterialIconExt Kind=MovieOpenPlus}"
+        Command="{Binding OpenVideoCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_CloseVideo}"
+        Icon="{icons:MaterialIconExt Kind=MovieOpenOff}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                           FallbackValue=false}"
-                      Command="{Binding OpenKeyframesCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_JumpTo}"
-                      Icon="{icons:MaterialIconExt Kind=BullseyeArrow}"
-                      Command="{Binding ShowJumpDialogCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Audio}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_OpenAudio}"
-                      Icon="{icons:MaterialIconExt Kind=Music}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+        Command="{Binding CloseVideoCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenKeyframes}"
+        Icon="{icons:MaterialIconExt Kind=FileKeyOutline}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                           FallbackValue=false}"
-                      Command="{Binding OpenAudioCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_CloseAudio}"
-                      Icon="{icons:MaterialIconExt Kind=MusicOff}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsAudioLoaded,
+        Command="{Binding OpenKeyframesCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_JumpTo}"
+        Icon="{icons:MaterialIconExt Kind=BullseyeArrow}"
+        Command="{Binding ShowJumpDialogCommand}"
+      />
+    </MenuItem>
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Audio}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_OpenAudio}"
+        Icon="{icons:MaterialIconExt Kind=Music}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                           FallbackValue=false}"
-                      Command="{Binding CloseAudioCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ChangeTracks}"
-                      Icon="{icons:MaterialIconExt Kind=PlaylistMusic}"
-                      IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.AudioInfo.TrackCount,
+        Command="{Binding OpenAudioCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_CloseAudio}"
+        Icon="{icons:MaterialIconExt Kind=MusicOff}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsAudioLoaded,
+                                          FallbackValue=false}"
+        Command="{Binding CloseAudioCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ChangeTracks}"
+        Icon="{icons:MaterialIconExt Kind=PlaylistMusic}"
+        IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.AudioInfo.TrackCount,
                                           Converter={StaticResource TrackCountConverter},
                                           FallbackValue=false}"
-                      Command="{Binding ChangeTracksCommand}" />
-        </MenuItem>
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Scripts}"
-                  ItemsSource="{Binding ScriptMenuItems}" />
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Layouts}"
-                  ItemsSource="{Binding LayoutMenuItems}" />
-        <MenuItem Header="{x:Static i18n:Resources.Menu_Help}">
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Help}"
-                      Icon="{icons:MaterialIconExt Kind=HelpCircleOutline}"
-                      Command="{Binding ShowHelpWindowCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Configuration}"
-                      Icon="{icons:MaterialIconExt Kind=CogOutline}"
-                      Command="{Binding ShowConfigDialogCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_Keybinds}"
-                      Icon="{icons:MaterialIconExt Kind=Keyboard}"
-                      Command="{Binding ShowKeybindsDialogCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_ShowLogs}"
-                      Icon="{icons:MaterialIconExt Kind=FormatListGroup}"
-                      Command="{Binding ShowLogWindowCommand}" />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_About}"
-                      Icon="{icons:MaterialIconExt Kind=InformationVariantCircleOutline}"
-                      Command="{Binding ShowAboutWindowCommand}" />
-            <Separator />
-            <MenuItem Header="{x:Static i18n:Resources.Menu_IssueTracker}"
-                      Icon="{icons:MaterialIconExt Kind=SpiderThread}"
-                      Command="{Binding OpenIssueTrackerCommand}" />
-        </MenuItem>
-        <Menu.Styles>
-            <Style Selector="MenuItem">
-                <Setter Property="MinHeight" Value="0" />
-            </Style>
-        </Menu.Styles>
-    </Menu>
+        Command="{Binding ChangeTracksCommand}"
+      />
+    </MenuItem>
+    <MenuItem
+      Header="{x:Static i18n:Resources.Menu_Scripts}"
+      ItemsSource="{Binding ScriptMenuItems}"
+    />
+    <MenuItem
+      Header="{x:Static i18n:Resources.Menu_Layouts}"
+      ItemsSource="{Binding LayoutMenuItems}"
+    />
+    <MenuItem Header="{x:Static i18n:Resources.Menu_Help}">
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Help}"
+        Icon="{icons:MaterialIconExt Kind=HelpCircleOutline}"
+        Command="{Binding ShowHelpWindowCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Configuration}"
+        Icon="{icons:MaterialIconExt Kind=CogOutline}"
+        Command="{Binding ShowConfigDialogCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_Keybinds}"
+        Icon="{icons:MaterialIconExt Kind=Keyboard}"
+        Command="{Binding ShowKeybindsDialogCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_ShowLogs}"
+        Icon="{icons:MaterialIconExt Kind=FormatListGroup}"
+        Command="{Binding ShowLogWindowCommand}"
+      />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_About}"
+        Icon="{icons:MaterialIconExt Kind=InformationVariantCircleOutline}"
+        Command="{Binding ShowAboutWindowCommand}"
+      />
+      <Separator />
+      <MenuItem
+        Header="{x:Static i18n:Resources.Menu_IssueTracker}"
+        Icon="{icons:MaterialIconExt Kind=SpiderThread}"
+        Command="{Binding OpenIssueTrackerCommand}"
+      />
+    </MenuItem>
+    <Menu.Styles>
+      <Style Selector="MenuItem">
+        <Setter Property="MinHeight" Value="0" />
+      </Style>
+    </Menu.Styles>
+  </Menu>
 </UserControl>

@@ -1,60 +1,63 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
-        
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        
-        x:Class="Ameko.Views.Windows.LogWindow"
-        x:DataType="vm:LogWindowViewModel"
-        
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Width="1200"
-        Height="550"
-        Title="{x:Static i18n:Other.LogWindow_Title}">
-    <Window.Resources>
-        <converters:LogColorConverter x:Key="ColorConverter" />
-    </Window.Resources>
-    <ListBox Name="LogList"
-             ItemsSource="{Binding LogEntries}"
-             FontFamily="{StaticResource MartianMono}"
-             SelectedItem="{Binding SelectedLog}"
-             SelectedItems="{Binding SelectedLogs}"
-             SelectionMode="Multiple"
-             AutoScrollToSelectedItem="True"
-             FontSize="10"
-             Classes="Small">
-        <ListBox.ItemTemplate>
-            <DataTemplate x:DataType="holo:LogEntry">
-                <TextBlock Text="{Binding Message}">
-                    <TextBlock.Foreground>
-                        <MultiBinding Converter="{StaticResource ColorConverter}">
-                            <Binding Path="Level" />
-                            <Binding Path="$parent[Window]" />
-                        </MultiBinding>
-                    </TextBlock.Foreground>
-                </TextBlock>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-        <ListBox.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Copy}"
-                          Command="{Binding CopySelectionCommand}" />
-            </ContextMenu>
-        </ListBox.ContextMenu>
-    </ListBox>
-    <Window.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="1" />
-        </Style>
-    </Window.Styles>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  x:Class="Ameko.Views.Windows.LogWindow"
+  x:DataType="vm:LogWindowViewModel"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Width="1200"
+  Height="550"
+  Title="{x:Static i18n:Other.LogWindow_Title}"
+>
+  <Window.Resources>
+    <converters:LogColorConverter x:Key="ColorConverter" />
+  </Window.Resources>
+  <ListBox
+    Name="LogList"
+    ItemsSource="{Binding LogEntries}"
+    FontFamily="{StaticResource MartianMono}"
+    SelectedItem="{Binding SelectedLog}"
+    SelectedItems="{Binding SelectedLogs}"
+    SelectionMode="Multiple"
+    AutoScrollToSelectedItem="True"
+    FontSize="10"
+    Classes="Small"
+  >
+    <ListBox.ItemTemplate>
+      <DataTemplate x:DataType="holo:LogEntry">
+        <TextBlock Text="{Binding Message}">
+          <TextBlock.Foreground>
+            <MultiBinding Converter="{StaticResource ColorConverter}">
+              <Binding Path="Level" />
+              <Binding Path="$parent[Window]" />
+            </MultiBinding>
+          </TextBlock.Foreground>
+        </TextBlock>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+    <ListBox.ContextMenu>
+      <ContextMenu>
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Copy}"
+          Command="{Binding CopySelectionCommand}"
+        />
+      </ContextMenu>
+    </ListBox.ContextMenu>
+  </ListBox>
+  <Window.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+  </Window.Styles>
 </Window>

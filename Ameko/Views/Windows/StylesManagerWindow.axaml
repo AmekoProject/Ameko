@@ -1,302 +1,344 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="900"
-        d:DesignHeight="525"
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="900"
+  d:DesignHeight="525"
+  xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.Views.Windows.StylesManagerWindow"
+  x:DataType="vm:StylesManagerWindowViewModel"
+  Focusable="True"
+  Width="900"
+  Height="525"
+  CanResize="False"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:StylesManager.StylesManager_Title}"
+>
+  <Window.Resources>
+    <converters:HccBorderConverter x:Key="BorderConverter" />
+  </Window.Resources>
 
-        xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-
-        x:Class="Ameko.Views.Windows.StylesManagerWindow"
-        x:DataType="vm:StylesManagerWindowViewModel"
-
-        Focusable="True"
-        Width="900"
-        Height="525"
-        CanResize="False"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:StylesManager.StylesManager_Title}">
-    <Window.Resources>
-        <converters:HccBorderConverter x:Key="BorderConverter" />
-    </Window.Resources>
-    
-    <Grid ColumnDefinitions="*, 2, *, 2, *"
-          RowDefinitions="Auto, *">
-        <!-- Global style list -->
-        <TextBlock Grid.Column="0"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   Text="{x:Static i18n:StylesManager.StylesManager_GlobalStyles}" />
-        <Grid Grid.Column="0"
-              Grid.Row="1"
-              RowDefinitions="*, Auto">
-            <ListBox Grid.Row="0"
-                     Margin="2"
-                     SelectedItem="{Binding SelectedGlobalStyle}"
-                     ItemsSource="{Binding Globals.StyleManager.Styles}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="ass:Style">
-                        <TextBlock Text="{Binding Name}"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Background="Transparent"
-                                   DoubleTapped="GlobalStyle_DoubleTapped">
-                            <TextBlock.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
-                                              CommandParameter="global" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=ArchivePlusOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="global,project" />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=FilePlusOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="global,document" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
-                                              CommandParameter="global" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
-                                              CommandParameter="global" />
-                                </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid Grid.Row="1"
-                  ColumnDefinitions="0.5*, *, 0.5*"
-                  RowDefinitions="Auto, Auto">
-                <Button Grid.Column="1"
-                        Grid.Row="0"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
-                        Command="{Binding NewStyleCommand}"
-                        CommandParameter="global"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}" />
-                <Button Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                        Command="{Binding EditStyleCommand}"
-                        CommandParameter="global"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                        IsEnabled="{Binding GlobalButtonsEnabled}" />
-            </Grid>
-        </Grid>
-        
-        <!-- Separator -->
-        <Panel Grid.Column="1"
-               Grid.Row="0"
-               Grid.RowSpan="2"
-               Classes="separator" />
-
-        <!-- Project style list -->
-        <TextBlock Grid.Column="2"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   Text="{x:Static i18n:StylesManager.StylesManager_ProjectStyles}" />
-        <Grid Grid.Column="2"
-              Grid.Row="1"
-              RowDefinitions="*, Auto">
-            <ListBox Grid.Row="0"
-                     Margin="2"
-                     Classes="Small"
-                     HorizontalAlignment="Stretch"
-                     SelectedItem="{Binding SelectedProjectStyle}"
-                     ItemsSource="{Binding Project.StyleManager.Styles}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="ass:Style">
-                        <TextBlock Text="{Binding Name}"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Background="Transparent"
-                                   DoubleTapped="ProjectStyle_DoubleTapped">
-                            <TextBlock.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
-                                              CommandParameter="project" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=EarthPlus}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="project,global" />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=FilePlusOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="project,document" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
-                                              CommandParameter="project" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
-                                              CommandParameter="project" />
-                                </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid Grid.Row="1"
-                  ColumnDefinitions="0.5*, *, 0.5*"
-                  RowDefinitions="Auto, Auto">
-                <Button Grid.Column="1"
-                        Grid.Row="0"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
-                        Command="{Binding NewStyleCommand}"
-                        CommandParameter="project"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}" />
-                <Button Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                        Command="{Binding EditStyleCommand}"
-                        CommandParameter="project"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                        IsEnabled="{Binding ProjectButtonsEnabled}" />
-            </Grid>
-        </Grid>
-        
-        <!-- Separator -->
-        <Panel Grid.Column="3"
-               Grid.Row="0"
-               Grid.RowSpan="2"
-               Classes="separator" />
-
-        <!-- Document style list -->
-        <TextBlock Grid.Column="4"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   Text="{x:Static i18n:StylesManager.StylesManager_DocumentStyles}" />
-        <Grid Grid.Column="4"
-              Grid.Row="1"
-              RowDefinitions="*, Auto">
-            <ListBox Grid.Row="0"
-                     Margin="2"
-                     Classes="Small"
-                     SelectedItem="{Binding SelectedDocumentStyle}"
-                     ItemsSource="{Binding Document.StyleManager.Styles}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="ass:Style">
-                        <TextBlock Text="{Binding Name}"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Background="Transparent"
-                                   DoubleTapped="DocumentStyle_DoubleTapped">
-                            <TextBlock.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
-                                              CommandParameter="document" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=EarthPlus}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="document,global" />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=ArchivePlusOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
-                                              CommandParameter="document,project" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
-                                              CommandParameter="document" />
-                                    <Separator />
-                                    <MenuItem Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
-                                              ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
-                                              Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-                                              Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
-                                              CommandParameter="document" />
-                                </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid Grid.Row="1"
-                  ColumnDefinitions="0.5*, *, 0.5*"
-                  RowDefinitions="Auto, Auto">
-                <Button Grid.Column="1"
-                        Grid.Row="0"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
-                        Command="{Binding NewStyleCommand}"
-                        CommandParameter="document"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}" />
-                <Button Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="2"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
-                        Command="{Binding EditStyleCommand}"
-                        CommandParameter="document"
-                        ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
-                        IsEnabled="{Binding DocumentButtonsEnabled}" />
-            </Grid>
-        </Grid>
+  <Grid ColumnDefinitions="*, 2, *, 2, *" RowDefinitions="Auto, *">
+    <!-- Global style list -->
+    <TextBlock
+      Grid.Column="0"
+      Grid.Row="0"
+      HorizontalAlignment="Center"
+      Text="{x:Static i18n:StylesManager.StylesManager_GlobalStyles}"
+    />
+    <Grid Grid.Column="0" Grid.Row="1" RowDefinitions="*, Auto">
+      <ListBox
+        Grid.Row="0"
+        Margin="2"
+        SelectedItem="{Binding SelectedGlobalStyle}"
+        ItemsSource="{Binding Globals.StyleManager.Styles}"
+      >
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="ass:Style">
+            <TextBlock
+              Text="{Binding Name}"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="Transparent"
+              DoubleTapped="GlobalStyle_DoubleTapped"
+            >
+              <TextBlock.ContextMenu>
+                <ContextMenu>
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
+                    CommandParameter="global"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=ArchivePlusOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="global,project"
+                  />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=FilePlusOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="global,document"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
+                    CommandParameter="global"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
+                    CommandParameter="global"
+                  />
+                </ContextMenu>
+              </TextBlock.ContextMenu>
+            </TextBlock>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid Grid.Row="1" ColumnDefinitions="0.5*, *, 0.5*" RowDefinitions="Auto, Auto">
+        <Button
+          Grid.Column="1"
+          Grid.Row="0"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
+          Command="{Binding NewStyleCommand}"
+          CommandParameter="global"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}"
+        />
+        <Button
+          Grid.Column="1"
+          Grid.Row="1"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+          Command="{Binding EditStyleCommand}"
+          CommandParameter="global"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+          IsEnabled="{Binding GlobalButtonsEnabled}"
+        />
+      </Grid>
     </Grid>
-    <Window.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="1" />
-        </Style>
-        <Style Selector="Panel.separator">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <Binding Path="Foreground"
-                             RelativeSource="{RelativeSource AncestorType=ContentControl}"
-                             Converter="{StaticResource BorderConverter}" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Styles>
+
+    <!-- Separator -->
+    <Panel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Classes="separator" />
+
+    <!-- Project style list -->
+    <TextBlock
+      Grid.Column="2"
+      Grid.Row="0"
+      HorizontalAlignment="Center"
+      Text="{x:Static i18n:StylesManager.StylesManager_ProjectStyles}"
+    />
+    <Grid Grid.Column="2" Grid.Row="1" RowDefinitions="*, Auto">
+      <ListBox
+        Grid.Row="0"
+        Margin="2"
+        Classes="Small"
+        HorizontalAlignment="Stretch"
+        SelectedItem="{Binding SelectedProjectStyle}"
+        ItemsSource="{Binding Project.StyleManager.Styles}"
+      >
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="ass:Style">
+            <TextBlock
+              Text="{Binding Name}"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="Transparent"
+              DoubleTapped="ProjectStyle_DoubleTapped"
+            >
+              <TextBlock.ContextMenu>
+                <ContextMenu>
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
+                    CommandParameter="project"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=EarthPlus}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="project,global"
+                  />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToDocument_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=FilePlusOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="project,document"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
+                    CommandParameter="project"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
+                    CommandParameter="project"
+                  />
+                </ContextMenu>
+              </TextBlock.ContextMenu>
+            </TextBlock>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid Grid.Row="1" ColumnDefinitions="0.5*, *, 0.5*" RowDefinitions="Auto, Auto">
+        <Button
+          Grid.Column="1"
+          Grid.Row="0"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
+          Command="{Binding NewStyleCommand}"
+          CommandParameter="project"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}"
+        />
+        <Button
+          Grid.Column="1"
+          Grid.Row="1"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+          Command="{Binding EditStyleCommand}"
+          CommandParameter="project"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+          IsEnabled="{Binding ProjectButtonsEnabled}"
+        />
+      </Grid>
+    </Grid>
+
+    <!-- Separator -->
+    <Panel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Classes="separator" />
+
+    <!-- Document style list -->
+    <TextBlock
+      Grid.Column="4"
+      Grid.Row="0"
+      HorizontalAlignment="Center"
+      Text="{x:Static i18n:StylesManager.StylesManager_DocumentStyles}"
+    />
+    <Grid Grid.Column="4" Grid.Row="1" RowDefinitions="*, Auto">
+      <ListBox
+        Grid.Row="0"
+        Margin="2"
+        Classes="Small"
+        SelectedItem="{Binding SelectedDocumentStyle}"
+        ItemsSource="{Binding Document.StyleManager.Styles}"
+      >
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="ass:Style">
+            <TextBlock
+              Text="{Binding Name}"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="Transparent"
+              DoubleTapped="DocumentStyle_DoubleTapped"
+            >
+              <TextBlock.ContextMenu>
+                <ContextMenu>
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TagEditOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).EditStyleCommand, FallbackValue=.}"
+                    CommandParameter="document"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToGlobal_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=EarthPlus}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="document,global"
+                  />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_CopyToProject_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=ArchivePlusOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).CopyToCommand, FallbackValue=.}"
+                    CommandParameter="document,project"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Duplicate_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DuplicateCommand, FallbackValue=.}"
+                    CommandParameter="document"
+                  />
+                  <Separator />
+                  <MenuItem
+                    Header="{x:Static i18n:StylesManager.StylesManager_Button_Delete}"
+                    ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Delete_ToolTip}"
+                    Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+                    Command="{Binding $parent[Window].((vm:StylesManagerWindowViewModel)DataContext).DeleteCommand, FallbackValue=.}"
+                    CommandParameter="document"
+                  />
+                </ContextMenu>
+              </TextBlock.ContextMenu>
+            </TextBlock>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid Grid.Row="1" ColumnDefinitions="0.5*, *, 0.5*" RowDefinitions="Auto, Auto">
+        <Button
+          Grid.Column="1"
+          Grid.Row="0"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_New}"
+          Command="{Binding NewStyleCommand}"
+          CommandParameter="document"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_New_ToolTip}"
+        />
+        <Button
+          Grid.Column="1"
+          Grid.Row="1"
+          Margin="2"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:StylesManager.StylesManager_Button_Edit}"
+          Command="{Binding EditStyleCommand}"
+          CommandParameter="document"
+          ToolTip.Tip="{x:Static i18n:StylesManager.StylesManager_Button_Edit_ToolTip}"
+          IsEnabled="{Binding DocumentButtonsEnabled}"
+        />
+      </Grid>
+    </Grid>
+  </Grid>
+  <Window.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+    <Style Selector="Panel.separator">
+      <Setter Property="Background">
+        <Setter.Value>
+          <Binding
+            Path="Foreground"
+            RelativeSource="{RelativeSource AncestorType=ContentControl}"
+            Converter="{StaticResource BorderConverter}"
+          />
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Styles>
 </Window>

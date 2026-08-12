@@ -1,66 +1,77 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="700"
-             d:DesignHeight="475"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:controls="clr-namespace:Ameko.Views.Controls"
-             xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
-             x:Class="Ameko.Views.Controls.PkgManRepositoriesTab"
-             x:DataType="vm:PkgManWindowViewModel">
-    <DockPanel>
-        <Grid DockPanel.Dock="Bottom"
-              ColumnDefinitions="*, *">
-            <controls:RepositoryInformation Grid.Column="0"
-                                            DataContext="{Binding SelectedRepository}"/>
-            <Grid Grid.Column="1"
-                  VerticalAlignment="Bottom"
-                  ColumnDefinitions="5*, 2*"
-                  RowDefinitions="Auto, Auto">
-                <Button Grid.Column="1"
-                        Grid.Row="0"
-                        Margin="2"
-                        Classes="Warning"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:PkgMan.PkgMan_Button_RemoveRepo}"
-                        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_RemoveRepo_ToolTip}"
-                        IsEnabled="{Binding RemoveRepoButtonEnabled}"
-                        Command="{Binding RemoveRepositoryCommand}" />
-                <Button Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="2"
-                        Classes="Success"
-                        HorizontalAlignment="Stretch"
-                        Content="{x:Static i18n:PkgMan.PkgMan_Button_AddRepo}"
-                        ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_AddRepo_ToolTip}"
-                        IsEnabled="{Binding AddRepoButtonEnabled}"
-                        Command="{Binding AddRepositoryCommand}" />
-                <TextBox Grid.Column="0"
-                         Grid.Row="1"
-                         Margin="2"
-                         AcceptsReturn="False"
-                         AcceptsTab="False"
-                         TextWrapping="NoWrap"
-                         PlaceholderText="https://your-repository.gov/base.json"
-                         Text="{Binding RepoUrlInput}"/>
-            </Grid>
-        </Grid>
-        
-        <!-- Repository list -->
-        <ListBox Margin="2"
-                 VerticalAlignment="Stretch"
-                 SelectionMode="Single"
-                 SelectedItem="{Binding SelectedRepository}"
-                 ItemsSource="{Binding PackageManager.Repositories, Mode=TwoWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="holo:Repository">
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="700"
+  d:DesignHeight="475"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:controls="clr-namespace:Ameko.Views.Controls"
+  xmlns:holo="clr-namespace:Holo.Scripting.Models;assembly=Holo"
+  x:Class="Ameko.Views.Controls.PkgManRepositoriesTab"
+  x:DataType="vm:PkgManWindowViewModel"
+>
+  <DockPanel>
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*, *">
+      <controls:RepositoryInformation Grid.Column="0" DataContext="{Binding SelectedRepository}" />
+      <Grid
+        Grid.Column="1"
+        VerticalAlignment="Bottom"
+        ColumnDefinitions="5*, 2*"
+        RowDefinitions="Auto, Auto"
+      >
+        <Button
+          Grid.Column="1"
+          Grid.Row="0"
+          Margin="2"
+          Classes="Warning"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:PkgMan.PkgMan_Button_RemoveRepo}"
+          ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_RemoveRepo_ToolTip}"
+          IsEnabled="{Binding RemoveRepoButtonEnabled}"
+          Command="{Binding RemoveRepositoryCommand}"
+        />
+        <Button
+          Grid.Column="1"
+          Grid.Row="1"
+          Margin="2"
+          Classes="Success"
+          HorizontalAlignment="Stretch"
+          Content="{x:Static i18n:PkgMan.PkgMan_Button_AddRepo}"
+          ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_AddRepo_ToolTip}"
+          IsEnabled="{Binding AddRepoButtonEnabled}"
+          Command="{Binding AddRepositoryCommand}"
+        />
+        <TextBox
+          Grid.Column="0"
+          Grid.Row="1"
+          Margin="2"
+          AcceptsReturn="False"
+          AcceptsTab="False"
+          TextWrapping="NoWrap"
+          PlaceholderText="https://your-repository.gov/base.json"
+          Text="{Binding RepoUrlInput}"
+        />
+      </Grid>
+    </Grid>
+
+    <!-- Repository list -->
+    <ListBox
+      Margin="2"
+      VerticalAlignment="Stretch"
+      SelectionMode="Single"
+      SelectedItem="{Binding SelectedRepository}"
+      ItemsSource="{Binding PackageManager.Repositories, Mode=TwoWay}"
+    >
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="holo:Repository">
+          <TextBlock Text="{Binding Name}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
 </UserControl>

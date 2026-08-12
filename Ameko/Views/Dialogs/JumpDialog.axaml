@@ -1,75 +1,92 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="200"
-        d:DesignHeight="150"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:c="clr-namespace:Ameko.Views.Controls"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.JumpDialog"
-        x:DataType="vm:JumpDialogViewModel"
-
-        Focusable="True"
-        Width="200"
-        CanResize="False"
-        SizeToContent="Height"
-        ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Jump.JumpDialog_Title}">
-    <Grid ColumnDefinitions="Auto, *"
-          RowDefinitions="Auto, Auto, Auto, Auto"
-          Margin="5"
-          ColumnSpacing="5">
-        <Label Grid.Column="0"
-               Grid.Row="0"
-               Content="{x:Static i18n:Jump.Jump_Frame}"
-               VerticalAlignment="Center" />
-        <Label Grid.Column="0"
-               Grid.Row="1"
-               Content="{x:Static i18n:Jump.Jump_Time}"
-               VerticalAlignment="Center" />
-        <Label Grid.Column="0"
-               Grid.Row="2"
-               Content="{x:Static i18n:Jump.Jump_Line}"
-               VerticalAlignment="Center" />
-        <c:NumberTextBox Grid.Column="1"
-                         Grid.Row="0"
-                         Padding="0"
-                         Margin="2"
-                         Minimum="0"
-                         Increment="1"
-                         FormatString="0"
-                         Value="{Binding Frame}"
-                         IsEnabled="{Binding VideoLoaded}" />
-        <c:TimeTextBox Name="TimeBox"
-                       Grid.Column="1"
-                       Grid.Row="1"
-                       Margin="2"
-                       AcceptsReturn="False"
-                       AcceptsTab="False"
-                       Text="{Binding Time.UpdatableText}"
-                       IsEnabled="{Binding VideoLoaded}" />
-        <c:NumberTextBox Grid.Column="1"
-                         Grid.Row="2"
-                         Padding="0"
-                         Margin="2"
-                         Minimum="1"
-                         Increment="1"
-                         FormatString="0"
-                         Value="{Binding Line}" />
-        <Button Grid.Column="0"
-                Grid.Row="3"
-                Grid.ColumnSpan="2"
-                Margin="2"
-                IsDefault="True"
-                Classes="Primary"
-                HorizontalAlignment="Right"
-                Content="{x:Static i18n:Jump.Jump_Button_Jump}"
-                Command="{Binding ConfirmCommand}" />
-    </Grid>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="200"
+  d:DesignHeight="150"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.JumpDialog"
+  x:DataType="vm:JumpDialogViewModel"
+  Focusable="True"
+  Width="200"
+  CanResize="False"
+  SizeToContent="Height"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Jump.JumpDialog_Title}"
+>
+  <Grid
+    ColumnDefinitions="Auto, *"
+    RowDefinitions="Auto, Auto, Auto, Auto"
+    Margin="5"
+    ColumnSpacing="5"
+  >
+    <Label
+      Grid.Column="0"
+      Grid.Row="0"
+      Content="{x:Static i18n:Jump.Jump_Frame}"
+      VerticalAlignment="Center"
+    />
+    <Label
+      Grid.Column="0"
+      Grid.Row="1"
+      Content="{x:Static i18n:Jump.Jump_Time}"
+      VerticalAlignment="Center"
+    />
+    <Label
+      Grid.Column="0"
+      Grid.Row="2"
+      Content="{x:Static i18n:Jump.Jump_Line}"
+      VerticalAlignment="Center"
+    />
+    <c:NumberTextBox
+      Grid.Column="1"
+      Grid.Row="0"
+      Padding="0"
+      Margin="2"
+      Minimum="0"
+      Increment="1"
+      FormatString="0"
+      Value="{Binding Frame}"
+      IsEnabled="{Binding VideoLoaded}"
+    />
+    <c:TimeTextBox
+      Name="TimeBox"
+      Grid.Column="1"
+      Grid.Row="1"
+      Margin="2"
+      AcceptsReturn="False"
+      AcceptsTab="False"
+      Text="{Binding Time.UpdatableText}"
+      IsEnabled="{Binding VideoLoaded}"
+    />
+    <c:NumberTextBox
+      Grid.Column="1"
+      Grid.Row="2"
+      Padding="0"
+      Margin="2"
+      Minimum="1"
+      Increment="1"
+      FormatString="0"
+      Value="{Binding Line}"
+    />
+    <Button
+      Grid.Column="0"
+      Grid.Row="3"
+      Grid.ColumnSpan="2"
+      Margin="2"
+      IsDefault="True"
+      Classes="Primary"
+      HorizontalAlignment="Right"
+      Content="{x:Static i18n:Jump.Jump_Button_Jump}"
+      Command="{Binding ConfirmCommand}"
+    />
+  </Grid>
 </Window>

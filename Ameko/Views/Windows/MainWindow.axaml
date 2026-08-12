@@ -1,245 +1,320 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:c="using:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:holo="clr-namespace:Holo;assembly=Holo"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.Views.Windows.MainWindow"
+  x:DataType="vm:MainWindowViewModel"
+  DragDrop.AllowDrop="True"
+  Width="1350"
+  Height="650"
+  MinWidth="650"
+  MinHeight="500"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{Binding WindowTitle}"
+>
+  <!-- <Design.DataContext> -->
+  <!--     This only sets the DataContext for the previewer in an IDE, -->
+  <!--          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+  <!--     <vm:MainWindowViewModel/> -->
+  <!-- </Design.DataContext> -->
+  <Window.Resources>
+    <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+    <converters:TrackCountConverter x:Key="TrackCountConverter" />
+  </Window.Resources>
 
-        xmlns:c="using:Ameko.Views.Controls"
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:holo="clr-namespace:Holo;assembly=Holo"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-
-        x:Class="Ameko.Views.Windows.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        
-        DragDrop.AllowDrop="True"
-
-        Width="1350"
-        Height="650"
-        MinWidth="650"
-        MinHeight="500"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{Binding WindowTitle}">
-    <!-- <Design.DataContext> -->
-    <!--     This only sets the DataContext for the previewer in an IDE, -->
-    <!--          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <!--     <vm:MainWindowViewModel/> -->
-    <!-- </Design.DataContext> -->
-    <Window.Resources>
-        <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
-        <converters:TrackCountConverter x:Key="TrackCountConverter" />
-    </Window.Resources>
-    
-    <DockPanel>
-        <c:MenuStrip DockPanel.Dock="Top"
-                     IsVisible="{Binding DisplayInWindowMenu}"
-                     IsEnabled="{Binding DisplayInWindowMenu}" />
-        <TextBlock DockPanel.Dock="Bottom"
-                   FontSize="10"
-                   Margin="5 0 0 0"
-                   Text="{Binding CurrentMessage}" />
-        <Grid Name="MainWindowGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="115" MinWidth="100" />
-                <ColumnDefinition Width="2" />
-                <ColumnDefinition Width="*" MinWidth="500" />
-            </Grid.ColumnDefinitions>
-            <c:ProjectExplorer Name="ProjectExplorer"
-                                Grid.Column="0" />
-            <GridSplitter Grid.Column="1" ResizeDirection="Columns" />
-            <Grid Name="TabControlHost" Grid.Column="2">
-                <TextBlock Text="{x:Static i18n:Resources.Tab_NothingLoaded}"
-                           IsVisible="{Binding ProjectProvider.Current.WorkingSpace,
+  <DockPanel>
+    <c:MenuStrip
+      DockPanel.Dock="Top"
+      IsVisible="{Binding DisplayInWindowMenu}"
+      IsEnabled="{Binding DisplayInWindowMenu}"
+    />
+    <TextBlock
+      DockPanel.Dock="Bottom"
+      FontSize="10"
+      Margin="5 0 0 0"
+      Text="{Binding CurrentMessage}"
+    />
+    <Grid Name="MainWindowGrid">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="115" MinWidth="100" />
+        <ColumnDefinition Width="2" />
+        <ColumnDefinition Width="*" MinWidth="500" />
+      </Grid.ColumnDefinitions>
+      <c:ProjectExplorer Name="ProjectExplorer" Grid.Column="0" />
+      <GridSplitter Grid.Column="1" ResizeDirection="Columns" />
+      <Grid Name="TabControlHost" Grid.Column="2">
+        <TextBlock
+          Text="{x:Static i18n:Resources.Tab_NothingLoaded}"
+          IsVisible="{Binding ProjectProvider.Current.WorkingSpace,
                                                Converter={StaticResource NullToBoolConverter}}"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center" />
-                <TabControl 
-                        Name="WorkspaceTabControl"
-                        IsVisible="{Binding ProjectProvider.Current.WorkingSpace,
+          VerticalAlignment="Center"
+          HorizontalAlignment="Center"
+        />
+        <TabControl
+          Name="WorkspaceTabControl"
+          IsVisible="{Binding ProjectProvider.Current.WorkingSpace,
                                             Converter={StaticResource NullToBoolConverter},
                                             ConverterParameter=.}"
-                        ItemsSource="{Binding ProjectProvider.Current.LoadedWorkspaces}"
-                        SelectedItem="{Binding ProjectProvider.Current.WorkingSpace}"
-                        TabStripPlacement="Bottom">
-                    <TabControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type holo:Workspace}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding DisplayTitle, Mode=OneWay}"
-                                           VerticalAlignment="Center"/>
-                                <Button Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).CloseTabCommand, FallbackValue=.}"
-                                        CommandParameter="{Binding Id}"
-                                        Classes="Small Tertiary">
-                                    <icons:MaterialIconExt Kind="CloseBox" />
-                                    <Button.Styles>
-                                        <Style Selector="Button">
-                                            <Setter Property="Background" Value="Transparent" />
-                                            <Setter Property="Padding" Value="2 0 0 0" />
-                                            <Setter Property="BorderThickness" Value="0" />
-                                        </Style>
-                                    </Button.Styles>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
-                    <TabControl.ContentTemplate>
-                        <DynamicResource ResourceKey="WorkspaceTabTemplate" />
-                    </TabControl.ContentTemplate>
-                    <TabControl.Styles>
-                        <Style Selector="TabItem">
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="Margin" Value="0" />
-                        </Style>
-                    </TabControl.Styles>
-                </TabControl>
-            </Grid>
-        </Grid>
-    </DockPanel>
+          ItemsSource="{Binding ProjectProvider.Current.LoadedWorkspaces}"
+          SelectedItem="{Binding ProjectProvider.Current.WorkingSpace}"
+          TabStripPlacement="Bottom"
+        >
+          <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type holo:Workspace}">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding DisplayTitle, Mode=OneWay}" VerticalAlignment="Center" />
+                <Button
+                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).CloseTabCommand, FallbackValue=.}"
+                  CommandParameter="{Binding Id}"
+                  Classes="Small Tertiary"
+                >
+                  <icons:MaterialIconExt Kind="CloseBox" />
+                  <Button.Styles>
+                    <Style Selector="Button">
+                      <Setter Property="Background" Value="Transparent" />
+                      <Setter Property="Padding" Value="2 0 0 0" />
+                      <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                  </Button.Styles>
+                </Button>
+              </StackPanel>
+            </DataTemplate>
+          </TabControl.ItemTemplate>
+          <TabControl.ContentTemplate>
+            <DynamicResource ResourceKey="WorkspaceTabTemplate" />
+          </TabControl.ContentTemplate>
+          <TabControl.Styles>
+            <Style Selector="TabItem">
+              <Setter Property="Padding" Value="0" />
+              <Setter Property="Margin" Value="0" />
+            </Style>
+          </TabControl.Styles>
+        </TabControl>
+      </Grid>
+    </Grid>
+  </DockPanel>
 
-    <NativeMenu.Menu>
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_File}">
         <NativeMenu>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_File}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_New}"
-                                    Command="{Binding NewCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenSubtitle}"
-                                    Command="{Binding OpenSubtitleCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SaveSubtitle}"
-                                    Command="{Binding SaveSubtitleCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SaveSubtitleAs}"
-                                    Command="{Binding SaveSubtitleAsCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ExportSubtitles}"
-                                    Command="{Binding ExportSubtitleCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_RecentSubtitles}">
-                        <NativeMenu />
-                    </NativeMenuItem>
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenProject}"
-                                    Command="{Binding OpenProjectCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenProjectFolder}"
-                                    Command="{Binding OpenFolderAsProjectCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SaveProject}"
-                                    Command="{Binding SaveProjectCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_RecentProjects}">
-                        <NativeMenu />
-                    </NativeMenuItem>
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_CloseTab}"
-                                    Command="{Binding CloseTabCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_CloseProject}"
-                                    Command="{Binding CloseProjectCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Edit}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Undo}"
-                                    Command="{Binding UndoCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Redo}"
-                                    Command="{Binding RedoCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Search}"
-                                    Command="{Binding ShowSearchDialogCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Spellcheck}"
-                                    Command="{Binding ShowSpellcheckDialogCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Subtitle}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_StylesManager}"
-                                    Command="{Binding ShowStylesManagerCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ReferenceFile_Attach}"
-                                    IsVisible="{Binding !ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded}"
-                                    Command="{Binding AttachReferenceFileCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ReferenceFile_Detach}"
-                                    IsVisible="{Binding ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded,
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_New}"
+            Command="{Binding NewCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenSubtitle}"
+            Command="{Binding OpenSubtitleCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SaveSubtitle}"
+            Command="{Binding SaveSubtitleCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SaveSubtitleAs}"
+            Command="{Binding SaveSubtitleAsCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ExportSubtitles}"
+            Command="{Binding ExportSubtitleCommand}"
+          />
+          <NativeMenuItem Header="{x:Static i18n:Resources.Menu_RecentSubtitles}">
+            <NativeMenu />
+          </NativeMenuItem>
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenProject}"
+            Command="{Binding OpenProjectCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenProjectFolder}"
+            Command="{Binding OpenFolderAsProjectCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SaveProject}"
+            Command="{Binding SaveProjectCommand}"
+          />
+          <NativeMenuItem Header="{x:Static i18n:Resources.Menu_RecentProjects}">
+            <NativeMenu />
+          </NativeMenuItem>
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_CloseTab}"
+            Command="{Binding CloseTabCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_CloseProject}"
+            Command="{Binding CloseProjectCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Edit}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Undo}"
+            Command="{Binding UndoCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Redo}"
+            Command="{Binding RedoCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Search}"
+            Command="{Binding ShowSearchDialogCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Spellcheck}"
+            Command="{Binding ShowSpellcheckDialogCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Subtitle}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_StylesManager}"
+            Command="{Binding ShowStylesManagerCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ReferenceFile_Attach}"
+            IsVisible="{Binding !ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded}"
+            Command="{Binding AttachReferenceFileCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ReferenceFile_Detach}"
+            IsVisible="{Binding ProjectProvider.Current.WorkingSpace.ReferenceFileManager.IsReferenceLoaded,
                                                         FallbackValue=false}"
-                                    Command="{Binding DetachReferenceFileCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ScriptProperties}"
-                                    Command="{Binding ShowScriptInfoDialogCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Profile_Subtitles}"
-                                    Command="{Binding ShowProfileSubtitlesCommand}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
-                                                        FallbackValue=false}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Sort_Lines}"
-                                    Command="{Binding ShowSortDialogCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SelectLines}"
-                                    Command="{Binding ShowSelectDialogCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Project}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenKnp}"
-                                    Command="{Binding ShowKnpWindowCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
-                                    Command="{Binding ShowProjectConfigDialogCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Timing}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ShiftTimes}"
-                                    Command="{Binding ShowShiftTimesDialogCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SnapFrame_Start}"
-                                    Command="{Binding SnapStartToCurrentFrameCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SnapFrame_End}"
-                                    Command="{Binding SnapEndToCurrentFrameCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SnapKf_Start}"
-                                    Command="{Binding SnapStartToKeyframeCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_SnapKf_End}"
-                                    Command="{Binding SnapEndToKeyframeCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Video}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenVideo}"
-                                    Command="{Binding OpenVideoCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_CloseVideo}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+            Command="{Binding DetachReferenceFileCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ScriptProperties}"
+            Command="{Binding ShowScriptInfoDialogCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Profile_Subtitles}"
+            Command="{Binding ShowProfileSubtitlesCommand}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                                         FallbackValue=false}"
-                                    Command="{Binding CloseVideoCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenKeyframes}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_Sort_Lines}"
+            Command="{Binding ShowSortDialogCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SelectLines}"
+            Command="{Binding ShowSelectDialogCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Project}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenKnp}"
+            Command="{Binding ShowKnpWindowCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ProjectConfig}"
+            Command="{Binding ShowProjectConfigDialogCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Timing}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ShiftTimes}"
+            Command="{Binding ShowShiftTimesDialogCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SnapFrame_Start}"
+            Command="{Binding SnapStartToCurrentFrameCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SnapFrame_End}"
+            Command="{Binding SnapEndToCurrentFrameCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SnapKf_Start}"
+            Command="{Binding SnapStartToKeyframeCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_SnapKf_End}"
+            Command="{Binding SnapEndToKeyframeCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Video}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenVideo}"
+            Command="{Binding OpenVideoCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_CloseVideo}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+                                                        FallbackValue=false}"
+            Command="{Binding CloseVideoCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenKeyframes}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                           FallbackValue=false}"
-                                    Command="{Binding OpenKeyframesCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_JumpTo}"
-                                    Command="{Binding ShowJumpDialogCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Audio}">
-                <NativeMenu>
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_OpenAudio}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
+            Command="{Binding OpenKeyframesCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_JumpTo}"
+            Command="{Binding ShowJumpDialogCommand}"
+          />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Audio}">
+        <NativeMenu>
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_OpenAudio}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsVideoLoaded,
                                                         FallbackValue=false}"
-                                    Command="{Binding OpenAudioCommand}" />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_CloseAudio}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsAudioLoaded,
+            Command="{Binding OpenAudioCommand}"
+          />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_CloseAudio}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.IsAudioLoaded,
                                                         FallbackValue=false}"
-                                    Command="{Binding CloseAudioCommand}" />
-                    <NativeMenuItemSeparator />
-                    <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ChangeTracks}"
-                                    IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.AudioInfo.TrackCount,
+            Command="{Binding CloseAudioCommand}"
+          />
+          <NativeMenuItemSeparator />
+          <NativeMenuItem
+            Header="{x:Static i18n:Resources.Menu_ChangeTracks}"
+            IsEnabled="{Binding ProjectProvider.Current.WorkingSpace.MediaController.AudioInfo.TrackCount,
                                                         Converter={StaticResource TrackCountConverter},
                                                         FallbackValue=false}"
-                                    Command="{Binding ChangeTracksCommand}" />
-                </NativeMenu>
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Scripts}">
-                <NativeMenu />
-            </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Layouts}">
-                <NativeMenu />
-            </NativeMenuItem>
+            Command="{Binding ChangeTracksCommand}"
+          />
         </NativeMenu>
-    </NativeMenu.Menu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Scripts}">
+        <NativeMenu />
+      </NativeMenuItem>
+      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Layouts}">
+        <NativeMenu />
+      </NativeMenuItem>
+    </NativeMenu>
+  </NativeMenu.Menu>
 </Window>

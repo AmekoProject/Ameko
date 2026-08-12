@@ -1,136 +1,156 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="125"
-             d:DesignHeight="450"
-
-             xmlns:c="clr-namespace:Ameko.Views.Controls"
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-
-             x:Class="Ameko.Views.Controls.ProjectExplorer"
-             x:DataType="vm:MainWindowViewModel">
-    <UserControl.Resources>
-        <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
-    </UserControl.Resources>
-    <TabControl TabStripPlacement="Bottom">
-        <TabItem Name="ProjectExplorerTabItem"
-                 Header="{icons:MaterialIconExt Kind=PlaylistStar}">
-            <DockPanel>
-                <TextBlock DockPanel.Dock="Top"
-                           Text="{x:Static i18n:Resources.ProjectExplorer_Header}" />
-                <TreeView ItemsSource="{Binding ProjectProvider.Current.ReferencedItems}"
-                          Padding="0"
-                          Margin="0"
-                          FontSize="12">
-                    <TreeView.DataTemplates>
-                        <!-- Documents -->
-                        <TreeDataTemplate DataType="holo:DocumentItem"
-                                          ItemsSource="{Binding Children}">
-                            <TextBlock Text="{Binding Title}"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Background="Transparent"
-                                       DoubleTapped="DocumentTreeItem_OnDoubleTapped">
-                                <TextBlock.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Open}"
-                                                  Icon="{icons:MaterialIconExt Kind=FolderOpenOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).OpenDocumentCommand, FallbackValue=.}" />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_AttachAsReference}"
-                                                  Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
-                                                  IsVisible="{Binding IsSavedToFileSystem}"
-                                                  IsEnabled="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ProjectProvider.Current.WorkingSpace,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="125"
+  d:DesignHeight="450"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:holo="clr-namespace:Holo.Models;assembly=Holo"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.Views.Controls.ProjectExplorer"
+  x:DataType="vm:MainWindowViewModel"
+>
+  <UserControl.Resources>
+    <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+  </UserControl.Resources>
+  <TabControl TabStripPlacement="Bottom">
+    <TabItem Name="ProjectExplorerTabItem" Header="{icons:MaterialIconExt Kind=PlaylistStar}">
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="{x:Static i18n:Resources.ProjectExplorer_Header}" />
+        <TreeView
+          ItemsSource="{Binding ProjectProvider.Current.ReferencedItems}"
+          Padding="0"
+          Margin="0"
+          FontSize="12"
+        >
+          <TreeView.DataTemplates>
+            <!-- Documents -->
+            <TreeDataTemplate DataType="holo:DocumentItem" ItemsSource="{Binding Children}">
+              <TextBlock
+                Text="{Binding Title}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                DoubleTapped="DocumentTreeItem_OnDoubleTapped"
+              >
+                <TextBlock.ContextMenu>
+                  <ContextMenu>
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Open}"
+                      Icon="{icons:MaterialIconExt Kind=FolderOpenOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).OpenDocumentCommand, FallbackValue=.}"
+                    />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_AttachAsReference}"
+                      Icon="{icons:MaterialIconExt Kind=ClosedCaptionOutline}"
+                      IsVisible="{Binding IsSavedToFileSystem}"
+                      IsEnabled="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ProjectProvider.Current.WorkingSpace,
                                                                       FallbackValue=.,
                                                                       Converter={StaticResource NullToBoolConverter},
                                                                       ConverterParameter=.}"
-                                                  CommandParameter="{Binding Uri}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).AttachReferenceFileNoGuiCommand, FallbackValue=.}" />
-                                        <Separator />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_ChangeDisplayName}"
-                                                  Icon="{icons:MaterialIconExt Kind=RenameOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RenameDocumentCommand, FallbackValue=.}" />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_MoveToFolder}"
-                                                  Icon="{icons:MaterialIconExt Kind=FolderArrowRightOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).MoveToFolderCommand, FallbackValue=.}" />
-                                        <Separator />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Remove}"
-                                                  Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveDocumentFromProjectCommand, FallbackValue=.}" />
-                                    </ContextMenu>
-                                </TextBlock.ContextMenu>
-                            </TextBlock>
-                        </TreeDataTemplate>
-                        <!-- Directories -->
-                        <TreeDataTemplate DataType="holo:DirectoryItem"
-                                          ItemsSource="{Binding Children}">
-                            <TextBlock HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Background="Transparent"
-                                       Text="{Binding Title}">
-                                <TextBlock.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_ChangeDisplayName}"
-                                                  Icon="{icons:MaterialIconExt Kind=RenameOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RenameDirectoryCommand, FallbackValue=.}" />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_MoveToFolder}"
-                                                  Icon="{icons:MaterialIconExt Kind=FolderArrowRightOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).MoveToFolderCommand, FallbackValue=.}" />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_CreateFolder_Folder}"
-                                                  Icon="{icons:MaterialIconExt Kind=FolderPlusOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).CreateFolderCommand, FallbackValue=.}" />
-                                        <Separator />
-                                        <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Remove}"
-                                                  Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-                                                  CommandParameter="{Binding Id}"
-                                                  Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveDirectoryFromProjectCommand, FallbackValue=.}" />
-                                    </ContextMenu>
-                                </TextBlock.ContextMenu>
-                            </TextBlock>
-                        </TreeDataTemplate>
-                    </TreeView.DataTemplates>
-                    <TreeView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_CreateFolder_Root}"
-                                      Icon="{icons:MaterialIconExt Kind=FolderPlusOutline}"
-                                      Command="{Binding CreateFolderCommand}">
-                                <MenuItem.CommandParameter>
-                                    <x:Int32>-1</x:Int32>
-                                </MenuItem.CommandParameter>
-                            </MenuItem>
-                        </ContextMenu>
-                    </TreeView.ContextMenu>
-                </TreeView>
-            </DockPanel>
-        </TabItem>
-        
-        <TabItem Name="ToolboxTabItem"
-                 Header="{icons:MaterialIconExt Kind=Tools}">
-            <DockPanel Width="125">
-                <TextBlock DockPanel.Dock="Top"
-                           Text="{x:Static i18n:Resources.Toolbox_Header}" />
-        
-            </DockPanel>
-        </TabItem>
-        
-        <TabItem Name="GitTabItem"
-                 Header="{icons:MaterialIconExt Kind=SourceBranch}">
-            <c:GitToolbox Width="{Binding $parent[TabControl].Bounds.Width}"
-                          DataContext="{Binding  GitToolboxViewModel}" />
-        </TabItem>
-    </TabControl>
+                      CommandParameter="{Binding Uri}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).AttachReferenceFileNoGuiCommand, FallbackValue=.}"
+                    />
+                    <Separator />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_ChangeDisplayName}"
+                      Icon="{icons:MaterialIconExt Kind=RenameOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RenameDocumentCommand, FallbackValue=.}"
+                    />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_MoveToFolder}"
+                      Icon="{icons:MaterialIconExt Kind=FolderArrowRightOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).MoveToFolderCommand, FallbackValue=.}"
+                    />
+                    <Separator />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Remove}"
+                      Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveDocumentFromProjectCommand, FallbackValue=.}"
+                    />
+                  </ContextMenu>
+                </TextBlock.ContextMenu>
+              </TextBlock>
+            </TreeDataTemplate>
+            <!-- Directories -->
+            <TreeDataTemplate DataType="holo:DirectoryItem" ItemsSource="{Binding Children}">
+              <TextBlock
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Text="{Binding Title}"
+              >
+                <TextBlock.ContextMenu>
+                  <ContextMenu>
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_ChangeDisplayName}"
+                      Icon="{icons:MaterialIconExt Kind=RenameOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RenameDirectoryCommand, FallbackValue=.}"
+                    />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_MoveToFolder}"
+                      Icon="{icons:MaterialIconExt Kind=FolderArrowRightOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).MoveToFolderCommand, FallbackValue=.}"
+                    />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_CreateFolder_Folder}"
+                      Icon="{icons:MaterialIconExt Kind=FolderPlusOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).CreateFolderCommand, FallbackValue=.}"
+                    />
+                    <Separator />
+                    <MenuItem
+                      Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_Remove}"
+                      Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+                      CommandParameter="{Binding Id}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveDirectoryFromProjectCommand, FallbackValue=.}"
+                    />
+                  </ContextMenu>
+                </TextBlock.ContextMenu>
+              </TextBlock>
+            </TreeDataTemplate>
+          </TreeView.DataTemplates>
+          <TreeView.ContextMenu>
+            <ContextMenu>
+              <MenuItem
+                Header="{x:Static i18n:Resources.ProjectExplorer_ContextMenu_CreateFolder_Root}"
+                Icon="{icons:MaterialIconExt Kind=FolderPlusOutline}"
+                Command="{Binding CreateFolderCommand}"
+              >
+                <MenuItem.CommandParameter>
+                  <x:Int32>-1</x:Int32>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+            </ContextMenu>
+          </TreeView.ContextMenu>
+        </TreeView>
+      </DockPanel>
+    </TabItem>
+
+    <TabItem Name="ToolboxTabItem" Header="{icons:MaterialIconExt Kind=Tools}">
+      <DockPanel Width="125">
+        <TextBlock DockPanel.Dock="Top" Text="{x:Static i18n:Resources.Toolbox_Header}" />
+      </DockPanel>
+    </TabItem>
+
+    <TabItem Name="GitTabItem" Header="{icons:MaterialIconExt Kind=SourceBranch}">
+      <c:GitToolbox
+        Width="{Binding $parent[TabControl].Bounds.Width}"
+        DataContext="{Binding  GitToolboxViewModel}"
+      />
+    </TabItem>
+  </TabControl>
 </UserControl>

@@ -1,66 +1,75 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="550"
-        d:DesignHeight="180"
-        
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        x:Class="Ameko.Views.Dialogs.InstallDictionaryDialog"
-        x:DataType="vm:InstallDictionaryDialogViewModel"
-
-        Focusable="True"
-        Width="550"
-        CanResize="False"
-        SizeToContent="Height"
-        ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Spellcheck.Spellcheck_WindowTitle}">
-    <DockPanel>
-        <Grid DockPanel.Dock="Top"
-              ColumnDefinitions="Auto, *"
-              RowDefinitions="Auto, Auto"
-              Margin="10">
-            <icons:MaterialIcon Grid.Column="0"
-                                Grid.Row="0"
-                                Kind="BookAlphabet"
-                                Height="64"
-                                Width="64"
-                                Margin="5" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       Text="{Binding Header}"
-                       FontWeight="Bold"
-                       FontSize="16"
-                       TextWrapping="Wrap"
-                       VerticalAlignment="Center"/>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="1"
-                        Spacing="5"
-                        IsEnabled="{Binding AreButtonsEnabled}">
-                <TextBlock Text="{x:Static i18n:Spellcheck.Spellcheck_Install_Capabilities}"
-                           FontSize="14"
-                           TextWrapping="Wrap"/>
-                <TextBlock Text="{x:Static i18n:Spellcheck.Spellcheck_Install_Notice}"
-                           TextWrapping="Wrap"/>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            Margin="0 10 0 0"
-                            Spacing="10">
-                    <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Install_Button_Ignore}"
-                            Command="{Binding IgnoreCommand}"
-                            Classes="Warning" />
-                    <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Install_Button_Download}"
-                            Command="{Binding DownloadCommand}"
-                            IsDefault="True"
-                            Classes="Primary"/>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="550"
+  d:DesignHeight="180"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.InstallDictionaryDialog"
+  x:DataType="vm:InstallDictionaryDialogViewModel"
+  Focusable="True"
+  Width="550"
+  CanResize="False"
+  SizeToContent="Height"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Spellcheck.Spellcheck_WindowTitle}"
+>
+  <DockPanel>
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="10">
+      <icons:MaterialIcon
+        Grid.Column="0"
+        Grid.Row="0"
+        Kind="BookAlphabet"
+        Height="64"
+        Width="64"
+        Margin="5"
+      />
+      <TextBlock
+        Grid.Column="1"
+        Grid.Row="0"
+        Text="{Binding Header}"
+        FontWeight="Bold"
+        FontSize="16"
+        TextWrapping="Wrap"
+        VerticalAlignment="Center"
+      />
+      <StackPanel Grid.Column="1" Grid.Row="1" Spacing="5" IsEnabled="{Binding AreButtonsEnabled}">
+        <TextBlock
+          Text="{x:Static i18n:Spellcheck.Spellcheck_Install_Capabilities}"
+          FontSize="14"
+          TextWrapping="Wrap"
+        />
+        <TextBlock
+          Text="{x:Static i18n:Spellcheck.Spellcheck_Install_Notice}"
+          TextWrapping="Wrap"
+        />
+        <StackPanel
+          Orientation="Horizontal"
+          HorizontalAlignment="Right"
+          Margin="0 10 0 0"
+          Spacing="10"
+        >
+          <Button
+            Content="{x:Static i18n:Spellcheck.Spellcheck_Install_Button_Ignore}"
+            Command="{Binding IgnoreCommand}"
+            Classes="Warning"
+          />
+          <Button
+            Content="{x:Static i18n:Spellcheck.Spellcheck_Install_Button_Download}"
+            Command="{Binding DownloadCommand}"
+            IsDefault="True"
+            Classes="Primary"
+          />
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </DockPanel>
 </Window>

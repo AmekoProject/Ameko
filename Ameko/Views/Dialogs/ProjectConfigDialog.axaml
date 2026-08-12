@@ -1,167 +1,205 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:c="clr-namespace:Ameko.Views.Controls"
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ProjectConfigDialog"
+  x:DataType="vm:ProjectConfigDialogViewModel"
+  Focusable="True"
+  Width="480"
+  CanResize="False"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Config.ProjectConfigDialog_Title}"
+>
+  <Window.Resources>
+    <converters:HccBorderConverter x:Key="BorderConverter" />
+  </Window.Resources>
+  <StackPanel Margin="2">
+    <!-- Substation Alpha -->
+    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Ssa}">
+      <Grid
+        ColumnDefinitions="Auto, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+        ColumnSpacing="10"
+        RowSpacing="2"
+      >
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_CpsWarnThreshold}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="0"
+          Width="50"
+          Minimum="0"
+          Maximum="100"
+          Increment="1"
+          FormatString="0"
+          HorizontalAlignment="Left"
+          Value="{Binding Project.Cps}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_CpsWhitespace}"
+        />
+        <CheckBox
+          Grid.Column="1"
+          Grid.Row="1"
+          IsChecked="{Binding Project.CpsIncludesWhitespace}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="2"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_CpsPunctuation}"
+        />
+        <CheckBox
+          Grid.Column="1"
+          Grid.Row="2"
+          IsChecked="{Binding Project.CpsIncludesPunctuation}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="3"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SoftLinebreaks}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SoftLinebreaks_ToolTip}"
+        />
+        <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Project.UseSoftLinebreaks}" />
+        <Label
+          Grid.Column="0"
+          Grid.Row="4"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_DefaultLayer}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="4"
+          Width="50"
+          Minimum="0"
+          Maximum="999"
+          Increment="1"
+          FormatString="0"
+          HorizontalAlignment="Left"
+          Value="{Binding Project.DefaultLayer}"
+        />
+      </Grid>
+    </HeaderedContentControl>
 
-        x:Class="Ameko.Views.Dialogs.ProjectConfigDialog"
-        x:DataType="vm:ProjectConfigDialogViewModel"
-
-        Focusable="True"
-        Width="480"
-        CanResize="False"
-        SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Config.ProjectConfigDialog_Title}">
-    <Window.Resources>
-        <converters:HccBorderConverter x:Key="BorderConverter" />
-    </Window.Resources>
-    <StackPanel Margin="2">
-        <!-- Substation Alpha -->
-        <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Ssa}">
-            <Grid ColumnDefinitions="Auto, Auto"
-                  RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                  ColumnSpacing="10"
-                  RowSpacing="2">
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_CpsWarnThreshold}" />
-                <c:NumberTextBox Grid.Column="1"
-                                 Grid.Row="0"
-                                 Width="50"
-                                 Minimum="0"
-                                 Maximum="100"
-                                 Increment="1"
-                                 FormatString="0"
-                                 HorizontalAlignment="Left"
-                                 Value="{Binding Project.Cps}" />
-                <Label Grid.Column="0"
-                       Grid.Row="1"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_CpsWhitespace}" />
-                <CheckBox Grid.Column="1"
-                          Grid.Row="1"
-                          IsChecked="{Binding Project.CpsIncludesWhitespace}" />
-                <Label Grid.Column="0"
-                       Grid.Row="2"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_CpsPunctuation}" />
-                <CheckBox Grid.Column="1"
-                          Grid.Row="2"
-                          IsChecked="{Binding Project.CpsIncludesPunctuation}" />
-                <Label Grid.Column="0"
-                       Grid.Row="3"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_SoftLinebreaks}"
-                       ToolTip.Tip="{x:Static i18n:Config.Config_Label_SoftLinebreaks_ToolTip}" />
-                <CheckBox Grid.Column="1"
-                          Grid.Row="3"
-                          IsChecked="{Binding Project.UseSoftLinebreaks}" />
-                <Label Grid.Column="0"
-                       Grid.Row="4"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Config.Config_Label_DefaultLayer}" />
-                <c:NumberTextBox Grid.Column="1"
-                                 Grid.Row="4"
-                                 Width="50"
-                                 Minimum="0"
-                                 Maximum="999"
-                                 Increment="1"
-                                 FormatString="0"
-                                 HorizontalAlignment="Left"
-                                 Value="{Binding Project.DefaultLayer}" />
-            </Grid>
-        </HeaderedContentControl>
-        
-        <!-- Spellchecking -->
-        <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Spellchecking}">
-            <StackPanel Spacing="5">
-                <!-- Custom words editor -->
-                <Grid ColumnDefinitions="*, Auto"
-                      RowDefinitions="Auto, 150, Auto"
-                      ColumnSpacing="2"
-                      RowSpacing="2">
-                    <TextBox Grid.Column="0"
-                             Grid.Row="0"
-                             Classes="Small"
-                             PlaceholderText="{x:Static i18n:Config.Config_CustomWordBox_Watermark}"
-                             Text="{Binding NewCustomWord}" />
-                    <Button Grid.Column="1"
-                            Grid.Row="0"
-                            Classes="Small"
-                            IsDefault="True"
-                            Content="{x:Static i18n:Config.Config_Button_Add}"
-                            IsEnabled="{Binding CanAddWord}"
-                            Command="{Binding AddWordCommand}" />
-                    <ListBox Grid.Column="0"
-                             Grid.Row="1"
-                             Grid.ColumnSpan="2"
-                             Classes="Small"
-                             VerticalAlignment="Stretch"
-                             ItemsSource="{Binding Project.CustomWords}"
-                             SelectedItems="{Binding CustomWordSelection}"
-                             SelectionMode="Multiple" />
-                    <Button Grid.Column="0"
-                            Grid.Row="2"
-                            Grid.ColumnSpan="2"
-                            Classes="Small"
-                            HorizontalAlignment="Right"
-                            Content="{x:Static i18n:Config.Config_Button_Remove}"
-                            IsEnabled="{Binding CanRemoveWords}"
-                            Command="{Binding RemoveWordsCommand}" />
-                </Grid>
-                <!-- Language selector -->
-                <Grid ColumnDefinitions="Auto, Auto"
-                      RowDefinitions="Auto"
-                      ColumnSpacing="10"
-                      RowSpacing="2">
-                    <Label Grid.Column="0"
-                           Grid.Row="0"
-                           VerticalAlignment="Center"
-                           Content="{x:Static i18n:Config.Config_Label_SpellcheckLanguage}" />
-                    <ComboBox Grid.Column="1"
-                              Grid.Row="0"
-                              Width="175"
-                              ItemsSource="{Binding AvailableLanguages}"
-                              SelectedValue="{Binding Project.SpellcheckCulture}"
-                              DisplayMemberBinding="{Binding Name}"
-                              SelectedValueBinding="{Binding Locale}" />
-                </Grid>
-            </StackPanel>
-        </HeaderedContentControl>
-    </StackPanel>
-    <Window.Styles>
-        <Style Selector="HeaderedContentControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border>
-                            <StackPanel>
-                                <ContentPresenter FontWeight="Bold"
-                                                  Margin="0 10 0 2"
-                                                  Content="{TemplateBinding Header}" />
-                                <Border BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
-                                        BorderThickness="2"
-                                        CornerRadius="5">
-                                    <ContentPresenter Content="{TemplateBinding Content}"
-                                                      Padding="5" />
-                                </Border>
-                            </StackPanel>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="1" />
-        </Style>
-    </Window.Styles>
+    <!-- Spellchecking -->
+    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Spellchecking}">
+      <StackPanel Spacing="5">
+        <!-- Custom words editor -->
+        <Grid
+          ColumnDefinitions="*, Auto"
+          RowDefinitions="Auto, 150, Auto"
+          ColumnSpacing="2"
+          RowSpacing="2"
+        >
+          <TextBox
+            Grid.Column="0"
+            Grid.Row="0"
+            Classes="Small"
+            PlaceholderText="{x:Static i18n:Config.Config_CustomWordBox_Watermark}"
+            Text="{Binding NewCustomWord}"
+          />
+          <Button
+            Grid.Column="1"
+            Grid.Row="0"
+            Classes="Small"
+            IsDefault="True"
+            Content="{x:Static i18n:Config.Config_Button_Add}"
+            IsEnabled="{Binding CanAddWord}"
+            Command="{Binding AddWordCommand}"
+          />
+          <ListBox
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Classes="Small"
+            VerticalAlignment="Stretch"
+            ItemsSource="{Binding Project.CustomWords}"
+            SelectedItems="{Binding CustomWordSelection}"
+            SelectionMode="Multiple"
+          />
+          <Button
+            Grid.Column="0"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Classes="Small"
+            HorizontalAlignment="Right"
+            Content="{x:Static i18n:Config.Config_Button_Remove}"
+            IsEnabled="{Binding CanRemoveWords}"
+            Command="{Binding RemoveWordsCommand}"
+          />
+        </Grid>
+        <!-- Language selector -->
+        <Grid
+          ColumnDefinitions="Auto, Auto"
+          RowDefinitions="Auto"
+          ColumnSpacing="10"
+          RowSpacing="2"
+        >
+          <Label
+            Grid.Column="0"
+            Grid.Row="0"
+            VerticalAlignment="Center"
+            Content="{x:Static i18n:Config.Config_Label_SpellcheckLanguage}"
+          />
+          <ComboBox
+            Grid.Column="1"
+            Grid.Row="0"
+            Width="175"
+            ItemsSource="{Binding AvailableLanguages}"
+            SelectedValue="{Binding Project.SpellcheckCulture}"
+            DisplayMemberBinding="{Binding Name}"
+            SelectedValueBinding="{Binding Locale}"
+          />
+        </Grid>
+      </StackPanel>
+    </HeaderedContentControl>
+  </StackPanel>
+  <Window.Styles>
+    <Style Selector="HeaderedContentControl">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Border>
+              <StackPanel>
+                <ContentPresenter
+                  FontWeight="Bold"
+                  Margin="0 10 0 2"
+                  Content="{TemplateBinding Header}"
+                />
+                <Border
+                  BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
+                  BorderThickness="2"
+                  CornerRadius="5"
+                >
+                  <ContentPresenter Content="{TemplateBinding Content}" Padding="5" />
+                </Border>
+              </StackPanel>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+  </Window.Styles>
 </Window>

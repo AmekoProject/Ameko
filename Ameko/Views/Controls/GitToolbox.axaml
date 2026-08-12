@@ -1,232 +1,259 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="250"
-             d:DesignHeight="450"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="250"
+  d:DesignHeight="450"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+  x:Class="Ameko.Views.Controls.GitToolbox"
+  x:DataType="vm:GitToolboxViewModel"
+>
+  <Grid RowDefinitions="*" Margin="2">
+    <!-- Not in repo display -->
+    <StackPanel
+      Grid.Row="0"
+      IsVisible="{Binding !IsInRepo}"
+      VerticalAlignment="Center"
+      Spacing="20"
+      Margin="10"
+    >
+      <TextBlock
+        Text="{x:Static i18n:Git.Git_NotInRepo}"
+        TextAlignment="Center"
+        TextWrapping="Wrap"
+      />
+      <TextBlock
+        Text="{x:Static i18n:Git.Git_NotInRepo_Tutorial}"
+        TextAlignment="Center"
+        TextWrapping="Wrap"
+      />
+      <TextBlock
+        IsVisible="{Binding IsPotentialOwnershipIssue}"
+        Text="{x:Static i18n:Git.Git_PotentialOwnershipIssue}"
+        TextWrapping="Wrap"
+        TextAlignment="Center"
+        Foreground="Red"
+      />
+      <Grid ColumnDefinitions="*, Auto, *">
+        <Button
+          Grid.Column="1"
+          Padding="2"
+          Background="Transparent"
+          CornerRadius="20"
+          Classes="Small"
+          Content="{icons:MaterialIconExt Kind=Refresh}"
+          ToolTip.Tip="{x:Static i18n:Git.Git_Button_Refresh_ToolTip}"
+          Command="{Binding RefreshCommand}"
+        />
+      </Grid>
+    </StackPanel>
 
-             x:Class="Ameko.Views.Controls.GitToolbox"
-             x:DataType="vm:GitToolboxViewModel">
-    <Grid RowDefinitions="*"
-          Margin="2">
-        <!-- Not in repo display -->
-        <StackPanel Grid.Row="0"
-                    IsVisible="{Binding !IsInRepo}"
-                    VerticalAlignment="Center"
-                    Spacing="20"
-                    Margin="10">
-            <TextBlock Text="{x:Static i18n:Git.Git_NotInRepo}"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap" />
-            <TextBlock Text="{x:Static i18n:Git.Git_NotInRepo_Tutorial}"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap" />
-            <TextBlock IsVisible="{Binding IsPotentialOwnershipIssue}"
-                       Text="{x:Static i18n:Git.Git_PotentialOwnershipIssue}"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"
-                       Foreground="Red" />
-            <Grid ColumnDefinitions="*, Auto, *">
-                <Button Grid.Column="1"
-                        Padding="2"
-                        Background="Transparent"
-                        CornerRadius="20"
-                        Classes="Small"
-                        Content="{icons:MaterialIconExt Kind=Refresh}"
-                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Refresh_ToolTip}"
-                        Command="{Binding RefreshCommand}" />
-            </Grid>
-        </StackPanel>
-        
-        <!-- In repo display -->
-        <Grid Grid.Row="0"
-              IsVisible="{Binding IsInRepo}"
-              RowDefinitions="Auto, Auto, Auto, Auto, Auto, 25, *"
-              RowSpacing="5">
-            <!-- Commit message -->
-            <Grid Grid.Row="0"
-                  ColumnDefinitions="*, Auto"
-                  ColumnSpacing="2">
-                <TextBox Grid.Column="0"
-                         IsEnabled="{Binding HasStagedChanges}"
-                         Text="{Binding CommitMessage}"
-                         PlaceholderText="{x:Static i18n:Git.Git_CommitBox_Watermark}"
-                         TextWrapping="Wrap" />
-                <Button Grid.Column="1"
-                        IsEnabled="{Binding CanCommit}"
-                        Content="{x:Static i18n:Git.Git_Button_Commit}"
-                        ToolTip.Tip="{Binding CommitButtonToolTip}"
-                        Command="{Binding CommitCommand}" />
-            </Grid>
-            
-            <TextBlock Grid.Row="1"
-                       IsVisible="{Binding !AnythingToCommit}"
-                       HorizontalAlignment="Center"
-                       Text="{x:Static i18n:Git.Git_NothingToCommit}"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center" />
-            
-            <!-- Staged Changes -->
-            <Grid IsVisible="{Binding HasStagedChanges}"
-                  Grid.Row="2"
-                  ColumnDefinitions="*, Auto"
-                  RowDefinitions="Auto, *"
-                  RowSpacing="2">
-                <TextBlock Grid.Column="0"
-                           Grid.Row="0"
-                           Text="{x:Static i18n:Git.Git_StagedChanges}"
-                           FontWeight="Bold"
-                           TextWrapping="Wrap"
-                           Margin="0" />
-                <TextBlock Grid.Column="1"
-                           Grid.Row="0"
-                           Text="{Binding StagedFiles.Count}" />
-                <ListBox Grid.Column="0"
-                         Grid.Row="1"
-                         Grid.ColumnSpan="2"
-                         MaxHeight="125"
-                         ItemsSource="{Binding StagedFiles}"
-                         BorderBrush="Transparent"
-                         Classes="Small">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*, Auto"
-                                  ColumnSpacing="2">
-                                <TextBlock Grid.Column="0"
-                                           Text="{Binding FileName}"
-                                           ToolTip.Tip="{Binding FilePath}" />
-                                <Button Grid.Column="1"
-                                        Padding="0"
-                                        Margin="0 0 5 0"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Classes="Small"
-                                        Content="{icons:MaterialIconExt Kind=Minus}"
-                                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Unstage_ToolTip}"
-                                        Command="{Binding $parent[UserControl].((vm:GitToolboxViewModel)DataContext).UnstageCommand, FallbackValue=.}"
-                                        CommandParameter="{Binding .}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-            
-            <!-- Unstaged Changes -->
-            <Grid IsVisible="{Binding HasUnstagedChanges}"
-                  Grid.Row="3"
-                  ColumnDefinitions="*, Auto"
-                  RowDefinitions="Auto, *"
-                  RowSpacing="2">
-                <TextBlock Grid.Column="0"
-                           Grid.Row="0"
-                           Text="{x:Static i18n:Git.Git_UnstagedChanges}"
-                           FontWeight="Bold"
-                           TextWrapping="Wrap" />
-                <TextBlock Grid.Column="1"
-                           Grid.Row="0"
-                           Text="{Binding UnstagedFiles.Count}" />
-                <ListBox Grid.Column="0"
-                         Grid.Row="1"
-                         Grid.ColumnSpan="2"
-                         MaxHeight="125"
-                         ItemsSource="{Binding UnstagedFiles}"
-                         BorderBrush="Transparent"
-                         Classes="Small">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*, Auto"
-                                  ColumnSpacing="2">
-                                <TextBlock Grid.Column="0"
-                                           Text="{Binding FileName}"
-                                           ToolTip.Tip="{Binding FilePath}" />
-                                <Button Grid.Column="1"
-                                        Padding="0"
-                                        Margin="0 0 5 0"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Classes="Small"
-                                        Content="{icons:MaterialIconExt Kind=Plus}"
-                                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Stage_ToolTip}"
-                                        Command="{Binding $parent[UserControl].((vm:GitToolboxViewModel)DataContext).StageCommand, FallbackValue=.}"
-                                        CommandParameter="{Binding .}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-            
-            <!-- Tools -->
-            <Grid Grid.Row="4"
-                  ColumnDefinitions="Auto, Auto, *, Auto"
-                  ColumnSpacing="2"
-                  Margin="4">
-                <Button Grid.Column="0"
-                        Padding="4"
-                        Background="Transparent"
-                        CornerRadius="20"
-                        Classes="Small"
-                        Content="{icons:MaterialIconExt Kind=TransferDown, IconSize=18}"
-                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Pull_ToolTip}"
-                        Command="{Binding PullCommand}" />
-                <Button Grid.Column="1"
-                        Padding="4"
-                        Background="Transparent"
-                        CornerRadius="20"
-                        Classes="Small"
-                        Content="{icons:MaterialIconExt Kind=TransferUp, IconSize=18}"
-                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Push_ToolTip}"
-                        Command="{Binding PushCommand}"
-                        IsEnabled="{Binding CanPush}" />
-                <Button Grid.Column="3"
-                        Padding="4"
-                        Background="Transparent"
-                        CornerRadius="20"
-                        Classes="Small"
-                        FontSize="14"
-                        Content="{icons:MaterialIconExt Kind=Refresh, IconSize=18}"
-                        ToolTip.Tip="{x:Static i18n:Git.Git_Button_Refresh_ToolTip}"
-                        Command="{Binding RefreshCommand}" />
-            </Grid>
-            
-            <!-- Recent Commits -->
-            <Grid Grid.Row="6"
-                  RowDefinitions="Auto, *"
-                  RowSpacing="2"
-                  VerticalAlignment="Bottom">
-                <TextBlock Grid.Row="0"
-                           Text="{Binding LatestCommitsHeader}"
-                           TextWrapping="Wrap"
-                           Margin="0" />
-                <ListBox Grid.Row="1"
-                         ItemsSource="{Binding LatestCommits}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal"
-                                        Spacing="2"
-                                        ToolTip.Tip="{Binding Date}">
-                                <icons:MaterialIcon Kind="SourceCommit"
-                                                    IsVisible="{Binding !IsMerge}" />
-                                <icons:MaterialIcon Kind="SourceMerge"
-                                                    IsVisible="{Binding IsMerge}" />
-                                <TextBlock Text="{Binding Message}" />
-                                <TextBlock Text="{Binding Author}"
-                                           Foreground="Gray"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-        </Grid>
+    <!-- In repo display -->
+    <Grid
+      Grid.Row="0"
+      IsVisible="{Binding IsInRepo}"
+      RowDefinitions="Auto, Auto, Auto, Auto, Auto, 25, *"
+      RowSpacing="5"
+    >
+      <!-- Commit message -->
+      <Grid Grid.Row="0" ColumnDefinitions="*, Auto" ColumnSpacing="2">
+        <TextBox
+          Grid.Column="0"
+          IsEnabled="{Binding HasStagedChanges}"
+          Text="{Binding CommitMessage}"
+          PlaceholderText="{x:Static i18n:Git.Git_CommitBox_Watermark}"
+          TextWrapping="Wrap"
+        />
+        <Button
+          Grid.Column="1"
+          IsEnabled="{Binding CanCommit}"
+          Content="{x:Static i18n:Git.Git_Button_Commit}"
+          ToolTip.Tip="{Binding CommitButtonToolTip}"
+          Command="{Binding CommitCommand}"
+        />
+      </Grid>
+
+      <TextBlock
+        Grid.Row="1"
+        IsVisible="{Binding !AnythingToCommit}"
+        HorizontalAlignment="Center"
+        Text="{x:Static i18n:Git.Git_NothingToCommit}"
+        TextWrapping="Wrap"
+        TextAlignment="Center"
+      />
+
+      <!-- Staged Changes -->
+      <Grid
+        IsVisible="{Binding HasStagedChanges}"
+        Grid.Row="2"
+        ColumnDefinitions="*, Auto"
+        RowDefinitions="Auto, *"
+        RowSpacing="2"
+      >
+        <TextBlock
+          Grid.Column="0"
+          Grid.Row="0"
+          Text="{x:Static i18n:Git.Git_StagedChanges}"
+          FontWeight="Bold"
+          TextWrapping="Wrap"
+          Margin="0"
+        />
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding StagedFiles.Count}" />
+        <ListBox
+          Grid.Column="0"
+          Grid.Row="1"
+          Grid.ColumnSpan="2"
+          MaxHeight="125"
+          ItemsSource="{Binding StagedFiles}"
+          BorderBrush="Transparent"
+          Classes="Small"
+        >
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid ColumnDefinitions="*, Auto" ColumnSpacing="2">
+                <TextBlock
+                  Grid.Column="0"
+                  Text="{Binding FileName}"
+                  ToolTip.Tip="{Binding FilePath}"
+                />
+                <Button
+                  Grid.Column="1"
+                  Padding="0"
+                  Margin="0 0 5 0"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Classes="Small"
+                  Content="{icons:MaterialIconExt Kind=Minus}"
+                  ToolTip.Tip="{x:Static i18n:Git.Git_Button_Unstage_ToolTip}"
+                  Command="{Binding $parent[UserControl].((vm:GitToolboxViewModel)DataContext).UnstageCommand, FallbackValue=.}"
+                  CommandParameter="{Binding .}"
+                />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+
+      <!-- Unstaged Changes -->
+      <Grid
+        IsVisible="{Binding HasUnstagedChanges}"
+        Grid.Row="3"
+        ColumnDefinitions="*, Auto"
+        RowDefinitions="Auto, *"
+        RowSpacing="2"
+      >
+        <TextBlock
+          Grid.Column="0"
+          Grid.Row="0"
+          Text="{x:Static i18n:Git.Git_UnstagedChanges}"
+          FontWeight="Bold"
+          TextWrapping="Wrap"
+        />
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding UnstagedFiles.Count}" />
+        <ListBox
+          Grid.Column="0"
+          Grid.Row="1"
+          Grid.ColumnSpan="2"
+          MaxHeight="125"
+          ItemsSource="{Binding UnstagedFiles}"
+          BorderBrush="Transparent"
+          Classes="Small"
+        >
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid ColumnDefinitions="*, Auto" ColumnSpacing="2">
+                <TextBlock
+                  Grid.Column="0"
+                  Text="{Binding FileName}"
+                  ToolTip.Tip="{Binding FilePath}"
+                />
+                <Button
+                  Grid.Column="1"
+                  Padding="0"
+                  Margin="0 0 5 0"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Classes="Small"
+                  Content="{icons:MaterialIconExt Kind=Plus}"
+                  ToolTip.Tip="{x:Static i18n:Git.Git_Button_Stage_ToolTip}"
+                  Command="{Binding $parent[UserControl].((vm:GitToolboxViewModel)DataContext).StageCommand, FallbackValue=.}"
+                  CommandParameter="{Binding .}"
+                />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+
+      <!-- Tools -->
+      <Grid Grid.Row="4" ColumnDefinitions="Auto, Auto, *, Auto" ColumnSpacing="2" Margin="4">
+        <Button
+          Grid.Column="0"
+          Padding="4"
+          Background="Transparent"
+          CornerRadius="20"
+          Classes="Small"
+          Content="{icons:MaterialIconExt Kind=TransferDown, IconSize=18}"
+          ToolTip.Tip="{x:Static i18n:Git.Git_Button_Pull_ToolTip}"
+          Command="{Binding PullCommand}"
+        />
+        <Button
+          Grid.Column="1"
+          Padding="4"
+          Background="Transparent"
+          CornerRadius="20"
+          Classes="Small"
+          Content="{icons:MaterialIconExt Kind=TransferUp, IconSize=18}"
+          ToolTip.Tip="{x:Static i18n:Git.Git_Button_Push_ToolTip}"
+          Command="{Binding PushCommand}"
+          IsEnabled="{Binding CanPush}"
+        />
+        <Button
+          Grid.Column="3"
+          Padding="4"
+          Background="Transparent"
+          CornerRadius="20"
+          Classes="Small"
+          FontSize="14"
+          Content="{icons:MaterialIconExt Kind=Refresh, IconSize=18}"
+          ToolTip.Tip="{x:Static i18n:Git.Git_Button_Refresh_ToolTip}"
+          Command="{Binding RefreshCommand}"
+        />
+      </Grid>
+
+      <!-- Recent Commits -->
+      <Grid Grid.Row="6" RowDefinitions="Auto, *" RowSpacing="2" VerticalAlignment="Bottom">
+        <TextBlock
+          Grid.Row="0"
+          Text="{Binding LatestCommitsHeader}"
+          TextWrapping="Wrap"
+          Margin="0"
+        />
+        <ListBox Grid.Row="1" ItemsSource="{Binding LatestCommits}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="2" ToolTip.Tip="{Binding Date}">
+                <icons:MaterialIcon Kind="SourceCommit" IsVisible="{Binding !IsMerge}" />
+                <icons:MaterialIcon Kind="SourceMerge" IsVisible="{Binding IsMerge}" />
+                <TextBlock Text="{Binding Message}" />
+                <TextBlock Text="{Binding Author}" Foreground="Gray" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
     </Grid>
-    <UserControl.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0" />
-        </Style>
-    </UserControl.Styles>
+  </Grid>
+  <UserControl.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0" />
+    </Style>
+  </UserControl.Styles>
 </UserControl>

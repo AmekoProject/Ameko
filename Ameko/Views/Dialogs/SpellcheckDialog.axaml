@@ -1,98 +1,107 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="550"
-        d:DesignHeight="275"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.SpellcheckDialog"
-        x:DataType="vm:SpellcheckDialogViewModel"
-
-        Focusable="True"
-        Width="550"
-        Height="275"
-        CanResize="False"
-        ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Spellcheck.Spellcheck_WindowTitle}">
-    <Grid ColumnDefinitions="*, 0.4*"
-          RowDefinitions="Auto, Auto, 0.4*, *, Auto"
-          Margin="10"
-          ColumnSpacing="30">
-        <TextBlock Grid.Column="0"
-                   Grid.Row="0"
-                   Grid.ColumnSpan="2"
-                   IsVisible="{Binding !HaveSuggestions, FallbackValue=False}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="25 50"
-                   FontSize="18"
-                   TextWrapping="Wrap"
-                   Text="{x:Static i18n:Spellcheck.Spellcheck_Label_NoIssues}" />
-        <StackPanel Grid.Column="0"
-                    Grid.Row="1"
-                    IsVisible="{Binding HaveSuggestions}">
-            <TextBox Name="MisspellingBox"
-                     AcceptsReturn="False"
-                     AcceptsTab="False"
-                     Text="{Binding MisspelledWord}" />
-            <TextBlock Text="{x:Static i18n:Spellcheck.Spellcheck_Label_NotFound}" />
-        </StackPanel>
-        <StackPanel Grid.Column="1"
-                    Grid.Row="1"
-                    Spacing="10"
-                    IsVisible="{Binding HaveSuggestions}">
-            <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Button_Change}"
-                    IsDefault="True"
-                    Classes="Primary"
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="{Binding CanChange}"
-                    Command="{Binding ChangeCommand}" />
-            <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Button_FindNext}"
-                    Command="{Binding FindNextCommand}"
-                    Classes="Secondary"
-                    HorizontalAlignment="Stretch" />
-        </StackPanel>
-        <ListBox Grid.Column="0"
-                 Grid.Row="3"
-                 Classes="Small"
-                 ItemsSource="{Binding Suggestions}"
-                 SelectedItem="{Binding SelectedSuggestion}"
-                 SelectionMode="AlwaysSelected"
-                 IsVisible="{Binding HaveSuggestions}" />
-        <StackPanel Grid.Column="1"
-                    Grid.Row="3"
-                    Spacing="10"
-                    IsVisible="{Binding HaveSuggestions}">
-            <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToProject}"
-                    ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToProject_ToolTip}"
-                    Command="{Binding AddToProjectCommand}"
-                    Classes="Tertiary"
-                    HorizontalAlignment="Stretch" />
-            <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToGlobals}"
-                    ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToGlobals_ToolTip}"
-                    Command="{Binding AddToGlobalsCommand}"
-                    Classes="Tertiary"
-                    HorizontalAlignment="Stretch" />
-            <Button Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToBoth}"
-                    ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToBoth_ToolTip}"
-                    Command="{Binding AddToBothCommand}"
-                    Classes="Tertiary"
-                    HorizontalAlignment="Stretch" />
-        </StackPanel>
-        <TextBlock Grid.Column="0"
-                   Grid.Row="4"
-                   Text="{Binding DictionaryInUse}" />
-    </Grid>
-    <Window.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="1" />
-        </Style>
-    </Window.Styles>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="550"
+  d:DesignHeight="275"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.SpellcheckDialog"
+  x:DataType="vm:SpellcheckDialogViewModel"
+  Focusable="True"
+  Width="550"
+  Height="275"
+  CanResize="False"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Spellcheck.Spellcheck_WindowTitle}"
+>
+  <Grid
+    ColumnDefinitions="*, 0.4*"
+    RowDefinitions="Auto, Auto, 0.4*, *, Auto"
+    Margin="10"
+    ColumnSpacing="30"
+  >
+    <TextBlock
+      Grid.Column="0"
+      Grid.Row="0"
+      Grid.ColumnSpan="2"
+      IsVisible="{Binding !HaveSuggestions, FallbackValue=False}"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Margin="25 50"
+      FontSize="18"
+      TextWrapping="Wrap"
+      Text="{x:Static i18n:Spellcheck.Spellcheck_Label_NoIssues}"
+    />
+    <StackPanel Grid.Column="0" Grid.Row="1" IsVisible="{Binding HaveSuggestions}">
+      <TextBox
+        Name="MisspellingBox"
+        AcceptsReturn="False"
+        AcceptsTab="False"
+        Text="{Binding MisspelledWord}"
+      />
+      <TextBlock Text="{x:Static i18n:Spellcheck.Spellcheck_Label_NotFound}" />
+    </StackPanel>
+    <StackPanel Grid.Column="1" Grid.Row="1" Spacing="10" IsVisible="{Binding HaveSuggestions}">
+      <Button
+        Content="{x:Static i18n:Spellcheck.Spellcheck_Button_Change}"
+        IsDefault="True"
+        Classes="Primary"
+        HorizontalAlignment="Stretch"
+        IsEnabled="{Binding CanChange}"
+        Command="{Binding ChangeCommand}"
+      />
+      <Button
+        Content="{x:Static i18n:Spellcheck.Spellcheck_Button_FindNext}"
+        Command="{Binding FindNextCommand}"
+        Classes="Secondary"
+        HorizontalAlignment="Stretch"
+      />
+    </StackPanel>
+    <ListBox
+      Grid.Column="0"
+      Grid.Row="3"
+      Classes="Small"
+      ItemsSource="{Binding Suggestions}"
+      SelectedItem="{Binding SelectedSuggestion}"
+      SelectionMode="AlwaysSelected"
+      IsVisible="{Binding HaveSuggestions}"
+    />
+    <StackPanel Grid.Column="1" Grid.Row="3" Spacing="10" IsVisible="{Binding HaveSuggestions}">
+      <Button
+        Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToProject}"
+        ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToProject_ToolTip}"
+        Command="{Binding AddToProjectCommand}"
+        Classes="Tertiary"
+        HorizontalAlignment="Stretch"
+      />
+      <Button
+        Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToGlobals}"
+        ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToGlobals_ToolTip}"
+        Command="{Binding AddToGlobalsCommand}"
+        Classes="Tertiary"
+        HorizontalAlignment="Stretch"
+      />
+      <Button
+        Content="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToBoth}"
+        ToolTip.Tip="{x:Static i18n:Spellcheck.Spellcheck_Button_AddToBoth_ToolTip}"
+        Command="{Binding AddToBothCommand}"
+        Classes="Tertiary"
+        HorizontalAlignment="Stretch"
+      />
+    </StackPanel>
+    <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding DictionaryInUse}" />
+  </Grid>
+  <Window.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+  </Window.Styles>
 </Window>

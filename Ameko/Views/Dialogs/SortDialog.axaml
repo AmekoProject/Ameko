@@ -1,160 +1,194 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="350"
-        d:DesignHeight="775"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:dm="clr-namespace:Ameko.DataModels"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.SortDialog"
-        x:DataType="vm:SortDialogViewModel"
-        
-        Focusable="True"
-        CanResize="False"
-        SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Search.SortWindow_Title}">
-    <Window.Resources>
-        <converters:EnumConverter x:Key="EnumConverter" />
-    </Window.Resources>
-    <StackPanel Orientation="Vertical"
-                Margin="5">
-        <UniformGrid Columns="2"
-                     ColumnSpacing="10">
-            <!-- Sort By -->
-            <StackPanel Orientation="Vertical">
-                <Label HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Search.Sort_Label_SortBy}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Text}"
-                             IsChecked="{Binding SortBy,
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="775"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:dm="clr-namespace:Ameko.DataModels"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.SortDialog"
+  x:DataType="vm:SortDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Search.SortWindow_Title}"
+>
+  <Window.Resources>
+    <converters:EnumConverter x:Key="EnumConverter" />
+  </Window.Resources>
+  <StackPanel Orientation="Vertical" Margin="5">
+    <UniformGrid Columns="2" ColumnSpacing="10">
+      <!-- Sort By -->
+      <StackPanel Orientation="Vertical">
+        <Label
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Search.Sort_Label_SortBy}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Text}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Text}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_TextStripped}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Text}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_TextStripped}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Style}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Style}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Style}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Actor}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Style}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Actor}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Effect}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Effect}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Comment}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Comment}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Comment}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_Start}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Comment}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_Start}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Start}}" />
-                <RadioButton GroupName="SortBy"
-                             Content="{x:Static i18n:Search.Search_RB_End}"
-                             IsChecked="{Binding SortBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Start}}"
+        />
+        <RadioButton
+          GroupName="SortBy"
+          Content="{x:Static i18n:Search.Search_RB_End}"
+          IsChecked="{Binding SortBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.End}}" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Label HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Search.Sort_Label_ThenBy}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Text}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.End}}"
+        />
+      </StackPanel>
+      <StackPanel Orientation="Vertical">
+        <Label
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Search.Sort_Label_ThenBy}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Text}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Text}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_TextStripped}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Text}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_TextStripped}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Style}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Style}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Style}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Actor}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Style}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Actor}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Effect}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Effect}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Comment}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Comment}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Comment}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_Start}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Comment}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_Start}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Start}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_End}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.Start}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_End}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.End}}" />
-                <RadioButton GroupName="ThenBy"
-                             Content="{x:Static i18n:Search.Search_RB_None}"
-                             IsChecked="{Binding ThenBy,
+                                             ConverterParameter={x:Static dm:SearchFilter.End}}"
+        />
+        <RadioButton
+          GroupName="ThenBy"
+          Content="{x:Static i18n:Search.Search_RB_None}"
+          IsChecked="{Binding ThenBy,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.None}}" />
-            </StackPanel>
-        </UniformGrid>
-        <!-- Descending -->
-        <UniformGrid Columns="2"
-                     ColumnSpacing="10"
-                     Margin="0 5 0 0">
-            <StackPanel Orientation="Horizontal"
-                        Spacing="2"
-                        Margin="2">
-                <Label HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Search.Sort_Label_Descending}" />
-                <CheckBox VerticalAlignment="Center"
-                          IsChecked="{Binding SortByDescending} "/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Spacing="2"
-                        Margin="2">
-                <Label HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:Search.Sort_Label_Descending}" />
-                <CheckBox VerticalAlignment="Center"
-                          IsChecked="{Binding ThenByDescending} "/>
-            </StackPanel>
-        </UniformGrid>
-        <!-- Button -->
-        <Grid ColumnDefinitions="*, Auto"
-              Margin="0 5 0 0">
-            <Button Grid.Column="1"
-                    IsDefault="True"
-                    Classes="Primary"
-                    Content="{x:Static i18n:Search.Sort_Button_Sort}"
-                    Command="{Binding SortCommand}" />
-        </Grid>
-    </StackPanel>
+                                             ConverterParameter={x:Static dm:SearchFilter.None}}"
+        />
+      </StackPanel>
+    </UniformGrid>
+    <!-- Descending -->
+    <UniformGrid Columns="2" ColumnSpacing="10" Margin="0 5 0 0">
+      <StackPanel Orientation="Horizontal" Spacing="2" Margin="2">
+        <Label
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Search.Sort_Label_Descending}"
+        />
+        <CheckBox VerticalAlignment="Center" IsChecked="{Binding SortByDescending} " />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="2" Margin="2">
+        <Label
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Search.Sort_Label_Descending}"
+        />
+        <CheckBox VerticalAlignment="Center" IsChecked="{Binding ThenByDescending} " />
+      </StackPanel>
+    </UniformGrid>
+    <!-- Button -->
+    <Grid ColumnDefinitions="*, Auto" Margin="0 5 0 0">
+      <Button
+        Grid.Column="1"
+        IsDefault="True"
+        Classes="Primary"
+        Content="{x:Static i18n:Search.Sort_Button_Sort}"
+        Command="{Binding SortCommand}"
+      />
+    </Grid>
+  </StackPanel>
 </Window>

@@ -1,49 +1,56 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        d:DesignWidth="700"
-        d:DesignHeight="475"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-
-        x:Class="Ameko.Views.Windows.PlaygroundWindow"
-        x:DataType="vm:PlaygroundWindowViewModel"
-
-        Width="700"
-        Height="475"
-        CanResize="True"
-        WindowStartupLocation="CenterScreen"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Playground.Playground_WindowTitle}">
-    <Grid RowDefinitions="*, 4, 0.25*, Auto"
-          RowSpacing="5"
-          Margin="5"
-          IsEnabled="{Binding !IsExecuting}">
-        <avaloniaEdit:TextEditor Grid.Row="0"
-                                 Name="PlaygroundEditor"
-                                 FontFamily="{StaticResource SarasaMono}"
-                                 FontSize="14"
-                                 ShowLineNumbers="True"
-                                 Document="{Binding Document}" />
-        <GridSplitter Grid.Row="1"
-                      ResizeDirection="Rows" />
-        <TextBox Grid.Row="2"
-                 IsReadOnly="True"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Stretch"
-                 VerticalContentAlignment="Top"
-                 Text="{Binding Status}" />
-        <StackPanel Grid.Row="3"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Spacing="10">
-            <Button Content="{x:Static i18n:Playground.Playground_Button_Reset}"
-                    Command="{Binding ResetCommand}" />
-            <Button Content="{x:Static i18n:Playground.Playground_Button_Execute}"
-                    Command="{Binding ExecuteCommand}" />
-        </StackPanel>
-    </Grid>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  d:DesignWidth="700"
+  d:DesignHeight="475"
+  xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  x:Class="Ameko.Views.Windows.PlaygroundWindow"
+  x:DataType="vm:PlaygroundWindowViewModel"
+  Width="700"
+  Height="475"
+  CanResize="True"
+  WindowStartupLocation="CenterScreen"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Playground.Playground_WindowTitle}"
+>
+  <Grid
+    RowDefinitions="*, 4, 0.25*, Auto"
+    RowSpacing="5"
+    Margin="5"
+    IsEnabled="{Binding !IsExecuting}"
+  >
+    <avaloniaEdit:TextEditor
+      Grid.Row="0"
+      Name="PlaygroundEditor"
+      FontFamily="{StaticResource SarasaMono}"
+      FontSize="14"
+      ShowLineNumbers="True"
+      Document="{Binding Document}"
+    />
+    <GridSplitter Grid.Row="1" ResizeDirection="Rows" />
+    <TextBox
+      Grid.Row="2"
+      IsReadOnly="True"
+      TextWrapping="Wrap"
+      VerticalAlignment="Stretch"
+      VerticalContentAlignment="Top"
+      Text="{Binding Status}"
+    />
+    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+      <Button
+        Content="{x:Static i18n:Playground.Playground_Button_Reset}"
+        Command="{Binding ResetCommand}"
+      />
+      <Button
+        Content="{x:Static i18n:Playground.Playground_Button_Execute}"
+        Command="{Binding ExecuteCommand}"
+      />
+    </StackPanel>
+  </Grid>
 </Window>

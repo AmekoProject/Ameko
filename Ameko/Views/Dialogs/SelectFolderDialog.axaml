@@ -1,41 +1,48 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="200"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.SelectFolderDialog"
-        x:DataType="vm:SelectFolderDialogViewModel"
-        
-        Focusable="True"
-        Width="350"
-        Height="200"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Other.SelectFolderDialog_Title}">
-    <DockPanel Margin="2">
-        <TextBlock DockPanel.Dock="Top"
-                   Text="{x:Static i18n:Other.SelectFolderDialog_Body}"
-                   HorizontalAlignment="Center" />
-        <Grid DockPanel.Dock="Bottom"
-              ColumnDefinitions="* Auto">
-            <Button Grid.Column="1"
-                    Name="SelectButton"
-                    Classes="Primary"
-                    IsDefault="True"
-                    Content="{x:Static i18n:Other.SelectFolderDialog_Button_Select}"
-                    Command="{Binding SelectFolderCommand}"/>
-        </Grid>
-        <ListBox Margin="2"
-                 ItemsSource="{Binding Folders}"
-                 SelectedItem="{Binding SelectedFolder}"
-                 DisplayMemberBinding="{Binding Name}"
-                 Classes="Small"
-                 SelectionMode="Single" />
-            
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="200"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.SelectFolderDialog"
+  x:DataType="vm:SelectFolderDialogViewModel"
+  Focusable="True"
+  Width="350"
+  Height="200"
+  CanResize="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Other.SelectFolderDialog_Title}"
+>
+  <DockPanel Margin="2">
+    <TextBlock
+      DockPanel.Dock="Top"
+      Text="{x:Static i18n:Other.SelectFolderDialog_Body}"
+      HorizontalAlignment="Center"
+    />
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="* Auto">
+      <Button
+        Grid.Column="1"
+        Name="SelectButton"
+        Classes="Primary"
+        IsDefault="True"
+        Content="{x:Static i18n:Other.SelectFolderDialog_Button_Select}"
+        Command="{Binding SelectFolderCommand}"
+      />
+    </Grid>
+    <ListBox
+      Margin="2"
+      ItemsSource="{Binding Folders}"
+      SelectedItem="{Binding SelectedFolder}"
+      DisplayMemberBinding="{Binding Name}"
+      Classes="Small"
+      SelectionMode="Single"
+    />
+  </DockPanel>
 </Window>
