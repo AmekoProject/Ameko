@@ -14,6 +14,10 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <EmbeddedResource Include="Assets/Text/WittyComments.txt" />
+    <EmbeddedResource Update="I18N\SourceViewer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScriptEditor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" />
@@ -247,6 +251,11 @@
     <Compile Update="Views\Dialogs\ProfilerDialog.axaml.cs">
       <DependentUpon>ProfilerWindow.axaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="I18N\SourceViewer.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SourceViewer.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
