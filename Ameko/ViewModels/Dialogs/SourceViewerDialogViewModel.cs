@@ -61,6 +61,7 @@ public class SourceViewerDialogViewModel : ViewModelBase
                 Document.Text = string.Empty;
             }
 
+            Document.UndoStack.ClearAll();
             return scriptType;
         });
 
