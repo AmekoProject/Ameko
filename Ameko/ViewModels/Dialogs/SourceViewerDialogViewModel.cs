@@ -3,9 +3,9 @@
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Windows.Input;
 using Ameko.Messages;
 using AvaloniaEdit.Document;
+using Holo.Scripting.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Primitives;
@@ -18,12 +18,13 @@ public class SourceViewerDialogViewModel : ViewModelBase
     public bool IsLocalScript { get; }
     public TextDocument Document { get; }
 
-    public ReactiveCommand<RxVoid, RxVoid> LoadSourceCommand { get; }
+    public ReactiveCommand<RxVoid, PackageType> LoadSourceCommand { get; }
     public ReactiveCommand<RxVoid, EmptyMessage> SaveCommand { get; }
 
     public SourceViewerDialogViewModel(
         ILogger<SourceViewerDialogViewModel> logger,
         HttpClient httpClient,
+        PackageType scriptType,
         string scriptName,
         Uri scriptUri
     )
@@ -59,6 +60,8 @@ public class SourceViewerDialogViewModel : ViewModelBase
                 logger.LogError(ex, "Failed to read from {ScriptPath}", scriptUri.LocalPath);
                 Document.Text = string.Empty;
             }
+
+            return scriptType;
         });
 
         SaveCommand = ReactiveCommand.CreateFromTask(async () =>

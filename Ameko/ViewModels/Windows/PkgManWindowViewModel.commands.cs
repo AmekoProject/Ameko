@@ -287,6 +287,7 @@ public partial class PkgManWindowViewModel
                     location = new Uri(package.Url); // fallback
 
                 var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
+                    package.Type,
                     package.DisplayName,
                     location
                 );
@@ -304,6 +305,7 @@ public partial class PkgManWindowViewModel
             async (Package package) =>
             {
                 var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
+                    package.Type,
                     package.DisplayName,
                     new Uri(package.Url)
                 );
