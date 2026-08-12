@@ -17,7 +17,7 @@
   CanResize="True"
   WindowStartupLocation="CenterScreen"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
-  Title="{x:Static i18n:Playground.Playground_WindowTitle}"
+  Title="{Binding Title}"
 >
   <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto" RowSpacing="5" Margin="5">
     <avaloniaEdit:TextEditor
