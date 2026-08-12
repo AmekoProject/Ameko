@@ -1,6 +1,7 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -83,6 +84,19 @@ public partial class PackageManager : IPackageManager
     public bool IsPackageInstalled(Package package)
     {
         return _fileSystem.File.Exists(PackagePath(package));
+    }
+
+    /// <inheritdoc />
+    public bool IsPackageInstalled(Package package, [NotNullWhen(true)] out Uri? location)
+    {
+        if (IsPackageInstalled(package))
+        {
+            location = new Uri(PackagePath(package));
+            return true;
+        }
+
+        location = null;
+        return false;
     }
 
     /// <summary>

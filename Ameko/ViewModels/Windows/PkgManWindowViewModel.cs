@@ -28,6 +28,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
     private string _repoUrlInput;
 
     public Interaction<ChangelogDialogViewModel, RxVoid> ShowChangelog { get; }
+    public Interaction<SourceViewerDialogViewModel, RxVoid> ShowSourceViewer { get; }
 
     public ICommand InstallCommand { get; }
     public ICommand UninstallCommand { get; }
@@ -37,6 +38,8 @@ public partial class PkgManWindowViewModel : ViewModelBase
     public ICommand AddRepositoryCommand { get; }
     public ICommand RemoveRepositoryCommand { get; }
     public ICommand ShowChangelogCommand { get; }
+    public ICommand ViewLocalSourceCommand { get; }
+    public ICommand ViewRemoteSourceCommand { get; }
 
     public IPackageManager PackageManager { get; }
 
@@ -123,6 +126,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
         _updateCandidates = new ObservableCollection<Package>(PackageManager.GetUpdateCandidates());
 
         ShowChangelog = new Interaction<ChangelogDialogViewModel, RxVoid>();
+        ShowSourceViewer = new Interaction<SourceViewerDialogViewModel, RxVoid>();
 
         InstallCommand = CreateInstallCommand();
         UninstallCommand = CreateUninstallCommand();
@@ -132,5 +136,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
         AddRepositoryCommand = CreateAddRepositoryCommand();
         RemoveRepositoryCommand = CreateRemoveRepositoryCommand();
         ShowChangelogCommand = CreateShowChangelogCommand();
+        ViewLocalSourceCommand = CreateViewLocalSourceCommand();
+        ViewRemoteSourceCommand = CreateViewRemoteSourceCommand();
     }
 }

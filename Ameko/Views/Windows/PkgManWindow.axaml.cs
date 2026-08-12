@@ -56,6 +56,12 @@ public partial class PkgManWindow : ReactiveWindow<PkgManWindowViewModel>
                     DoShowDialogAsync<ChangelogDialog, ChangelogDialogViewModel>
                 )
                 .DisposeWith(disposables);
+
+            ViewModel
+                ?.ShowSourceViewer.RegisterHandler(
+                    DoShowDialogAsync<SourceViewerDialog, SourceViewerDialogViewModel>
+                )
+                .DisposeWith(disposables);
         });
     }
 }

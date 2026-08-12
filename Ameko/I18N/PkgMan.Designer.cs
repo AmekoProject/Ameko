@@ -320,5 +320,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("PkgMan_Info_License", resourceCulture);
             }
         }
+        
+        public static string PkgMan_Button_ViewSource_ToolTip {
+            get {
+                return ResourceManager.GetString("PkgMan_Button_ViewSource_ToolTip", resourceCulture);
+            }
+        }
     }
 }

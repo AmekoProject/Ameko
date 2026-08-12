@@ -237,4 +237,10 @@
     <data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
         <value>Save Profile Result</value>
     </data>
+    <data name="SourceViewer_Title" xml:space="preserve">
+        <value>Source Viewer - {0}</value>
+    </data>
+    <data name="SourceViewer_Button_Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
 </root>

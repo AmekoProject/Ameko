@@ -156,4 +156,7 @@
     <data name="PkgMan_Info_License" xml:space="preserve">
         <value>License</value>
     </data>
+    <data name="PkgMan_Button_ViewSource_ToolTip" xml:space="preserve">
+        <value>View Source</value>
+    </data>
 </root>

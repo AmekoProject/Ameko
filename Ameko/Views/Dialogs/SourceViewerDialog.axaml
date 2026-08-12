@@ -5,11 +5,38 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d"
-  d:DesignWidth="800"
-  d:DesignHeight="450"
+  d:DesignWidth="700"
+  d:DesignHeight="475"
+  xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
   x:Class="Ameko.Views.Dialogs.SourceViewerDialog"
-  Title="ScriptEditorDialog"
+  x:DataType="vm:SourceViewerDialogViewModel"
+  Width="700"
+  Height="475"
+  CanResize="True"
+  WindowStartupLocation="CenterScreen"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Playground.Playground_WindowTitle}"
 >
-  Welcome to Avalonia!
+  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto" RowSpacing="5" Margin="5">
+    <avaloniaEdit:TextEditor
+      Grid.Column="0"
+      Grid.Row="0"
+      Grid.ColumnSpan="2"
+      Name="ScriptSourceEditor"
+      FontFamily="{StaticResource SarasaMono}"
+      FontSize="14"
+      ShowLineNumbers="True"
+      Document="{Binding Document}"
+      IsReadOnly="{Binding !IsLocalScript}"
+    />
+    <Button
+      Grid.Column="1"
+      Grid.Row="1"
+      Content="{x:Static i18n:Other.SourceViewer_Button_Save}"
+      Command="{Binding SaveCommand}"
+      IsEnabled="{Binding IsLocalScript}"
+    />
+  </Grid>
 </Window>

@@ -260,7 +260,7 @@ public partial class PkgManWindowViewModel
     }
 
     /// <summary>
-    /// Remove a repository
+    /// Show the changelog for a package
     /// </summary>
     private ReactiveCommand<Package, RxVoid> CreateShowChangelogCommand()
     {
@@ -271,6 +271,43 @@ public partial class PkgManWindowViewModel
                     package.GenerateChangelog()
                 );
                 await ShowChangelog.Handle(vm);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Show the source for a local package
+    /// </summary>
+    private ReactiveCommand<Package, RxVoid> CreateViewLocalSourceCommand()
+    {
+        return ReactiveCommand.CreateFromTask(
+            async (Package package) =>
+            {
+                if (!PackageManager.IsPackageInstalled(package, out var location))
+                    location = new Uri(package.Url); // fallback
+
+                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
+                    package.DisplayName,
+                    location
+                );
+                await ShowSourceViewer.Handle(vm);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Show the source for a remote package
+    /// </summary>
+    private ReactiveCommand<Package, RxVoid> CreateViewRemoteSourceCommand()
+    {
+        return ReactiveCommand.CreateFromTask(
+            async (Package package) =>
+            {
+                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
+                    package.DisplayName,
+                    new Uri(package.Url)
+                );
+                await ShowSourceViewer.Handle(vm);
             }
         );
     }

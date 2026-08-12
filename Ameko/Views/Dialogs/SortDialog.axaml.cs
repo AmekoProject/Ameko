@@ -5,7 +5,6 @@ using Avalonia.Input;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
 using ReactiveUI.Primitives;
-using ReactiveUI.Primitives.Disposables;
 
 namespace Ameko.Views.Dialogs;
 

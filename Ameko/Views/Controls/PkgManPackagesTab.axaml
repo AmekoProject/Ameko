@@ -63,19 +63,31 @@
                 VerticalAlignment="Center"
                 Text="{Binding Version, StringFormat='v{0}'}"
               />
-              <Button
-                Grid.Column="3"
-                Margin="0"
-                Padding="0"
-                Classes="Small"
-                VerticalAlignment="Center"
-                IsEnabled="{Binding HasChangelog}"
-                Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
-                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
-                Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
+              <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2">
+                <Button
+                  Margin="0"
+                  Padding="1 0"
+                  Classes="Small"
+                  VerticalAlignment="Center"
+                  IsEnabled="{Binding HasChangelog}"
+                  Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
+                  ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
+                  Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
                                                       FallbackValue=.}"
-                CommandParameter="{Binding .}"
-              />
+                  CommandParameter="{Binding .}"
+                />
+                <Button
+                  Margin="0"
+                  Padding="1 0"
+                  Classes="Small"
+                  VerticalAlignment="Center"
+                  Content="{icons:MaterialIconExt Kind=FileCodeOutline}"
+                  ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_ViewSource_ToolTip}"
+                  Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ViewRemoteSourceCommand,
+                                                      FallbackValue=.}"
+                  CommandParameter="{Binding .}"
+                />
+              </StackPanel>
             </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -136,19 +148,31 @@
                 VerticalAlignment="Center"
                 Text="{Binding Version, StringFormat='v{0}'}"
               />
-              <Button
-                Grid.Column="4"
-                Margin="0"
-                Padding="1 0"
-                Classes="Small"
-                VerticalAlignment="Center"
-                IsEnabled="{Binding HasChangelog}"
-                Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
-                ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
-                Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
+              <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="2">
+                <Button
+                  Margin="0"
+                  Padding="1 0"
+                  Classes="Small"
+                  VerticalAlignment="Center"
+                  IsEnabled="{Binding HasChangelog}"
+                  Content="{icons:MaterialIconExt Kind=FormatListBulletedType}"
+                  ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_Changelog_ToolTip}"
+                  Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ShowChangelogCommand,
                                                       FallbackValue=.}"
-                CommandParameter="{Binding .}"
-              />
+                  CommandParameter="{Binding .}"
+                />
+                <Button
+                  Margin="0"
+                  Padding="1 0"
+                  Classes="Small"
+                  VerticalAlignment="Center"
+                  Content="{icons:MaterialIconExt Kind=FileCodeOutline}"
+                  ToolTip.Tip="{x:Static i18n:PkgMan.PkgMan_Button_ViewSource_ToolTip}"
+                  Command="{Binding $parent[Window].((vm:PkgManWindowViewModel)DataContext).ViewLocalSourceCommand,
+                                                      FallbackValue=.}"
+                  CommandParameter="{Binding .}"
+                />
+              </StackPanel>
             </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>
