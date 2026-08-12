@@ -52,10 +52,10 @@
                   <TextBlock Text="{Binding License, StringFormat='({0})'}" />
                 </StackPanel>
               </ToolTip.Tip>
-              <Image
+              <icons:MaterialIcon
                 Grid.Column="0"
                 VerticalAlignment="Center"
-                Source="{Binding Type, Converter={StaticResource IconConverter}}"
+                Kind="{Binding Type, Converter={StaticResource IconConverter}}"
               />
               <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding DisplayName}" />
               <TextBlock
@@ -117,10 +117,10 @@
                   <TextBlock Text="{Binding License, StringFormat='({0})'}" />
                 </StackPanel>
               </ToolTip.Tip>
-              <Image
+              <icons:MaterialIcon
                 Grid.Column="0"
                 VerticalAlignment="Center"
-                Source="{Binding Type, Converter={StaticResource IconConverter}}"
+                Kind="{Binding Type, Converter={StaticResource IconConverter}}"
               />
               <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding DisplayName}" />
               <icons:MaterialIcon
@@ -139,7 +139,7 @@
               <Button
                 Grid.Column="4"
                 Margin="0"
-                Padding="0"
+                Padding="1 0"
                 Classes="Small"
                 VerticalAlignment="Center"
                 IsEnabled="{Binding HasChangelog}"
