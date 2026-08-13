@@ -296,6 +296,7 @@
           Classes="Small"
           ToolTip.Tip="{x:Static i18n:Resources.Editor_SetFont_ToolTip}"
           Content="{icons:MaterialIconExt Kind=FormatFont}"
+          IsEnabled="False"
         />
         <Button
           Name="NextOrCreateBtn"
