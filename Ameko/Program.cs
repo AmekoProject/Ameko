@@ -1,8 +1,10 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Ameko.Services;
@@ -25,7 +27,7 @@ internal sealed class Program
 {
     private const int ManagedCrashExitCode = -25565;
 
-    internal static string[] Args { get; private set; } = null!;
+    internal static List<string> Args { get; } = [];
     internal static bool IsInSafeMode { get; private set; }
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
@@ -34,7 +36,6 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        Args = args;
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
         if (args is ["--display-crash-report", _])
@@ -58,6 +59,31 @@ internal sealed class Program
 
         try
         {
+            var fileArgs = args.Where(a => a is not ("--monitored" or "--safe")).ToList();
+            var sb = new StringBuilder();
+            for (var i = 0; i < fileArgs.Count; i++)
+            {
+                var fileArg = fileArgs[i];
+                if (fileArg[^1] is '\\' && i < fileArgs.Count - 1)
+                {
+                    sb.Append(fileArg[..^1]);
+                    sb.Append(' ');
+                }
+                else
+                {
+                    if (sb.Length == 0)
+                    {
+                        Args.Add(fileArg);
+                    }
+                    else
+                    {
+                        sb.Append(fileArg);
+                        Args.Add(sb.ToString());
+                        sb.Clear();
+                    }
+                }
+            }
+
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
         }

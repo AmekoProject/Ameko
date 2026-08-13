@@ -41,7 +41,7 @@ public class App : Application
 
         desktop.Exit += (_, _) => Environment.Exit(0);
 
-        if (Program.Args.Length == 2 && Program.Args[0] == "--display-crash-report")
+        if (Program.Args.Count == 2 && Program.Args[0] == "--display-crash-report")
             InitializeAmekoForCrashReport(desktop);
         else
             InitializeAmekoForNormalOperation(desktop);
@@ -99,7 +99,7 @@ public class App : Application
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
             // Check if there's anything to open
-            if (Program.Args.Length > 0)
+            if (Program.Args.Count > 0)
                 InitializeStartupProject(provider, desktop.MainWindow);
 
             InitializeKeybindService(provider);
@@ -230,10 +230,10 @@ public class App : Application
                     case ".ass":
                     case ".srt":
                     case ".ssa":
-                        subs.Add(new Uri(path));
+                        subs.Add(new Uri(path, UriKind.Absolute));
                         break;
                     case ".aproj":
-                        projects.Add(new Uri(path));
+                        projects.Add(new Uri(path, UriKind.Absolute));
                         break;
                     default:
                         continue;
@@ -248,10 +248,7 @@ public class App : Application
 
         if (subs.Count > 0)
         {
-            mainWindow.Opened += (_, _) =>
-            {
-                vm.OpenSubtitlesNoGuiCommand.Execute(subs.ToArray());
-            };
+            vm.OpenSubtitlesNoGuiCommand.Execute(subs.ToArray());
         }
     }
 }
