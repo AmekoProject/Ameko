@@ -243,4 +243,10 @@
     <data name="SourceViewer_Button_Save" xml:space="preserve">
         <value>Save</value>
     </data>
+    <data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
+        <value>Enable Editing</value>
+    </data>
+    <data name="SourceViewer_Disclaimer" xml:space="preserve">
+        <value>Notice: Any edits will be overwritten if the package is updated</value>
+    </data>
 </root>

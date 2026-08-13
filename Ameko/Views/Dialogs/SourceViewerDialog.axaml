@@ -4,7 +4,6 @@
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   d:DesignWidth="700"
   d:DesignHeight="475"
   xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
@@ -14,16 +13,24 @@
   x:DataType="vm:SourceViewerDialogViewModel"
   Width="700"
   Height="475"
+  MinWidth="700"
+  MinHeight="475"
   CanResize="True"
   WindowStartupLocation="CenterScreen"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
   Title="{Binding Title}"
 >
-  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto" RowSpacing="5" Margin="5">
+  <Grid
+    ColumnDefinitions="Auto, *, Auto"
+    RowDefinitions="*, Auto"
+    RowSpacing="5"
+    ColumnSpacing="5"
+    Margin="5"
+  >
     <avaloniaEdit:TextEditor
       Grid.Column="0"
       Grid.Row="0"
-      Grid.ColumnSpan="2"
+      Grid.ColumnSpan="3"
       Name="ScriptSourceEditor"
       FontFamily="{StaticResource SarasaMono}"
       FontSize="14"
@@ -31,12 +38,34 @@
       Document="{Binding Document}"
       IsReadOnly="{Binding !IsLocalScript}"
     />
-    <Button
+    <CheckBox
+      Grid.Column="0"
+      Grid.Row="1"
+      VerticalAlignment="Center"
+      IsChecked="{Binding IsEditingEnabled}"
+      Content="{x:Static i18n:Other.SourceViewer_CheckBox_EnableEditing}"
+      IsVisible="{Binding IsLocalScript}"
+    />
+    <TextBlock
       Grid.Column="1"
+      Grid.Row="1"
+      Foreground="Red"
+      VerticalAlignment="Center"
+      Text="{x:Static i18n:Other.SourceViewer_Disclaimer}"
+      IsVisible="{Binding IsLocalScript}"
+    />
+    <Button
+      Grid.Column="2"
       Grid.Row="1"
       Content="{x:Static i18n:Other.SourceViewer_Button_Save}"
       Command="{Binding SaveCommand}"
-      IsEnabled="{Binding IsLocalScript}"
-    />
+    >
+      <Button.IsEnabled>
+        <MultiBinding Converter="{x:Static BoolConverters.And}">
+          <Binding Path="IsEditingEnabled" />
+          <Binding Path="IsLocalScript" />
+        </MultiBinding>
+      </Button.IsEnabled>
+    </Button>
   </Grid>
 </Window>

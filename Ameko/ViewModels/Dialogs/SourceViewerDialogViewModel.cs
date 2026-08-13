@@ -16,6 +16,11 @@ public class SourceViewerDialogViewModel : ViewModelBase
 {
     public string Title { get; }
     public bool IsLocalScript { get; }
+    public bool IsEditingEnabled
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
     public TextDocument Document { get; }
 
     public ReactiveCommand<RxVoid, PackageType> LoadSourceCommand { get; }

@@ -494,5 +494,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("SourceViewer_Button_Save", resourceCulture);
             }
         }
+        
+        public static string SourceViewer_CheckBox_EnableEditing {
+            get {
+                return ResourceManager.GetString("SourceViewer_CheckBox_EnableEditing", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Disclaimer {
+            get {
+                return ResourceManager.GetString("SourceViewer_Disclaimer", resourceCulture);
+            }
+        }
     }
 }
