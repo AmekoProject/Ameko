@@ -247,6 +247,6 @@
         <value>Enable Editing</value>
     </data>
     <data name="SourceViewer_Disclaimer" xml:space="preserve">
-        <value>Notice: Any edits will be overwritten if the package is updated</value>
+        <value>Any edits will be overwritten if the package is updated</value>
     </data>
 </root>

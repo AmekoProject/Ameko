@@ -59,6 +59,7 @@
       Grid.Row="1"
       Content="{x:Static i18n:Other.SourceViewer_Button_Save}"
       Command="{Binding SaveCommand}"
+      IsVisible="{Binding IsLocalScript}"
     >
       <Button.IsEnabled>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
