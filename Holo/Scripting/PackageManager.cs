@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -99,6 +100,32 @@ public partial class PackageManager : IPackageManager
         return false;
     }
 
+    /// <inheritdoc />
+    public async Task<bool> IsPackageModified(Package package)
+    {
+        if (!IsPackageInstalled(package))
+            return false;
+        if (!_fileSystem.File.Exists(BackupPath(package)))
+            return false;
+
+        using var md5 = MD5.Create();
+        await using var packageFs = _fileSystem.FileStream.New(
+            PackagePath(package),
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite
+        );
+        await using var backupFs = _fileSystem.FileStream.New(
+            BackupPath(package),
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite
+        );
+        var packageHash = await md5.ComputeHashAsync(packageFs);
+        var backupHash = await md5.ComputeHashAsync(backupFs);
+        return !packageHash.SequenceEqual(backupHash);
+    }
+
     /// <summary>
     /// Recursively install a <see cref="Package"/> and its dependencies
     /// </summary>
@@ -140,25 +167,32 @@ public partial class PackageManager : IPackageManager
 
         try
         {
+            CreateDirectories(package);
+
             var path = PackagePath(package);
+            var backup = BackupPath(package);
             var sidecar = SidecarPath(package);
             var help = HelpPath(package);
-            // Create package directories if they don't exist
-            if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
-                _fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
-            if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(sidecar)))
-                _fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(sidecar) ?? "/");
-            if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(help)))
-                _fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(help) ?? "/");
 
             await using var dlStream = await _httpClient.GetStreamAsync(package.Url);
             await using var packageFs = _fileSystem.FileStream.New(
                 path,
                 FileMode.Create,
-                FileAccess.Write,
+                FileAccess.ReadWrite,
                 FileShare.None
             );
             await dlStream.CopyToAsync(packageFs);
+
+            await using var backupFs = _fileSystem.FileStream.New(
+                backup,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None
+            );
+
+            await packageFs.FlushAsync();
+            packageFs.Seek(0, SeekOrigin.Begin);
+            await packageFs.CopyToAsync(backupFs);
 
             await using var sidecarFs = _fileSystem.FileStream.New(
                 sidecar,
@@ -215,6 +249,8 @@ public partial class PackageManager : IPackageManager
     /// <remarks>Does not uninstall dependencies</remarks>
     public InstallationResult UninstallPackage(Package package, bool isUpdate = false)
     {
+        CreateDirectories(package);
+
         if (!IsPackageInstalled(package))
             return InstallationResult.NotInstalled;
         if (
@@ -226,9 +262,9 @@ public partial class PackageManager : IPackageManager
         try
         {
             _fileSystem.File.Delete(PackagePath(package));
+            _fileSystem.File.Delete(BackupPath(package));
             _fileSystem.File.Delete(SidecarPath(package));
-            if (!string.IsNullOrEmpty(package.HelpUrl))
-                _fileSystem.File.Delete(HelpPath(package));
+            _fileSystem.File.Delete(HelpPath(package));
             _logger.LogInformation(
                 "Successfully uninstalled package {Package}",
                 package.QualifiedName
@@ -251,10 +287,47 @@ public partial class PackageManager : IPackageManager
     public async Task<InstallationResult> UpdatePackage(Package package)
     {
         _logger.LogInformation("Update for package {Package} requested...", package.QualifiedName);
+
+        var storePackage = _packageStore.FirstOrDefault(p =>
+            p.QualifiedName == package.QualifiedName
+        );
+        if (storePackage is null)
+        {
+            _logger.LogError(
+                "Could not find new version of {PackageName} in the store!",
+                package.QualifiedName
+            );
+            return InstallationResult.Failure;
+        }
+
         var uninstallResult = UninstallPackage(package, true);
         if (uninstallResult == InstallationResult.Success)
-            return await InstallPackage(package);
+            return await InstallPackage(storePackage);
         return uninstallResult;
+    }
+
+    /// <inheritdoc />
+    public async Task<InstallationResult> RestorePackage(Package package)
+    {
+        if (!IsPackageInstalled(package))
+            return InstallationResult.NotInstalled;
+        if (!await IsPackageModified(package))
+            return InstallationResult.Success;
+
+        await using var packageFs = _fileSystem.FileStream.New(
+            PackagePath(package),
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None
+        );
+        await using var backupFs = _fileSystem.FileStream.New(
+            BackupPath(package),
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite
+        );
+        await backupFs.CopyToAsync(packageFs);
+        return InstallationResult.Success;
     }
 
     /// <summary>
@@ -305,6 +378,23 @@ public partial class PackageManager : IPackageManager
             PackageType.Script => Path.Combine(ScriptingRoot.LocalPath, $"{qName}.cs"),
             PackageType.Library => Path.Combine(ScriptingRoot.LocalPath, $"{qName}.lib.cs"),
             PackageType.Scriptlet => Path.Combine(ScriptingRoot.LocalPath, $"{qName}.js"),
+            _ => throw new ArgumentOutOfRangeException(nameof(package)),
+        };
+    }
+
+    /// <summary>
+    /// Get the filepath for a package's backup
+    /// </summary>
+    /// <param name="package">Package</param>
+    /// <returns>The filepath, ending in <c>.cs</c></returns>
+    public static string BackupPath(Package package)
+    {
+        var qName = package.QualifiedName;
+        return package.Type switch
+        {
+            PackageType.Script => Path.Combine(ScriptingRoot.LocalPath, ".bak", $"{qName}.cs"),
+            PackageType.Library => Path.Combine(ScriptingRoot.LocalPath, ".bak", $"{qName}.lib.cs"),
+            PackageType.Scriptlet => Path.Combine(ScriptingRoot.LocalPath, ".bak", $"{qName}.js"),
             _ => throw new ArgumentOutOfRangeException(nameof(package)),
         };
     }
@@ -571,6 +661,39 @@ public partial class PackageManager : IPackageManager
     }
 
     #endregion Repositories
+
+    /// <summary>
+    /// Create required directories if they don't already exist
+    /// </summary>
+    /// <param name="package">Package to create directories for</param>
+    private void CreateDirectories(Package package)
+    {
+        if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(PackagePath(package))))
+        {
+            _fileSystem.Directory.CreateDirectory(
+                Path.GetDirectoryName(PackagePath(package)) ?? "/"
+            );
+        }
+
+        if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(BackupPath(package))))
+        {
+            _fileSystem.Directory.CreateDirectory(
+                Path.GetDirectoryName(BackupPath(package)) ?? "/"
+            );
+        }
+
+        if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(SidecarPath(package))))
+        {
+            _fileSystem.Directory.CreateDirectory(
+                Path.GetDirectoryName(SidecarPath(package)) ?? "/"
+            );
+        }
+
+        if (!_fileSystem.Directory.Exists(Path.GetDirectoryName(HelpPath(package))))
+        {
+            _fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(HelpPath(package)) ?? "/");
+        }
+    }
 
     /// <summary>
     /// Instantiate a Dependency Control instance

@@ -21,7 +21,7 @@
   Title="{Binding Title}"
 >
   <Grid
-    ColumnDefinitions="Auto, *, Auto"
+    ColumnDefinitions="Auto, *, Auto, Auto"
     RowDefinitions="*, Auto"
     RowSpacing="5"
     ColumnSpacing="5"
@@ -30,14 +30,20 @@
     <avaloniaEdit:TextEditor
       Grid.Column="0"
       Grid.Row="0"
-      Grid.ColumnSpan="3"
+      Grid.ColumnSpan="4"
       Name="ScriptSourceEditor"
       FontFamily="{StaticResource SarasaMono}"
       FontSize="14"
       ShowLineNumbers="True"
       Document="{Binding Document}"
-      IsReadOnly="{Binding !IsLocalScript}"
-    />
+    >
+      <avaloniaEdit:TextEditor.IsReadOnly>
+        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+          <Binding Path="!IsEditingEnabled" />
+          <Binding Path="!IsLocalScript" />
+        </MultiBinding>
+      </avaloniaEdit:TextEditor.IsReadOnly>
+    </avaloniaEdit:TextEditor>
     <CheckBox
       Grid.Column="0"
       Grid.Row="1"
@@ -46,16 +52,32 @@
       Content="{x:Static i18n:Other.SourceViewer_CheckBox_EnableEditing}"
       IsVisible="{Binding IsLocalScript}"
     />
-    <TextBlock
-      Grid.Column="1"
+    <StackPanel Grid.Column="1" Grid.Row="1">
+      <TextBlock
+        Foreground="Red"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Text="{x:Static i18n:Other.SourceViewer_Disclaimer}"
+        IsVisible="{Binding IsLocalScript}"
+      />
+      <TextBlock
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Text="{x:Static i18n:Other.SourceViewer_Notice}"
+        IsVisible="{Binding IsLocalScript}"
+      />
+    </StackPanel>
+    <Button
+      Grid.Column="2"
       Grid.Row="1"
-      Foreground="Red"
-      VerticalAlignment="Center"
-      Text="{x:Static i18n:Other.SourceViewer_Disclaimer}"
+      Content="{x:Static i18n:Other.SourceViewer_Button_Restore}"
+      ToolTip.Tip="{x:Static i18n:Other.SourceViewer_Button_Restore_ToolTip}"
+      Command="{Binding RestoreCommand}"
+      IsEnabled="{Binding CanRestore}"
       IsVisible="{Binding IsLocalScript}"
     />
     <Button
-      Grid.Column="2"
+      Grid.Column="3"
       Grid.Row="1"
       Content="{x:Static i18n:Other.SourceViewer_Button_Save}"
       Command="{Binding SaveCommand}"

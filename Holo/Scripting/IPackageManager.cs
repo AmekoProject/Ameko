@@ -47,6 +47,16 @@ public interface IPackageManager
     bool IsPackageInstalled(Package package, [NotNullWhen(true)] out Uri? location);
 
     /// <summary>
+    /// Determine if a package has been modified by the user
+    /// </summary>
+    /// <remarks>
+    /// Will return <see langword="false"/> if a backup does not exist or the package is not installed
+    /// </remarks>
+    /// <param name="package">Package to check</param>
+    /// <returns><see langword="true"/> if the package does not match its backup</returns>
+    Task<bool> IsPackageModified(Package package);
+
+    /// <summary>
     /// Recursively install a <see cref="Package"/> and its dependencies
     /// </summary>
     /// <param name="package">Package to install</param>
@@ -68,6 +78,13 @@ public interface IPackageManager
     /// <param name="package">Package to update</param>
     /// <returns><see cref="InstallationResult.Success"/> on success</returns>
     Task<InstallationResult> UpdatePackage(Package package);
+
+    /// <summary>
+    /// Restore a package to its backup
+    /// </summary>
+    /// <param name="package">Package to restore</param>
+    /// <returns><see cref="InstallationResult.Success"/> on success</returns>
+    Task<InstallationResult> RestorePackage(Package package);
 
     /// <summary>
     /// Get a list of installed packages with available updates

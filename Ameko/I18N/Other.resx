@@ -247,6 +247,15 @@
         <value>Enable Editing</value>
     </data>
     <data name="SourceViewer_Disclaimer" xml:space="preserve">
-        <value>Any edits will be overwritten if the package is updated</value>
+        <value>Edits will be overwritten if the package is updated.</value>
+    </data>
+    <data name="SourceViewer_Button_Restore" xml:space="preserve">
+        <value>Restore</value>
+    </data>
+    <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
+        <value>Restore package to its original state</value>
+    </data>
+    <data name="SourceViewer_Notice" xml:space="preserve">
+        <value>"Update All" will skip this package if modified.</value>
     </data>
 </root>

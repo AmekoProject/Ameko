@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using Ameko.Messages;
 using AvaloniaEdit.Document;
+using Holo.Scripting;
 using Holo.Scripting.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
@@ -16,25 +17,33 @@ public class SourceViewerDialogViewModel : ViewModelBase
 {
     public string Title { get; }
     public bool IsLocalScript { get; }
+    public TextDocument Document { get; }
+
     public bool IsEditingEnabled
     {
         get;
         set => this.RaiseAndSetIfChanged(ref field, value);
     }
-    public TextDocument Document { get; }
+
+    public bool CanRestore
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
 
     public ReactiveCommand<RxVoid, PackageType> LoadSourceCommand { get; }
     public ReactiveCommand<RxVoid, EmptyMessage> SaveCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> RestoreCommand { get; }
 
     public SourceViewerDialogViewModel(
         ILogger<SourceViewerDialogViewModel> logger,
+        IPackageManager packageManager,
         HttpClient httpClient,
-        PackageType scriptType,
-        string scriptName,
+        Package package,
         Uri scriptUri
     )
     {
-        Title = string.Format(I18N.Other.SourceViewer_Title, scriptName);
+        Title = string.Format(I18N.Other.SourceViewer_Title, package.DisplayName);
         IsLocalScript = scriptUri.IsFile;
         Document = new TextDocument();
 
@@ -67,7 +76,8 @@ public class SourceViewerDialogViewModel : ViewModelBase
             }
 
             Document.UndoStack.ClearAll();
-            return scriptType;
+            CanRestore = await packageManager.IsPackageModified(package);
+            return package.Type;
         });
 
         SaveCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -92,6 +102,16 @@ public class SourceViewerDialogViewModel : ViewModelBase
                 logger.LogError(ex, "Failed to write to {ScriptPath}", scriptUri.LocalPath);
             }
 
+            return new EmptyMessage();
+        });
+
+        RestoreCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            // Just in case
+            if (!IsLocalScript)
+                return new EmptyMessage();
+
+            await packageManager.RestorePackage(package);
             return new EmptyMessage();
         });
     }

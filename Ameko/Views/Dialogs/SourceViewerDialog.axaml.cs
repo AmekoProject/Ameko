@@ -21,6 +21,7 @@ public partial class SourceViewerDialog : ReactiveWindow<SourceViewerDialogViewM
         this.WhenActivated(disposables =>
         {
             ViewModel?.SaveCommand.Subscribe(Close).DisposeWith(disposables);
+            ViewModel?.RestoreCommand.Subscribe(Close).DisposeWith(disposables);
 
             // Trigger source loading, then use the resulting PackageType to configure the highlighting
             ViewModel

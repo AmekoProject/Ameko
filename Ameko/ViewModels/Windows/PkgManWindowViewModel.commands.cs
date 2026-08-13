@@ -27,14 +27,16 @@ public partial class PkgManWindowViewModel
 
             var result = await PackageManager.InstallPackage(SelectedStorePackage);
 
-            await _messageBoxService.ShowAsync(result);
-
-            if (result == InstallationResult.Success)
+            if (result is InstallationResult.Success)
             {
                 this.RaisePropertyChanged(nameof(InstallButtonEnabled));
                 this.RaisePropertyChanged(nameof(UninstallButtonEnabled));
 
                 await _scriptService.Reload(false);
+            }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
             }
         });
     }
@@ -51,8 +53,6 @@ public partial class PkgManWindowViewModel
 
             var result = PackageManager.UninstallPackage(SelectedInstalledPackage);
 
-            await _messageBoxService.ShowAsync(result);
-
             if (result == InstallationResult.Success)
             {
                 SelectedInstalledPackage = null;
@@ -60,6 +60,10 @@ public partial class PkgManWindowViewModel
                 this.RaisePropertyChanged(nameof(UninstallButtonEnabled));
 
                 await _scriptService.Reload(false);
+            }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
             }
         });
     }
@@ -78,9 +82,7 @@ public partial class PkgManWindowViewModel
             _updateCandidates.Clear();
             _updateCandidates.AddRange(PackageManager.GetUpdateCandidates());
 
-            await _messageBoxService.ShowAsync(result);
-
-            if (result == InstallationResult.Success)
+            if (result is InstallationResult.Success)
             {
                 // Raise all the properties because updates can result in installations
                 this.RaisePropertyChanged(nameof(InstallButtonEnabled));
@@ -89,6 +91,10 @@ public partial class PkgManWindowViewModel
                 this.RaisePropertyChanged(nameof(UpdateAllButtonEnabled));
 
                 await _scriptService.Reload(false);
+            }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
             }
         });
     }
@@ -107,6 +113,16 @@ public partial class PkgManWindowViewModel
 
             foreach (var package in _updateCandidates)
             {
+                // Skip modified packages
+                if (await PackageManager.IsPackageModified(package))
+                {
+                    _logger.LogInformation(
+                        "Skipping update for {PackageName} because it has been modified",
+                        package.QualifiedName
+                    );
+                    continue;
+                }
+
                 var result = await PackageManager.UpdatePackage(package);
                 // Pick a failure, any failure
                 if (
@@ -127,7 +143,8 @@ public partial class PkgManWindowViewModel
             this.RaisePropertyChanged(nameof(UpdateButtonEnabled));
             this.RaisePropertyChanged(nameof(UpdateAllButtonEnabled));
 
-            await _messageBoxService.ShowAsync(finalResult);
+            if (finalResult is not InstallationResult.Success)
+                await _messageBoxService.ShowAsync(finalResult);
 
             await _scriptService.Reload(false);
         });
@@ -286,11 +303,7 @@ public partial class PkgManWindowViewModel
                 if (!PackageManager.IsPackageInstalled(package, out var location))
                     location = new Uri(package.Url); // fallback
 
-                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
-                    package.Type,
-                    package.DisplayName,
-                    location
-                );
+                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(package, location);
                 await ShowSourceViewer.Handle(vm);
             }
         );
@@ -305,8 +318,7 @@ public partial class PkgManWindowViewModel
             async (Package package) =>
             {
                 var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
-                    package.Type,
-                    package.DisplayName,
+                    package,
                     new Uri(package.Url)
                 );
                 await ShowSourceViewer.Handle(vm);
