@@ -22,8 +22,8 @@ internal record PersistenceModel : PersistenceModelBase
     public required string PlaygroundJs;
     public required Dictionary<int, ScaleFactor> ScalesForRes;
     public required Dictionary<string, int> AudioTrackForVideo;
-    public required List<Uri> RecentDocuments;
-    public required List<Uri> RecentProjects;
+    public required List<string> RecentDocuments;
+    public required List<string> RecentProjects;
     public required double WindowWidth;
     public required double WindowHeight;
     public required PersistentWindowState WindowState;
