@@ -256,6 +256,6 @@
         <value>Restore package to its original state</value>
     </data>
     <data name="SourceViewer_Notice" xml:space="preserve">
-        <value>"Update All" will skip this package if modified.</value>
+        <value>"Update All" will skip modified packages.</value>
     </data>
 </root>
