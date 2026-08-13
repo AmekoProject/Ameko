@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using Ameko.ViewModels.Dialogs;
 using Avalonia.Input;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Dialogs;
 
@@ -32,9 +30,7 @@ public partial class SelectTrackDialog : ReactiveWindow<SelectTrackDialogViewMod
         this.WhenActivated(disposables =>
         {
             SelectButton.Focus();
-            ViewModel?.SelectTrackCommand.Subscribe(Close);
-
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            ViewModel?.SelectTrackCommand.Subscribe(Close).DisposeWith(disposables);
         });
     }
 }

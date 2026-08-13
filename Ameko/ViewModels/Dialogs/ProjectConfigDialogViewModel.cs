@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class ProjectConfigDialogViewModel : ViewModelBase
+public class ProjectConfigDialogViewModel : ViewModelBase
 {
     public Project Project { get; }
     public IReadOnlyList<SpellcheckLanguage> AvailableLanguages { get; }

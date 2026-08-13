@@ -482,5 +482,47 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("FileDialog_SaveProfileResult_Title", resourceCulture);
             }
         }
+        
+        public static string SourceViewer_Title {
+            get {
+                return ResourceManager.GetString("SourceViewer_Title", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Button_Save {
+            get {
+                return ResourceManager.GetString("SourceViewer_Button_Save", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_CheckBox_EnableEditing {
+            get {
+                return ResourceManager.GetString("SourceViewer_CheckBox_EnableEditing", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Disclaimer {
+            get {
+                return ResourceManager.GetString("SourceViewer_Disclaimer", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Button_Restore {
+            get {
+                return ResourceManager.GetString("SourceViewer_Button_Restore", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Button_Restore_ToolTip {
+            get {
+                return ResourceManager.GetString("SourceViewer_Button_Restore_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string SourceViewer_Notice {
+            get {
+                return ResourceManager.GetString("SourceViewer_Notice", resourceCulture);
+            }
+        }
     }
 }

@@ -1,51 +1,56 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="200"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:dm="clr-namespace:Ameko.DataModels"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.SelectTrackDialog"
-        x:DataType="vm:SelectTrackDialogViewModel"
-        
-        Focusable="True"
-        Width="350"
-        Height="200"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Other.SelectTrackDialog_Title}">
-    <DockPanel Margin="2">
-        <TextBlock DockPanel.Dock="Top"
-                   Text="{x:Static i18n:Other.SelectTrackDialog_Body}"
-                   HorizontalAlignment="Center" />
-        <Grid DockPanel.Dock="Bottom"
-              ColumnDefinitions="* Auto">
-            <Button Grid.Column="1"
-                    Name="SelectButton"
-                    Classes="Primary"
-                    IsDefault="True"
-                    Content="{x:Static i18n:Other.SelectTrackDialog_Button_Load}"
-                    Command="{Binding SelectTrackCommand}"/>
-        </Grid>
-        <ListBox Margin="2"
-                 ItemsSource="{Binding Tracks}"
-                 SelectedItem="{Binding SelectedTrack}"
-                 SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="dm:TrackInformation">
-                    <Grid ColumnDefinitions="Auto, Auto"
-                          ColumnSpacing="2">
-                        <TextBlock Grid.Column="0"
-                                   Text="{Binding Index}" />
-                        <TextBlock Grid.Column="1"
-                                   Text="{Binding Codec, StringFormat='({0})'}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="200"
+  xmlns:dm="clr-namespace:Ameko.DataModels"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.SelectTrackDialog"
+  x:DataType="vm:SelectTrackDialogViewModel"
+  Focusable="True"
+  Width="350"
+  Height="200"
+  CanResize="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Other.SelectTrackDialog_Title}"
+>
+  <DockPanel Margin="2">
+    <TextBlock
+      DockPanel.Dock="Top"
+      Text="{x:Static i18n:Other.SelectTrackDialog_Body}"
+      HorizontalAlignment="Center"
+    />
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="* Auto">
+      <Button
+        Grid.Column="1"
+        Name="SelectButton"
+        Classes="Primary"
+        IsDefault="True"
+        Content="{x:Static i18n:Other.SelectTrackDialog_Button_Load}"
+        Command="{Binding SelectTrackCommand}"
+      />
+    </Grid>
+    <ListBox
+      Margin="2"
+      ItemsSource="{Binding Tracks}"
+      SelectedItem="{Binding SelectedTrack}"
+      SelectionMode="Single"
+    >
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="dm:TrackInformation">
+          <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="2">
+            <TextBlock Grid.Column="0" Text="{Binding Index}" />
+            <TextBlock Grid.Column="1" Text="{Binding Codec, StringFormat='({0})'}" />
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
 </Window>

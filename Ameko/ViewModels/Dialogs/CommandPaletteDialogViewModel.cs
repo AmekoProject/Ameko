@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reactive;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
@@ -16,6 +15,7 @@ using Holo.Configuration.Keybinds;
 using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
@@ -27,7 +27,7 @@ public class CommandPaletteDialogViewModel : ViewModelBase
     private readonly ICommand _executeScriptCommand;
 
     public string Query { get; set; } = string.Empty;
-    public ReactiveCommand<Unit, EmptyMessage> GoCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> GoCommand { get; }
 
     private readonly RangeObservableCollection<CommandPaletteResult> _results = [];
 

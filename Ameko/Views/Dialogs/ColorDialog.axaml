@@ -1,60 +1,66 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="375"
-        d:DesignHeight="500"
-        
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.ColorDialog"
-        x:DataType="vm:ColorDialogViewModel"
-        
-        Focusable="True"
-        CanResize="False"
-        ShowInTaskbar="False"
-        SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:StyleEditor.StyleEditor_WindowTitle}">
-    <Window.Resources>
-        <converters:ColorRingConverter x:Key="ColorRingConverter" />
-    </Window.Resources>
-    <DockPanel Margin="5">
-        <Grid DockPanel.Dock="Bottom"
-              ColumnSpacing="2"
-              RowSpacing="2"
-              ColumnDefinitions="Auto, *"
-              RowDefinitions="Auto, Auto, Auto">
-            <CheckBox Grid.Column="0"
-                      Grid.Row="0"
-                      IsChecked="{Binding UseRing}"
-                      Content="{x:Static i18n:StyleEditor.ColorDialog_CheckBox_UseRing}" />
-            <Label Grid.Column="0"
-                   Grid.Row="1"
-                   Content="{x:Static i18n:StyleEditor.ColorDialog_Label_AssColor}"
-                   VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1"
-                     Grid.Row="1"
-                     IsEnabled="False"
-                     Text="{Binding AssFormattedColor}" />
-            <Button Grid.Column="0"
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Right"
-                    IsDefault="True"
-                    Classes="Primary"
-                    Content="{x:Static i18n:StyleEditor.ColorDialog_Button_Select}"
-                    Command="{Binding SelectColorCommand}" />
-        </Grid>
-        <ColorView IsColorPaletteVisible="False"
-                   HsvColor="{Binding HsvColor}"
-                   ColorSpectrumShape="{Binding UseRing,
-                                                Converter={StaticResource ColorRingConverter}}" />
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="375"
+  d:DesignHeight="500"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ColorDialog"
+  x:DataType="vm:ColorDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  ShowInTaskbar="False"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:StyleEditor.StyleEditor_WindowTitle}"
+>
+  <Window.Resources>
+    <converters:ColorRingConverter x:Key="ColorRingConverter" />
+  </Window.Resources>
+  <DockPanel Margin="5">
+    <Grid
+      DockPanel.Dock="Bottom"
+      ColumnSpacing="2"
+      RowSpacing="2"
+      ColumnDefinitions="Auto, *"
+      RowDefinitions="Auto, Auto, Auto"
+    >
+      <CheckBox
+        Grid.Column="0"
+        Grid.Row="0"
+        IsChecked="{Binding UseRing}"
+        Content="{x:Static i18n:StyleEditor.ColorDialog_CheckBox_UseRing}"
+      />
+      <Label
+        Grid.Column="0"
+        Grid.Row="1"
+        Content="{x:Static i18n:StyleEditor.ColorDialog_Label_AssColor}"
+        VerticalAlignment="Center"
+      />
+      <TextBox Grid.Column="1" Grid.Row="1" IsEnabled="False" Text="{Binding AssFormattedColor}" />
+      <Button
+        Grid.Column="0"
+        Grid.Row="2"
+        Grid.ColumnSpan="2"
+        HorizontalAlignment="Right"
+        IsDefault="True"
+        Classes="Primary"
+        Content="{x:Static i18n:StyleEditor.ColorDialog_Button_Select}"
+        Command="{Binding SelectColorCommand}"
+      />
+    </Grid>
+    <ColorView
+      IsColorPaletteVisible="False"
+      HsvColor="{Binding HsvColor}"
+      ColorSpectrumShape="{Binding UseRing,
+                                                Converter={StaticResource ColorRingConverter}}"
+    />
+  </DockPanel>
 </Window>

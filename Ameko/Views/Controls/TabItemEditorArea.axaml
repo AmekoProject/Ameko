@@ -1,299 +1,348 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-
-             xmlns:assCs="clr-namespace:AssCS;assembly=AssCS"
-             xmlns:c="clr-namespace:Ameko.Views.Controls"
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
-
-             x:Class="Ameko.Views.Controls.TabItemEditorArea"
-             x:DataType="vm:TabItemViewModel">
-    <UserControl.Resources>
-        <converters:StyleNameConverter x:Key="StyleNameConverter" />
-    </UserControl.Resources>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom">
-            <TextBox Name="ReferenceBox"
-                     Margin="1"
-                     IsReadOnly="True"
-                     FontSize="{Binding Configuration.ReferenceFontSize}"
-                     MaxLines="4"
-                     TextWrapping="Wrap"
-                     IsVisible="{Binding Workspace.ReferenceFileManager.IsReferenceLoaded}"
-                     Text="{Binding Workspace.ReferenceFileManager.CurrentLines}" />
-            <DataGrid Name="TermsGrid"
-                      HeadersVisibility="None"
-                      CanUserReorderColumns="False"
-                      CanUserResizeColumns="False"
-                      Background="Transparent"
-                      IsReadOnly="True"
-                      Margin="1"
-                      Padding="0"
-                      Classes="Small"
-                      Focusable="False"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled"
-                      GridLinesVisibility="All"
-                      ItemsSource="{Binding VisibleKnpTerms}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Original}" />
-                    <DataGridTextColumn Binding="{Binding Alternate}" />
-                    <DataGridTextColumn Binding="{Binding Translation}" />
-                </DataGrid.Columns>
-                <DataGrid.Styles>
-                    <Style Selector="TextBlock">
-                        <Setter Property="Padding" Value="0" /> 
-                        <Setter Property="Margin" Value="5 0" />
-                    </Style>
-                    <Style Selector="DataGridCell">
-                        <Setter Property="MinHeight" Value="0" />
-                    </Style>
-                </DataGrid.Styles>
-            </DataGrid>
-        </StackPanel>
-        <Grid Name="EditorPanel"
-              RowDefinitions="Auto, Auto, *">
-            <Grid Grid.Row="0"
-                  ColumnDefinitions="Auto, *, Auto, *, *, Auto">
-                <CheckBox Name="CommentCheckBox"
-                          Grid.Column="0"
-                          Margin="1"
-                          VerticalAlignment="Center"
-                          IsChecked="{Binding Workspace.SelectionManager.ActiveEvent.IsComment}"
-                          Content="{x:Static i18n:Resources.Editor_IsComment_Label}"
-                          ToolTip.Tip="{x:Static i18n:Resources.Editor_IsComment_ToolTip}"
-                          Click="AnyControl_EventMetaChanged" />
-                <ComboBox Name="StyleList" 
-                          Grid.Column="1"
-                          Margin="1"
-                          Classes="Small"
-                          HorizontalAlignment="Stretch"
-                          ItemsSource="{Binding Workspace.Document.StyleManager.Styles}"
-                          SelectedItem="{Binding Workspace.SelectionManager.ActiveEvent.Style,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:assCs="clr-namespace:AssCS;assembly=AssCS"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+  x:Class="Ameko.Views.Controls.TabItemEditorArea"
+  x:DataType="vm:TabItemViewModel"
+>
+  <UserControl.Resources>
+    <converters:StyleNameConverter x:Key="StyleNameConverter" />
+  </UserControl.Resources>
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Bottom">
+      <TextBox
+        Name="ReferenceBox"
+        Margin="1"
+        IsReadOnly="True"
+        FontSize="{Binding Configuration.ReferenceFontSize}"
+        MaxLines="4"
+        TextWrapping="Wrap"
+        IsVisible="{Binding Workspace.ReferenceFileManager.IsReferenceLoaded}"
+        Text="{Binding Workspace.ReferenceFileManager.CurrentLines}"
+      />
+      <DataGrid
+        Name="TermsGrid"
+        HeadersVisibility="None"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="False"
+        Background="Transparent"
+        IsReadOnly="True"
+        Margin="1"
+        Padding="0"
+        Classes="Small"
+        Focusable="False"
+        VerticalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Disabled"
+        GridLinesVisibility="All"
+        ItemsSource="{Binding VisibleKnpTerms}"
+      >
+        <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding Original}" />
+          <DataGridTextColumn Binding="{Binding Alternate}" />
+          <DataGridTextColumn Binding="{Binding Translation}" />
+        </DataGrid.Columns>
+        <DataGrid.Styles>
+          <Style Selector="TextBlock">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="5 0" />
+          </Style>
+          <Style Selector="DataGridCell">
+            <Setter Property="MinHeight" Value="0" />
+          </Style>
+        </DataGrid.Styles>
+      </DataGrid>
+    </StackPanel>
+    <Grid Name="EditorPanel" RowDefinitions="Auto, Auto, *">
+      <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto, *, *, Auto">
+        <CheckBox
+          Name="CommentCheckBox"
+          Grid.Column="0"
+          Margin="1"
+          VerticalAlignment="Center"
+          IsChecked="{Binding Workspace.SelectionManager.ActiveEvent.IsComment}"
+          Content="{x:Static i18n:Resources.Editor_IsComment_Label}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_IsComment_ToolTip}"
+          Click="AnyControl_EventMetaChanged"
+        />
+        <ComboBox
+          Name="StyleList"
+          Grid.Column="1"
+          Margin="1"
+          Classes="Small"
+          HorizontalAlignment="Stretch"
+          ItemsSource="{Binding Workspace.Document.StyleManager.Styles}"
+          SelectedItem="{Binding Workspace.SelectionManager.ActiveEvent.Style,
                                                  Converter={StaticResource StyleNameConverter}}"
-                          ToolTip.Tip="{x:Static i18n:Resources.Editor_StyleBox_ToolTip}"
-                          SelectionChanged="AnyControl_EventMetaChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="assCs:Style">
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Name="EditStyleBtn"
-                        Grid.Column="2"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_EditStyle_ToolTip}"
-                        Content="{icons:MaterialIconExt Kind=TagEditOutline}"
-                        Command="{Binding EditStyleCommand}" />
-                <AutoCompleteBox Name="ActorAcBox"
-                                 Grid.Column="3"
-                                 Margin="1"
-                                 Classes="Small"
-                                 Text="{Binding Workspace.SelectionManager.ActiveEvent.Actor}"
-                                 ItemsSource="{Binding Workspace.Document.EventManager.Actors}"
-                                 FilterMode="Contains"
-                                 PlaceholderText="{x:Static i18n:Resources.Editor_ActorAcBox_Watermark}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_ActorAcBox_ToolTip}"
-                                 TextChanged="AnyControl_EventMetaChanged" />
-                <AutoCompleteBox Name="EffectAcBox"
-                                 Grid.Column="4"
-                                 Margin="1"
-                                 Classes="Small"
-                                 Text="{Binding Workspace.SelectionManager.ActiveEvent.Effect}"
-                                 ItemsSource="{Binding Workspace.Document.EventManager.Effects}"
-                                 FilterMode="Contains"
-                                 PlaceholderText="{x:Static i18n:Resources.Editor_EffectAcBox_Watermark}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_EffectAcBox_ToolTip}"
-                                 TextChanged="AnyControl_EventMetaChanged" />
-                <TextBlock Name="MaxLineWidthBox"
-                           Grid.Column="5"
-                           Margin="1"
-                           Classes="Small"
-                           IsTabStop="False"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource MartianMono}"
-                           Text="{Binding Workspace.SelectionManager.ActiveEvent.MaxLineWidth}"
-                           ToolTip.Tip="{x:Static i18n:Resources.Editor_MaxLineWidth_ToolTip}" />
-            </Grid>
-            <WrapPanel Grid.Row="1"
-                  Orientation="Horizontal">
-                <c:NumberTextBox Name="LayerUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 AcceptsReturn="False"
-                                 AcceptsTab="False"
-                                 Minimum="0"
-                                 Increment="1"
-                                 FormatString="0"
-                                 TextAlignment="Center"
-                                 IsVisible="{Binding DisplayLayers}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Layer}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_LayerUpDown_ToolTip}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <c:TimeTextBox Name="StartBox"
-                               Margin="1"
-                               Classes="Small"
-                               MinWidth="125"
-                               AcceptsReturn="False"
-                               AcceptsTab="False"
-                               TextAlignment="Center"
-                               FontFamily="{StaticResource MartianMono}"
-                               Text="{Binding Workspace.SelectionManager.ActiveEvent.Start.UpdatableText}"
-                               ToolTip.Tip="{x:Static i18n:Resources.Editor_StartBox_ToolTip}"
-                               TextChanged="AnyControl_EventTimeChanged" />
-                <c:TimeTextBox Name="EndBox"
-                               Margin="1"
-                               Classes="Small"
-                               MinWidth="125"
-                               AcceptsReturn="False"
-                               AcceptsTab="False"
-                               TextAlignment="Center"
-                               FontFamily="{StaticResource MartianMono}"
-                               Text="{Binding Workspace.SelectionManager.ActiveEvent.End.UpdatableText}"
-                               ToolTip.Tip="{x:Static i18n:Resources.Editor_EndBox_ToolTip}"
-                               TextChanged="AnyControl_EventTimeChanged" />
-                <c:NumberTextBox Name="MarginLeftUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 Increment="1"
-                                 FormatString="0"
-                                 TextAlignment="Center"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginLeft_ToolTip}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Left}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <c:NumberTextBox Name="MarginRightUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 Increment="1"
-                                 FormatString="0"
-                                 TextAlignment="Center"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginRight_ToolTip}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Right}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <c:NumberTextBox Name="MarginVerticalUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 Increment="1"
-                                 FormatString="0"
-                                 IsVisible="{Binding !DisplayMarginTopBtm}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginVertical_ToolTip}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Vertical}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <c:NumberTextBox Name="MarginTopUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 Increment="1"
-                                 FormatString="0"
-                                 IsVisible="{Binding DisplayMarginTopBtm}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginTop_ToolTip}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Top}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <c:NumberTextBox Name="MarginBottomUpDown"
-                                 Margin="1"
-                                 Classes="Small"
-                                 MinWidth="30"
-                                 Increment="1"
-                                 FormatString="0"
-                                 IsVisible="{Binding DisplayMarginTopBtm}"
-                                 ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginBottom_ToolTip}"
-                                 Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Bottom}"
-                                 FontFamily="{StaticResource MartianMono}"
-                                 ValueChanged="AnyControl_EventMetaChanged" />
-                <Button Name="ToggleBoldBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleBold_ToolTip}"
-                        Command="{Binding ToggleTagCommand}"
-                        CommandParameter="b"
-                        Content="{icons:MaterialIconExt Kind=FormatBold}" />
-                <Button Name="ToggleItalicsBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleItalics_ToolTip}"
-                        Command="{Binding ToggleTagCommand}"
-                        CommandParameter="i"
-                        Content="{icons:MaterialIconExt Kind=FormatItalic}" />
-                <Button Name="ToggleUnderlineBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleUnderline_ToolTip}"
-                        Command="{Binding ToggleTagCommand}"
-                        CommandParameter="u"
-                        Content="{icons:MaterialIconExt Kind=FormatUnderline}" />
-                <Button Name="ToggleStrikethroughBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleStrikethrough_ToolTip}"
-                        Command="{Binding ToggleTagCommand}"
-                        CommandParameter="s"
-                        Content="{icons:MaterialIconExt Kind=FormatStrikethrough}" />
-                <Button Name="SetFontBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_SetFont_ToolTip}"
-                        Content="{icons:MaterialIconExt Kind=FormatFont}" />
-                <Button Name="NextOrCreateBtn"
-                        Margin="1"
-                        Padding="2 0"
-                        Classes="Small"
-                        ToolTip.Tip="{x:Static i18n:Resources.Editor_NextOrCreate_ToolTip}"
-                        Command="{Binding GetOrCreateAfterCommand}"
-                        Content="{icons:MaterialIconExt Kind=CheckOutline}" />
-            </WrapPanel>
-            <TextBox Name="EditBox"
-                     Grid.Row="2"
-                     VerticalAlignment="Stretch"
-                     VerticalContentAlignment="Top"
-                     ClearSelectionOnLostFocus="False"
-                     FontSize="{Binding Configuration.EditorFontSize}"
-                     Text="{Binding Workspace.SelectionManager.ActiveEvent.Text}"
-                     SelectionStart="{Binding EditBoxSelectionStart, Mode=TwoWay}"
-                     SelectionEnd="{Binding EditBoxSelectionEnd, Mode=TwoWay}"
-                     Margin="1"
-                     MinLines="1"
-                     TextWrapping="Wrap"
-                     IsUndoEnabled="False">
-                <TextBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="{x:Static i18n:Resources.Editor_Menu_SpellcheckLine}"
-                                  Icon="{icons:MaterialIconExt Kind=Spellcheck}"
-                                  Command="{Binding SpellcheckEventCommand}" />
-                        <Separator />
-                        <MenuItem Header="{x:Static i18n:Resources.Editor_Menu_SplitLineAtCursor}"
-                                  Icon="{icons:MaterialIconExt Kind=CallSplit}"
-                                  Command="{Binding SplitEventsAtCursorCommand}" />
-                        <MenuItem Header="{x:Static i18n:Resources.Editor_Menu_SplitLineAtCursorKeepTimes}"
-                                  Icon="{icons:MaterialIconExt Kind=CallSplit}"
-                                  Command="{Binding SplitEventsAtCursorKeepTimesCommand}" />
-                    </ContextMenu>
-                </TextBox.ContextMenu>
-            </TextBox>
-        </Grid>
-    </DockPanel>
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_StyleBox_ToolTip}"
+          SelectionChanged="AnyControl_EventMetaChanged"
+        >
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="assCs:Style">
+              <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button
+          Name="EditStyleBtn"
+          Grid.Column="2"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_EditStyle_ToolTip}"
+          Content="{icons:MaterialIconExt Kind=TagEditOutline}"
+          Command="{Binding EditStyleCommand}"
+        />
+        <AutoCompleteBox
+          Name="ActorAcBox"
+          Grid.Column="3"
+          Margin="1"
+          Classes="Small"
+          Text="{Binding Workspace.SelectionManager.ActiveEvent.Actor}"
+          ItemsSource="{Binding Workspace.Document.EventManager.Actors}"
+          FilterMode="Contains"
+          PlaceholderText="{x:Static i18n:Resources.Editor_ActorAcBox_Watermark}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_ActorAcBox_ToolTip}"
+          TextChanged="AnyControl_EventMetaChanged"
+        />
+        <AutoCompleteBox
+          Name="EffectAcBox"
+          Grid.Column="4"
+          Margin="1"
+          Classes="Small"
+          Text="{Binding Workspace.SelectionManager.ActiveEvent.Effect}"
+          ItemsSource="{Binding Workspace.Document.EventManager.Effects}"
+          FilterMode="Contains"
+          PlaceholderText="{x:Static i18n:Resources.Editor_EffectAcBox_Watermark}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_EffectAcBox_ToolTip}"
+          TextChanged="AnyControl_EventMetaChanged"
+        />
+        <TextBlock
+          Name="MaxLineWidthBox"
+          Grid.Column="5"
+          Margin="1"
+          Classes="Small"
+          IsTabStop="False"
+          VerticalAlignment="Center"
+          FontFamily="{StaticResource MartianMono}"
+          Text="{Binding Workspace.SelectionManager.ActiveEvent.MaxLineWidth}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MaxLineWidth_ToolTip}"
+        />
+      </Grid>
+      <WrapPanel Grid.Row="1" Orientation="Horizontal">
+        <c:NumberTextBox
+          Name="LayerUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          AcceptsReturn="False"
+          AcceptsTab="False"
+          Minimum="0"
+          Increment="1"
+          FormatString="0"
+          TextAlignment="Center"
+          IsVisible="{Binding DisplayLayers}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Layer}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_LayerUpDown_ToolTip}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <c:TimeTextBox
+          Name="StartBox"
+          Margin="1"
+          Classes="Small"
+          MinWidth="125"
+          AcceptsReturn="False"
+          AcceptsTab="False"
+          TextAlignment="Center"
+          FontFamily="{StaticResource MartianMono}"
+          Text="{Binding Workspace.SelectionManager.ActiveEvent.Start.UpdatableText}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_StartBox_ToolTip}"
+          TextChanged="AnyControl_EventTimeChanged"
+        />
+        <c:TimeTextBox
+          Name="EndBox"
+          Margin="1"
+          Classes="Small"
+          MinWidth="125"
+          AcceptsReturn="False"
+          AcceptsTab="False"
+          TextAlignment="Center"
+          FontFamily="{StaticResource MartianMono}"
+          Text="{Binding Workspace.SelectionManager.ActiveEvent.End.UpdatableText}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_EndBox_ToolTip}"
+          TextChanged="AnyControl_EventTimeChanged"
+        />
+        <c:NumberTextBox
+          Name="MarginLeftUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          Increment="1"
+          FormatString="0"
+          TextAlignment="Center"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginLeft_ToolTip}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Left}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <c:NumberTextBox
+          Name="MarginRightUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          Increment="1"
+          FormatString="0"
+          TextAlignment="Center"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginRight_ToolTip}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Right}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <c:NumberTextBox
+          Name="MarginVerticalUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          Increment="1"
+          FormatString="0"
+          IsVisible="{Binding !DisplayMarginTopBtm}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginVertical_ToolTip}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Vertical}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <c:NumberTextBox
+          Name="MarginTopUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          Increment="1"
+          FormatString="0"
+          IsVisible="{Binding DisplayMarginTopBtm}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginTop_ToolTip}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Top}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <c:NumberTextBox
+          Name="MarginBottomUpDown"
+          Margin="1"
+          Classes="Small"
+          MinWidth="30"
+          Increment="1"
+          FormatString="0"
+          IsVisible="{Binding DisplayMarginTopBtm}"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_MarginBottom_ToolTip}"
+          Value="{Binding Workspace.SelectionManager.ActiveEvent.Margins.Bottom}"
+          FontFamily="{StaticResource MartianMono}"
+          ValueChanged="AnyControl_EventMetaChanged"
+        />
+        <Button
+          Name="ToggleBoldBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleBold_ToolTip}"
+          Command="{Binding ToggleTagCommand}"
+          CommandParameter="b"
+          Content="{icons:MaterialIconExt Kind=FormatBold}"
+        />
+        <Button
+          Name="ToggleItalicsBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleItalics_ToolTip}"
+          Command="{Binding ToggleTagCommand}"
+          CommandParameter="i"
+          Content="{icons:MaterialIconExt Kind=FormatItalic}"
+        />
+        <Button
+          Name="ToggleUnderlineBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleUnderline_ToolTip}"
+          Command="{Binding ToggleTagCommand}"
+          CommandParameter="u"
+          Content="{icons:MaterialIconExt Kind=FormatUnderline}"
+        />
+        <Button
+          Name="ToggleStrikethroughBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_ToggleStrikethrough_ToolTip}"
+          Command="{Binding ToggleTagCommand}"
+          CommandParameter="s"
+          Content="{icons:MaterialIconExt Kind=FormatStrikethrough}"
+        />
+        <Button
+          Name="SetFontBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_SetFont_ToolTip}"
+          Content="{icons:MaterialIconExt Kind=FormatFont}"
+        />
+        <Button
+          Name="NextOrCreateBtn"
+          Margin="1"
+          Padding="2 0"
+          Classes="Small"
+          ToolTip.Tip="{x:Static i18n:Resources.Editor_NextOrCreate_ToolTip}"
+          Command="{Binding GetOrCreateAfterCommand}"
+          Content="{icons:MaterialIconExt Kind=CheckOutline}"
+        />
+      </WrapPanel>
+      <TextBox
+        Name="EditBox"
+        Grid.Row="2"
+        VerticalAlignment="Stretch"
+        VerticalContentAlignment="Top"
+        ClearSelectionOnLostFocus="False"
+        FontSize="{Binding Configuration.EditorFontSize}"
+        Text="{Binding Workspace.SelectionManager.ActiveEvent.Text}"
+        SelectionStart="{Binding EditBoxSelectionStart, Mode=TwoWay}"
+        SelectionEnd="{Binding EditBoxSelectionEnd, Mode=TwoWay}"
+        Margin="1"
+        MinLines="1"
+        TextWrapping="Wrap"
+        IsUndoEnabled="False"
+      >
+        <TextBox.ContextMenu>
+          <ContextMenu>
+            <MenuItem
+              Header="{x:Static i18n:Resources.Editor_Menu_SpellcheckLine}"
+              Icon="{icons:MaterialIconExt Kind=Spellcheck}"
+              Command="{Binding SpellcheckEventCommand}"
+            />
+            <Separator />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Editor_Menu_SplitLineAtCursor}"
+              Icon="{icons:MaterialIconExt Kind=CallSplit}"
+              Command="{Binding SplitEventsAtCursorCommand}"
+            />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Editor_Menu_SplitLineAtCursorKeepTimes}"
+              Icon="{icons:MaterialIconExt Kind=CallSplit}"
+              Command="{Binding SplitEventsAtCursorKeepTimesCommand}"
+            />
+          </ContextMenu>
+        </TextBox.ContextMenu>
+      </TextBox>
+    </Grid>
+  </DockPanel>
 </UserControl>

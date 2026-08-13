@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
-using System.Reactive;
 using Holo.Models;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Controls;
 
 public partial class GitToolboxViewModel : ViewModelBase
 {
-    private ReactiveCommand<Unit, Unit> CreateRefreshCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRefreshCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -18,7 +17,7 @@ public partial class GitToolboxViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<GitStatusEntry, Unit> CreateStageCommand()
+    private ReactiveCommand<GitStatusEntry, RxVoid> CreateStageCommand()
     {
         return ReactiveCommand.Create(
             (GitStatusEntry entry) =>
@@ -29,7 +28,7 @@ public partial class GitToolboxViewModel : ViewModelBase
         );
     }
 
-    private ReactiveCommand<GitStatusEntry, Unit> CreateUnstageCommand()
+    private ReactiveCommand<GitStatusEntry, RxVoid> CreateUnstageCommand()
     {
         return ReactiveCommand.Create(
             (GitStatusEntry entry) =>
@@ -40,7 +39,7 @@ public partial class GitToolboxViewModel : ViewModelBase
         );
     }
 
-    private ReactiveCommand<GitStatusEntry, Unit> CreateCommitCommand()
+    private ReactiveCommand<GitStatusEntry, RxVoid> CreateCommitCommand()
     {
         return ReactiveCommand.Create(
             (GitStatusEntry entry) =>
@@ -52,7 +51,7 @@ public partial class GitToolboxViewModel : ViewModelBase
         );
     }
 
-    private ReactiveCommand<GitStatusEntry, Unit> CreatePullCommand()
+    private ReactiveCommand<GitStatusEntry, RxVoid> CreatePullCommand()
     {
         return ReactiveCommand.Create(
             (GitStatusEntry entry) =>
@@ -63,7 +62,7 @@ public partial class GitToolboxViewModel : ViewModelBase
         );
     }
 
-    private ReactiveCommand<GitStatusEntry, Unit> CreatePushCommand()
+    private ReactiveCommand<GitStatusEntry, RxVoid> CreatePushCommand()
     {
         return ReactiveCommand.Create(
             (GitStatusEntry entry) =>

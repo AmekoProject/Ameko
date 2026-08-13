@@ -3,23 +3,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using Ameko.DataModels;
 using Ameko.Messages;
 using Ameko.Utilities;
 using AssCS;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class SelectDialogViewModel : ViewModelBase
+public class SelectDialogViewModel : ViewModelBase
 {
     private readonly IProjectProvider _projectProvider;
 
     public string Query { get; set; } = string.Empty;
     public SearchFilter Filter { get; set; } = SearchFilter.Text;
-    public ReactiveCommand<Unit, EmptyMessage> SelectCommand { get; }
+    public ReactiveCommand<RxVoid, EmptyMessage> SelectCommand { get; }
 
     public SelectDialogViewModel(IProjectProvider projectProvider, ITabFactory tabFactory)
     {

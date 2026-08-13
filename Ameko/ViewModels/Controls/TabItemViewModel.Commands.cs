@@ -3,8 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using Ameko.DataModels;
 using Ameko.ViewModels.Dialogs;
 using AssCS;
@@ -12,6 +10,8 @@ using AssCS.History;
 using Holo.Media;
 using Holo.Models;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Controls;
 
@@ -20,7 +20,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Command for copying events to the clipboard
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCopyEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCopyEventsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -31,7 +31,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Command for cutting events to the clipboard
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCutEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCutEventsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -42,7 +42,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Paste events from the clipboard
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePasteEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePasteEventsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -91,7 +91,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Paste events from the clipboard over existing events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePasteOverEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePasteOverEventsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -178,7 +178,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Command for copying plaintext events to the clipboard
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCopyPlaintextEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCopyPlaintextEventsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -189,7 +189,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Duplicate selected events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateDuplicateEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateDuplicateEventsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -207,7 +207,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Insert event before
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInsertEventBeforeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInsertEventBeforeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -222,7 +222,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Insert event after
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInsertEventAfterCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInsertEventAfterCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -237,7 +237,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Insert event before
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInsertEventBeforeAtVideoTimeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInsertEventBeforeAtVideoTimeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -256,7 +256,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Insert event after
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInsertEventAfterAtVideoTimeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInsertEventAfterAtVideoTimeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -275,7 +275,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Delete events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateDeleteEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateDeleteEventsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -319,7 +319,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Merge adjacent events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateMergeEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateMergeEventsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -346,7 +346,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Split events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSplitEventsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSplitEventsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -375,7 +375,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Split events, keeping times
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSplitEventsKeepTimesCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSplitEventsKeepTimesCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -406,7 +406,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Split events at cursor
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSplitEventsAtCursorCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSplitEventsAtCursorCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -433,7 +433,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Split events at cursor, keeping times
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSplitEventsAtCursorKeepTimesCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSplitEventsAtCursorKeepTimesCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -462,7 +462,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Spellcheck the selected event
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSpellcheckEventCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSpellcheckEventCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -479,7 +479,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Edit the current event's style
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateEditStyleCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateEditStyleCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -514,7 +514,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Get or Create the next event in the document
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateGetOrCreateAfterCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateGetOrCreateAfterCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -533,7 +533,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Toggle an ass tag
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateToggleTagCommand()
+    private ReactiveCommand<string, RxVoid> CreateToggleTagCommand()
     {
         return ReactiveCommand.Create(
             (string tag) =>
@@ -556,7 +556,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Toggle whether an event is a comment or not
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateToggleCommentCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateToggleCommentCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -574,7 +574,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Execute a Script
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateExecuteScriptCommand()
+    private ReactiveCommand<string, RxVoid> CreateExecuteScriptCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (string qualifiedName) =>
@@ -591,7 +591,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Play/Pause video
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePlayPauseCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayPauseCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -607,7 +607,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Stop video
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateStopPlayingCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateStopPlayingCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -620,7 +620,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Play selected events
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePlaySelectionCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlaySelectionCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -635,7 +635,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Toggle Auto-Seek
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateToggleAutoseekCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateToggleAutoseekCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -650,7 +650,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to next frame
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateNextFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateNextFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -663,7 +663,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to previous frame
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePreviousFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -676,7 +676,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to next boundary
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateNextBoundaryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateNextBoundaryCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -701,7 +701,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to previous boundary
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePreviousBoundaryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousBoundaryCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -726,7 +726,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to next keyframe
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateNextKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateNextKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -744,7 +744,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to previous keyframe
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreatePreviousKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -762,7 +762,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to start of active event
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateActiveStartCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateActiveStartCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -776,7 +776,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Go to end of active event
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateActiveEndCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateActiveEndCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -790,7 +790,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Increase video zoom level
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateZoomInCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateZoomInCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -807,7 +807,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Decrease video zoom level
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateZoomOutCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateZoomOutCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -824,7 +824,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Rotate Clockwise
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRotateClockwiseCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRotateClockwiseCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -841,7 +841,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Rotate Counterclockwise
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRotateCounterclockwiseCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRotateCounterclockwiseCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -859,7 +859,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// Toggle mute
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateToggleMuteCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateToggleMuteCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -869,7 +869,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayPauseAudioEventCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayPauseAudioEventCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -886,7 +886,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayAudioBeforeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayAudioBeforeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -900,7 +900,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayAudioFirstCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayAudioFirstCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -914,7 +914,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayAudioSurroundCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayAudioSurroundCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -928,7 +928,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayAudioLastCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayAudioLastCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -942,7 +942,7 @@ public partial class TabItemViewModel : ViewModelBase
         });
     }
 
-    private ReactiveCommand<Unit, Unit> CreatePlayAudioAfterCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreatePlayAudioAfterCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -959,7 +959,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Shift reference file forwards
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShiftReferenceForwardCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShiftReferenceForwardCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -972,7 +972,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// <summary>
     /// Shift reference file forwards
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShiftReferenceBackwardCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShiftReferenceBackwardCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -986,7 +986,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// Save frame to disk
     /// </summary>
     /// <param name="mode">Save Frame Mode</param>
-    private ReactiveCommand<Unit, Unit> CreateSaveFrameCommand(SaveFrameMode mode)
+    private ReactiveCommand<RxVoid, RxVoid> CreateSaveFrameCommand(SaveFrameMode mode)
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1000,7 +1000,7 @@ public partial class TabItemViewModel : ViewModelBase
     /// Copy frame to clipboard
     /// </summary>
     /// <param name="mode"></param>
-    private ReactiveCommand<Unit, Unit> CreateCopyFrameCommand(SaveFrameMode mode)
+    private ReactiveCommand<RxVoid, RxVoid> CreateCopyFrameCommand(SaveFrameMode mode)
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {

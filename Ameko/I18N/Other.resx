@@ -237,4 +237,25 @@
     <data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
         <value>Save Profile Result</value>
     </data>
+    <data name="SourceViewer_Title" xml:space="preserve">
+        <value>Source Viewer - {0}</value>
+    </data>
+    <data name="SourceViewer_Button_Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
+        <value>Enable Editing</value>
+    </data>
+    <data name="SourceViewer_Disclaimer" xml:space="preserve">
+        <value>Edits will be overwritten if the package is updated.</value>
+    </data>
+    <data name="SourceViewer_Button_Restore" xml:space="preserve">
+        <value>Restore</value>
+    </data>
+    <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
+        <value>Restore package to its original state</value>
+    </data>
+    <data name="SourceViewer_Notice" xml:space="preserve">
+        <value>"Update All" will skip modified packages.</value>
+    </data>
 </root>

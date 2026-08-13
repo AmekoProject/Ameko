@@ -7,8 +7,6 @@ using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -29,6 +27,8 @@ using Holo.Providers;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 using SkiaSharp;
 
 namespace Ameko.Services;
@@ -340,11 +340,11 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<Workspace[]> OpenSubtitleFilesAsync(
-        Interaction<Unit, Uri[]?> interaction,
+        Interaction<RxVoid, Uri[]?> interaction,
         Project prj
     )
     {
-        var uris = await interaction.Handle(Unit.Default);
+        var uris = await interaction.Handle(RxVoid.Default);
         if (uris is null || uris.Length == 0)
             return [];
 
@@ -512,9 +512,12 @@ public class IoService(
     }
 
     /// <inheritdoc />
-    public async Task<bool> AttachReferenceFile(Interaction<Unit, Uri?> interaction, Workspace wsp)
+    public async Task<bool> AttachReferenceFile(
+        Interaction<RxVoid, Uri?> interaction,
+        Workspace wsp
+    )
     {
-        var uri = await interaction.Handle(Unit.Default);
+        var uri = await interaction.Handle(RxVoid.Default);
         if (uri is null)
             return false;
 
@@ -584,6 +587,7 @@ public class IoService(
                 string.Format(I18N.Other.Message_VideoNotFound, Path.GetFileName(videoPath)),
                 TimeSpan.FromSeconds(7)
             );
+            return true;
         }
 
         // Stop here if media loading is ongoing (maybe video was drag-n-dropped in at the same time?)
@@ -639,12 +643,12 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> OpenVideoFileAsync(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
-        var uri = await interaction.Handle(Unit.Default);
+        var uri = await interaction.Handle(RxVoid.Default);
         if (uri is null)
             return false;
 
@@ -694,12 +698,12 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> OpenAudioFileAsync(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
-        var uri = await interaction.Handle(Unit.Default);
+        var uri = await interaction.Handle(RxVoid.Default);
         if (uri is null)
             return false;
 
@@ -768,11 +772,11 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> OpenKeyframesAsync(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace
     )
     {
-        var uri = await interaction.Handle(Unit.Default);
+        var uri = await interaction.Handle(RxVoid.Default);
         if (uri is null)
             return false;
 
@@ -791,7 +795,7 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> SaveFrameToFile(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         SaveFrameMode mode
     )
@@ -829,7 +833,7 @@ public class IoService(
                 );
                 break;
             default: // Subs aren't saved to disk, so we need to request a filename from the user
-                var uri = await interaction.Handle(Unit.Default);
+                var uri = await interaction.Handle(RxVoid.Default);
                 if (uri is null)
                     return false;
                 path = uri.LocalPath;
@@ -862,7 +866,7 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> CopyFrameToClipboard(
-        Interaction<string, Unit> interaction,
+        Interaction<string, RxVoid> interaction,
         Workspace workspace,
         SaveFrameMode mode
     )

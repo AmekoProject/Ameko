@@ -24,7 +24,7 @@ namespace Ameko.Views.Controls;
 [TemplatePart("PART_IncreaseButton", typeof(Button))]
 [TemplatePart("PART_Track", typeof(Track))]
 [PseudoClasses(":vertical", ":horizontal", ":pressed")]
-public sealed partial class SeekSlider : RangeBase
+public sealed class SeekSlider : RangeBase
 {
     protected override Type StyleKeyOverride => typeof(Slider);
 

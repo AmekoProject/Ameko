@@ -1,159 +1,210 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             
-             xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
-
-             x:Class="Ameko.Views.Controls.TabItemEventsArea"
-             x:DataType="vm:TabItemViewModel">
-	<UserControl.Resources>
-		<converters:GridPaddingConverter x:Key="PaddingConverter" />
-		<converters:EventTextLengthConverter x:Key="EventTextLengthConverter" />
-		<converters:TextLengthConverter x:Key="TextLengthConverter" />
-		<converters:CommentConverter x:Key="CommentConverter" />
-	</UserControl.Resources>
-    <DataGrid Name="EventsGrid"
-              IsReadOnly="True"
-              Margin="0"
-              Padding="0"
-              Classes="Small"
-              Focusable="True"
-              Background="Transparent"
-              CanUserResizeColumns="True"
-              CanUserReorderColumns="False"
-              CanUserSortColumns="False"
-              SelectionMode="Extended"
-              GridLinesVisibility="All"
-              VerticalScrollBarVisibility="Auto"
-              HorizontalScrollBarVisibility="Disabled"
-              FontSize="{Binding Configuration.GridFontSize}"
-              ItemsSource="{Binding Workspace.Document.EventManager.Events}"
-              SelectedItem="{Binding Workspace.SelectionManager.ActiveEvent, Mode=OneWay}">
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="ID"
-                                Binding="{Binding Id}"
-                                IsVisible="False"
-                                CanUserResize="False" />
-            <DataGridTextColumn Header="#"
-                                Binding="{Binding Index}"
-                                CanUserResize="False" />
-            <DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Start}"
-                                Binding="{Binding Start.UpdatableText}"
-                                CanUserResize="False" />
-            <DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_End}"
-                                Binding="{Binding End.UpdatableText}"
-                                CanUserResize="False" />
-            <DataGridTemplateColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Cps}"
-                                CanUserResize="False"
-                                SortMemberPath="Cps">
-	            <DataGridTemplateColumn.CellTemplate>
-		            <DataTemplate>
-			            <TextBlock Text="{Binding Cps}"
-			                       HorizontalAlignment="Center"
-			                       VerticalAlignment="Center"
-			                       Background="{Binding Cps, 
-														Converter={StaticResource CpsWarnConverter}}" />
-		            </DataTemplate>
-	            </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Style}"
-                                CanUserResize="False"
-                                Binding="{Binding Style,
-												  Mode=OneWay,
-												  Converter={StaticResource TextLengthConverter}}" />
-			<DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Actor}"
-			                    Binding="{Binding Actor,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:ass="clr-namespace:AssCS;assembly=AssCS"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+  x:Class="Ameko.Views.Controls.TabItemEventsArea"
+  x:DataType="vm:TabItemViewModel"
+>
+  <UserControl.Resources>
+    <converters:GridPaddingConverter x:Key="PaddingConverter" />
+    <converters:EventTextLengthConverter x:Key="EventTextLengthConverter" />
+    <converters:TextLengthConverter x:Key="TextLengthConverter" />
+    <converters:CommentConverter x:Key="CommentConverter" />
+  </UserControl.Resources>
+  <DataGrid
+    Name="EventsGrid"
+    IsReadOnly="True"
+    Margin="0"
+    Padding="0"
+    Classes="Small"
+    Focusable="True"
+    Background="Transparent"
+    CanUserResizeColumns="True"
+    CanUserReorderColumns="False"
+    CanUserSortColumns="False"
+    SelectionMode="Extended"
+    GridLinesVisibility="All"
+    VerticalScrollBarVisibility="Auto"
+    HorizontalScrollBarVisibility="Disabled"
+    FontSize="{Binding Configuration.GridFontSize}"
+    ItemsSource="{Binding Workspace.Document.EventManager.Events}"
+    SelectedItem="{Binding Workspace.SelectionManager.ActiveEvent, Mode=OneWay}"
+  >
+    <DataGrid.Columns>
+      <DataGridTextColumn
+        Header="ID"
+        Binding="{Binding Id}"
+        IsVisible="False"
+        CanUserResize="False"
+      />
+      <DataGridTextColumn Header="#" Binding="{Binding Index}" CanUserResize="False" />
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Start}"
+        Binding="{Binding Start.UpdatableText}"
+        CanUserResize="False"
+      />
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_End}"
+        Binding="{Binding End.UpdatableText}"
+        CanUserResize="False"
+      />
+      <DataGridTemplateColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Cps}"
+        CanUserResize="False"
+        SortMemberPath="Cps"
+      >
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock
+              Text="{Binding Cps}"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Background="{Binding Cps, 
+														Converter={StaticResource CpsWarnConverter}}"
+            />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Style}"
+        CanUserResize="False"
+        Binding="{Binding Style,
 												  Mode=OneWay,
 												  Converter={StaticResource TextLengthConverter}}"
-			                    IsVisible="{Binding Workspace.DisplayActorsColumn}" />
-			<DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Effect}"
-			                    Binding="{Binding Effect,
+      />
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Actor}"
+        Binding="{Binding Actor,
 												  Mode=OneWay,
 												  Converter={StaticResource TextLengthConverter}}"
-			                    IsVisible="{Binding Workspace.DisplayEffectsColumn}" />
-			<DataGridTextColumn Header="{x:Static i18n:Resources.EventsGrid_Header_Content}"
-			                    Width="*"
-			                    Binding="{Binding Text,
+        IsVisible="{Binding Workspace.DisplayActorsColumn}"
+      />
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Effect}"
+        Binding="{Binding Effect,
 												  Mode=OneWay,
-												  Converter={StaticResource EventTextLengthConverter}}" />
-        </DataGrid.Columns>
-	    <DataGrid.ContextMenu>
-		    <ContextMenu>
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Duplicate}"
-			              Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
-			              Command="{Binding DuplicateEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_MergeLines}"
-			              Icon="{icons:MaterialIconExt Kind=CallMerge}"
-			              Command="{Binding MergeEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_SplitLine}"
-			              Icon="{icons:MaterialIconExt Kind=CallSplit}"
-			              Command="{Binding SplitEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_SplitLineKeepTimes}"
-			              Icon="{icons:MaterialIconExt Kind=CallSplit}"
-			              Command="{Binding SplitEventsKeepTimesCommand}" />
-			    <Separator />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertBefore}"
-			              Icon="{icons:MaterialIconExt Kind=ArrowCollapseUp}"
-			              Command="{Binding InsertEventBeforeCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertAfter}"
-			              Icon="{icons:MaterialIconExt Kind=ArrowCollapseDown}"
-			              Command="{Binding InsertEventAfterCommand}" />
-                <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertBeforeAtVideoTime}"
-                          Icon="{icons:MaterialIconExt Kind=ArrowCollapseUp}"
-                          IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
-                          Command="{Binding InsertEventBeforeAtVideoTimeCommand}" />
-                <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertAfterAtVideoTime}"
-                          Icon="{icons:MaterialIconExt Kind=ArrowCollapseDown}"
-                          IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
-                          Command="{Binding InsertEventAfterAtVideoTimeCommand}" />
-			    <Separator />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Copy}"
-			              Icon="{icons:MaterialIconExt Kind=ContentCopy}"
-			              Command="{Binding CopyEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_CopyPlaintext}"
-			              Icon="{icons:MaterialIconExt Kind=InvoiceExportOutline}"
-			              Command="{Binding CopyPlaintextEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Cut}"
-			              Icon="{icons:MaterialIconExt Kind=ContentCut}"
-			              Command="{Binding CutEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Paste}"
-			              Icon="{icons:MaterialIconExt Kind=ContentPaste}"
-			              Command="{Binding PasteEventsCommand}" />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_PasteOver}"
-			              Icon="{icons:MaterialIconExt Kind=ClipboardEditOutline}"
-			              Command="{Binding PasteOverEventsCommand}"/>
-			    <Separator />
-			    <MenuItem Header="{x:Static i18n:Resources.EventsGrid_Menu_Delete}"
-			              Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
-			              Command="{Binding DeleteEventsCommand}" />
-		    </ContextMenu>
-	    </DataGrid.ContextMenu>
-	    <DataGrid.Styles>
-		    <Style Selector="DataGridRow">
-			    <Setter Property="Background"
-			            x:DataType="ass:Event"
-			            Value="{Binding IsComment,
-										Converter={StaticResource CommentConverter}}" />
-		    </Style>
-		    <Style Selector="TextBlock">
-			    <Setter Property="Padding" Value="{Binding $parent[UserControl].((vm:TabItemViewModel)DataContext).Configuration.GridPadding,
+												  Converter={StaticResource TextLengthConverter}}"
+        IsVisible="{Binding Workspace.DisplayEffectsColumn}"
+      />
+      <DataGridTextColumn
+        Header="{x:Static i18n:Resources.EventsGrid_Header_Content}"
+        Width="*"
+        Binding="{Binding Text,
+												  Mode=OneWay,
+												  Converter={StaticResource EventTextLengthConverter}}"
+      />
+    </DataGrid.Columns>
+    <DataGrid.ContextMenu>
+      <ContextMenu>
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Duplicate}"
+          Icon="{icons:MaterialIconExt Kind=ContentDuplicate}"
+          Command="{Binding DuplicateEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_MergeLines}"
+          Icon="{icons:MaterialIconExt Kind=CallMerge}"
+          Command="{Binding MergeEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_SplitLine}"
+          Icon="{icons:MaterialIconExt Kind=CallSplit}"
+          Command="{Binding SplitEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_SplitLineKeepTimes}"
+          Icon="{icons:MaterialIconExt Kind=CallSplit}"
+          Command="{Binding SplitEventsKeepTimesCommand}"
+        />
+        <Separator />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertBefore}"
+          Icon="{icons:MaterialIconExt Kind=ArrowCollapseUp}"
+          Command="{Binding InsertEventBeforeCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertAfter}"
+          Icon="{icons:MaterialIconExt Kind=ArrowCollapseDown}"
+          Command="{Binding InsertEventAfterCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertBeforeAtVideoTime}"
+          Icon="{icons:MaterialIconExt Kind=ArrowCollapseUp}"
+          IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+          Command="{Binding InsertEventBeforeAtVideoTimeCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_InsertAfterAtVideoTime}"
+          Icon="{icons:MaterialIconExt Kind=ArrowCollapseDown}"
+          IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+          Command="{Binding InsertEventAfterAtVideoTimeCommand}"
+        />
+        <Separator />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Copy}"
+          Icon="{icons:MaterialIconExt Kind=ContentCopy}"
+          Command="{Binding CopyEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_CopyPlaintext}"
+          Icon="{icons:MaterialIconExt Kind=InvoiceExportOutline}"
+          Command="{Binding CopyPlaintextEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Cut}"
+          Icon="{icons:MaterialIconExt Kind=ContentCut}"
+          Command="{Binding CutEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Paste}"
+          Icon="{icons:MaterialIconExt Kind=ContentPaste}"
+          Command="{Binding PasteEventsCommand}"
+        />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_PasteOver}"
+          Icon="{icons:MaterialIconExt Kind=ClipboardEditOutline}"
+          Command="{Binding PasteOverEventsCommand}"
+        />
+        <Separator />
+        <MenuItem
+          Header="{x:Static i18n:Resources.EventsGrid_Menu_Delete}"
+          Icon="{icons:MaterialIconExt Kind=TrashCanOutline}"
+          Command="{Binding DeleteEventsCommand}"
+        />
+      </ContextMenu>
+    </DataGrid.ContextMenu>
+    <DataGrid.Styles>
+      <Style Selector="DataGridRow">
+        <Setter
+          Property="Background"
+          x:DataType="ass:Event"
+          Value="{Binding IsComment,
+										Converter={StaticResource CommentConverter}}"
+        />
+      </Style>
+      <Style Selector="TextBlock">
+        <Setter
+          Property="Padding"
+          Value="{Binding $parent[UserControl].((vm:TabItemViewModel)DataContext).Configuration.GridPadding,
 														   Converter={StaticResource PaddingConverter},
-														   FallbackValue=.}" />
-			    <Setter Property="Margin" Value="0" />
-		    </Style>
-		    <Style Selector="DataGridCell">
-			    <Setter Property="MinHeight" Value="0" />
-		    </Style>
-	    </DataGrid.Styles>
-    </DataGrid>
+														   FallbackValue=.}"
+        />
+        <Setter Property="Margin" Value="0" />
+      </Style>
+      <Style Selector="DataGridCell">
+        <Setter Property="MinHeight" Value="0" />
+      </Style>
+    </DataGrid.Styles>
+  </DataGrid>
 </UserControl>

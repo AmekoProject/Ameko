@@ -1,55 +1,61 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="500"
-        d:DesignHeight="600"
-
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-
-        x:Class="Ameko.Views.Windows.AboutWindow"
-        x:DataType="vm:AboutWindowViewModel"
-
-        Focusable="True"
-        Width="500"
-        Height="600"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:About.AboutWindow_Title}">
-    <DockPanel Margin="10">
-        <StackPanel DockPanel.Dock="Top"
-                    Margin="5">
-            <Image Height="200"
-                   Margin="5"
-                   Stretch="Uniform"
-                   Source="avares://Ameko/Assets/Images/Ameko-Logo-512.png" />
-            <TextBlock Text="Ameko" 
-                       HorizontalAlignment="Center" 
-                       FontSize="32" />
-            <TextBlock Text="{Binding Version}"
-                       HorizontalAlignment="Center"
-                       FontSize="14"
-                       Cursor="Hand"
-                       PointerPressed="VersionLabel_OnPointerPressed"/>
-        </StackPanel>
-        <TabControl TabStripPlacement="Bottom">
-            <TabItem Header="{x:Static i18n:About.AboutWindow_GeneralTab}">
-                <HtmlPanel Margin="5"
-                           Text="{Binding GeneralContent, FallbackValue='Section content loading failed!'}" />         
-            </TabItem>
-            <TabItem Header="{x:Static i18n:About.AboutWindow_AssetsTab}">
-                <HtmlPanel Margin="5"
-                           Text="{Binding AssetsContent, FallbackValue='Section content loading failed!'}" />    
-            </TabItem>
-            <TabItem Header="{x:Static i18n:About.AboutWindow_LibrariesTab}">
-                <HtmlPanel Margin="5"
-                           Text="{Binding LibrariesContent, FallbackValue='Section content loading failed!'}" />    
-            </TabItem>
-        </TabControl>
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="500"
+  d:DesignHeight="600"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.Views.Windows.AboutWindow"
+  x:DataType="vm:AboutWindowViewModel"
+  Focusable="True"
+  Width="500"
+  Height="600"
+  CanResize="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:About.AboutWindow_Title}"
+>
+  <DockPanel Margin="10">
+    <StackPanel DockPanel.Dock="Top" Margin="5">
+      <Image
+        Height="200"
+        Margin="5"
+        Stretch="Uniform"
+        Source="avares://Ameko/Assets/Images/Ameko-Logo-512.png"
+      />
+      <TextBlock Text="Ameko" HorizontalAlignment="Center" FontSize="32" />
+      <TextBlock
+        Text="{Binding Version}"
+        HorizontalAlignment="Center"
+        FontSize="14"
+        Cursor="Hand"
+        PointerPressed="VersionLabel_OnPointerPressed"
+      />
+    </StackPanel>
+    <TabControl TabStripPlacement="Bottom">
+      <TabItem Header="{x:Static i18n:About.AboutWindow_GeneralTab}">
+        <HtmlPanel
+          Margin="5"
+          Text="{Binding GeneralContent, FallbackValue='Section content loading failed!'}"
+        />
+      </TabItem>
+      <TabItem Header="{x:Static i18n:About.AboutWindow_AssetsTab}">
+        <HtmlPanel
+          Margin="5"
+          Text="{Binding AssetsContent, FallbackValue='Section content loading failed!'}"
+        />
+      </TabItem>
+      <TabItem Header="{x:Static i18n:About.AboutWindow_LibrariesTab}">
+        <HtmlPanel
+          Margin="5"
+          Text="{Binding LibrariesContent, FallbackValue='Section content loading failed!'}"
+        />
+      </TabItem>
+    </TabControl>
+  </DockPanel>
 </Window>

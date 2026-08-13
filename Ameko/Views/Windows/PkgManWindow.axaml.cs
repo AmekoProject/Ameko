@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.ViewModels;
 using Ameko.ViewModels.Dialogs;
@@ -12,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Windows;
 
@@ -24,14 +22,14 @@ public partial class PkgManWindow : ReactiveWindow<PkgManWindowViewModel>
     /// <typeparam name="TDialog">Dialog type</typeparam>
     /// <typeparam name="TViewModel">ViewModel type</typeparam>
     private async Task DoShowDialogAsync<TDialog, TViewModel>(
-        IInteractionContext<TViewModel, Unit> interaction
+        IInteractionContext<TViewModel, RxVoid> interaction
     )
         where TDialog : Window, new()
         where TViewModel : ViewModelBase
     {
         var dialog = new TDialog { DataContext = interaction.Input };
         await dialog.ShowDialog(this);
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     public PkgManWindow()
@@ -53,11 +51,17 @@ public partial class PkgManWindow : ReactiveWindow<PkgManWindowViewModel>
 
         this.WhenActivated(disposables =>
         {
-            ViewModel?.ShowChangelog.RegisterHandler(
-                DoShowDialogAsync<ChangelogDialog, ChangelogDialogViewModel>
-            );
+            ViewModel
+                ?.ShowChangelog.RegisterHandler(
+                    DoShowDialogAsync<ChangelogDialog, ChangelogDialogViewModel>
+                )
+                .DisposeWith(disposables);
 
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            ViewModel
+                ?.ShowSourceViewer.RegisterHandler(
+                    DoShowDialogAsync<SourceViewerDialog, SourceViewerDialogViewModel>
+                )
+                .DisposeWith(disposables);
         });
     }
 }

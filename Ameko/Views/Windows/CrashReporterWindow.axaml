@@ -1,37 +1,39 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="640"
-        d:DesignHeight="480"
-        
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        
-        x:Class="Ameko.Views.Windows.CrashReporterWindow"
-        x:DataType="vm:CrashReporterWindowViewModel"
-        
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Width="640"
-        Height="480"
-        MinWidth="300"
-        MinHeight="300"
-        CanResize="True"
-        Title="{x:Static i18n:Other.CrashReporter_WindowTitle}">
-    <Grid RowDefinitions="Auto, Auto, *"
-          Margin="10">
-        <TextBlock Grid.Row="0"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   Text="{x:Static i18n:Other.CrashReporter_Header}" />
-        <TextBlock Grid.Row="1"
-                   FontSize="14"
-                   Text="{x:Static i18n:Other.CrashReporter_Info}" />
-        <TextBox Grid.Row="2"
-                 IsReadOnly="True"
-                 VerticalAlignment="Stretch"
-                 VerticalContentAlignment="Top"
-                 Text="{Binding Content}" />
-    </Grid>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="640"
+  d:DesignHeight="480"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  x:Class="Ameko.Views.Windows.CrashReporterWindow"
+  x:DataType="vm:CrashReporterWindowViewModel"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Width="640"
+  Height="480"
+  MinWidth="300"
+  MinHeight="300"
+  CanResize="True"
+  Title="{x:Static i18n:Other.CrashReporter_WindowTitle}"
+>
+  <Grid RowDefinitions="Auto, Auto, *" Margin="10">
+    <TextBlock
+      Grid.Row="0"
+      FontSize="24"
+      FontWeight="Bold"
+      Text="{x:Static i18n:Other.CrashReporter_Header}"
+    />
+    <TextBlock Grid.Row="1" FontSize="14" Text="{x:Static i18n:Other.CrashReporter_Info}" />
+    <TextBox
+      Grid.Row="2"
+      IsReadOnly="True"
+      VerticalAlignment="Stretch"
+      VerticalContentAlignment="Top"
+      Text="{Binding Content}"
+    />
+  </Grid>
 </Window>

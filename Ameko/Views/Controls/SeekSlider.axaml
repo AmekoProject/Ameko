@@ -1,55 +1,56 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:Ameko.Views.Controls">
-    <Design.PreviewWith>
-        <Border Background="Black" Padding="20" Width="100">
-            <controls:SeekSlider Value="0" Maximum="100" />
-        </Border>
-    </Design.PreviewWith>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-    <!-- Add Styles Here -->
-    <Style Selector="controls|SeekSlider">
-        <Setter Property="MinWidth" Value="40" />
-        <Setter Property="MinHeight" Value="10" />
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Grid Name="Grid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto"
-                                       MinHeight="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Border Background="{TemplateBinding Background}" />
-                    <Track Name="PART_Track"
-                           Grid.Row="1"
-                           IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
-                           Orientation="Horizontal">
-                        <Thumb Name="thumb"
-                               MinWidth="20"
-                               MinHeight="20">
-                            <Thumb.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Ellipse Width="12"
-                                                 Height="12"
-                                                 Fill="{DynamicResource ThemeAccentBrush}" />
-                                    </Grid>
-                                </ControlTemplate>
-                            </Thumb.Template>
-                        </Thumb>
-                    </Track>
-                </Grid>
-            </ControlTemplate>
-        </Setter>
-    </Style>
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Ameko.Views.Controls"
+>
+  <Design.PreviewWith>
+    <Border Background="Black" Padding="20" Width="100">
+      <controls:SeekSlider Value="0" Maximum="100" />
+    </Border>
+  </Design.PreviewWith>
 
-    <Style Selector="controls|SeekSlider /template/ Track#PART_Track">
-        <Setter Property="Minimum" Value="{TemplateBinding Minimum}" />
-        <Setter Property="Maximum" Value="{TemplateBinding Maximum}" />
-        <Setter Property="Value" Value="{TemplateBinding Value, Mode=TwoWay}" />
-    </Style>
-    <Style Selector="controls|SeekSlider:disabled /template/ Grid#grid">
-        <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
-    </Style>
+  <!-- Add Styles Here -->
+  <Style Selector="controls|SeekSlider">
+    <Setter Property="MinWidth" Value="40" />
+    <Setter Property="MinHeight" Value="10" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid Name="Grid">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="10" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Border Background="{TemplateBinding Background}" />
+          <Track
+            Name="PART_Track"
+            Grid.Row="1"
+            IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
+            Orientation="Horizontal"
+          >
+            <Thumb Name="thumb" MinWidth="20" MinHeight="20">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Grid>
+                    <Ellipse Width="12" Height="12" Fill="{DynamicResource ThemeAccentBrush}" />
+                  </Grid>
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+          </Track>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="controls|SeekSlider /template/ Track#PART_Track">
+    <Setter Property="Minimum" Value="{TemplateBinding Minimum}" />
+    <Setter Property="Maximum" Value="{TemplateBinding Maximum}" />
+    <Setter Property="Value" Value="{TemplateBinding Value, Mode=TwoWay}" />
+  </Style>
+  <Style Selector="controls|SeekSlider:disabled /template/ Grid#grid">
+    <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
+  </Style>
 </Styles>

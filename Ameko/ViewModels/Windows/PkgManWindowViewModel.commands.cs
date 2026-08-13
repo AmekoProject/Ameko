@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
-using System.Reactive.Linq;
+using Ameko.Utilities;
 using Ameko.ViewModels.Dialogs;
-using DynamicData;
 using Holo.Models;
 using Holo.Scripting.Models;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -18,7 +18,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Install a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateInstallCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateInstallCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -27,14 +27,16 @@ public partial class PkgManWindowViewModel
 
             var result = await PackageManager.InstallPackage(SelectedStorePackage);
 
-            await _messageBoxService.ShowAsync(result);
-
-            if (result == InstallationResult.Success)
+            if (result is InstallationResult.Success)
             {
                 this.RaisePropertyChanged(nameof(InstallButtonEnabled));
                 this.RaisePropertyChanged(nameof(UninstallButtonEnabled));
 
                 await _scriptService.Reload(false);
+            }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
             }
         });
     }
@@ -42,7 +44,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Uninstall a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUninstallCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUninstallCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -50,8 +52,6 @@ public partial class PkgManWindowViewModel
                 return;
 
             var result = PackageManager.UninstallPackage(SelectedInstalledPackage);
-
-            await _messageBoxService.ShowAsync(result);
 
             if (result == InstallationResult.Success)
             {
@@ -61,13 +61,17 @@ public partial class PkgManWindowViewModel
 
                 await _scriptService.Reload(false);
             }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
+            }
         });
     }
 
     /// <summary>
     /// Update a package
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUpdateCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUpdateCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -78,9 +82,7 @@ public partial class PkgManWindowViewModel
             _updateCandidates.Clear();
             _updateCandidates.AddRange(PackageManager.GetUpdateCandidates());
 
-            await _messageBoxService.ShowAsync(result);
-
-            if (result == InstallationResult.Success)
+            if (result is InstallationResult.Success)
             {
                 // Raise all the properties because updates can result in installations
                 this.RaisePropertyChanged(nameof(InstallButtonEnabled));
@@ -90,13 +92,17 @@ public partial class PkgManWindowViewModel
 
                 await _scriptService.Reload(false);
             }
+            else
+            {
+                await _messageBoxService.ShowAsync(result);
+            }
         });
     }
 
     /// <summary>
     /// Update all packages
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUpdateAllCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUpdateAllCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -107,6 +113,16 @@ public partial class PkgManWindowViewModel
 
             foreach (var package in _updateCandidates)
             {
+                // Skip modified packages
+                if (await PackageManager.IsPackageModified(package))
+                {
+                    _logger.LogInformation(
+                        "Skipping update for {PackageName} because it has been modified",
+                        package.QualifiedName
+                    );
+                    continue;
+                }
+
                 var result = await PackageManager.UpdatePackage(package);
                 // Pick a failure, any failure
                 if (
@@ -127,7 +143,8 @@ public partial class PkgManWindowViewModel
             this.RaisePropertyChanged(nameof(UpdateButtonEnabled));
             this.RaisePropertyChanged(nameof(UpdateAllButtonEnabled));
 
-            await _messageBoxService.ShowAsync(finalResult);
+            if (finalResult is not InstallationResult.Success)
+                await _messageBoxService.ShowAsync(finalResult);
 
             await _scriptService.Reload(false);
         });
@@ -136,7 +153,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Refresh the Package Store
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRefreshCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRefreshCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -166,7 +183,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Add a repository
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateAddRepositoryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateAddRepositoryCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -207,7 +224,7 @@ public partial class PkgManWindowViewModel
     /// <summary>
     /// Remove a repository
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRemoveRepositoryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRemoveRepositoryCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -260,9 +277,9 @@ public partial class PkgManWindowViewModel
     }
 
     /// <summary>
-    /// Remove a repository
+    /// Show the changelog for a package
     /// </summary>
-    private ReactiveCommand<Package, Unit> CreateShowChangelogCommand()
+    private ReactiveCommand<Package, RxVoid> CreateShowChangelogCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Package package) =>
@@ -271,6 +288,40 @@ public partial class PkgManWindowViewModel
                     package.GenerateChangelog()
                 );
                 await ShowChangelog.Handle(vm);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Show the source for a local package
+    /// </summary>
+    private ReactiveCommand<Package, RxVoid> CreateViewLocalSourceCommand()
+    {
+        return ReactiveCommand.CreateFromTask(
+            async (Package package) =>
+            {
+                if (!PackageManager.IsPackageInstalled(package, out var location))
+                    location = new Uri(package.Url); // fallback
+
+                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(package, location);
+                await ShowSourceViewer.Handle(vm);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Show the source for a remote package
+    /// </summary>
+    private ReactiveCommand<Package, RxVoid> CreateViewRemoteSourceCommand()
+    {
+        return ReactiveCommand.CreateFromTask(
+            async (Package package) =>
+            {
+                var vm = _viewModelFactory.Create<SourceViewerDialogViewModel>(
+                    package,
+                    new Uri(package.Url)
+                );
+                await ShowSourceViewer.Handle(vm);
             }
         );
     }

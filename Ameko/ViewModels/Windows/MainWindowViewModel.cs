@@ -3,7 +3,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Ameko.Messages;
@@ -14,7 +13,6 @@ using Ameko.ViewModels.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
-using DynamicData;
 using Holo;
 using Holo.Configuration;
 using Holo.Configuration.Keybinds;
@@ -22,6 +20,7 @@ using Holo.Media.Providers;
 using Holo.Providers;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -45,56 +44,59 @@ public partial class MainWindowViewModel : ViewModelBase
 
     #region Interactions
     // File
-    public Interaction<Unit, Uri[]?> OpenSubtitle { get; }
+    public Interaction<RxVoid, Uri[]?> OpenSubtitle { get; }
     public Interaction<string, Uri?> SaveSubtitleAs { get; }
     public Interaction<string, Uri?> ExportSubtitle { get; }
-    public Interaction<Unit, Uri?> OpenProject { get; }
-    public Interaction<Unit, Uri?> OpenFolderAsProject { get; }
+    public Interaction<RxVoid, Uri?> OpenProject { get; }
+    public Interaction<RxVoid, Uri?> OpenFolderAsProject { get; }
     public Interaction<string, Uri?> SaveProjectAs { get; }
 
     // Edit
-    public Interaction<SearchDialogViewModel, Unit> ShowSearchDialog { get; }
-    public Interaction<SpellcheckDialogViewModel, Unit> ShowSpellcheckDialog { get; }
+    public Interaction<SearchDialogViewModel, RxVoid> ShowSearchDialog { get; }
+    public Interaction<SpellcheckDialogViewModel, RxVoid> ShowSpellcheckDialog { get; }
 
     // Subtitle
-    public Interaction<StylesManagerWindowViewModel, Unit> ShowStylesManager { get; }
-    public Interaction<Unit, Uri?> AttachReferenceFile { get; }
-    public Interaction<ScriptInfoDialogViewModel, Unit> ShowScriptInfoDialog { get; }
-    public Interaction<ProfilerDialogViewModel, Unit> ShowProfilerDialog { get; }
-    public Interaction<SortDialogViewModel, Unit> ShowSortDialog { get; }
-    public Interaction<SelectDialogViewModel, Unit> ShowSelectDialog { get; }
+    public Interaction<StylesManagerWindowViewModel, RxVoid> ShowStylesManager { get; }
+    public Interaction<RxVoid, Uri?> AttachReferenceFile { get; }
+    public Interaction<ScriptInfoDialogViewModel, RxVoid> ShowScriptInfoDialog { get; }
+    public Interaction<ProfilerDialogViewModel, RxVoid> ShowProfilerDialog { get; }
+    public Interaction<SortDialogViewModel, RxVoid> ShowSortDialog { get; }
+    public Interaction<SelectDialogViewModel, RxVoid> ShowSelectDialog { get; }
 
     // Project
-    public Interaction<KnpWindowViewModel, Unit> ShowKnpWindow { get; }
-    public Interaction<ProjectConfigDialogViewModel, Unit> ShowProjectConfigDialog { get; }
+    public Interaction<KnpWindowViewModel, RxVoid> ShowKnpWindow { get; }
+    public Interaction<ProjectConfigDialogViewModel, RxVoid> ShowProjectConfigDialog { get; }
 
     // Timing
-    public Interaction<ShiftTimesDialogViewModel, Unit> ShowShiftTimesDialog { get; }
+    public Interaction<ShiftTimesDialogViewModel, RxVoid> ShowShiftTimesDialog { get; }
 
     // Video
-    public Interaction<Unit, Uri?> OpenVideo { get; }
-    public Interaction<Unit, Uri?> OpenKeyframes { get; }
+    public Interaction<RxVoid, Uri?> OpenVideo { get; }
+    public Interaction<RxVoid, Uri?> OpenKeyframes { get; }
     public Interaction<JumpDialogViewModel, JumpDialogClosedMessage?> ShowJumpDialog { get; }
 
     // Audio
-    public Interaction<Unit, Uri?> OpenAudio { get; }
+    public Interaction<RxVoid, Uri?> OpenAudio { get; }
 
     // Scripts
-    public Interaction<PkgManWindowViewModel, Unit> ShowPackageManager { get; }
-    public Interaction<PlaygroundWindowViewModel, Unit> ShowPlaygroundWindow { get; }
+    public Interaction<PkgManWindowViewModel, RxVoid> ShowPackageManager { get; }
+    public Interaction<PlaygroundWindowViewModel, RxVoid> ShowPlaygroundWindow { get; }
 
     // Help
-    public Interaction<HelpWindowViewModel, Unit> ShowHelpWindow { get; }
-    public Interaction<LogWindowViewModel, Unit> ShowLogWindow { get; }
-    public Interaction<AboutWindowViewModel, Unit> ShowAboutWindow { get; }
-    public Interaction<ConfigDialogViewModel, Unit> ShowConfigDialog { get; }
-    public Interaction<KeybindsDialogViewModel, Unit> ShowKeybindsDialog { get; }
-    public Interaction<Unit, Unit> OpenIssueTracker { get; }
+    public Interaction<HelpWindowViewModel, RxVoid> ShowHelpWindow { get; }
+    public Interaction<LogWindowViewModel, RxVoid> ShowLogWindow { get; }
+    public Interaction<AboutWindowViewModel, RxVoid> ShowAboutWindow { get; }
+    public Interaction<ConfigDialogViewModel, RxVoid> ShowConfigDialog { get; }
+    public Interaction<KeybindsDialogViewModel, RxVoid> ShowKeybindsDialog { get; }
+    public Interaction<RxVoid, RxVoid> OpenIssueTracker { get; }
 
     // Other
-    public Interaction<CommandPaletteDialogViewModel, Unit> ShowCommandPaletteDialog { get; }
-    public Interaction<Unit, Unit> ToggleFullscreen { get; }
-    public Interaction<InstallDictionaryDialogViewModel, Unit> ShowInstallDictionaryDialog { get; }
+    public Interaction<CommandPaletteDialogViewModel, RxVoid> ShowCommandPaletteDialog { get; }
+    public Interaction<RxVoid, RxVoid> ToggleFullscreen { get; }
+    public Interaction<
+        InstallDictionaryDialogViewModel,
+        RxVoid
+    > ShowInstallDictionaryDialog { get; }
     public Interaction<
         SelectFolderDialogViewModel,
         SelectFolderMessage?
@@ -447,47 +449,47 @@ public partial class MainWindowViewModel : ViewModelBase
 
         #region Interactions
         // File
-        OpenSubtitle = new Interaction<Unit, Uri[]?>();
+        OpenSubtitle = new Interaction<RxVoid, Uri[]?>();
         SaveSubtitleAs = new Interaction<string, Uri?>();
         ExportSubtitle = new Interaction<string, Uri?>();
-        OpenProject = new Interaction<Unit, Uri?>();
-        OpenFolderAsProject = new Interaction<Unit, Uri?>();
+        OpenProject = new Interaction<RxVoid, Uri?>();
+        OpenFolderAsProject = new Interaction<RxVoid, Uri?>();
         SaveProjectAs = new Interaction<string, Uri?>();
         // Edit
-        ShowSearchDialog = new Interaction<SearchDialogViewModel, Unit>();
-        ShowSpellcheckDialog = new Interaction<SpellcheckDialogViewModel, Unit>();
+        ShowSearchDialog = new Interaction<SearchDialogViewModel, RxVoid>();
+        ShowSpellcheckDialog = new Interaction<SpellcheckDialogViewModel, RxVoid>();
         // Subtitle
-        ShowStylesManager = new Interaction<StylesManagerWindowViewModel, Unit>();
-        AttachReferenceFile = new Interaction<Unit, Uri?>();
-        ShowScriptInfoDialog = new Interaction<ScriptInfoDialogViewModel, Unit>();
-        ShowProfilerDialog = new Interaction<ProfilerDialogViewModel, Unit>();
-        ShowSortDialog = new Interaction<SortDialogViewModel, Unit>();
-        ShowSelectDialog = new Interaction<SelectDialogViewModel, Unit>();
+        ShowStylesManager = new Interaction<StylesManagerWindowViewModel, RxVoid>();
+        AttachReferenceFile = new Interaction<RxVoid, Uri?>();
+        ShowScriptInfoDialog = new Interaction<ScriptInfoDialogViewModel, RxVoid>();
+        ShowProfilerDialog = new Interaction<ProfilerDialogViewModel, RxVoid>();
+        ShowSortDialog = new Interaction<SortDialogViewModel, RxVoid>();
+        ShowSelectDialog = new Interaction<SelectDialogViewModel, RxVoid>();
         // Project
-        ShowKnpWindow = new Interaction<KnpWindowViewModel, Unit>();
-        ShowProjectConfigDialog = new Interaction<ProjectConfigDialogViewModel, Unit>();
+        ShowKnpWindow = new Interaction<KnpWindowViewModel, RxVoid>();
+        ShowProjectConfigDialog = new Interaction<ProjectConfigDialogViewModel, RxVoid>();
         // Video
-        OpenVideo = new Interaction<Unit, Uri?>();
-        OpenKeyframes = new Interaction<Unit, Uri?>();
+        OpenVideo = new Interaction<RxVoid, Uri?>();
+        OpenKeyframes = new Interaction<RxVoid, Uri?>();
         ShowJumpDialog = new Interaction<JumpDialogViewModel, JumpDialogClosedMessage?>();
         // Audio
-        OpenAudio = new Interaction<Unit, Uri?>();
+        OpenAudio = new Interaction<RxVoid, Uri?>();
         // Timing
-        ShowShiftTimesDialog = new Interaction<ShiftTimesDialogViewModel, Unit>();
+        ShowShiftTimesDialog = new Interaction<ShiftTimesDialogViewModel, RxVoid>();
         // Scripts
-        ShowPackageManager = new Interaction<PkgManWindowViewModel, Unit>();
-        ShowPlaygroundWindow = new Interaction<PlaygroundWindowViewModel, Unit>();
+        ShowPackageManager = new Interaction<PkgManWindowViewModel, RxVoid>();
+        ShowPlaygroundWindow = new Interaction<PlaygroundWindowViewModel, RxVoid>();
         // Help
-        ShowHelpWindow = new Interaction<HelpWindowViewModel, Unit>();
-        ShowLogWindow = new Interaction<LogWindowViewModel, Unit>();
-        ShowAboutWindow = new Interaction<AboutWindowViewModel, Unit>();
-        ShowConfigDialog = new Interaction<ConfigDialogViewModel, Unit>();
-        ShowKeybindsDialog = new Interaction<KeybindsDialogViewModel, Unit>();
-        OpenIssueTracker = new Interaction<Unit, Unit>();
+        ShowHelpWindow = new Interaction<HelpWindowViewModel, RxVoid>();
+        ShowLogWindow = new Interaction<LogWindowViewModel, RxVoid>();
+        ShowAboutWindow = new Interaction<AboutWindowViewModel, RxVoid>();
+        ShowConfigDialog = new Interaction<ConfigDialogViewModel, RxVoid>();
+        ShowKeybindsDialog = new Interaction<KeybindsDialogViewModel, RxVoid>();
+        OpenIssueTracker = new Interaction<RxVoid, RxVoid>();
         // Other
-        ShowCommandPaletteDialog = new Interaction<CommandPaletteDialogViewModel, Unit>();
-        ToggleFullscreen = new Interaction<Unit, Unit>();
-        ShowInstallDictionaryDialog = new Interaction<InstallDictionaryDialogViewModel, Unit>();
+        ShowCommandPaletteDialog = new Interaction<CommandPaletteDialogViewModel, RxVoid>();
+        ToggleFullscreen = new Interaction<RxVoid, RxVoid>();
+        ShowInstallDictionaryDialog = new Interaction<InstallDictionaryDialogViewModel, RxVoid>();
         ShowSelectFolderDialog =
             new Interaction<SelectFolderDialogViewModel, SelectFolderMessage?>();
         #endregion

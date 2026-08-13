@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -18,7 +18,7 @@ public class LogWindowViewModel : ViewModelBase
     private readonly ILogProvider _logProvider;
 
     public ICommand CopySelectionCommand { get; }
-    public Interaction<string, Unit> CopySelection { get; }
+    public Interaction<string, RxVoid> CopySelection { get; }
 
     public object? SelectedLog
     {
@@ -39,7 +39,7 @@ public class LogWindowViewModel : ViewModelBase
                 SelectedLog = args.NewItems[^1];
         };
 
-        CopySelection = new Interaction<string, Unit>();
+        CopySelection = new Interaction<string, RxVoid>();
         CopySelectionCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             if (SelectedLogs.Count == 0)

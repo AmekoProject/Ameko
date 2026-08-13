@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using Ameko.ViewModels.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Input;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Dialogs;
 
@@ -48,9 +46,8 @@ public partial class CommandPaletteDialog : ReactiveWindow<CommandPaletteDialogV
             QueryBox.SelectionStart = 0;
             QueryBox.SelectionEnd = QueryBox.Text.Length;
 
-            ViewModel?.GoCommand.Subscribe(Close);
+            ViewModel?.GoCommand.Subscribe(Close).DisposeWith(disposables);
             ViewModel?.GenerateCommandSuggestions();
-            Disposable.Create(() => { }).DisposeWith(disposables);
 
             Deactivated += (_, _) =>
             {

@@ -1,21 +1,24 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-        
-        x:Class="Ameko.Views.Dialogs.ChangelogDialog"
-        x:DataType="vm:ChangelogDialogViewModel"
-        
-        Focusable="True"
-        Width="600"
-        Height="600"
-        CanResize="True"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Other.ChangelogDialog_Title}">
-    <HtmlPanel Text="{Binding ChangelogContent, FallbackValue={x:Static i18n:Other.Changelog_NoChangelog}}" /> 
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="600"
+  d:DesignHeight="600"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ChangelogDialog"
+  x:DataType="vm:ChangelogDialogViewModel"
+  Focusable="True"
+  Width="600"
+  Height="600"
+  CanResize="True"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Other.ChangelogDialog_Title}"
+>
+  <HtmlPanel Text="{Binding ChangelogContent, FallbackValue={x:Static i18n:Other.Changelog_NoChangelog}}" />
 </Window>

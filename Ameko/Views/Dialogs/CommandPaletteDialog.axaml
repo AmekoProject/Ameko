@@ -1,47 +1,49 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="500"
-        d:DesignHeight="200"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:dm="clr-namespace:Ameko.DataModels"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.CommandPaletteDialog"
-        x:DataType="vm:CommandPaletteDialogViewModel"
-        
-        Focusable="True"
-        CanResize="False"
-        Width="500"
-        SizeToContent="Height"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:CommandPalette.CommandPalette_Title}">
-    <DockPanel Margin="5">
-        <Grid ColumnDefinitions="*, Auto"
-              ColumnSpacing="2"
-              Margin="2"
-              DockPanel.Dock="Top">
-            <TextBox Grid.Column="0"
-                     Name="QueryBox"
-                     PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
-                     AcceptsTab="False"
-                     AcceptsReturn="False"
-                     Text="{Binding Query}"
-                     TextChanged="QueryBox_OnTextChanged"
-                     KeyDown="QueryBox_OnKeyDown"/>
-            <Button Grid.Column="1"
-                    IsDefault="True"
-                    Classes="Primary"
-                    Content="{x:Static i18n:CommandPalette.CmdP_Button}"
-                    Command="{Binding GoCommand}" />
-        </Grid>
-        <ListBox ItemsSource="{Binding Results}"
-                 SelectedItem="{Binding SelectedResult}"
-                 SelectedIndex="{Binding SelectedIndex}" />
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="500"
+  d:DesignHeight="200"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.CommandPaletteDialog"
+  x:DataType="vm:CommandPaletteDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  Width="500"
+  SizeToContent="Height"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:CommandPalette.CommandPalette_Title}"
+>
+  <DockPanel Margin="5">
+    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="2" Margin="2" DockPanel.Dock="Top">
+      <TextBox
+        Grid.Column="0"
+        Name="QueryBox"
+        PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
+        AcceptsTab="False"
+        AcceptsReturn="False"
+        Text="{Binding Query}"
+        TextChanged="QueryBox_OnTextChanged"
+        KeyDown="QueryBox_OnKeyDown"
+      />
+      <Button
+        Grid.Column="1"
+        IsDefault="True"
+        Classes="Primary"
+        Content="{x:Static i18n:CommandPalette.CmdP_Button}"
+        Command="{Binding GoCommand}"
+      />
+    </Grid>
+    <ListBox
+      ItemsSource="{Binding Results}"
+      SelectedItem="{Binding SelectedResult}"
+      SelectedIndex="{Binding SelectedIndex}"
+    />
+  </DockPanel>
 </Window>

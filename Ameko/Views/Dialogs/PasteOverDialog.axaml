@@ -1,118 +1,149 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="300"
-        d:DesignHeight="310"
-
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.PasteOverDialog"
-        x:DataType="vm:PasteOverDialogViewModel"
-
-        Focusable="True"
-        Width="300"
-        CanResize="False"
-        SizeToContent="Height"
-        ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:PasteOver.PasteOver_WindowTitle}">
-    <DockPanel Margin="5"
-               VerticalSpacing="2">
-        <StackPanel DockPanel.Dock="Top"
-                    Spacing="2">
-            <CheckBox Name="CommentBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Comment}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding Comment}" />
-            <CheckBox Name="LayerBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Layer}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding Layer}" />
-            <CheckBox Name="StartBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_StartTime}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding StartTime}" />
-            <CheckBox Name="EndBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_EndTime}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding EndTime}" />
-            <CheckBox Name="StyleBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Style}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding Style}" />
-            <CheckBox Name="ActorBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Actor}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding Actor}" />
-            <CheckBox Name="MarginLeftBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginLeft}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding MarginLeft}" />
-            <CheckBox Name="MarginRightBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginRight}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding MarginRight}" />
-            <CheckBox Name="MarginVerticalBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginVertical}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding MarginVertical}" />
-            <CheckBox Name="EffectBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Effect}"
-                      IsEnabled="{Binding IsAssContent}"
-                      IsChecked="{Binding Effect}" />
-            <CheckBox Name="TextBox"
-                      Content="{x:Static i18n:PasteOver.PasteOver_CB_Text}"
-                      IsChecked="{Binding Text}" />
-        </StackPanel>
-        <Grid DockPanel.Dock="Bottom"
-              ColumnDefinitions="*, *, *, *"
-              RowDefinitions="Auto, Auto"
-              ColumnSpacing="3"
-              RowSpacing="3">
-            <Button Grid.Column="0"
-                    Grid.Row="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Tertiary"
-                    Content="{x:Static i18n:PasteOver.PasteOver_Button_All}"
-                    ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_All_ToolTip}"
-                    IsEnabled="{Binding IsAssContent}"
-                    Command="{Binding SelectAllCommand}" />
-            <Button Grid.Column="1"
-                    Grid.Row="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Tertiary"
-                    Content="{x:Static i18n:PasteOver.PasteOver_Button_None}"
-                    ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_None_ToolTip}"
-                    IsEnabled="{Binding IsAssContent}"
-                    Command="{Binding SelectNoneCommand}" />
-            <Button Grid.Column="2"
-                    Grid.Row="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Tertiary"
-                    Content="{x:Static i18n:PasteOver.PasteOver_Button_Times}"
-                    ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_Times_ToolTip}"
-                    IsEnabled="{Binding IsAssContent}"
-                    Command="{Binding SelectTimesCommand}" />
-            <Button Grid.Column="3"
-                    Grid.Row="0"
-                    HorizontalAlignment="Stretch"
-                    Classes="Tertiary"
-                    Content="{x:Static i18n:PasteOver.PasteOver_Button_Text}"
-                    ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_Text_ToolTip}"
-                    Command="{Binding SelectTextCommand}" />
-            <Button Grid.Column="3"
-                    Grid.Row="1"
-                    HorizontalAlignment="Stretch"
-                    Classes="Primary"
-                    IsDefault="True"
-                    Content="{x:Static i18n:PasteOver.PasteOver_Button_Confirm}"
-                    Command="{Binding ConfirmCommand}" />
-        </Grid>
-    </DockPanel>
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="300"
+  d:DesignHeight="310"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.PasteOverDialog"
+  x:DataType="vm:PasteOverDialogViewModel"
+  Focusable="True"
+  Width="300"
+  CanResize="False"
+  SizeToContent="Height"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:PasteOver.PasteOver_WindowTitle}"
+>
+  <DockPanel Margin="5" VerticalSpacing="2">
+    <StackPanel DockPanel.Dock="Top" Spacing="2">
+      <CheckBox
+        Name="CommentBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Comment}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding Comment}"
+      />
+      <CheckBox
+        Name="LayerBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Layer}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding Layer}"
+      />
+      <CheckBox
+        Name="StartBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_StartTime}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding StartTime}"
+      />
+      <CheckBox
+        Name="EndBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_EndTime}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding EndTime}"
+      />
+      <CheckBox
+        Name="StyleBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Style}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding Style}"
+      />
+      <CheckBox
+        Name="ActorBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Actor}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding Actor}"
+      />
+      <CheckBox
+        Name="MarginLeftBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginLeft}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding MarginLeft}"
+      />
+      <CheckBox
+        Name="MarginRightBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginRight}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding MarginRight}"
+      />
+      <CheckBox
+        Name="MarginVerticalBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_MarginVertical}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding MarginVertical}"
+      />
+      <CheckBox
+        Name="EffectBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Effect}"
+        IsEnabled="{Binding IsAssContent}"
+        IsChecked="{Binding Effect}"
+      />
+      <CheckBox
+        Name="TextBox"
+        Content="{x:Static i18n:PasteOver.PasteOver_CB_Text}"
+        IsChecked="{Binding Text}"
+      />
+    </StackPanel>
+    <Grid
+      DockPanel.Dock="Bottom"
+      ColumnDefinitions="*, *, *, *"
+      RowDefinitions="Auto, Auto"
+      ColumnSpacing="3"
+      RowSpacing="3"
+    >
+      <Button
+        Grid.Column="0"
+        Grid.Row="0"
+        HorizontalAlignment="Stretch"
+        Classes="Tertiary"
+        Content="{x:Static i18n:PasteOver.PasteOver_Button_All}"
+        ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_All_ToolTip}"
+        IsEnabled="{Binding IsAssContent}"
+        Command="{Binding SelectAllCommand}"
+      />
+      <Button
+        Grid.Column="1"
+        Grid.Row="0"
+        HorizontalAlignment="Stretch"
+        Classes="Tertiary"
+        Content="{x:Static i18n:PasteOver.PasteOver_Button_None}"
+        ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_None_ToolTip}"
+        IsEnabled="{Binding IsAssContent}"
+        Command="{Binding SelectNoneCommand}"
+      />
+      <Button
+        Grid.Column="2"
+        Grid.Row="0"
+        HorizontalAlignment="Stretch"
+        Classes="Tertiary"
+        Content="{x:Static i18n:PasteOver.PasteOver_Button_Times}"
+        ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_Times_ToolTip}"
+        IsEnabled="{Binding IsAssContent}"
+        Command="{Binding SelectTimesCommand}"
+      />
+      <Button
+        Grid.Column="3"
+        Grid.Row="0"
+        HorizontalAlignment="Stretch"
+        Classes="Tertiary"
+        Content="{x:Static i18n:PasteOver.PasteOver_Button_Text}"
+        ToolTip.Tip="{x:Static i18n:PasteOver.PasteOver_Button_Text_ToolTip}"
+        Command="{Binding SelectTextCommand}"
+      />
+      <Button
+        Grid.Column="3"
+        Grid.Row="1"
+        HorizontalAlignment="Stretch"
+        Classes="Primary"
+        IsDefault="True"
+        Content="{x:Static i18n:PasteOver.PasteOver_Button_Confirm}"
+        Command="{Binding ConfirmCommand}"
+      />
+    </Grid>
+  </DockPanel>
 </Window>

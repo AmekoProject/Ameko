@@ -1,12 +1,12 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
-using System.Reactive.Linq;
 using Ameko.ViewModels.Dialogs;
 using AssCS;
 using AssCS.History;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -15,7 +15,7 @@ public partial class StylesManagerWindowViewModel : ViewModelBase
     /// <summary>
     /// Duplicate a style
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateDuplicateCommand()
+    private ReactiveCommand<string, RxVoid> CreateDuplicateCommand()
     {
         return ReactiveCommand.Create(
             (string input) =>
@@ -46,7 +46,7 @@ public partial class StylesManagerWindowViewModel : ViewModelBase
     /// <summary>
     /// Delete a style
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateDeleteCommand()
+    private ReactiveCommand<string, RxVoid> CreateDeleteCommand()
     {
         return ReactiveCommand.Create(
             (string input) =>
@@ -77,7 +77,7 @@ public partial class StylesManagerWindowViewModel : ViewModelBase
     /// <summary>
     /// Copy a style from one group to another
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateCopyToCommand()
+    private ReactiveCommand<string, RxVoid> CreateCopyToCommand()
     {
         return ReactiveCommand.Create(
             (string input) =>
@@ -119,7 +119,7 @@ public partial class StylesManagerWindowViewModel : ViewModelBase
     /// <summary>
     /// Edit a style
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateEditStyleCommand()
+    private ReactiveCommand<string, RxVoid> CreateEditStyleCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (string input) =>
@@ -158,7 +158,7 @@ public partial class StylesManagerWindowViewModel : ViewModelBase
     /// <summary>
     /// Create a style
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateNewStyleCommand()
+    private ReactiveCommand<string, RxVoid> CreateNewStyleCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (string input) =>

@@ -1,77 +1,90 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="350"
-        d:DesignHeight="75"
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:dm="clr-namespace:Ameko.DataModels"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="75"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:dm="clr-namespace:Ameko.DataModels"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.SearchDialog"
+  x:DataType="vm:SearchDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Search.SearchWindow_Title}"
+>
+  <Window.Resources>
+    <converters:EnumConverter x:Key="EnumConverter" />
+  </Window.Resources>
 
-        x:Class="Ameko.Views.Dialogs.SearchDialog"
-        x:DataType="vm:SearchDialogViewModel"
-        
-        Focusable="True"
-        CanResize="False"
-        SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:Search.SearchWindow_Title}">
-    <Window.Resources>
-        <converters:EnumConverter x:Key="EnumConverter" />
-    </Window.Resources>
-    
-    <StackPanel Margin="5">
-        <Grid ColumnDefinitions="Auto, *, Auto"
-              ColumnSpacing="2"
-              Margin="2">
-            <Label Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="{x:Static i18n:Search.Search_Label_Find}" />
-            <TextBox Grid.Column="1"
-                     Name="QueryBox"
-                     PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
-                     AcceptsTab="False"
-                     AcceptsReturn="False"
-                     Text="{Binding Query}"/>
-            <Button Grid.Column="2"
-                    IsDefault="True"
-                    Classes="Primary"
-                    Content="{x:Static i18n:Search.Search_Button_Find}"
-                    Command="{Binding FindNextCommand}" />
-        </Grid>
-        <StackPanel Orientation="Horizontal"
-                    Margin="2"
-                    Spacing="12">
-            <RadioButton GroupName="Filter"
-                         Content="{x:Static i18n:Search.Search_RB_Text}"
-                         IsChecked="{Binding Filter,
+  <StackPanel Margin="5">
+    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="2" Margin="2">
+      <Label
+        Grid.Column="0"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Content="{x:Static i18n:Search.Search_Label_Find}"
+      />
+      <TextBox
+        Grid.Column="1"
+        Name="QueryBox"
+        PlaceholderText="{x:Static i18n:Search.Search_QueryBox_Watermark}"
+        AcceptsTab="False"
+        AcceptsReturn="False"
+        Text="{Binding Query}"
+      />
+      <Button
+        Grid.Column="2"
+        IsDefault="True"
+        Classes="Primary"
+        Content="{x:Static i18n:Search.Search_Button_Find}"
+        Command="{Binding FindNextCommand}"
+      />
+    </Grid>
+    <StackPanel Orientation="Horizontal" Margin="2" Spacing="12">
+      <RadioButton
+        GroupName="Filter"
+        Content="{x:Static i18n:Search.Search_RB_Text}"
+        IsChecked="{Binding Filter,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Text}}" />
-            <RadioButton GroupName="Filter"
-                         Content="{x:Static i18n:Search.Search_RB_TextStripped}"
-                         IsChecked="{Binding Filter,
+                                             ConverterParameter={x:Static dm:SearchFilter.Text}}"
+      />
+      <RadioButton
+        GroupName="Filter"
+        Content="{x:Static i18n:Search.Search_RB_TextStripped}"
+        IsChecked="{Binding Filter,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}" />
-            <RadioButton GroupName="Filter"
-                         Content="{x:Static i18n:Search.Search_RB_Style}"
-                         IsChecked="{Binding Filter,
+                                             ConverterParameter={x:Static dm:SearchFilter.StrippedText}}"
+      />
+      <RadioButton
+        GroupName="Filter"
+        Content="{x:Static i18n:Search.Search_RB_Style}"
+        IsChecked="{Binding Filter,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Style}}" />
-            <RadioButton GroupName="Filter"
-                         Content="{x:Static i18n:Search.Search_RB_Actor}"
-                         IsChecked="{Binding Filter,
+                                             ConverterParameter={x:Static dm:SearchFilter.Style}}"
+      />
+      <RadioButton
+        GroupName="Filter"
+        Content="{x:Static i18n:Search.Search_RB_Actor}"
+        IsChecked="{Binding Filter,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}" />
-            <RadioButton GroupName="Filter"
-                         Content="{x:Static i18n:Search.Search_RB_Effect}"
-                         IsChecked="{Binding Filter,
+                                             ConverterParameter={x:Static dm:SearchFilter.Actor}}"
+      />
+      <RadioButton
+        GroupName="Filter"
+        Content="{x:Static i18n:Search.Search_RB_Effect}"
+        IsChecked="{Binding Filter,
                                              Converter={StaticResource EnumConverter},
-                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}" />
-        </StackPanel>
+                                             ConverterParameter={x:Static dm:SearchFilter.Effect}}"
+      />
     </StackPanel>
+  </StackPanel>
 </Window>

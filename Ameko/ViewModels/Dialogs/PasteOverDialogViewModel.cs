@@ -2,15 +2,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Windows.Input;
 using Ameko.Messages;
 using AssCS;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class PasteOverDialogViewModel : ViewModelBase
+public class PasteOverDialogViewModel : ViewModelBase
 {
     private EventField _fields;
 
@@ -18,7 +18,7 @@ public partial class PasteOverDialogViewModel : ViewModelBase
     public ICommand SelectNoneCommand { get; }
     public ICommand SelectTimesCommand { get; }
     public ICommand SelectTextCommand { get; }
-    public ReactiveCommand<Unit, PasteOverDialogClosedMessage> ConfirmCommand { get; }
+    public ReactiveCommand<RxVoid, PasteOverDialogClosedMessage> ConfirmCommand { get; }
 
     public bool IsAssContent { get; set; }
 

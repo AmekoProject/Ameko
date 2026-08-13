@@ -1,452 +1,561 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignWidth="375"
-        d:DesignHeight="700"
-
-        xmlns:c="clr-namespace:Ameko.Views.Controls"
-        xmlns:converters="clr-namespace:Ameko.Converters"
-        xmlns:i18n="clr-namespace:Ameko.I18N"
-        xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
-
-        x:Class="Ameko.Views.Dialogs.StyleEditorDialog"
-        x:DataType="vm:StyleEditorDialogViewModel"
-        
-        Width="400"
-        CanResize="False"
-        SizeToContent="Height"
-        WindowStartupLocation="CenterOwner"
-        Icon="/Assets/Ameko-Simplified-BG-64.ico"
-        Title="{x:Static i18n:StyleEditor.StyleEditor_WindowTitle}">
-    <Window.Resources>
-        <converters:StyleColorConverter x:Key="ColorConverter" />
-        <converters:StyleAlignmentConverter x:Key="AlignmentConverter" />
-        <converters:StyleBorderBoxConverter x:Key="BoxConverter" />
-        <converters:HccBorderConverter x:Key="BorderConverter" />
-    </Window.Resources>
-    <StackPanel Margin="5">
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_BasicInfo}">
-            <StackPanel>
-                <TextBlock Foreground="Red"
-                           IsVisible="{Binding IsNameInvalid}"
-                           Text="{x:Static i18n:StyleEditor.StyleEditor_InvalidName}" />
-                <TextBox Text="{Binding StyleName}"
-                         PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_NameBox_Watermark}" />
-            </StackPanel>
-        </HeaderedContentControl>
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_Font}">
-            <StackPanel Spacing="2">
-                <Grid ColumnDefinitions="*, *, *, *">
-                    <TextBox Grid.Column="0"
-                             Grid.Row="0"
-                             Grid.ColumnSpan="3"
-                             Margin="0 0 2 2"
-                             Text="{Binding Style.FontFamily}"
-                             PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_FontFamilyBox_Watermark}" />
-                    <c:NumberTextBox Grid.Column="3"
-                                     Grid.Row="0"
-                                     Padding="0"
-                                     Margin="2 0 0 2"
-                                     FormatString="0"
-                                     Increment="1"
-                                     Minimum="0"
-                                     Value="{Binding Style.FontSize}" />
-                </Grid>
-                <StackPanel Orientation="Horizontal"
-                            Spacing="10">
-                    <CheckBox IsChecked="{Binding Style.IsBold}"
-                              Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Bold}" />
-                    <CheckBox IsChecked="{Binding Style.IsItalic}"
-                              Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Italic}" />
-                    <CheckBox IsChecked="{Binding Style.IsUnderline}"
-                              Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Underline}" />
-                    <CheckBox IsChecked="{Binding Style.IsStrikethrough}"
-                              Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Strikethrough}" />
-                </StackPanel>
-            </StackPanel>
-        </HeaderedContentControl>
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_Colors}">
-            <Grid ColumnDefinitions=" *, *, *, *"
-                  RowDefinitions="*, *">
-                <!-- Primary color -->
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Primary}"
-                       HorizontalAlignment="Center" />
-                <Button Grid.Column="0"
-                        Grid.Row="1"
-                        Height="40"
-                        Padding="0"
-                        Margin="1"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding EditColorCommand}"
-                        CommandParameter="{Binding Style.PrimaryColor}">
-                    <Grid RowDefinitions="*, *"
-                          Background="White">
-                        <Panel Grid.Row="0"
-                               Height="20"
-                               Background="{Binding PrimaryColor,
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="375"
+  d:DesignHeight="700"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.StyleEditorDialog"
+  x:DataType="vm:StyleEditorDialogViewModel"
+  Width="400"
+  CanResize="False"
+  SizeToContent="Height"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:StyleEditor.StyleEditor_WindowTitle}"
+>
+  <Window.Resources>
+    <converters:StyleColorConverter x:Key="ColorConverter" />
+    <converters:StyleAlignmentConverter x:Key="AlignmentConverter" />
+    <converters:StyleBorderBoxConverter x:Key="BoxConverter" />
+    <converters:HccBorderConverter x:Key="BorderConverter" />
+  </Window.Resources>
+  <StackPanel Margin="5">
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_BasicInfo}">
+      <StackPanel>
+        <TextBlock
+          Foreground="Red"
+          IsVisible="{Binding IsNameInvalid}"
+          Text="{x:Static i18n:StyleEditor.StyleEditor_InvalidName}"
+        />
+        <TextBox
+          Text="{Binding StyleName}"
+          PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_NameBox_Watermark}"
+        />
+      </StackPanel>
+    </HeaderedContentControl>
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_Font}">
+      <StackPanel Spacing="2">
+        <Grid ColumnDefinitions="*, *, *, *">
+          <TextBox
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Margin="0 0 2 2"
+            Text="{Binding Style.FontFamily}"
+            PlaceholderText="{x:Static i18n:StyleEditor.StyleEditor_FontFamilyBox_Watermark}"
+          />
+          <c:NumberTextBox
+            Grid.Column="3"
+            Grid.Row="0"
+            Padding="0"
+            Margin="2 0 0 2"
+            FormatString="0"
+            Increment="1"
+            Minimum="0"
+            Value="{Binding Style.FontSize}"
+          />
+        </Grid>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <CheckBox
+            IsChecked="{Binding Style.IsBold}"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Bold}"
+          />
+          <CheckBox
+            IsChecked="{Binding Style.IsItalic}"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Italic}"
+          />
+          <CheckBox
+            IsChecked="{Binding Style.IsUnderline}"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Underline}"
+          />
+          <CheckBox
+            IsChecked="{Binding Style.IsStrikethrough}"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_CheckBox_Strikethrough}"
+          />
+        </StackPanel>
+      </StackPanel>
+    </HeaderedContentControl>
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Section_Colors}">
+      <Grid ColumnDefinitions=" *, *, *, *" RowDefinitions="*, *">
+        <!-- Primary color -->
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Primary}"
+          HorizontalAlignment="Center"
+        />
+        <Button
+          Grid.Column="0"
+          Grid.Row="1"
+          Height="40"
+          Padding="0"
+          Margin="1"
+          HorizontalContentAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Command="{Binding EditColorCommand}"
+          CommandParameter="{Binding Style.PrimaryColor}"
+        >
+          <Grid RowDefinitions="*, *" Background="White">
+            <Panel
+              Grid.Row="0"
+              Height="20"
+              Background="{Binding PrimaryColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=false}" />
-                        <Panel Grid.Row="1"
-                               Height="20"
-                               Background="{Binding PrimaryColor,
+                                                    ConverterParameter=false}"
+            />
+            <Panel
+              Grid.Row="1"
+              Height="20"
+              Background="{Binding PrimaryColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=true}" />
-                    </Grid>
-                </Button>
-                <!-- Secondary color -->
-                <Label Grid.Column="1"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Secondary}"
-                       HorizontalAlignment="Center" />
-                <Button Grid.Column="1"
-                        Grid.Row="1"
-                        Height="40"
-                        Padding="0"
-                        Margin="1"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding EditColorCommand}"
-                        CommandParameter="{Binding Style.SecondaryColor}">
-                    <Grid RowDefinitions="*, *"
-                          Background="White">
-                        <Panel Grid.Row="0"
-                               Height="20"
-                               Background="{Binding SecondaryColor,
+                                                    ConverterParameter=true}"
+            />
+          </Grid>
+        </Button>
+        <!-- Secondary color -->
+        <Label
+          Grid.Column="1"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Secondary}"
+          HorizontalAlignment="Center"
+        />
+        <Button
+          Grid.Column="1"
+          Grid.Row="1"
+          Height="40"
+          Padding="0"
+          Margin="1"
+          HorizontalContentAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Command="{Binding EditColorCommand}"
+          CommandParameter="{Binding Style.SecondaryColor}"
+        >
+          <Grid RowDefinitions="*, *" Background="White">
+            <Panel
+              Grid.Row="0"
+              Height="20"
+              Background="{Binding SecondaryColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=false}" />
-                        <Panel Grid.Row="1"
-                               Height="20"
-                               Background="{Binding SecondaryColor,
+                                                    ConverterParameter=false}"
+            />
+            <Panel
+              Grid.Row="1"
+              Height="20"
+              Background="{Binding SecondaryColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=true}" />
-                    </Grid>
-                </Button>
-                <!-- Outline color -->
-                <Label Grid.Column="2"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Outline}"
-                       HorizontalAlignment="Center" />
-                <Button Grid.Column="2"
-                        Grid.Row="1"
-                        Height="40"
-                        Padding="0"
-                        Margin="1"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding EditColorCommand}"
-                        CommandParameter="{Binding Style.OutlineColor}">
-                    <Grid RowDefinitions="*, *"
-                          Background="White">
-                        <Panel Grid.Row="0"
-                               Height="20"
-                               Background="{Binding OutlineColor,
+                                                    ConverterParameter=true}"
+            />
+          </Grid>
+        </Button>
+        <!-- Outline color -->
+        <Label
+          Grid.Column="2"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Outline}"
+          HorizontalAlignment="Center"
+        />
+        <Button
+          Grid.Column="2"
+          Grid.Row="1"
+          Height="40"
+          Padding="0"
+          Margin="1"
+          HorizontalContentAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Command="{Binding EditColorCommand}"
+          CommandParameter="{Binding Style.OutlineColor}"
+        >
+          <Grid RowDefinitions="*, *" Background="White">
+            <Panel
+              Grid.Row="0"
+              Height="20"
+              Background="{Binding OutlineColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=false}" />
-                        <Panel Grid.Row="1"
-                               Height="20"
-                               Background="{Binding OutlineColor,
+                                                    ConverterParameter=false}"
+            />
+            <Panel
+              Grid.Row="1"
+              Height="20"
+              Background="{Binding OutlineColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=true}" />
-                    </Grid>
-                </Button>
-                <!-- Shadow color -->
-                <Label Grid.Column="3"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Shadow}"
-                       HorizontalAlignment="Center" />
-                <Button Grid.Column="3"
-                        Grid.Row="1"
-                        Height="40"
-                        Padding="0"
-                        Margin="1"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding EditColorCommand}"
-                        CommandParameter="{Binding Style.ShadowColor}">
-                    <Grid RowDefinitions="*, *"
-                          Background="White">
-                        <Panel Grid.Row="0"
-                               Height="20"
-                               Background="{Binding ShadowColor,
+                                                    ConverterParameter=true}"
+            />
+          </Grid>
+        </Button>
+        <!-- Shadow color -->
+        <Label
+          Grid.Column="3"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Shadow}"
+          HorizontalAlignment="Center"
+        />
+        <Button
+          Grid.Column="3"
+          Grid.Row="1"
+          Height="40"
+          Padding="0"
+          Margin="1"
+          HorizontalContentAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Command="{Binding EditColorCommand}"
+          CommandParameter="{Binding Style.ShadowColor}"
+        >
+          <Grid RowDefinitions="*, *" Background="White">
+            <Panel
+              Grid.Row="0"
+              Height="20"
+              Background="{Binding ShadowColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=false}" />
-                        <Panel Grid.Row="1"
-                               Height="20"
-                               Background="{Binding ShadowColor,
+                                                    ConverterParameter=false}"
+            />
+            <Panel
+              Grid.Row="1"
+              Height="20"
+              Background="{Binding ShadowColor,
                                                     Converter={StaticResource ColorConverter},
-                                                    ConverterParameter=true}" />
-                    </Grid>
-                </Button>
-            </Grid>
-        </HeaderedContentControl>
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Positioning}">
-            <Grid ColumnDefinitions="*, *"
-                  RowDefinitions="Auto, *"
-                  ColumnSpacing="2">
-                <!-- Margins -->
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Margins}" />
-                <UniformGrid Grid.Column="0"
-                             Grid.Row="1"
-                             Columns="3"
-                             ColumnSpacing="2">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <c:NumberTextBox Padding="0"
-                                         FormatString="0"
-                                         Increment="1"
-                                         Minimum="0"
-                                         VerticalAlignment="Center"
-                                         Value="{Binding Style.Margins.Left}"
-                                         ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginLeft_ToolTip}" />
-                        <Label HorizontalAlignment="Center"
-                               Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginLeft}" />
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Bottom">
-                        <c:NumberTextBox Padding="0"
-                                         FormatString="0"
-                                         Increment="1"
-                                         Minimum="0"
-                                         VerticalAlignment="Center"
-                                         Value="{Binding Style.Margins.Right}"
-                                         ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginRight_ToolTip}" />
-                        <Label HorizontalAlignment="Center"
-                               Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginRight}" />
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Bottom">
-                        <c:NumberTextBox Padding="0"
-                                         FormatString="0"
-                                         Increment="1"
-                                         Minimum="0"
-                                         VerticalAlignment="Center"
-                                         Value="{Binding Style.Margins.Vertical}"
-                                         ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginVertical_ToolTip}" />
-                        <Label HorizontalAlignment="Center"
-                               Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginVertical}" />
-                    </StackPanel>
-                </UniformGrid>
-                <!-- Alignment -->
-                <Label Grid.Column="1"
-                       Grid.Row="0"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Alignment}" />
-                <UniformGrid Grid.Column="1"
-                             Grid.Row="1"
-                             Columns="3"
-                             Rows="3"
-                             ColumnSpacing="5"
-                             RowSpacing="5">
-                    <RadioButton GroupName="Align"
-                                 Content="7"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An7_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                    ConverterParameter=true}"
+            />
+          </Grid>
+        </Button>
+      </Grid>
+    </HeaderedContentControl>
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Positioning}">
+      <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, *" ColumnSpacing="2">
+        <!-- Margins -->
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Margins}"
+        />
+        <UniformGrid Grid.Column="0" Grid.Row="1" Columns="3" ColumnSpacing="2">
+          <StackPanel VerticalAlignment="Bottom">
+            <c:NumberTextBox
+              Padding="0"
+              FormatString="0"
+              Increment="1"
+              Minimum="0"
+              VerticalAlignment="Center"
+              Value="{Binding Style.Margins.Left}"
+              ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginLeft_ToolTip}"
+            />
+            <Label
+              HorizontalAlignment="Center"
+              Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginLeft}"
+            />
+          </StackPanel>
+          <StackPanel VerticalAlignment="Bottom">
+            <c:NumberTextBox
+              Padding="0"
+              FormatString="0"
+              Increment="1"
+              Minimum="0"
+              VerticalAlignment="Center"
+              Value="{Binding Style.Margins.Right}"
+              ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginRight_ToolTip}"
+            />
+            <Label
+              HorizontalAlignment="Center"
+              Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginRight}"
+            />
+          </StackPanel>
+          <StackPanel VerticalAlignment="Bottom">
+            <c:NumberTextBox
+              Padding="0"
+              FormatString="0"
+              Increment="1"
+              Minimum="0"
+              VerticalAlignment="Center"
+              Value="{Binding Style.Margins.Vertical}"
+              ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_MarginVertical_ToolTip}"
+            />
+            <Label
+              HorizontalAlignment="Center"
+              Content="{x:Static i18n:StyleEditor.StyleEditor_Label_MarginVertical}"
+            />
+          </StackPanel>
+        </UniformGrid>
+        <!-- Alignment -->
+        <Label
+          Grid.Column="1"
+          Grid.Row="0"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Alignment}"
+        />
+        <UniformGrid
+          Grid.Column="1"
+          Grid.Row="1"
+          Columns="3"
+          Rows="3"
+          ColumnSpacing="5"
+          RowSpacing="5"
+        >
+          <RadioButton
+            GroupName="Align"
+            Content="7"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An7_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=7,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="8"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An8_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="8"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An8_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=8,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="9"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An9_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="9"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An9_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=9,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="4"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An4_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="4"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An4_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=4,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="5"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An5_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="5"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An5_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=5,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="6"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An6_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="6"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An6_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=6,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="1"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An1_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="1"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An1_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=1,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="2"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An2_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="2"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An2_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=2,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="Align"
-                                 Content="3"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An3_ToolTip}"
-                                 IsChecked="{Binding Style.Alignment,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="Align"
+            Content="3"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_An3_ToolTip}"
+            IsChecked="{Binding Style.Alignment,
                                                      Converter={StaticResource AlignmentConverter},
                                                      ConverterParameter=3,
-                                                     Mode=TwoWay}" />
-                </UniformGrid>
-            </Grid>
-        </HeaderedContentControl>
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Decoration}">
-            <Grid ColumnDefinitions="Auto, *, Auto, *"
-                  RowDefinitions="Auto, Auto"
-                  RowSpacing="5">
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_BorderThickness}" />
-                <c:NumberTextBox Grid.Column="1"
-                                 Grid.Row="0"
-                                 FormatString="0.00"
-                                 Increment="0.10"
-                                 Minimum="0"
-                                 Value="{Binding Style.BorderThickness}" />
-                <Label Grid.Column="2"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ShadowDistance}" />
-                <c:NumberTextBox Grid.Column="3"
-                                 Grid.Row="0"
-                                 FormatString="0.00"
-                                 Increment="0.10"
-                                 Minimum="0"
-                                 Value="{Binding Style.ShadowDistance}" />
-                <StackPanel Grid.Column="0"
-                            Grid.Row="1"
-                            Grid.ColumnSpan="4"
-                            Orientation="Horizontal"
-                            Spacing="8">
-                    <RadioButton GroupName="BorderStyle"
-                                 Content="{x:Static i18n:StyleEditor.StyleEditor_BBox1}"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox1_ToolTip}"
-                                 IsChecked="{Binding Style.BorderStyle,
+                                                     Mode=TwoWay}"
+          />
+        </UniformGrid>
+      </Grid>
+    </HeaderedContentControl>
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Decoration}">
+      <Grid ColumnDefinitions="Auto, *, Auto, *" RowDefinitions="Auto, Auto" RowSpacing="5">
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_BorderThickness}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="0"
+          FormatString="0.00"
+          Increment="0.10"
+          Minimum="0"
+          Value="{Binding Style.BorderThickness}"
+        />
+        <Label
+          Grid.Column="2"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ShadowDistance}"
+        />
+        <c:NumberTextBox
+          Grid.Column="3"
+          Grid.Row="0"
+          FormatString="0.00"
+          Increment="0.10"
+          Minimum="0"
+          Value="{Binding Style.ShadowDistance}"
+        />
+        <StackPanel
+          Grid.Column="0"
+          Grid.Row="1"
+          Grid.ColumnSpan="4"
+          Orientation="Horizontal"
+          Spacing="8"
+        >
+          <RadioButton
+            GroupName="BorderStyle"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_BBox1}"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox1_ToolTip}"
+            IsChecked="{Binding Style.BorderStyle,
                                                      Converter={StaticResource BoxConverter},
                                                      ConverterParameter=1,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="BorderStyle"
-                                 Content="{x:Static i18n:StyleEditor.StyleEditor_BBox3}"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox3_ToolTip}"
-                                 IsChecked="{Binding Style.BorderStyle,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="BorderStyle"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_BBox3}"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox3_ToolTip}"
+            IsChecked="{Binding Style.BorderStyle,
                                                      Converter={StaticResource BoxConverter},
                                                      ConverterParameter=3,
-                                                     Mode=TwoWay}" />
-                    <RadioButton GroupName="BorderStyle"
-                                 Content="{x:Static i18n:StyleEditor.StyleEditor_BBox4}"
-                                 ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox4_ToolTip}"
-                                 IsChecked="{Binding Style.BorderStyle,
+                                                     Mode=TwoWay}"
+          />
+          <RadioButton
+            GroupName="BorderStyle"
+            Content="{x:Static i18n:StyleEditor.StyleEditor_BBox4}"
+            ToolTip.Tip="{x:Static i18n:StyleEditor.StyleEditor_BBox4_ToolTip}"
+            IsChecked="{Binding Style.BorderStyle,
                                                      Converter={StaticResource BoxConverter},
                                                      ConverterParameter=4,
-                                                     Mode=TwoWay}" />
-                </StackPanel>
-            </Grid>
-        </HeaderedContentControl>
-        <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Appearance}">
-            <Grid ColumnDefinitions="Auto, *, Auto, *"
-                  RowDefinitions="*, *"
-                  ColumnSpacing="2"
-                  RowSpacing="4">
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ScaleX}" />
-                <c:NumberTextBox Grid.Column="1"
-                                 Grid.Row="0"
-                                 Padding="0"
-                                 FormatString="0.00"
-                                 Increment="1.00"
-                                 AllowDecimal="True"
-                                 Minimum="0"
-                                 Value="{Binding Style.ScaleX}" />
-                <Label Grid.Column="2"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ScaleY}" />
-                <c:NumberTextBox Grid.Column="3"
-                                 Grid.Row="0"
-                                 Padding="0"
-                                 FormatString="0.00"
-                                 Increment="1.00"
-                                 AllowDecimal="True"
-                                 Minimum="0"
-                                 Value="{Binding Style.ScaleY}" />
-                <Label Grid.Column="0"
-                       Grid.Row="1"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Rotation}" />
-                <c:NumberTextBox Grid.Column="1"
-                                 Grid.Row="1"
-                                 Padding="0"
-                                 FormatString="0.00"
-                                 Increment="1.00"
-                                 AllowDecimal="True"
-                                 Maximum="360"
-                                 Minimum="-360"
-                                 Value="{Binding Style.Angle}" />
-                <Label Grid.Column="2"
-                       Grid.Row="1"
-                       VerticalAlignment="Center"
-                       Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Spacing}" />
-                <c:NumberTextBox Grid.Column="3"
-                                 Grid.Row="1"
-                                 FormatString="0.00"
-                                 Increment="1.000"
-                                 AllowDecimal="True"
-                                 Value="{Binding Style.Spacing}" />
-            </Grid>
-        </HeaderedContentControl>
-        <Button HorizontalAlignment="Right"
-                Margin="0 4 0 0"
-                IsDefault="True"
-                Classes="Primary"
-                Content="{x:Static i18n:StyleEditor.StyleEditor_Button_Save}"
-                Command="{Binding SaveCommand}" />
-    </StackPanel>
-    <Window.Styles>
-        <Style Selector="HeaderedContentControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border>
-                            <StackPanel>
-                                <ContentPresenter FontWeight="Bold"
-                                                  Margin="0 10 0 2"
-                                                  Content="{TemplateBinding Header}" />
-                                <Border BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
-                                        BorderThickness="2"
-                                        CornerRadius="5">
-                                    <ContentPresenter Content="{TemplateBinding Content}"
-                                                      Padding="5" />
-                                </Border>
-                            </StackPanel>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Styles>
+                                                     Mode=TwoWay}"
+          />
+        </StackPanel>
+      </Grid>
+    </HeaderedContentControl>
+    <HeaderedContentControl Header="{x:Static i18n:StyleEditor.StyleEditor_Header_Appearance}">
+      <Grid
+        ColumnDefinitions="Auto, *, Auto, *"
+        RowDefinitions="*, *"
+        ColumnSpacing="2"
+        RowSpacing="4"
+      >
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ScaleX}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="0"
+          Padding="0"
+          FormatString="0.00"
+          Increment="1.00"
+          AllowDecimal="True"
+          Minimum="0"
+          Value="{Binding Style.ScaleX}"
+        />
+        <Label
+          Grid.Column="2"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_ScaleY}"
+        />
+        <c:NumberTextBox
+          Grid.Column="3"
+          Grid.Row="0"
+          Padding="0"
+          FormatString="0.00"
+          Increment="1.00"
+          AllowDecimal="True"
+          Minimum="0"
+          Value="{Binding Style.ScaleY}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Rotation}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="1"
+          Padding="0"
+          FormatString="0.00"
+          Increment="1.00"
+          AllowDecimal="True"
+          Maximum="360"
+          Minimum="-360"
+          Value="{Binding Style.Angle}"
+        />
+        <Label
+          Grid.Column="2"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:StyleEditor.StyleEditor_Label_Spacing}"
+        />
+        <c:NumberTextBox
+          Grid.Column="3"
+          Grid.Row="1"
+          FormatString="0.00"
+          Increment="1.000"
+          AllowDecimal="True"
+          Value="{Binding Style.Spacing}"
+        />
+      </Grid>
+    </HeaderedContentControl>
+    <Button
+      HorizontalAlignment="Right"
+      Margin="0 4 0 0"
+      IsDefault="True"
+      Classes="Primary"
+      Content="{x:Static i18n:StyleEditor.StyleEditor_Button_Save}"
+      Command="{Binding SaveCommand}"
+    />
+  </StackPanel>
+  <Window.Styles>
+    <Style Selector="HeaderedContentControl">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Border>
+              <StackPanel>
+                <ContentPresenter
+                  FontWeight="Bold"
+                  Margin="0 10 0 2"
+                  Content="{TemplateBinding Header}"
+                />
+                <Border
+                  BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
+                  BorderThickness="2"
+                  CornerRadius="5"
+                >
+                  <ContentPresenter Content="{TemplateBinding Content}" Padding="5" />
+                </Border>
+              </StackPanel>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Styles>
 </Window>

@@ -7,7 +7,7 @@ using Avalonia.Platform;
 
 namespace Ameko.ViewModels.Windows;
 
-public partial class AboutWindowViewModel : ViewModelBase
+public class AboutWindowViewModel : ViewModelBase
 {
     public static string Version => VersionService.FullLabel;
 

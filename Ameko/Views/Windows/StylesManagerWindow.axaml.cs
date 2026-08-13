@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.Messages;
 using Ameko.ViewModels.Dialogs;
@@ -11,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Windows;
 
@@ -74,9 +73,12 @@ public partial class StylesManagerWindow : ReactiveWindow<StylesManagerWindowVie
 
         this.WhenActivated(disposables =>
         {
-            ViewModel?.ShowStyleEditorWindow.RegisterHandler(DoShowStyleEditor);
+            if (ViewModel is null)
+                return;
 
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            ViewModel
+                .ShowStyleEditorWindow.RegisterHandler(DoShowStyleEditor)
+                .DisposeWith(disposables);
         });
     }
 }

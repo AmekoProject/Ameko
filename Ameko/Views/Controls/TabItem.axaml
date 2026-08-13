@@ -1,25 +1,39 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-
-             xmlns:c="clr-namespace:Ameko.Views.Controls"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
-
-             x:Class="Ameko.Views.Controls.TabItem"
-             x:DataType="vm:TabItemViewModel">
-    <Grid Name="TabItemGrid"
-          ColumnDefinitions="*, 2, *"
-          RowDefinitions="*, 2, *, 2 *"
-          ShowGridLines="False">
-        <c:TabItemVideoArea Name="TabItemVideoArea" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Focusable="True" />
-        <c:TabItemAudioArea Name="TabItemAudioArea" Grid.Column="2" Grid.Row="0" Focusable="True" />
-        <c:TabItemEditorArea Name="TabItemEditorArea" Grid.Column="2" Grid.Row="2" Focusable="True" />
-        <c:TabItemEventsArea Name="TabItemEventsArea" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Focusable="True" />
-    </Grid>
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+  x:Class="Ameko.Views.Controls.TabItem"
+  x:DataType="vm:TabItemViewModel"
+>
+  <Grid
+    Name="TabItemGrid"
+    ColumnDefinitions="*, 2, *"
+    RowDefinitions="*, 2, *, 2 *"
+    ShowGridLines="False"
+  >
+    <c:TabItemVideoArea
+      Name="TabItemVideoArea"
+      Grid.Column="0"
+      Grid.Row="0"
+      Grid.RowSpan="3"
+      Focusable="True"
+    />
+    <c:TabItemAudioArea Name="TabItemAudioArea" Grid.Column="2" Grid.Row="0" Focusable="True" />
+    <c:TabItemEditorArea Name="TabItemEditorArea" Grid.Column="2" Grid.Row="2" Focusable="True" />
+    <c:TabItemEventsArea
+      Name="TabItemEventsArea"
+      Grid.Column="0"
+      Grid.Row="4"
+      Grid.ColumnSpan="3"
+      Focusable="True"
+    />
+  </Grid>
 </UserControl>

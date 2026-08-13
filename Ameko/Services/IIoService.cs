@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Reactive;
 using System.Threading.Tasks;
 using Ameko.DataModels;
 using Holo;
 using Holo.Media.Providers;
 using Holo.Models;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Services;
 
@@ -80,7 +80,7 @@ public interface IIoService
     /// <param name="interaction">Open File Dialog interaction</param>
     /// <param name="prj">Project to add the workspaces to</param>
     /// <returns><see langword="true"/> if successful</returns>
-    Task<Workspace[]> OpenSubtitleFilesAsync(Interaction<Unit, Uri[]?> interaction, Project prj);
+    Task<Workspace[]> OpenSubtitleFilesAsync(Interaction<RxVoid, Uri[]?> interaction, Project prj);
 
     /// <summary>
     /// Load subtitle files into Workspaces
@@ -120,7 +120,7 @@ public interface IIoService
     /// <param name="interaction">Open File Dialog interaction</param>
     /// <param name="wsp">Workspace to attach the file to to</param>
     /// <returns><see langword="true"/> if successful</returns>
-    Task<bool> AttachReferenceFile(Interaction<Unit, Uri?> interaction, Workspace wsp);
+    Task<bool> AttachReferenceFile(Interaction<RxVoid, Uri?> interaction, Workspace wsp);
 
     /// <summary>
     /// Attach a reference file to the workspace
@@ -151,7 +151,7 @@ public interface IIoService
     /// <param name="progressCallback">Indexing progress callback</param>
     /// <returns><see langword="true"/> if successful</returns>
     Task<bool> OpenVideoFileAsync(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         ISourceProvider.ProgressCallback? progressCallback = null
     );
@@ -176,7 +176,7 @@ public interface IIoService
     /// <param name="progressCallback">Indexing progress callback</param>
     /// <returns><see langword="true"/> if successful</returns>
     Task<bool> OpenAudioFileAsync(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         ISourceProvider.ProgressCallback? progressCallback = null
     );
@@ -201,7 +201,7 @@ public interface IIoService
     /// <param name="interaction">Open File Dialog interaction</param>
     /// <param name="workspace">Workspace to open the keyframes in</param>
     /// <returns><see langword="true"/> if successful</returns>
-    Task<bool> OpenKeyframesAsync(Interaction<Unit, Uri?> interaction, Workspace workspace);
+    Task<bool> OpenKeyframesAsync(Interaction<RxVoid, Uri?> interaction, Workspace workspace);
 
     /// <summary>
     /// Save a frame to file
@@ -211,7 +211,7 @@ public interface IIoService
     /// <param name="mode">Save Frame Mode</param>
     /// <returns></returns>
     Task<bool> SaveFrameToFile(
-        Interaction<Unit, Uri?> interaction,
+        Interaction<RxVoid, Uri?> interaction,
         Workspace workspace,
         SaveFrameMode mode
     );
@@ -224,7 +224,7 @@ public interface IIoService
     /// <param name="mode">Save Frame Mode</param>
     /// <returns></returns>
     Task<bool> CopyFrameToClipboard(
-        Interaction<string, Unit> interaction,
+        Interaction<string, RxVoid> interaction,
         Workspace workspace,
         SaveFrameMode mode
     );

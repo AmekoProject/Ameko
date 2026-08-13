@@ -5,7 +5,6 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 using Holo.Scripting.Models;
 using Material.Icons;
-using Material.Icons.Avalonia;
 
 namespace Ameko.Converters;
 
@@ -17,8 +16,8 @@ public class PkgManIconConverter : IValueConverter
             return null;
         return type switch
         {
-            PackageType.Script => new MaterialIcon { Kind = MaterialIconKind.CodeBlockBraces },
-            PackageType.Library => new MaterialIcon { Kind = MaterialIconKind.Bookshelf },
+            PackageType.Script => MaterialIconKind.CodeBlockBraces,
+            PackageType.Library => MaterialIconKind.Bookshelf,
             _ => null,
         };
     }

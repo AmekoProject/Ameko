@@ -1,34 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Disposables.Fluent;
 using Ameko.ViewModels.Controls;
 using AssCS;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Controls;
 
 public partial class TabItemEventsArea : ReactiveUserControl<TabItemViewModel>
 {
-    private void DoScrollToAndSelectEvent(IInteractionContext<Event, Unit> interaction)
+    private void DoScrollToAndSelectEvent(IInteractionContext<Event, RxVoid> interaction)
     {
         EventsGrid.ScrollIntoView(interaction.Input, null);
         EventsGrid.SelectedItem = interaction.Input;
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
-    private void DoSelectEvents(IInteractionContext<IList<Event>, Unit> interaction)
+    private void DoSelectEvents(IInteractionContext<IList<Event>, RxVoid> interaction)
     {
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
         if (interaction.Input.Count < 2)
             return;
 
@@ -45,26 +42,24 @@ public partial class TabItemEventsArea : ReactiveUserControl<TabItemViewModel>
 
         this.WhenActivated(disposables =>
         {
-            this.GetObservable(ViewModelProperty)
-                .WhereNotNull()
-                .Subscribe(vm =>
-                {
-                    vm.ScrollToAndSelectEvent.RegisterHandler(DoScrollToAndSelectEvent);
-                    vm.SelectEvents.RegisterHandler(DoSelectEvents);
+            if (ViewModel is not { } vm)
+                return;
 
-                    EventsGrid.AddHandler(
-                        DataGrid.SelectionChangedEvent,
-                        DataGrid_OnSelectionChanged,
-                        RoutingStrategies.Bubble
-                    );
-
-                    EventsGrid.AddHandler(
-                        DataGrid.DoubleTappedEvent,
-                        DataGrid_OnDoubleTapped,
-                        RoutingStrategies.Bubble
-                    );
-                })
+            vm.ScrollToAndSelectEvent.RegisterHandler(DoScrollToAndSelectEvent)
                 .DisposeWith(disposables);
+            vm.SelectEvents.RegisterHandler(DoSelectEvents).DisposeWith(disposables);
+
+            EventsGrid.AddHandler(
+                DataGrid.SelectionChangedEvent,
+                DataGrid_OnSelectionChanged,
+                RoutingStrategies.Bubble
+            );
+
+            EventsGrid.AddHandler(
+                DataGrid.DoubleTappedEvent,
+                DataGrid_OnDoubleTapped,
+                RoutingStrategies.Bubble
+            );
         });
     }
 

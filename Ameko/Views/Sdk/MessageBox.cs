@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -16,7 +15,7 @@ namespace Ameko.Views.Sdk;
 /// <summary>
 /// A simple message box API
 /// </summary>
-public partial class MessageBox : Window
+public class MessageBox : Window
 {
     /// <summary>
     /// A box for displaying a message to the user

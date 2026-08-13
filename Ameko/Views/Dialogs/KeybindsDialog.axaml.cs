@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
-using System.Reactive.Linq;
 using Ameko.ViewModels.Dialogs;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Dialogs;
 
@@ -18,9 +15,10 @@ public partial class KeybindsDialog : ReactiveWindow<KeybindsDialogViewModel>
 
         this.WhenActivated(disposables =>
         {
-            ViewModel?.SaveCommand.Where(success => success).Subscribe(_ => Close());
-
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            ViewModel
+                ?.SaveCommand.Where(success => success)
+                .Subscribe(_ => Close())
+                .DisposeWith(disposables);
         });
     }
 }

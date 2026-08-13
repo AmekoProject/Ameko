@@ -2,8 +2,6 @@
 
 using System;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using Ameko.DataModels;
 using Ameko.Messages;
 using Ameko.ViewModels.Dialogs;
@@ -21,6 +19,8 @@ using Material.Icons;
 using Microsoft.Extensions.Logging;
 using NaturalSort.Extension;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
@@ -29,7 +29,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Create a new file
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateNewCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateNewCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -41,7 +41,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Subtitle dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenSubtitleCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenSubtitleCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -90,7 +90,7 @@ public partial class MainWindowViewModel
     /// Open a subtitle without using a dialog
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Uri, Unit> CreateOpenSubtitleNoGuiCommand()
+    private ReactiveCommand<Uri, RxVoid> CreateOpenSubtitleNoGuiCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Uri uri) =>
@@ -136,7 +136,7 @@ public partial class MainWindowViewModel
     /// Open subtitles without using a dialog
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Uri[], Unit> CreateOpenSubtitlesNoGuiCommand()
+    private ReactiveCommand<Uri[], RxVoid> CreateOpenSubtitlesNoGuiCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Uri[] uris) =>
@@ -185,7 +185,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display either the Save Subtitle or Save Subtitle As dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSaveSubtitleCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSaveSubtitleCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -202,7 +202,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Save Subtitle As dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSaveSubtitleAsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSaveSubtitleAsCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -219,7 +219,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Save As dialog for exporting
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateExportSubtitleCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateExportSubtitleCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -237,7 +237,7 @@ public partial class MainWindowViewModel
     /// Clear the recent subtitles list
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateClearRecentSubtitlesCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateClearRecentSubtitlesCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -248,12 +248,12 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Project File dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenProjectCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
             _logger.LogDebug("Preparing to open project file");
-            var uri = await OpenProject.Handle(Unit.Default);
+            var uri = await OpenProject.Handle(RxVoid.Default);
 
             if (uri is null)
             {
@@ -291,7 +291,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Open a project without using a dialog
     /// </summary>
-    private ReactiveCommand<Uri, Unit> CreateOpenProjectNoGuiCommand()
+    private ReactiveCommand<Uri, RxVoid> CreateOpenProjectNoGuiCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Uri uri) =>
@@ -331,12 +331,12 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Folder as Project File dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenFolderAsProjectCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenFolderAsProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
             _logger.LogDebug("Preparing to open a directory as a project");
-            var uri = await OpenFolderAsProject.Handle(Unit.Default);
+            var uri = await OpenFolderAsProject.Handle(RxVoid.Default);
 
             if (uri is null)
             {
@@ -352,7 +352,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Save Project File dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateSaveProjectCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSaveProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -363,7 +363,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Close the currently active tab
     /// </summary>
-    private ReactiveCommand<int?, Unit> CreateCloseTabCommand()
+    private ReactiveCommand<int?, RxVoid> CreateCloseTabCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int? id) =>
@@ -393,7 +393,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Close the currently active tab
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCloseProjectCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCloseProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -431,7 +431,7 @@ public partial class MainWindowViewModel
     /// Clear the recent projects list
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateClearRecentProjectsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateClearRecentProjectsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -442,7 +442,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Quit the application
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateQuitCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateQuitCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -485,7 +485,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Undo
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateUndoCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateUndoCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -504,7 +504,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Redo
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateRedoCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRedoCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -523,7 +523,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show search dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowSearchDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowSearchDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -535,7 +535,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show spellcheck dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowSpellcheckDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowSpellcheckDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -547,7 +547,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="StylesManagerWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowStylesManagerCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowStylesManagerCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -565,7 +565,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the "attach reference file" dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateAttachReferenceFileCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateAttachReferenceFileCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -580,7 +580,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Detach the reference file
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateDetachReferenceFileCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateDetachReferenceFileCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -595,7 +595,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show Script Info dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowScriptInfoDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowScriptInfoDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -610,7 +610,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show Profile Subtitles dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowProfileSubtitlesDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowProfileSubtitlesDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -625,7 +625,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show sort lines dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowSortDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowSortDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -637,7 +637,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Show select lines dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowSelectDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowSelectDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -649,7 +649,7 @@ public partial class MainWindowViewModel
     /// <summary>
     ///Attach a reference file without an open file dialog
     /// </summary>
-    private ReactiveCommand<Uri, Unit> CreateAttachReferenceFileNoGuiCommand()
+    private ReactiveCommand<Uri, RxVoid> CreateAttachReferenceFileNoGuiCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Uri uri) =>
@@ -665,7 +665,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="KnpWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowKnpWindowCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowKnpWindowCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -678,7 +678,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="ProjectConfigDialog"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowProjectConfigDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowProjectConfigDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -691,7 +691,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="ShiftTimesDialog"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowShiftTimesDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowShiftTimesDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -709,7 +709,7 @@ public partial class MainWindowViewModel
     /// Snap start of active event to nearest keyframe
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateSnapStartToKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSnapStartToKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -753,7 +753,7 @@ public partial class MainWindowViewModel
     /// Snap end of active event to nearest keyframe
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateSnapEndToKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSnapEndToKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -797,7 +797,7 @@ public partial class MainWindowViewModel
     /// Snap start of active event to current frame
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateSnapStartToCurrentFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSnapStartToCurrentFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -820,7 +820,7 @@ public partial class MainWindowViewModel
     /// Snap end of active event to current frame
     /// </summary>
     /// <returns></returns>
-    private ReactiveCommand<Unit, Unit> CreateSnapEndToCurrentFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSnapEndToCurrentFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -842,7 +842,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Video dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenVideoCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenVideoCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -884,7 +884,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Open a video without using a dialog
     /// </summary>
-    private ReactiveCommand<Uri, Unit> CreateOpenVideoNoGuiCommand()
+    private ReactiveCommand<Uri, RxVoid> CreateOpenVideoNoGuiCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (Uri uri) =>
@@ -904,7 +904,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Close the open video
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCloseVideoCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCloseVideoCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -916,7 +916,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Keyframes dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenKeyframesCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenKeyframesCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -931,7 +931,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Jump dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowJumpDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowJumpDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -973,7 +973,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the Open Audio dialog
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenAudioCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenAudioCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1015,7 +1015,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Close the open audio
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCloseAudioCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCloseAudioCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -1027,7 +1027,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Change audio tracks
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateChangeTracksCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateChangeTracksCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1078,7 +1078,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Execute a Script
     /// </summary>
-    private ReactiveCommand<string, Unit> CreateExecuteScriptCommand()
+    private ReactiveCommand<string, RxVoid> CreateExecuteScriptCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (string qualifiedName) =>
@@ -1091,7 +1091,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Reload scripts
     /// </summary>
-    private ReactiveCommand<bool, Unit> CreateReloadScriptsCommand()
+    private ReactiveCommand<bool, RxVoid> CreateReloadScriptsCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (bool isManual) =>
@@ -1104,7 +1104,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="PkgManWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowPackageManagerCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowPackageManagerCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1116,7 +1116,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="PlaygroundWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowPlaygroundCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowPlaygroundCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1125,7 +1125,7 @@ public partial class MainWindowViewModel
         });
     }
 
-    private ReactiveCommand<string, Unit> CreateSelectLayoutCommand()
+    private ReactiveCommand<string, RxVoid> CreateSelectLayoutCommand()
     {
         return ReactiveCommand.Create(
             (string name) =>
@@ -1139,7 +1139,7 @@ public partial class MainWindowViewModel
         );
     }
 
-    private ReactiveCommand<Unit, Unit> CreateRefreshLayoutsCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateRefreshLayoutsCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -1150,7 +1150,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="HelpWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowHelpWindowCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowHelpWindowCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1162,7 +1162,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="LogWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowLogWindowCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowLogWindowCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1174,7 +1174,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="AboutWindow"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowAboutWindowCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowAboutWindowCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1186,7 +1186,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="KeybindsDialog"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowKeybindsDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowKeybindsDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1198,7 +1198,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Display the <see cref="ConfigDialog"/>
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowConfigDialogCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowConfigDialogCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1210,18 +1210,18 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Open the issue tracker in the user's default browser
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateOpenIssueTrackerCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateOpenIssueTrackerCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
-            await OpenIssueTracker.Handle(Unit.Default);
+            await OpenIssueTracker.Handle(RxVoid.Default);
         });
     }
 
     /// <summary>
     /// Show command palette
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateShowCommandPaletteCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateShowCommandPaletteCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
@@ -1236,18 +1236,18 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Toggle fullscreen
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateToggleFullscreenCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateToggleFullscreenCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {
-            await ToggleFullscreen.Handle(Unit.Default);
+            await ToggleFullscreen.Handle(RxVoid.Default);
         });
     }
 
     /// <summary>
     /// Remove workspace from the project
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateRemoveDocumentFromProjectCommand()
+    private ReactiveCommand<int, RxVoid> CreateRemoveDocumentFromProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1276,7 +1276,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Remove folder from the project
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateRemoveFolderFromProjectCommand()
+    private ReactiveCommand<int, RxVoid> CreateRemoveFolderFromProjectCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1305,7 +1305,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Rename project folder
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateRenameFolderCommand()
+    private ReactiveCommand<int, RxVoid> CreateRenameFolderCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1344,7 +1344,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Rename project document
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateRenameDocumentCommand()
+    private ReactiveCommand<int, RxVoid> CreateRenameDocumentCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1383,7 +1383,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Add a folder to an existing project folder
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateCreateFolderCommand()
+    private ReactiveCommand<int, RxVoid> CreateCreateFolderCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int parentId) =>
@@ -1424,7 +1424,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Move an item to a folder
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateMoveToFolderCommand()
+    private ReactiveCommand<int, RxVoid> CreateMoveToFolderCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1460,7 +1460,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Open project document
     /// </summary>
-    private ReactiveCommand<int, Unit> CreateOpenDocumentCommand()
+    private ReactiveCommand<int, RxVoid> CreateOpenDocumentCommand()
     {
         return ReactiveCommand.CreateFromTask(
             async (int id) =>
@@ -1476,7 +1476,7 @@ public partial class MainWindowViewModel
     /// <summary>
     /// Check if the configuration-specified spellcheck dictionary is installed
     /// </summary>
-    private ReactiveCommand<Unit, Unit> CreateCheckSpellcheckDictionaryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateCheckSpellcheckDictionaryCommand()
     {
         return ReactiveCommand.CreateFromTask(async () =>
         {

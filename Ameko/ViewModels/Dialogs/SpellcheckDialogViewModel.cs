@@ -4,22 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Ameko.Utilities;
 using Ameko.ViewModels.Controls;
 using AssCS;
-using DynamicData;
 using Holo;
 using Holo.Models;
 using Holo.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives.Signals;
 using ChangeType = AssCS.History.ChangeType;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class SpellcheckDialogViewModel : ViewModelBase
+public class SpellcheckDialogViewModel : ViewModelBase
 {
     private IEnumerator<SpellcheckSuggestion> _spellcheckSuggestions;
 

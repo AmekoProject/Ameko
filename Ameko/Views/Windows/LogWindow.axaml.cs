@@ -1,21 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.ViewModels.Windows;
 using Avalonia.Input.Platform;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
 
 namespace Ameko.Views.Windows;
 
 public partial class LogWindow : ReactiveWindow<LogWindowViewModel>
 {
-    private async Task DoCopyLogsAsync(IInteractionContext<string, Unit> interaction)
+    private async Task DoCopyLogsAsync(IInteractionContext<string, RxVoid> interaction)
     {
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
         if (Clipboard is null)
             return;
         await Clipboard.SetTextAsync(interaction.Input);
@@ -27,8 +25,7 @@ public partial class LogWindow : ReactiveWindow<LogWindowViewModel>
 
         this.WhenActivated(disposables =>
         {
-            ViewModel?.CopySelection.RegisterHandler(DoCopyLogsAsync);
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            ViewModel?.CopySelection.RegisterHandler(DoCopyLogsAsync).DisposeWith(disposables);
         });
     }
 }

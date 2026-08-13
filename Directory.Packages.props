@@ -7,47 +7,47 @@
     <PackageVersion Include="AutoFixture" Version="4.18.1" />
     <PackageVersion Include="AutoFixture.AutoNSubstitute" Version="4.18.1" />
     <PackageVersion Include="AutoFixture.Xunit2" Version="4.18.1" />
-    <PackageVersion Include="Avalonia" Version="12.0.4" />
+    <PackageVersion Include="Avalonia" Version="12.1.1" />
     <PackageVersion Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.17" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.4" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.20" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.1" />
     <PackageVersion Include="Avalonia.HtmlRenderer" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Themes.Simple" Version="12.0.4" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageVersion Include="Avalonia.Themes.Simple" Version="12.1.1" />
     <PackageVersion Include="AvaloniaEdit.TextMate" Version="12.0.0" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="CS-Script" Version="4.14.10" />
-    <PackageVersion Include="CSharpier.MsBuild" Version="1.2.6" />
+    <PackageVersion Include="CS-Script" Version="4.14.11" />
+    <PackageVersion Include="CSharpier.MsBuild" Version="1.3.0" />
     <PackageVersion Include="DiscordRichPresence" Version="1.6.1.70" />
     <PackageVersion Include="FuzzySharp" Version="2.0.2" />
     <PackageVersion Include="GitInfo" Version="3.3.5" />
-    <PackageVersion Include="Jint" Version="4.9.3" />
-    <PackageVersion Include="LibGit2Sharp" Version="0.31.0" />
-    <PackageVersion Include="Markdig" Version="1.2.0" />
+    <PackageVersion Include="Jint" Version="4.15.3" />
+    <PackageVersion Include="LibGit2Sharp" Version="0.32.0" />
+    <PackageVersion Include="Markdig" Version="1.3.2" />
     <PackageVersion Include="Markdown.ColorCode" Version="3.0.1" />
     <PackageVersion Include="Material.Icons" Version="3.0.2" />
     <PackageVersion Include="Material.Icons.Avalonia" Version="3.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.8" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.6.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
     <PackageVersion Include="NaturalSort.Extension" Version="4.4.1" />
-    <PackageVersion Include="NLog" Version="6.1.3" />
-    <PackageVersion Include="NLog.Extensions.Logging" Version="6.1.3" />
-    <PackageVersion Include="NSubstitute" Version="5.3.0" />
-    <PackageVersion Include="ReactiveUI.Avalonia" Version="12.0.2" />
-    <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
+    <PackageVersion Include="NLog" Version="6.1.4" />
+    <PackageVersion Include="NLog.Extensions.Logging" Version="6.1.4" />
+    <PackageVersion Include="NSubstitute" Version="6.2.0" />
+    <PackageVersion Include="ReactiveUI.Avalonia" Version="12.1.1" />
+    <PackageVersion Include="RichardSzalay.MockHttp" Version="7.1.0" />
     <PackageVersion Include="Samboy063.Tomlet" Version="6.2.0" />
     <PackageVersion Include="ScottPlot.Avalonia" Version="5.1.59" />
-    <PackageVersion Include="Semi.Avalonia" Version="12.0.3" />
+    <PackageVersion Include="Semi.Avalonia" Version="12.1.0.1" />
     <PackageVersion Include="Semi.Avalonia.AvaloniaEdit" Version="12.0.0" />
-    <PackageVersion Include="Semi.Avalonia.ColorPicker" Version="12.0.3" />
-    <PackageVersion Include="Semi.Avalonia.DataGrid" Version="12.0.0" />
+    <PackageVersion Include="Semi.Avalonia.ColorPicker" Version="12.1.0.1" />
+    <PackageVersion Include="Semi.Avalonia.DataGrid" Version="12.1.0.1" />
     <PackageVersion Include="Semi.Avalonia.Tabalonia" Version="11.0.0-beta1" />
     <PackageVersion Include="Semver" Version="3.0.0" />
     <PackageVersion Include="Silk.NET.OpenAL" Version="2.23.0" />
@@ -55,12 +55,12 @@
     <PackageVersion Include="Silk.NET.OpenAL.Extensions.Soft" Version="2.23.0" />
     <PackageVersion Include="Silk.NET.OpenAL.Soft.Native" Version="1.23.1" />
     <PackageVersion Include="Silk.NET.OpenGLES" Version="2.23.0" />
-    <PackageVersion Include="Tabalonia" Version="0.12.0" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions" Version="22.1.1" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.TestingHelpers" Version="22.1.1" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.Wrappers" Version="22.1.1" />
-    <PackageVersion Include="TUnit" Version="1.63.25" />
+    <PackageVersion Include="Tabalonia" Version="12.0.0" />
+    <PackageVersion Include="TestableIO.System.IO.Abstractions" Version="22.2.0" />
+    <PackageVersion Include="TestableIO.System.IO.Abstractions.TestingHelpers" Version="22.2.0" />
+    <PackageVersion Include="TestableIO.System.IO.Abstractions.Wrappers" Version="22.2.0" />
+    <PackageVersion Include="TUnit" Version="1.64.13" />
     <PackageVersion Include="WeCantSpell.Hunspell" Version="7.0.1" />
-    <PackageVersion Include="Xdg.Directories" Version="0.1.2" />
+    <PackageVersion Include="Xdg.Directories" Version="0.2.0" />
   </ItemGroup>
 </Project>

@@ -3,9 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Ameko.Messages;
 using Ameko.Services;
@@ -19,7 +16,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
-using DynamicData;
 using Holo.Configuration;
 using Holo.Configuration.Keybinds;
 using Holo.Media.Providers;
@@ -27,6 +23,8 @@ using Holo.Models;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Disposables;
 
 namespace Ameko.Views.Windows;
 
@@ -76,14 +74,14 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// <typeparam name="TDialog">Dialog type</typeparam>
     /// <typeparam name="TViewModel">ViewModel type</typeparam>
     private async Task DoShowDialogAsync<TDialog, TViewModel>(
-        IInteractionContext<TViewModel, Unit> interaction
+        IInteractionContext<TViewModel, RxVoid> interaction
     )
         where TDialog : Window, new()
         where TViewModel : ViewModelBase
     {
         var dialog = new TDialog { DataContext = interaction.Input };
         await dialog.ShowDialog(this);
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     /// <summary>
@@ -93,17 +91,19 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// <typeparam name="TWindow">Dialog type</typeparam>
     /// <typeparam name="TViewModel">ViewModel type</typeparam>
     private static void DoShowWindow<TWindow, TViewModel>(
-        IInteractionContext<TViewModel, Unit> interaction
+        IInteractionContext<TViewModel, RxVoid> interaction
     )
         where TWindow : Window, new()
         where TViewModel : ViewModelBase
     {
         var window = new TWindow { DataContext = interaction.Input };
         window.Show();
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
-    private async Task DoShowOpenSubtitleDialogAsync(IInteractionContext<Unit, Uri[]?> interaction)
+    private async Task DoShowOpenSubtitleDialogAsync(
+        IInteractionContext<RxVoid, Uri[]?> interaction
+    )
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
@@ -197,7 +197,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoShowOpenProjectDialogAsync(IInteractionContext<Unit, Uri?> interaction)
+    private async Task DoShowOpenProjectDialogAsync(IInteractionContext<RxVoid, Uri?> interaction)
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
@@ -222,7 +222,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     }
 
     private async Task DoShowOpenFolderAsProjectDialogAsync(
-        IInteractionContext<Unit, Uri?> interaction
+        IInteractionContext<RxVoid, Uri?> interaction
     )
     {
         var dirs = await StorageProvider.OpenFolderPickerAsync(
@@ -269,7 +269,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(null);
     }
 
-    private void DoShowSearchDialog(IInteractionContext<SearchDialogViewModel, Unit> interaction)
+    private void DoShowSearchDialog(IInteractionContext<SearchDialogViewModel, RxVoid> interaction)
     {
         _searchDialog.DataContext ??= interaction.Input;
 
@@ -282,11 +282,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             _isSearching = true;
             _searchDialog.Show();
         }
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     private void DoShowCommandPalette(
-        IInteractionContext<CommandPaletteDialogViewModel, Unit> interaction
+        IInteractionContext<CommandPaletteDialogViewModel, RxVoid> interaction
     )
     {
         _cmdPalette.DataContext ??= interaction.Input;
@@ -300,10 +300,10 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             _isCmdPaletteOpen = true;
             _cmdPalette.Show();
         }
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
-    private void DoShowKnpWindow(IInteractionContext<KnpWindowViewModel, Unit> interaction)
+    private void DoShowKnpWindow(IInteractionContext<KnpWindowViewModel, RxVoid> interaction)
     {
         _knpWindow.DataContext ??= interaction.Input;
 
@@ -316,11 +316,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             _isKnpWindowOpen = true;
             _knpWindow.Show();
         }
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     private async Task DoShowAttachReferenceFileDialogAsync(
-        IInteractionContext<Unit, Uri?> interaction
+        IInteractionContext<RxVoid, Uri?> interaction
     )
     {
         var files = await StorageProvider.OpenFilePickerAsync(
@@ -349,7 +349,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoShowOpenVideoDialogAsync(IInteractionContext<Unit, Uri?> interaction)
+    private async Task DoShowOpenVideoDialogAsync(IInteractionContext<RxVoid, Uri?> interaction)
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
@@ -373,7 +373,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoShowOpenAudioDialogAsync(IInteractionContext<Unit, Uri?> interaction)
+    private async Task DoShowOpenAudioDialogAsync(IInteractionContext<RxVoid, Uri?> interaction)
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
@@ -397,7 +397,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoShowOpenKeyframesDialogAsync(IInteractionContext<Unit, Uri?> interaction)
+    private async Task DoShowOpenKeyframesDialogAsync(IInteractionContext<RxVoid, Uri?> interaction)
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
@@ -432,13 +432,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     }
 
     private async Task DoShowInstallDictionaryDialogAsync(
-        IInteractionContext<InstallDictionaryDialogViewModel, Unit> interaction
+        IInteractionContext<InstallDictionaryDialogViewModel, RxVoid> interaction
     )
     {
         _logger.LogDebug("Displaying install dictionary dialog");
         var dialog = new InstallDictionaryDialog { DataContext = interaction.Input };
         await dialog.ShowDialog<EmptyMessage>(this);
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
     private async Task DoShowSelectFolderDialogAsync(
@@ -451,7 +451,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    private async Task DoOpenIssueTrackerAsync(IInteractionContext<Unit, Unit> interaction)
+    private async Task DoOpenIssueTrackerAsync(IInteractionContext<RxVoid, RxVoid> interaction)
     {
         const string issuesUrl = "https://github.com/9vult/Ameko/issues";
         _logger.LogDebug("Opening the issue tracker in the default browser");
@@ -463,12 +463,12 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         {
             _logger.LogError(ex, "Failed to launch default browser");
         }
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
     }
 
-    private void DoToggleFullscreen(IInteractionContext<Unit, Unit> interaction)
+    private void DoToggleFullscreen(IInteractionContext<RxVoid, RxVoid> interaction)
     {
-        interaction.SetOutput(Unit.Default);
+        interaction.SetOutput(RxVoid.Default);
         if (WindowState is WindowState.FullScreen && _lastWindowState is not null)
         {
             WindowState = _lastWindowState.Value;
@@ -678,7 +678,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
                     ViewModel?.CheckSpellcheckDictionaryCommand.Execute(null);
             };
 
-            Disposable.Create(() => { }).DisposeWith(disposables);
+            new ActionDisposable(() => { }).DisposeWith(disposables);
         });
 
         _logger.LogInformation("Done!");

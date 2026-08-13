@@ -1,16 +1,15 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System.Linq;
-using System.Reactive;
-using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Messages;
 using Holo.Media.Providers;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
-public partial class SelectTrackDialogViewModel : ViewModelBase
+public class SelectTrackDialogViewModel : ViewModelBase
 {
     public TrackInformation[] Tracks { get; }
 
@@ -20,7 +19,7 @@ public partial class SelectTrackDialogViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
-    public ReactiveCommand<Unit, SelectTrackMessage> SelectTrackCommand { get; }
+    public ReactiveCommand<RxVoid, SelectTrackMessage> SelectTrackCommand { get; }
 
     public SelectTrackDialogViewModel(TrackInfo[] tracks)
     {

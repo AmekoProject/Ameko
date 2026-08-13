@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using Ameko.DataModels;
 using Ameko.Messages;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace Ameko.ViewModels.Dialogs;
 
@@ -19,7 +19,7 @@ public class SelectFolderDialogViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
-    public ReactiveCommand<Unit, SelectFolderMessage> SelectFolderCommand { get; }
+    public ReactiveCommand<RxVoid, SelectFolderMessage> SelectFolderCommand { get; }
 
     public SelectFolderDialogViewModel(List<FolderInformation> folders)
     {

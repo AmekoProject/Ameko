@@ -1,212 +1,267 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="640"
-             d:DesignHeight="400"
-
-             xmlns:c="clr-namespace:Ameko.Views.Controls"
-             xmlns:converters="clr-namespace:Ameko.Converters"
-             xmlns:holo="clr-namespace:Holo.Media;assembly=Holo"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
-
-             x:Class="Ameko.Views.Controls.TabItemVideoArea"
-             x:DataType="vm:TabItemViewModel">
-    <Control.Resources>
-        <converters:SeekSliderMaxConverter x:Key="MaxConverter" />
-        <converters:IsMediaIndexingConverter x:Key="IndexingConverter" />
-    </Control.Resources>
-    <DockPanel Margin="2">
-        <Grid DockPanel.Dock="Bottom"
-              ColumnDefinitions="Auto, *, Auto"
-              RowDefinitions="Auto, Auto">
-            <!-- Indexing Indicator -->
-            <Grid Grid.Column="0"
-                  Grid.Row="0"
-                  Grid.ColumnSpan="3"
-                  Margin="2"
-                  Name="IndexingInfo"
-                  ColumnDefinitions="Auto, *">
-                <Grid.IsVisible>
-                    <MultiBinding Converter="{StaticResource IndexingConverter}">
-                        <Binding Path="IsIndexing" />
-                        <Binding Path="Workspace.MediaController.IsVideoLoaded" />
-                    </MultiBinding>
-                </Grid.IsVisible>
-                <TextBlock Grid.Column="0"
-                           Text="{x:Static i18n:Resources.Video_Indexing}"
-                           VerticalAlignment="Center"
-                           Margin="0 0 5 0" />
-                <ProgressBar Grid.Column="1"
-                             Minimum="0"
-                             Maximum="1"
-                             Classes="Success"
-                             ShowProgressText="True"
-                             Value="{Binding IndexingProgress}"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Stretch" />
-            </Grid>
-            <!-- Seek Bar -->
-            <c:SeekSlider Grid.Column="0"
-                          Grid.Row="0"
-                          Grid.ColumnSpan="3"
-                          Padding="0 3"
-                          IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}" 
-                          Name="SeekBar"
-                          VerticalAlignment="Center"
-                          SmallChange="1"
-                          LargeChange="25"
-                          TickFrequency="1"
-                          TickPlacement="Outside"
-                          Minimum="0"
-                          Maximum="{Binding Workspace.MediaController.VideoInfo.FrameCount,
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="640"
+  d:DesignHeight="400"
+  xmlns:c="clr-namespace:Ameko.Views.Controls"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:holo="clr-namespace:Holo.Media;assembly=Holo"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
+  x:Class="Ameko.Views.Controls.TabItemVideoArea"
+  x:DataType="vm:TabItemViewModel"
+>
+  <Control.Resources>
+    <converters:SeekSliderMaxConverter x:Key="MaxConverter" />
+    <converters:IsMediaIndexingConverter x:Key="IndexingConverter" />
+  </Control.Resources>
+  <DockPanel Margin="2">
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto">
+      <!-- Indexing Indicator -->
+      <Grid
+        Grid.Column="0"
+        Grid.Row="0"
+        Grid.ColumnSpan="3"
+        Margin="2"
+        Name="IndexingInfo"
+        ColumnDefinitions="Auto, *"
+      >
+        <Grid.IsVisible>
+          <MultiBinding Converter="{StaticResource IndexingConverter}">
+            <Binding Path="IsIndexing" />
+            <Binding Path="Workspace.MediaController.IsVideoLoaded" />
+          </MultiBinding>
+        </Grid.IsVisible>
+        <TextBlock
+          Grid.Column="0"
+          Text="{x:Static i18n:Resources.Video_Indexing}"
+          VerticalAlignment="Center"
+          Margin="0 0 5 0"
+        />
+        <ProgressBar
+          Grid.Column="1"
+          Minimum="0"
+          Maximum="1"
+          Classes="Success"
+          ShowProgressText="True"
+          Value="{Binding IndexingProgress}"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Stretch"
+        />
+      </Grid>
+      <!-- Seek Bar -->
+      <c:SeekSlider
+        Grid.Column="0"
+        Grid.Row="0"
+        Grid.ColumnSpan="3"
+        Padding="0 3"
+        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+        Name="SeekBar"
+        VerticalAlignment="Center"
+        SmallChange="1"
+        LargeChange="25"
+        TickFrequency="1"
+        TickPlacement="Outside"
+        Minimum="0"
+        Maximum="{Binding Workspace.MediaController.VideoInfo.FrameCount,
                                             Converter={StaticResource MaxConverter},
                                             FallbackValue=1}"
-                          Value="{Binding Workspace.MediaController.CurrentFrame}">
-                <c:SeekSlider.IsVisible>
-                    <MultiBinding Converter="{StaticResource IndexingConverter}">
-                        <Binding Path="Workspace.MediaController.IsVideoLoaded" />
-                        <Binding Path="IsIndexing" />
-                    </MultiBinding>
-                </c:SeekSlider.IsVisible>
-            </c:SeekSlider>
-            
-            <!-- Video Controls -->
-            <StackPanel Grid.Column="0"
-                        Grid.Row="1"
-                        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
-                        Orientation="Horizontal"
-                        Spacing="2">
-                <Button ToolTip.Tip="{x:Static i18n:Resources.Video_Button_PlayPause_ToolTip}"
-                        Command="{Binding PlayPauseCommand}"
-                        Classes="Small">
-                    <StackPanel>
-                        <icons:MaterialIcon Kind="Play"
-                                            IsVisible="{Binding !Workspace.MediaController.IsVideoPlaying}" />
-                        <icons:MaterialIcon Kind="Pause"
-                                            IsVisible="{Binding Workspace.MediaController.IsVideoPlaying, FallbackValue=False}" />
-                    </StackPanel>
-                </Button>
-                <Button Content="{icons:MaterialIconExt Kind=SkipNext}"
-                        ToolTip.Tip="{x:Static i18n:Resources.Video_Button_PlaySelection_ToolTip}"
-                        Command="{Binding PlaySelectionCommand}"
-                        Classes="Small" />
-                <Button Content="{icons:MaterialIconExt Kind=ArrowOscillatingOff}"
-                        IsVisible="{Binding !Workspace.MediaController.IsAutoSeekEnabled}"
-                        ToolTip.Tip="{x:Static i18n:Resources.Video_Button_EnableAutoSeek_ToolTip}"
-                        Command="{Binding ToggleAutoSeekCommand}"
-                        Classes="Small" />
-                <Button Content="{icons:MaterialIconExt Kind=ArrowOscillating}"
-                        IsVisible="{Binding Workspace.MediaController.IsAutoSeekEnabled}"
-                        ToolTip.Tip="{x:Static i18n:Resources.Video_Button_DisableAutoSeek_ToolTip}"
-                        Command="{Binding ToggleAutoSeekCommand}"
-                        Classes="Small" />
-                <Button ToolTip.Tip="{x:Static i18n:Resources.Video_Button_Mute_ToolTip}"
-                        Command="{Binding ToggleMuteCommand}"
-                        Classes="Small">
-                    <StackPanel>
-                        <icons:MaterialIcon Kind="VolumeHigh"
-                                            IsVisible="{Binding !Workspace.MediaController.IsMuted}" />
-                        <icons:MaterialIcon Kind="VolumeOff"
-                                            IsVisible="{Binding Workspace.MediaController.IsMuted, FallbackValue=False}" />
-                    </StackPanel>
-                </Button>
-                <TextBox IsReadOnly="true"
-                         FontFamily="{StaticResource MartianMono}"
-                         Text="{Binding Workspace.MediaController.CurrentTime.MillisecondText,
+        Value="{Binding Workspace.MediaController.CurrentFrame}"
+      >
+        <c:SeekSlider.IsVisible>
+          <MultiBinding Converter="{StaticResource IndexingConverter}">
+            <Binding Path="Workspace.MediaController.IsVideoLoaded" />
+            <Binding Path="IsIndexing" />
+          </MultiBinding>
+        </c:SeekSlider.IsVisible>
+      </c:SeekSlider>
+
+      <!-- Video Controls -->
+      <StackPanel
+        Grid.Column="0"
+        Grid.Row="1"
+        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+        Orientation="Horizontal"
+        Spacing="2"
+      >
+        <Button
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Button_PlayPause_ToolTip}"
+          Command="{Binding PlayPauseCommand}"
+          Classes="Small"
+        >
+          <StackPanel>
+            <icons:MaterialIcon
+              Kind="Play"
+              IsVisible="{Binding !Workspace.MediaController.IsVideoPlaying}"
+            />
+            <icons:MaterialIcon
+              Kind="Pause"
+              IsVisible="{Binding Workspace.MediaController.IsVideoPlaying, FallbackValue=False}"
+            />
+          </StackPanel>
+        </Button>
+        <Button
+          Content="{icons:MaterialIconExt Kind=SkipNext}"
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Button_PlaySelection_ToolTip}"
+          Command="{Binding PlaySelectionCommand}"
+          Classes="Small"
+        />
+        <Button
+          Content="{icons:MaterialIconExt Kind=ArrowOscillatingOff}"
+          IsVisible="{Binding !Workspace.MediaController.IsAutoSeekEnabled}"
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Button_EnableAutoSeek_ToolTip}"
+          Command="{Binding ToggleAutoSeekCommand}"
+          Classes="Small"
+        />
+        <Button
+          Content="{icons:MaterialIconExt Kind=ArrowOscillating}"
+          IsVisible="{Binding Workspace.MediaController.IsAutoSeekEnabled}"
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Button_DisableAutoSeek_ToolTip}"
+          Command="{Binding ToggleAutoSeekCommand}"
+          Classes="Small"
+        />
+        <Button
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Button_Mute_ToolTip}"
+          Command="{Binding ToggleMuteCommand}"
+          Classes="Small"
+        >
+          <StackPanel>
+            <icons:MaterialIcon
+              Kind="VolumeHigh"
+              IsVisible="{Binding !Workspace.MediaController.IsMuted}"
+            />
+            <icons:MaterialIcon
+              Kind="VolumeOff"
+              IsVisible="{Binding Workspace.MediaController.IsMuted, FallbackValue=False}"
+            />
+          </StackPanel>
+        </Button>
+        <TextBox
+          IsReadOnly="true"
+          FontFamily="{StaticResource MartianMono}"
+          Text="{Binding Workspace.MediaController.CurrentTime.MillisecondText,
                                         FallbackValue='0:00:00.000'}"
-                         ToolTip.Tip="{x:Static i18n:Resources.Video_Time_ToolTip}"
-                         Classes="Small" />
-                <TextBox IsReadOnly="true"
-                         FontFamily="{StaticResource MartianMono}"
-                         Text="{Binding Workspace.MediaController.CurrentFrame,
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Time_ToolTip}"
+          Classes="Small"
+        />
+        <TextBox
+          IsReadOnly="true"
+          FontFamily="{StaticResource MartianMono}"
+          Text="{Binding Workspace.MediaController.CurrentFrame,
                                         FallbackValue='0'}"
-                         ToolTip.Tip="{x:Static i18n:Resources.Video_Frame_ToolTip}"
-                         Classes="Small" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="1"
-                        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}" 
-                        Spacing="2"
-                        Orientation="Horizontal">
-                <TextBlock Text="{x:Static i18n:Resources.Video_Angle}"
-                           VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{x:Static holo:RotationalFactor.Angles}"
-                          SelectedItem="{Binding Workspace.MediaController.RotationalFactor}"
-                          Width="75"
-                          MaxDropDownHeight="425"
-                          Classes="Small">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Text}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <CheckBox Content="{x:Static i18n:Resources.Video_LockAR}"
-                          ToolTip.Tip="{x:Static i18n:Resources.Video_LockAR_ToolTip}"
-                          VerticalAlignment="Center"
-                          IsEnabled="False" />
-                <ComboBox ItemsSource="{x:Static holo:ScaleFactor.Scales}"
-                          SelectedItem="{Binding Workspace.MediaController.ScaleFactor}"
-                          Width="100"
-                          MaxDropDownHeight="425"
-                          Classes="Small">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Text}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        
-        <Grid>
-            <TextBlock Text="{x:Static i18n:Resources.Video_NothingLoaded}"
-                       IsVisible="{Binding !Workspace.MediaController.IsVideoLoaded}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Opacity="0.5" />
-            <!-- Video Target -->
-            <ScrollViewer IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
-                          IsVisible="{Binding Workspace.MediaController.IsVideoLoaded}"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto"
-                          IsScrollChainingEnabled="False"
-                          AllowAutoHide="False"
-                          Classes="InsetContent">
-                <Panel Name="VideoTarget"
-                       Width="{Binding Workspace.MediaController.DisplayWidth, FallbackValue=0, Mode=OneWay}"
-                       Height="{Binding Workspace.MediaController.DisplayHeight, FallbackValue=0, Mode=OneWay}"
-                       Background="Gray"
-                       PointerWheelChanged="VideoTarget_OnPointerWheelChanged">
-                    <c:SilkRenderer MediaController="{Binding Workspace.MediaController}" />
-                    <Panel.RenderTransform>
-                        <RotateTransform Angle="{Binding Workspace.MediaController.DisplayAngle, FallbackValue=0, Mode=OneWay}" />
-                    </Panel.RenderTransform>
-                </Panel>
-                <ScrollViewer.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_Frame}"
-                                  Command="{Binding CopyFrameCommand}" />
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_VideoOnly}"
-                                  Command="{Binding CopyFrameVideoOnlyCommand}" />
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_SubsOnly}"
-                                  Command="{Binding CopyFrameVideoOnlyCommand}" />
-                        <Separator />
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_Frame}"
-                                  Command="{Binding SaveFrameCommand}" />
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_VideoOnly}"
-                                  Command="{Binding SaveFrameVideoOnlyCommand}" />
-                        <MenuItem Header="{x:Static i18n:Resources.Video_ContextMenu_Save_SubsOnly}"
-                                  Command="{Binding SaveFrameSubtitlesOnlyCommand}" />
-                    </ContextMenu>
-                </ScrollViewer.ContextMenu>
-            </ScrollViewer>
-        </Grid>
-    </DockPanel>
+          ToolTip.Tip="{x:Static i18n:Resources.Video_Frame_ToolTip}"
+          Classes="Small"
+        />
+      </StackPanel>
+      <StackPanel
+        Grid.Column="2"
+        Grid.Row="1"
+        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+        Spacing="2"
+        Orientation="Horizontal"
+      >
+        <TextBlock Text="{x:Static i18n:Resources.Video_Angle}" VerticalAlignment="Center" />
+        <ComboBox
+          ItemsSource="{x:Static holo:RotationalFactor.Angles}"
+          SelectedItem="{Binding Workspace.MediaController.RotationalFactor}"
+          Width="75"
+          MaxDropDownHeight="425"
+          Classes="Small"
+        >
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Text}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <CheckBox
+          Content="{x:Static i18n:Resources.Video_LockAR}"
+          ToolTip.Tip="{x:Static i18n:Resources.Video_LockAR_ToolTip}"
+          VerticalAlignment="Center"
+          IsEnabled="False"
+        />
+        <ComboBox
+          ItemsSource="{x:Static holo:ScaleFactor.Scales}"
+          SelectedItem="{Binding Workspace.MediaController.ScaleFactor}"
+          Width="100"
+          MaxDropDownHeight="425"
+          Classes="Small"
+        >
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Text}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+    </Grid>
+
+    <Grid>
+      <TextBlock
+        Text="{x:Static i18n:Resources.Video_NothingLoaded}"
+        IsVisible="{Binding !Workspace.MediaController.IsVideoLoaded}"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Opacity="0.5"
+      />
+      <!-- Video Target -->
+      <ScrollViewer
+        IsEnabled="{Binding Workspace.MediaController.IsVideoLoaded}"
+        IsVisible="{Binding Workspace.MediaController.IsVideoLoaded}"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+        IsScrollChainingEnabled="False"
+        AllowAutoHide="False"
+        Classes="InsetContent"
+      >
+        <Panel
+          Name="VideoTarget"
+          Width="{Binding Workspace.MediaController.DisplayWidth, FallbackValue=0, Mode=OneWay}"
+          Height="{Binding Workspace.MediaController.DisplayHeight, FallbackValue=0, Mode=OneWay}"
+          Background="Gray"
+          PointerWheelChanged="VideoTarget_OnPointerWheelChanged"
+        >
+          <c:SilkRenderer MediaController="{Binding Workspace.MediaController}" />
+          <Panel.RenderTransform>
+            <RotateTransform Angle="{Binding Workspace.MediaController.DisplayAngle, FallbackValue=0, Mode=OneWay}" />
+          </Panel.RenderTransform>
+        </Panel>
+        <ScrollViewer.ContextMenu>
+          <ContextMenu>
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_Frame}"
+              Command="{Binding CopyFrameCommand}"
+            />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_VideoOnly}"
+              Command="{Binding CopyFrameVideoOnlyCommand}"
+            />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_SubsOnly}"
+              Command="{Binding CopyFrameVideoOnlyCommand}"
+            />
+            <Separator />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Save_Frame}"
+              Command="{Binding SaveFrameCommand}"
+            />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Save_VideoOnly}"
+              Command="{Binding SaveFrameVideoOnlyCommand}"
+            />
+            <MenuItem
+              Header="{x:Static i18n:Resources.Video_ContextMenu_Save_SubsOnly}"
+              Command="{Binding SaveFrameSubtitlesOnlyCommand}"
+            />
+          </ContextMenu>
+        </ScrollViewer.ContextMenu>
+      </ScrollViewer>
+    </Grid>
+  </DockPanel>
 </UserControl>

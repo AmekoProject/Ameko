@@ -1,83 +1,100 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:semi="https://irihi.tech/semi"
-             xmlns:local="using:Ameko"
-             xmlns:i18n="clr-namespace:Ameko.I18N"
-             xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
-             
-             x:Class="Ameko.App"
-             x:DataType="vm:MainWindowViewModel"
-             Name="Ameko">
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
-    
-    <Application.Resources>
-        <FontFamily x:Key="MartianMono">avares://Ameko/Assets/Fonts/#Martian Mono</FontFamily>
-        <FontFamily x:Key="SarasaUi">avares://Ameko/Assets/Fonts/#Sarasa UI CL</FontFamily>
-        <FontFamily x:Key="SarasaMono">avares://Ameko/Assets/Fonts/#Sarasa Mono CL</FontFamily>
-    </Application.Resources>
-  
-    <Application.Styles>
-        <SimpleTheme />
-        <semi:SemiTheme Locale="en-US" />
-        <semi:ColorPickerSemiTheme />
-        <semi:DataGridSemiTheme />
-        <semi:AvaloniaEditSemiTheme />
-        <StyleInclude Source="avares://Ameko/Views/Controls/SeekSlider.axaml" />
-        <materialIcons:MaterialIconStyles />
+<Application
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:semi="https://irihi.tech/semi"
+  xmlns:local="using:Ameko"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
+  x:Class="Ameko.App"
+  x:DataType="vm:MainWindowViewModel"
+  Name="Ameko"
+>
+  <Application.DataTemplates>
+    <local:ViewLocator />
+  </Application.DataTemplates>
 
-        <Style Selector="MenuItem:selected:open /template/ Border">
-            <Setter Property="MaxHeight" Value="800"/> <!-- Max height of menu -->
-        </Style>
-        
-        <Style Selector="TextBox:modified">
-            <Setter Property="FontStyle" Value="Normal"/>
-        </Style>
-        
-        <Style Selector="Window"> <!-- Setting window font applies to all child controls without a font set -->
-            <Setter Property="FontFamily" Value="{StaticResource SarasaUi}" />
-        </Style>
-        
-        <!-- Dummy styles to stop the "style not found" warnings -->
-        <Style Selector="Button.Small" />
-        <Style Selector="Button.Large" />
-        <Style Selector="Button.Primary" />
-        <Style Selector="Button.Secondary" />
-        <Style Selector="Button.Tertiary" />
-        <Style Selector="Button.Success" />
-        <Style Selector="Button.Danger" />
-        <Style Selector="Button.Warning" />
-        <Style Selector="TextBox.Small" />
-        <Style Selector="ComboBox.Small" />
-        <Style Selector="NumericUpDown.Small" />
-        <Style Selector="ScrollViewer.InsetContent" />
-    </Application.Styles>
-    
-    <NativeMenu.Menu>
-        <NativeMenu>
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Help}"
-                            Command="{Binding ShowHelpWindowCommand}" />
-            <NativeMenuItemSeparator />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_About}"
-                            Command="{Binding ShowAboutWindowCommand}" />
-            <NativeMenuItemSeparator />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Configuration}"
-                            Command="{Binding ShowConfigDialogCommand}" />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Keybinds}"
-                            Command="{Binding ShowKeybindsDialogCommand}" />
-            <NativeMenuItemSeparator />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_ShowLogs}"
-                            Command="{Binding ShowLogWindowCommand}" />
-            <NativeMenuItemSeparator />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_IssueTracker}"
-                            Command="{Binding OpenIssueTrackerCommand}" />
-            <NativeMenuItemSeparator />
-            <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Quit}"
-                            Command="{Binding QuitCommand}" />
-        </NativeMenu>
-    </NativeMenu.Menu>
+  <Application.Resources>
+    <FontFamily x:Key="MartianMono">avares://Ameko/Assets/Fonts/#Martian Mono</FontFamily>
+    <FontFamily x:Key="SarasaUi">avares://Ameko/Assets/Fonts/#Sarasa UI CL</FontFamily>
+    <FontFamily x:Key="SarasaMono">avares://Ameko/Assets/Fonts/#Sarasa Mono CL</FontFamily>
+  </Application.Resources>
+
+  <Application.Styles>
+    <SimpleTheme />
+    <semi:SemiTheme Locale="en-US" />
+    <semi:ColorPickerSemiTheme />
+    <semi:DataGridSemiTheme />
+    <semi:AvaloniaEditSemiTheme />
+    <StyleInclude Source="avares://Ameko/Views/Controls/SeekSlider.axaml" />
+    <materialIcons:MaterialIconStyles />
+
+    <Style Selector="MenuItem:selected:open /template/ Border">
+      <Setter Property="MaxHeight" Value="800" />
+      <!-- Max height of menu -->
+    </Style>
+
+    <Style Selector="TextBox:modified">
+      <Setter Property="FontStyle" Value="Normal" />
+    </Style>
+
+    <Style Selector="Window">
+      <!-- Setting window font applies to all child controls without a font set -->
+      <Setter Property="FontFamily" Value="{StaticResource SarasaUi}" />
+    </Style>
+
+    <!-- Dummy styles to stop the "style not found" warnings -->
+    <Style Selector="Button.Small" />
+    <Style Selector="Button.Large" />
+    <Style Selector="Button.Primary" />
+    <Style Selector="Button.Secondary" />
+    <Style Selector="Button.Tertiary" />
+    <Style Selector="Button.Success" />
+    <Style Selector="Button.Danger" />
+    <Style Selector="Button.Warning" />
+    <Style Selector="TextBox.Small" />
+    <Style Selector="ComboBox.Small" />
+    <Style Selector="NumericUpDown.Small" />
+    <Style Selector="ScrollViewer.InsetContent" />
+  </Application.Styles>
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_Help}"
+        Command="{Binding ShowHelpWindowCommand}"
+      />
+      <NativeMenuItemSeparator />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_About}"
+        Command="{Binding ShowAboutWindowCommand}"
+      />
+      <NativeMenuItemSeparator />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_Configuration}"
+        Command="{Binding ShowConfigDialogCommand}"
+      />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_Keybinds}"
+        Command="{Binding ShowKeybindsDialogCommand}"
+      />
+      <NativeMenuItemSeparator />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_ShowLogs}"
+        Command="{Binding ShowLogWindowCommand}"
+      />
+      <NativeMenuItemSeparator />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_IssueTracker}"
+        Command="{Binding OpenIssueTrackerCommand}"
+      />
+      <NativeMenuItemSeparator />
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_Quit}"
+        Command="{Binding QuitCommand}"
+      />
+    </NativeMenu>
+  </NativeMenu.Menu>
 </Application>
