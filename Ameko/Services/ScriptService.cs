@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
+using Ameko.DataModels;
 using AssCS.History;
 using Avalonia.Threading;
 using CSScriptLib;
@@ -108,14 +109,12 @@ public class ScriptService : IScriptService
         if (TryGetScriptlet(qualifiedName, out var scriptlet))
         {
             var logger = _loggerFactory.CreateLogger(scriptlet.Info.QualifiedName);
-            var engine = new Engine(cfg => cfg.AllowClr())
-                .SetValue("ChangeType", typeof(ChangeType))
-                .SetValue("log", new Action<string>(msg => logger.LogInformation("{Message}", msg)))
-                .SetValue("err", new Action<string>(msg => logger.LogError("{Error}", msg)));
+            var timeout = TimeSpan.FromSeconds(5);
+            var engine = CreateJavaScriptEngine(logger, _projectProvider, timeout);
 
-            var success = engine
+            var success = await engine
                 .Execute(scriptlet.CompiledScript)
-                .Invoke("execute", _projectProvider.Current);
+                .InvokeAsync("execute", _projectProvider.Current);
 
             return success is JsBoolean jsBool
                 ? jsBool.AsBoolean()
@@ -134,19 +133,42 @@ public class ScriptService : IScriptService
     }
 
     /// <inheritdoc />
-    public string ExecutePlaygroundScript(string content, bool csharp)
+    public async Task<string> ExecutePlaygroundScriptAsync(
+        string content,
+        PlaygroundLanguage language
+    )
     {
-        if (!csharp)
-            throw new NotImplementedException();
-
-        try
+        switch (language)
         {
-            _ = CSScript.Evaluator.Eval(content);
-            return I18N.Playground.Playground_Status_Success;
-        }
-        catch (Exception ex)
-        {
-            return string.Format(I18N.Playground.Playground_Status_Failure, ex);
+            case PlaygroundLanguage.JavaScript:
+            {
+                try
+                {
+                    var logger = _loggerFactory.CreateLogger("Playground");
+                    var timeout = TimeSpan.FromSeconds(5);
+                    var engine = CreateJavaScriptEngine(logger, _projectProvider, timeout);
+                    await engine.ExecuteAsync(content);
+                    return I18N.Playground.Playground_Status_Success;
+                }
+                catch (Exception ex)
+                {
+                    return string.Format(I18N.Playground.Playground_Status_Failure, ex);
+                }
+            }
+            case PlaygroundLanguage.CSharp:
+            {
+                try
+                {
+                    _ = CSScript.Evaluator.Eval(content);
+                    return I18N.Playground.Playground_Status_Success;
+                }
+                catch (Exception ex)
+                {
+                    return string.Format(I18N.Playground.Playground_Status_Failure, ex);
+                }
+            }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(language), language, null);
         }
     }
 
@@ -286,6 +308,77 @@ public class ScriptService : IScriptService
 
     /// <inheritdoc />
     public event EventHandler<EventArgs>? Reloaded;
+
+    private static Engine CreateJavaScriptEngine(
+        ILogger logger,
+        IProjectProvider projectProvider,
+        TimeSpan timeoutInterval
+    )
+    {
+        var engine = new Engine(options =>
+        {
+            options.AllowClr(); // TODO: Do we want to keep this?
+            options.LimitRecursion(500);
+            options.TimeoutInterval(timeoutInterval);
+            // options.AddExtensionMethods(typeof(Enumerable));
+        });
+
+        engine.SetValue("ChangeType", typeof(ChangeType));
+        engine.SetValue("log", new Action<string?>(msg => logger.LogInformation("{Message}", msg)));
+        engine.SetValue("err", new Action<string?>(msg => logger.LogError("{Message}", msg)));
+        engine.SetValue(
+            "commitOne",
+            new Action<AssCS.Event, ChangeType>(
+                (active, changeType) =>
+                    projectProvider.Current.WorkingSpace?.Commit(active, changeType)
+            )
+        );
+        engine.SetValue(
+            "commitMany",
+            new Action<IEnumerable<AssCS.Event>, ChangeType>(
+                (selection, changeType) =>
+                    projectProvider.Current.WorkingSpace?.Commit(selection.ToList(), changeType)
+            )
+        );
+        engine.SetValue(
+            "selectOne",
+            new Action<AssCS.Event>(active =>
+                projectProvider.Current.WorkingSpace?.SelectionManager.Select(active)
+            )
+        );
+        engine.SetValue(
+            "selectMany",
+            new Action<AssCS.Event, IEnumerable<AssCS.Event>>(
+                (active, selection) =>
+                    projectProvider.Current.WorkingSpace?.SelectionManager.Select(
+                        active,
+                        selection.ToList()
+                    )
+            )
+        );
+
+        engine.SetValue("ProjectProvider", projectProvider);
+        engine.Execute(
+            """
+            Object.defineProperty(globalThis, 'project', { get: function() { return ProjectProvider.Current; } });
+            Object.defineProperty(globalThis, 'workspace', { get: function() { return ProjectProvider.Current.WorkingSpace; } });
+            Object.defineProperty(globalThis, 'activeEvent', { get: function() { return ProjectProvider.Current.WorkingSpace?.SelectionManager.ActiveEvent; } });
+            Object.defineProperty(globalThis, 'selectedEvents', {
+                get: function() {
+                    var col = ProjectProvider.Current.WorkingSpace?.SelectionManager.SelectedEventCollection;
+                    return col ? Array.from(col) : [];
+                }
+            });
+            Object.defineProperty(globalThis, 'events', {
+                get: function() {
+                    var col = ProjectProvider.Current.WorkingSpace?.Document.EventManager.Events;
+                    return col ? Array.from(col) : [];
+                }
+            });
+            """
+        );
+        return engine;
+    }
 
     public ScriptService(
         ILogger<ScriptService> logger,

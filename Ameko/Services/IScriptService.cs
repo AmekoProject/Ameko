@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Ameko.DataModels;
 using Holo.Scripting;
 
 namespace Ameko.Services;
@@ -46,9 +47,9 @@ public interface IScriptService
     /// Execute a playground script
     /// </summary>
     /// <param name="content">Content of the script</param>
-    /// <param name="csharp">If this is a C# script</param>
+    /// <param name="language">Type of script to execute</param>
     /// <returns>Status result</returns>
-    string ExecutePlaygroundScript(string content, bool csharp);
+    Task<string> ExecutePlaygroundScriptAsync(string content, PlaygroundLanguage language);
 
     /// <summary>
     /// Reload scripts

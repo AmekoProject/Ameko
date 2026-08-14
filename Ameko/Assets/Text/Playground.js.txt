@@ -1,0 +1,15 @@
+// Welcome to the Ameko Scripting Playground!
+
+// The following properties are available to you:
+// log(msg), err(msg), commitOne(event, ChangeType) commitMany(event[], ChangeType)
+// selectOne(event), selectMany(event[])
+// project, workspace, events, activeEvent, selectedEvents
+
+// Here's a demo to get you started!
+
+if (!workspace || events.length == 0)
+  return;
+
+var oddEvents = events.filter(e => e.Index % 2 !== 0);
+oddEvents.forEach(e => e.Text = "You just got Coconut Mall-ed!");
+commitMany(oddEvents, ChangeType.ModifyEventText);

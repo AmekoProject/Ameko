@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using Avalonia.Controls;
+using AvaloniaEdit.Indentation;
 using AvaloniaEdit.Indentation.CSharp;
 using AvaloniaEdit.TextMate;
 using TextMateSharp.Grammars;
@@ -16,10 +17,8 @@ public partial class PlaygroundWindow : Window
         var registryOptions = new RegistryOptions(ThemeName.Monokai);
         var textMateInstallation = PlaygroundEditor.InstallTextMate(registryOptions);
 
-        textMateInstallation.SetGrammar(registryOptions.GetScopeByExtension(".cs"));
+        textMateInstallation.SetGrammar(registryOptions.GetScopeByExtension(".js"));
 
-        PlaygroundEditor.TextArea.IndentationStrategy = new CSharpIndentationStrategy(
-            PlaygroundEditor.Options
-        );
+        PlaygroundEditor.TextArea.IndentationStrategy = new DefaultIndentationStrategy();
     }
 }

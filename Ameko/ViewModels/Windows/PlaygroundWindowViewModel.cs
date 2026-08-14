@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Windows.Input;
+using Ameko.DataModels;
 using Ameko.Services;
 using Avalonia.Platform;
 using AvaloniaEdit.Document;
@@ -33,7 +34,7 @@ public class PlaygroundWindowViewModel : ViewModelBase
 
     private void Reset()
     {
-        var uri = new Uri("avares://Ameko/Assets/Text/Playground.cs.txt");
+        var uri = new Uri("avares://Ameko/Assets/Text/Playground.js.txt");
         using var reader = new StreamReader(AssetLoader.Open(uri));
         Document.Text = reader.ReadToEnd();
     }
@@ -41,18 +42,21 @@ public class PlaygroundWindowViewModel : ViewModelBase
     public PlaygroundWindowViewModel(IPersistence persistence, IScriptService scriptService)
     {
         _status = I18N.Playground.Playground_Status_Ready;
-        Document = new TextDocument(persistence.PlaygroundCs);
+        Document = new TextDocument(persistence.PlaygroundJs);
 
         if (string.IsNullOrEmpty(Document.Text))
             Reset();
 
         ResetCommand = ReactiveCommand.Create(Reset);
 
-        ExecuteCommand = ReactiveCommand.Create(() =>
+        ExecuteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             IsExecuting = true;
-            persistence.PlaygroundCs = Document.Text;
-            Status = scriptService.ExecutePlaygroundScript(Document.Text, true);
+            persistence.PlaygroundJs = Document.Text;
+            Status = await scriptService.ExecutePlaygroundScriptAsync(
+                Document.Text,
+                PlaygroundLanguage.JavaScript
+            );
             IsExecuting = false;
         });
     }
