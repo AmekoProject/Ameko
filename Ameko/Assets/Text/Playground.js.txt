@@ -1,9 +1,7 @@
 // Welcome to the Ameko Scripting Playground!
 
-// The following properties are available to you:
-// log(msg), err(msg), commitOne(event, ChangeType) commitMany(event[], ChangeType)
-// selectOne(event), selectMany(event[])
-// project, workspace, events, activeEvent, selectedEvents
+// See the Wiki page for details on how to use the Playground!
+// https://github.com/AmekoProject/Ameko/wiki/Scripting-Playground
 
 // Here's a demo to get you started!
 

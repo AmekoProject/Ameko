@@ -230,7 +230,9 @@ public class ScriptService : IScriptService
                 );
                 using var reader = new StreamReader(fs);
                 var compiled = Engine.PrepareScript(await reader.ReadToEndAsync());
-                var scriptletInfo = new Engine().Execute(compiled).Evaluate("scriptInfo");
+                var scriptletInfo = await new Engine()
+                    .Execute(compiled)
+                    .EvaluateAsync("scriptInfo");
                 loadedScriptlets.Add(
                     new HoloScriptlet
                     {
@@ -324,36 +326,29 @@ public class ScriptService : IScriptService
         });
 
         engine.SetValue("ChangeType", typeof(ChangeType));
-        engine.SetValue("log", new Action<string?>(msg => logger.LogInformation("{Message}", msg)));
-        engine.SetValue("err", new Action<string?>(msg => logger.LogError("{Message}", msg)));
+        engine.SetValue("log", new Action<string>(msg => JavaScriptApi.Log(logger, msg)));
+        engine.SetValue("err", new Action<string>(msg => JavaScriptApi.Err(logger, msg)));
         engine.SetValue(
             "commitOne",
             new Action<AssCS.Event, ChangeType>(
-                (active, changeType) =>
-                    projectProvider.Current.WorkingSpace?.Commit(active, changeType)
+                (active, changeType) => JavaScriptApi.CommitOne(projectProvider, active, changeType)
             )
         );
         engine.SetValue(
             "commitMany",
             new Action<IEnumerable<AssCS.Event>, ChangeType>(
                 (selection, changeType) =>
-                    projectProvider.Current.WorkingSpace?.Commit(selection.ToList(), changeType)
+                    JavaScriptApi.CommitMany(projectProvider, selection, changeType)
             )
         );
         engine.SetValue(
             "selectOne",
-            new Action<AssCS.Event>(active =>
-                projectProvider.Current.WorkingSpace?.SelectionManager.Select(active)
-            )
+            new Action<AssCS.Event>(active => JavaScriptApi.SelectOne(projectProvider, active))
         );
         engine.SetValue(
             "selectMany",
             new Action<AssCS.Event, IEnumerable<AssCS.Event>>(
-                (active, selection) =>
-                    projectProvider.Current.WorkingSpace?.SelectionManager.Select(
-                        active,
-                        selection.ToList()
-                    )
+                (active, selection) => JavaScriptApi.SelectMany(projectProvider, active, selection)
             )
         );
 
@@ -362,6 +357,7 @@ public class ScriptService : IScriptService
             """
             Object.defineProperty(globalThis, 'project', { get: function() { return ProjectProvider.Current; } });
             Object.defineProperty(globalThis, 'workspace', { get: function() { return ProjectProvider.Current.WorkingSpace; } });
+            Object.defineProperty(globalThis, 'eventManager', { get: function() { return ProjectProvider.Current.WorkingSpace?.Document.EventManager; } });
             Object.defineProperty(globalThis, 'activeEvent', { get: function() { return ProjectProvider.Current.WorkingSpace?.SelectionManager.ActiveEvent; } });
             Object.defineProperty(globalThis, 'selectedEvents', {
                 get: function() {
@@ -401,5 +397,56 @@ public class ScriptService : IScriptService
         _scriptletMap = [];
         Scripts = new AssCS.Utilities.ReadOnlyObservableCollection<IHoloExecutable>(_scripts);
         CSScripting.Globals.DefaultRoslynCompilationToScript = true;
+    }
+
+    /// <summary>
+    /// API surface for Scriptlets and Playground scripts
+    /// </summary>
+    private static class JavaScriptApi
+    {
+        public static void Log(ILogger logger, string? message)
+        {
+            logger.LogInformation("{Message}", message);
+        }
+
+        public static void Err(ILogger logger, string? message)
+        {
+            logger.LogError("{Message}", message);
+        }
+
+        public static void CommitOne(
+            IProjectProvider projectProvider,
+            AssCS.Event active,
+            ChangeType changeType
+        )
+        {
+            projectProvider.Current.WorkingSpace?.Commit(active, changeType);
+        }
+
+        public static void CommitMany(
+            IProjectProvider projectProvider,
+            IEnumerable<AssCS.Event> selection,
+            ChangeType changeType
+        )
+        {
+            projectProvider.Current.WorkingSpace?.Commit(selection.ToList(), changeType);
+        }
+
+        public static void SelectOne(IProjectProvider projectProvider, AssCS.Event active)
+        {
+            projectProvider.Current.WorkingSpace?.SelectionManager.Select(active);
+        }
+
+        public static void SelectMany(
+            IProjectProvider projectProvider,
+            AssCS.Event active,
+            IEnumerable<AssCS.Event> selection
+        )
+        {
+            projectProvider.Current.WorkingSpace?.SelectionManager.Select(
+                active,
+                selection.ToList()
+            );
+        }
     }
 }
