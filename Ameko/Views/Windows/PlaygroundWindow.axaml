@@ -42,15 +42,18 @@
       VerticalContentAlignment="Top"
       Text="{Binding Status}"
     />
-    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-      <Button
-        Content="{x:Static i18n:Playground.Playground_Button_Reset}"
-        Command="{Binding ResetCommand}"
-      />
-      <Button
-        Content="{x:Static i18n:Playground.Playground_Button_Execute}"
-        Command="{Binding ExecuteCommand}"
-      />
-    </StackPanel>
+    <Grid Grid.Row="3" ColumnDefinitions="Auto, *, Auto">
+      <ComboBox Grid.Column="0" SelectedItem="JavaScript" IsEnabled="False" />
+      <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+        <Button
+          Content="{x:Static i18n:Playground.Playground_Button_Reset}"
+          Command="{Binding ResetCommand}"
+        />
+        <Button
+          Content="{x:Static i18n:Playground.Playground_Button_Execute}"
+          Command="{Binding ExecuteCommand}"
+        />
+      </StackPanel>
+    </Grid>
   </Grid>
 </Window>
