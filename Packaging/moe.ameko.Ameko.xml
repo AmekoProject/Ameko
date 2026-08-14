@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="text/x-ssa">
+        <comment>Advanced SubStation Alpha subtitle</comment>
+        <glob pattern="*.ass"/>
+    </mime-type>
+    <mime-type type="application/x-subrip">
+        <comment>SubRip subtitle</comment>
+        <glob pattern="*.srt"/>
+    </mime-type>
+    <mime-type type="application/vnd.ameko.project+json">
+        <comment>Ameko project file</comment>
+        <glob pattern="*.aproj"/>
+    </mime-type>
+</mime-info>

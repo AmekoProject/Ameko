@@ -1,7 +1,7 @@
-# Maintainer: 9volt <ninevult@gmail.com>
+# Maintainer: 9volt <me@ninevolt.moe>
 
 pkgname='ameko-git'
-pkgver=1.1.0.3ee0753
+pkgver=1
 pkgrel=1
 pkgdesc='Cross-platform editor for Advanced Substation Alpha (ASS) subtitles'
 arch=('x86_64')
@@ -16,15 +16,16 @@ makedepends=(
   'git'
   'zig'
   'dotnet-sdk'
-  'aspnet-runtime'
+  'aspnet-runtime',
+  'imagemagick'
 )
-provides=('ameko=${pkgver}')
+provides=('ameko')
 conflicts=('ameko')
 source=('git+https://github.com/9vult/Ameko.git')
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "Ameko"
+  cd "Ameko" # repo root
   git describe --long --abbrev=7 2>/dev/null \
     | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g([A-Za-z0-9]+)/\1.\2.\3.\4/' \
     | sed -E 's/-/./g' \
@@ -32,18 +33,37 @@ pkgver() {
 }
 
 build() {
-  cd "Ameko/Mizuki"
+  cd "Ameko" # repo root
+  cd "Mizuki"
   zig build
-  cd ..
+  cd .. # repo root
   dotnet publish Ameko -c Release -p:SolutionDir=./
+  
+  # Create icons
+  mkdir -p Icons
+  for size in 16 32 48 64 128 256; do
+    convert "Ameko/Assets/Ameko.ico[0]" -resize ${size}x${size} "Icons/ameko-${size}.png" 2>/dev/null || true
+  done
 }
 
 package() {
+  cd "Ameko" # repo root
+
   install -d "${pkgdir}/usr/bin" "${pkgdir}/usr/lib/ameko"
 
-  cp -a "Ameko/Ameko/bin/Release/net10.0/publish/." "${pkgdir}/usr/lib/ameko/"
-  install -Dm 755 "Ameko/Ameko/bin/Release/net10.0/publish/Ameko" "${pkgdir}/usr/lib/ameko/ameko"
+  cp -a "Ameko/bin/Release/net10.0/publish/." "${pkgdir}/usr/lib/ameko/"
+  ln -s "Ameko" "${pkgdir}/usr/lib/ameko/ameko"
   ln -s "/usr/lib/ameko/ameko" "${pkgdir}/usr/bin/ameko"
 
-  install -Dm 755 "Ameko/Mizuki/zig-out/lib/libmizuki.so" "${pkgdir}/usr/lib/ameko/libmizuki.so"
+  install -Dm 755 "Mizuki/zig-out/lib/libmizuki.so" "${pkgdir}/usr/lib/ameko/libmizuki.so"
+
+  install -Dm 644 "Ameko/Assets/moe.ameko.Ameko.desktop" "${pkgdir}/usr/share/applications/moe.ameko.Ameko.desktop"
+  install -Dm 644 "Ameko/Assets/moe.ameko.Ameko.xml" "${pkgdir}/usr/share/mime/packages/moe.ameko.Ameko.xml"
+  install -Dm 644 "LICENSE-GPL" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-GPL"
+  install -Dm 644 "LICENSE-MPL" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-MPL"
+  
+  # Install icons
+  for size in 16 32 48 64 128 256; do
+    install -Dm 644 "Icons/ameko-${size}.png" "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/moe.ameko.Ameko.png"
+  done
 }

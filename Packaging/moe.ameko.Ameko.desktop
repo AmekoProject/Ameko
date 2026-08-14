@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Ameko
+GenericName=Subtitle Editor
+Comment=Cross-platform editor for Advanced Substation Alpha (ASS) subtitles
+Exec=ameko %F
+Icon=moe.ameko.Ameko
+Terminal=false
+Categories=AudioVideo;Video;Editor;
+MimeType=text/x-ssa;application/x-subrip;application/vnd.ameko.project+json;
