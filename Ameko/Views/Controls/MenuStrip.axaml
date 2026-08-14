@@ -259,6 +259,7 @@
     <MenuItem
       Header="{x:Static i18n:Resources.Menu_Scripts}"
       ItemsSource="{Binding ScriptMenuItems}"
+      IsEnabled="{Binding IsScriptMenuEnabled}"
     />
     <MenuItem
       Header="{x:Static i18n:Resources.Menu_Layouts}"

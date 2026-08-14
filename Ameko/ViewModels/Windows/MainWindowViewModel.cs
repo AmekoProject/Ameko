@@ -286,6 +286,12 @@ public partial class MainWindowViewModel : ViewModelBase
     public ObservableCollection<TemplatedControl> RecentDocumentMenuItems { get; }
     public ObservableCollection<TemplatedControl> RecentProjectMenuItems { get; }
 
+    public bool IsScriptMenuEnabled
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = false;
+
     public string CurrentMessage
     {
         get;
@@ -363,6 +369,8 @@ public partial class MainWindowViewModel : ViewModelBase
         ScriptMenuItems.Add(new Separator());
         ScriptMenuItems.Add(ScriptMenuService.GenerateReloadMenuItem(ReloadScriptsCommand));
         ScriptMenuItems.Add(ScriptMenuService.GeneratePkgManMenuItem(ShowPackageManagerCommand));
+
+        IsScriptMenuEnabled = true;
         _logger.LogDebug("Done!");
     }
 

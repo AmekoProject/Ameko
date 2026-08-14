@@ -309,7 +309,10 @@
           />
         </NativeMenu>
       </NativeMenuItem>
-      <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Scripts}">
+      <NativeMenuItem
+        Header="{x:Static i18n:Resources.Menu_Scripts}"
+        IsEnabled="{Binding IsScriptMenuEnabled}"
+      >
         <NativeMenu />
       </NativeMenuItem>
       <NativeMenuItem Header="{x:Static i18n:Resources.Menu_Layouts}">
