@@ -73,7 +73,7 @@
           Command="{Binding PlayPauseAudioEventCommand}"
           Classes="Small"
         >
-          <StackPanel>
+          <Grid>
             <icons:MaterialIcon
               Kind="SkipNext"
               IsVisible="{Binding !Workspace.MediaController.IsAudioPlaying}"
@@ -82,7 +82,7 @@
               Kind="Pause"
               IsVisible="{Binding Workspace.MediaController.IsAudioPlaying, FallbackValue=False}"
             />
-          </StackPanel>
+          </Grid>
         </Button>
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowCollapseRight}"

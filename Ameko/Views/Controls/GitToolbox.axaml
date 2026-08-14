@@ -239,8 +239,10 @@
           <ListBox.ItemTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal" Spacing="2" ToolTip.Tip="{Binding Date}">
-                <icons:MaterialIcon Kind="SourceCommit" IsVisible="{Binding !IsMerge}" />
-                <icons:MaterialIcon Kind="SourceMerge" IsVisible="{Binding IsMerge}" />
+                <Grid>
+                  <icons:MaterialIcon Kind="SourceCommit" IsVisible="{Binding !IsMerge}" />
+                  <icons:MaterialIcon Kind="SourceMerge" IsVisible="{Binding IsMerge}" />
+                </Grid>
                 <TextBlock Text="{Binding Message}" />
                 <TextBlock Text="{Binding Author}" Foreground="Gray" />
               </StackPanel>

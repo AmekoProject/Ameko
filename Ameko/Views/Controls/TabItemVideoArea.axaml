@@ -95,7 +95,7 @@
           Command="{Binding PlayPauseCommand}"
           Classes="Small"
         >
-          <StackPanel>
+          <Grid>
             <icons:MaterialIcon
               Kind="Play"
               IsVisible="{Binding !Workspace.MediaController.IsVideoPlaying}"
@@ -104,7 +104,7 @@
               Kind="Pause"
               IsVisible="{Binding Workspace.MediaController.IsVideoPlaying, FallbackValue=False}"
             />
-          </StackPanel>
+          </Grid>
         </Button>
         <Button
           Content="{icons:MaterialIconExt Kind=SkipNext}"
@@ -131,7 +131,7 @@
           Command="{Binding ToggleMuteCommand}"
           Classes="Small"
         >
-          <StackPanel>
+          <Grid>
             <icons:MaterialIcon
               Kind="VolumeHigh"
               IsVisible="{Binding !Workspace.MediaController.IsMuted}"
@@ -140,7 +140,7 @@
               Kind="VolumeOff"
               IsVisible="{Binding Workspace.MediaController.IsMuted, FallbackValue=False}"
             />
-          </StackPanel>
+          </Grid>
         </Button>
         <TextBox
           IsReadOnly="true"
