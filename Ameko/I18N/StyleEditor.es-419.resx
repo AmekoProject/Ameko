@@ -18,180 +18,180 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StyleEditor_WindowTitle" xml:space="preserve">
-        <value>Style Editor</value>
+        <value>Editor de estilos</value>
     </data>
   <data name="StyleEditor_Section_BasicInfo" xml:space="preserve">
-        <value>Basic Info</value>
+        <value>Información básica</value>
     </data>
   <data name="StyleEditor_InvalidName" xml:space="preserve">
-        <value>Invalid name!</value>
+        <value>¡Nombre no válido!</value>
     </data>
   <data name="StyleEditor_NameBox_Watermark" xml:space="preserve">
-        <value>Style Name</value>
+        <value>Nombre del estilo</value>
     </data>
   <data name="StyleEditor_Section_Font" xml:space="preserve">
-        <value>Font</value>
+        <value>Fuente</value>
     </data>
   <data name="StyleEditor_FontFamilyBox_Watermark" xml:space="preserve">
-        <value>Font Family</value>
+        <value>Familia de fuente</value>
     </data>
   <data name="StyleEditor_CheckBox_Bold" xml:space="preserve">
-        <value>Bold</value>
+        <value>Negrita</value>
     </data>
   <data name="StyleEditor_CheckBox_Italic" xml:space="preserve">
-        <value>Italic</value>
+        <value>Itálica</value>
     </data>
   <data name="StyleEditor_CheckBox_Underline" xml:space="preserve">
-        <value>Underline</value>
+        <value>Subrayado</value>
     </data>
   <data name="StyleEditor_CheckBox_Strikethrough" xml:space="preserve">
-        <value>Strikethrough</value>
+        <value>Tachado</value>
     </data>
   <data name="StyleEditor_Section_Colors" xml:space="preserve">
-        <value>Colors</value>
+        <value>Colores</value>
     </data>
   <data name="StyleEditor_Label_Primary" xml:space="preserve">
-        <value>Primary</value>
+        <value>Primario</value>
     </data>
   <data name="StyleEditor_Label_Secondary" xml:space="preserve">
-        <value>Secondary</value>
+        <value>Secundario</value>
     </data>
   <data name="StyleEditor_Label_Outline" xml:space="preserve">
-        <value>Outline</value>
+        <value>Contorno</value>
     </data>
   <data name="StyleEditor_Label_Shadow" xml:space="preserve">
-        <value>Shadow</value>
+        <value>Sombra</value>
     </data>
   <data name="StyleEditor_Header_Positioning" xml:space="preserve">
-        <value>Positioning</value>
+        <value>Posicionamiento</value>
     </data>
   <data name="StyleEditor_Label_Margins" xml:space="preserve">
-        <value>Margins</value>
+        <value>Márgenes</value>
     </data>
   <data name="StyleEditor_Label_Alignment" xml:space="preserve">
-        <value>Alignment</value>
+        <value>Alineación</value>
     </data>
   <data name="StyleEditor_MarginLeft_ToolTip" xml:space="preserve">
-        <value>Left margin</value>
+        <value>Margen izquierdo</value>
     </data>
   <data name="StyleEditor_MarginRight_ToolTip" xml:space="preserve">
-        <value>Right margin</value>
+        <value>Margen derecho</value>
     </data>
   <data name="StyleEditor_MarginVertical_ToolTip" xml:space="preserve">
-        <value>Vertical margin</value>
+        <value>Margen vertical</value>
     </data>
   <data name="StyleEditor_An1_ToolTip" xml:space="preserve">
-        <value>Align bottom-left (\an1)</value>
+        <value>Alinear abajo-izquierda (\an1)</value>
     </data>
   <data name="StyleEditor_An2_ToolTip" xml:space="preserve">
-        <value>Align bottom-center (\an2)</value>
+        <value>Alinear abajo-centro (\an2)</value>
     </data>
   <data name="StyleEditor_An3_ToolTip" xml:space="preserve">
-        <value>Align bottom-right (\an3)</value>
+        <value>Alinear abajo-derecha (\an3)</value>
     </data>
   <data name="StyleEditor_An4_ToolTip" xml:space="preserve">
-        <value>Align middle-left (\an4)</value>
+        <value>Alinear medio-izquierda (\an4)</value>
     </data>
   <data name="StyleEditor_An5_ToolTip" xml:space="preserve">
-        <value>Align center (\an5)</value>
+        <value>Alinear centro (\an5)</value>
     </data>
   <data name="StyleEditor_An6_ToolTip" xml:space="preserve">
-        <value>Align middle-right (\an6)</value>
+        <value>Alinear medio-derecha (\an6)</value>
     </data>
   <data name="StyleEditor_An7_ToolTip" xml:space="preserve">
-        <value>Align top-left (\an7)</value>
+        <value>Alinear arriba-izquierda (\an7)</value>
     </data>
   <data name="StyleEditor_An8_ToolTip" xml:space="preserve">
-        <value>Align top-center (\an8)</value>
+        <value>Alinear arriba-centro (\an8)</value>
     </data>
   <data name="StyleEditor_An9_ToolTip" xml:space="preserve">
-        <value>Align top-right (\an9)</value>
+        <value>Alinear arriba-derecha (\an9)</value>
     </data>
   <data name="StyleEditor_Label_MarginLeft" xml:space="preserve">
-        <value>Left</value>
+        <value>Izquierdo</value>
     </data>
   <data name="StyleEditor_Label_MarginRight" xml:space="preserve">
-        <value>Right</value>
+        <value>Derecho</value>
     </data>
   <data name="StyleEditor_Label_MarginVertical" xml:space="preserve">
         <value>Vertical</value>
     </data>
   <data name="StyleEditor_Header_Decoration" xml:space="preserve">
-        <value>Decoration</value>
+        <value>Decoración</value>
     </data>
   <data name="StyleEditor_Label_BorderThickness" xml:space="preserve">
-        <value>Outline</value>
+        <value>Contorno</value>
     </data>
   <data name="StyleEditor_Label_ShadowDistance" xml:space="preserve">
-        <value>Shadow</value>
+        <value>Sombra</value>
     </data>
   <data name="StyleEditor_BBox4" xml:space="preserve">
-        <value>Box (Event)</value>
+        <value>Caja (Evento)</value>
     </data>
   <data name="StyleEditor_BBox1" xml:space="preserve">
-        <value>Outline &amp; Shadow</value>
+        <value>Contorno y sombra</value>
     </data>
   <data name="StyleEditor_BBox3" xml:space="preserve">
-        <value>Box (Line)</value>
+        <value>Caja (Línea)</value>
     </data>
   <data name="StyleEditor_BBox1_ToolTip" xml:space="preserve">
-        <value>Display an outline and shadow around each character</value>
+        <value>Mostrar un contorno y sombra alrededor de cada carácter</value>
     </data>
   <data name="StyleEditor_BBox3_ToolTip" xml:space="preserve">
-        <value>Display an opaque box around each line in the event</value>
+        <value>Mostrar una caja opaca alrededor de cada línea en el evento</value>
     </data>
   <data name="StyleEditor_BBox4_ToolTip" xml:space="preserve">
-        <value>Display a single opaque box around all lines in the event (libass only)</value>
+        <value>Mostrar una sola caja opaca alrededor de todas las líneas en el evento (solo libass)</value>
     </data>
   <data name="StyleEditor_Header_Appearance" xml:space="preserve">
-        <value>Appearance</value>
+        <value>Apariencia</value>
     </data>
   <data name="StyleEditor_Label_ScaleX" xml:space="preserve">
-        <value>X Scale %</value>
+        <value>Escala X %</value>
     </data>
   <data name="StyleEditor_Label_ScaleY" xml:space="preserve">
-        <value>Y Scale %</value>
+        <value>Escala Y %</value>
     </data>
   <data name="StyleEditor_Label_Rotation" xml:space="preserve">
-        <value>Rotation (deg)</value>
+        <value>Rotación (grados)</value>
     </data>
   <data name="StyleEditor_Label_Spacing" xml:space="preserve">
-        <value>Spacing</value>
+        <value>Espaciado</value>
     </data>
   <data name="ColorDialog_WindowTitle" xml:space="preserve">
-        <value>Colors</value>
+        <value>Colores</value>
     </data>
   <data name="ColorDialog_CheckBox_UseRing" xml:space="preserve">
-        <value>Ring</value>
+        <value>Anillo</value>
     </data>
   <data name="ColorDialog_Label_AssColor" xml:space="preserve">
-        <value>ASS Color:</value>
+        <value>Color ASS:</value>
     </data>
   <data name="ColorDialog_Button_Select" xml:space="preserve">
-        <value>Select</value>
+        <value>Seleccionar</value>
     </data>
   <data name="StyleEditor_Button_Save" xml:space="preserve">
-        <value>Save</value>
+        <value>Guardar</value>
     </data>
   <data name="StyleEditor_Label_MarginTop" xml:space="preserve">
-        <value>Top</value>
+        <value>Superior</value>
     </data>
   <data name="StyleEditor_Label_MarginBottom" xml:space="preserve">
-        <value>Bottom</value>
+        <value>Inferior</value>
     </data>
   <data name="StyleEditor_MarginTop_ToolTip" xml:space="preserve">
-        <value>Top margin</value>
+        <value>Margen superior</value>
     </data>
   <data name="StyleEditor_MarginBottom_ToolTip" xml:space="preserve">
-        <value>Bottom margin</value>
+        <value>Margen inferior</value>
     </data>
   <data name="StyleEditor_Label_Tertiary" xml:space="preserve">
-        <value>Tertiary</value>
+        <value>Terciario</value>
     </data>
   <data name="StyleEditor_Label_Back" xml:space="preserve">
-        <value>Back</value>
+        <value>Atrás</value>
     </data>
   <data name="StyleEditor_CheckBox_Relative" xml:space="preserve">
-        <value>Relative</value>
+        <value>Relativo</value>
     </data>
 </root>

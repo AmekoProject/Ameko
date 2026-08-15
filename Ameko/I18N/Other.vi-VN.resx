@@ -18,213 +18,243 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LogWindow_Title" xml:space="preserve">
-    <value>Nhật ký Ameko</value>
-  </data>
+        <value>Nhật ký Ameko</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
-    <value>Xoá tài liệu?</value>
-  </data>
+        <value>Xoá tài liệu?</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
-    <value>Bạn có chắc muốn xoá tài liệu này khỏi dự án không?</value>
-  </data>
+        <value>Bạn có chắc muốn xoá tài liệu này khỏi dự án không?</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
-    <value>Xoá thư mục?</value>
-  </data>
+        <value>Xoá thư mục?</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
-    <value>Bạn có chắc muốn xoá thư mục này khỏi dự án không?</value>
-  </data>
+        <value>Bạn có chắc muốn xoá thư mục này khỏi dự án không?</value>
+    </data>
   <data name="MsgBox_NameDirectory_Title" xml:space="preserve">
-    <value>Đặt tên thư mục</value>
-  </data>
+        <value>Đặt tên thư mục</value>
+    </data>
   <data name="MsgBox_NameDirectory_Body" xml:space="preserve">
-    <value>Vui lòng chọn tên cho thư mục:</value>
-  </data>
+        <value>Vui lòng chọn tên cho thư mục:</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Disclaimer" xml:space="preserve">
-    <value>Không có thư mục nào bị xoá khỏi máy tính của bạn.</value>
-  </data>
+        <value>Không có thư mục nào bị xoá khỏi máy tính của bạn.</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Disclaimer" xml:space="preserve">
-    <value>Không có tệp nào bị xoá khỏi máy tính của bạn.</value>
-  </data>
+        <value>Không có tệp nào bị xoá khỏi máy tính của bạn.</value>
+    </data>
   <data name="MsgBox_NameItem_Label" xml:space="preserve">
-    <value>Tên: </value>
-  </data>
+        <value>Tên: </value>
+    </data>
   <data name="MsgBox_NameDocument_Body" xml:space="preserve">
-    <value>Vui lòng chọn tên hiển thị cho tài liệu:</value>
-  </data>
+        <value>Vui lòng chọn tên hiển thị cho tài liệu:</value>
+    </data>
   <data name="MsgBox_NameDocument_Title" xml:space="preserve">
-    <value>Đặt tên tài liệu</value>
-  </data>
+        <value>Đặt tên tài liệu</value>
+    </data>
   <data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
-    <value>Dịch vụ loại {0} chưa được đăng ký để sử dụng bởi script</value>
-  </data>
+        <value>Dịch vụ loại {0} chưa được đăng ký để sử dụng bởi script</value>
+    </data>
   <data name="MsgBox_Save_Title" xml:space="preserve">
-    <value>Lưu công việc?</value>
-  </data>
+        <value>Lưu công việc?</value>
+    </data>
   <data name="MsgBox_Save_Body" xml:space="preserve">
-    <value>{0} có nội dung chưa lưu. Bạn có muốn lưu lại không?</value>
-  </data>
+        <value>{0} có nội dung chưa lưu. Bạn có muốn lưu lại không?</value>
+    </data>
   <data name="FileDialog_FileType_Project" xml:space="preserve">
-    <value>Tệp dự án Ameko</value>
-  </data>
+        <value>Tệp dự án Ameko</value>
+    </data>
   <data name="FileDialog_OpenProject_Title" xml:space="preserve">
-    <value>Mở tệp dự án</value>
-  </data>
+        <value>Mở tệp dự án</value>
+    </data>
   <data name="FileDialog_SaveProject_Title" xml:space="preserve">
-    <value>Lưu tệp dự án</value>
-  </data>
+        <value>Lưu tệp dự án</value>
+    </data>
   <data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
-    <value>Mở tệp phụ đề</value>
-  </data>
+        <value>Mở tệp phụ đề</value>
+    </data>
   <data name="FileDialog_FileType_Ass" xml:space="preserve">
-    <value>Tệp ASS</value>
-  </data>
+        <value>Tệp ASS</value>
+    </data>
   <data name="FileDialog_FileType_Srt" xml:space="preserve">
-    <value>Tệp SRT</value>
-  </data>
+        <value>Tệp SRT</value>
+    </data>
   <data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
-    <value>Lưu tệp phụ đề</value>
-  </data>
+        <value>Lưu tệp phụ đề</value>
+    </data>
   <data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
-    <value>Xuất tệp phụ đề</value>
-  </data>
+        <value>Xuất tệp phụ đề</value>
+    </data>
   <data name="FileDialog_FileType_Text" xml:space="preserve">
-    <value>Tệp văn bản</value>
-  </data>
+        <value>Tệp văn bản</value>
+    </data>
   <data name="MsgBox_ScriptService_Title" xml:space="preserve">
-    <value>Dịch vụ Script Ameko</value>
-  </data>
+        <value>Dịch vụ Script Ameko</value>
+    </data>
   <data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
-    <value>Tải lại script thành công</value>
-  </data>
+        <value>Tải lại script thành công</value>
+    </data>
   <data name="FileDialog_OpenVideo_Title" xml:space="preserve">
-    <value>Mở tệp Video</value>
-  </data>
+        <value>Mở tệp Video</value>
+    </data>
   <data name="FileDialog_FileType_Video" xml:space="preserve">
-    <value>Tệp Video</value>
-  </data>
+        <value>Tệp Video</value>
+    </data>
   <data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
-    <value>Mở thư mục dự án</value>
-  </data>
+        <value>Mở thư mục dự án</value>
+    </data>
   <data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
-    <value>Đính kèm tệp tham chiếu</value>
-  </data>
+        <value>Đính kèm tệp tham chiếu</value>
+    </data>
   <data name="CrashReporter_WindowTitle" xml:space="preserve">
-    <value>Báo cáo sự cố Ameko</value>
-  </data>
+        <value>Báo cáo sự cố Ameko</value>
+    </data>
   <data name="CrashReporter_Header" xml:space="preserve">
-    <value>Ameko gặp sự cố rồi :(</value>
-  </data>
+        <value>Ameko gặp sự cố rồi :(</value>
+    </data>
   <data name="CrashReporter_Info" xml:space="preserve">
-    <value>Chi tiết lỗi như sau:</value>
-  </data>
+        <value>Chi tiết lỗi như sau:</value>
+    </data>
   <data name="Message_ClipboardEmpty" xml:space="preserve">
-    <value>Khay nhớ tạm đang trống!</value>
-  </data>
+        <value>Khay nhớ tạm đang trống!</value>
+    </data>
   <data name="MsgBox_Btn_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
+        <value>OK</value>
+    </data>
   <data name="MsgBox_Btn_Cancel" xml:space="preserve">
-    <value>Huỷ</value>
-  </data>
+        <value>Huỷ</value>
+    </data>
   <data name="MsgBox_Btn_Yes" xml:space="preserve">
-    <value>Có</value>
-  </data>
+        <value>Có</value>
+    </data>
   <data name="MsgBox_Btn_No" xml:space="preserve">
-    <value>Không</value>
-  </data>
+        <value>Không</value>
+    </data>
   <data name="MsgBox_LoadVideo_Title" xml:space="preserve">
-    <value>Tải Video</value>
-  </data>
+        <value>Tải Video</value>
+    </data>
   <data name="MsgBox_LoadVideo_Body" xml:space="preserve">
-    <value>Bạn có muốn tải video liên kết không?</value>
-  </data>
+        <value>Bạn có muốn tải video liên kết không?</value>
+    </data>
   <data name="Message_VideoNotFound" xml:space="preserve">
-    <value>Không tìm thấy video liên kết "{0}".</value>
-  </data>
+        <value>Không tìm thấy video liên kết "{0}".</value>
+    </data>
   <data name="Message_SavedFrame" xml:space="preserve">
-    <value>Đã lưu khung hình vào {0}</value>
-  </data>
+        <value>Đã lưu khung hình vào {0}</value>
+    </data>
   <data name="Message_CopiedFrame" xml:space="preserve">
-    <value>Đã sao chép khung hình vào khay nhớ tạm</value>
-  </data>
+        <value>Đã sao chép khung hình vào khay nhớ tạm</value>
+    </data>
   <data name="FileDialog_SaveFrame_Title" xml:space="preserve">
-    <value>Lưu khung hình</value>
-  </data>
+        <value>Lưu khung hình</value>
+    </data>
   <data name="FileDialog_FileType_Png" xml:space="preserve">
-    <value>Tệp PNG</value>
-  </data>
+        <value>Tệp PNG</value>
+    </data>
   <data name="Message_UpdateAvailable" xml:space="preserve">
-    <value>Đã có phiên bản mới của Ameko: {0}!</value>
-  </data>
+        <value>Đã có phiên bản mới của Ameko: {0}!</value>
+    </data>
   <data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
-    <value>Tính năng phát media đã bị tắt! Có thể là do thiếu Ffms2 hoặc libass!</value>
-  </data>
+        <value>Tính năng phát media đã bị tắt! Có thể là do thiếu Ffms2 hoặc libass!</value>
+    </data>
   <data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
-    <value>Phát media</value>
-  </data>
+        <value>Phát media</value>
+    </data>
   <data name="Message_AutosaveComplete" xml:space="preserve">
-    <value>Tự động lưu hoàn tất!</value>
-  </data>
+        <value>Tự động lưu hoàn tất!</value>
+    </data>
   <data name="SelectTrackDialog_Title" xml:space="preserve">
-    <value>Chọn Track</value>
-  </data>
+        <value>Chọn Track</value>
+    </data>
   <data name="SelectTrackDialog_Body" xml:space="preserve">
-    <value>Chọn một track để tải:</value>
-  </data>
+        <value>Chọn một track để tải:</value>
+    </data>
   <data name="SelectTrackDialog_Button_Load" xml:space="preserve">
-    <value>Tải</value>
-  </data>
+        <value>Tải</value>
+    </data>
   <data name="FileDialog_OpenAudio_Title" xml:space="preserve">
-    <value>Mở tệp âm thanh</value>
-  </data>
+        <value>Mở tệp âm thanh</value>
+    </data>
   <data name="FileDialog_FileType_Audio" xml:space="preserve">
-    <value>Tệp âm thanh</value>
-  </data>
+        <value>Tệp âm thanh</value>
+    </data>
   <data name="ChangelogDialog_Title" xml:space="preserve">
-    <value>Xem nhật ký thay đổi</value>
-  </data>
+        <value>Xem nhật ký thay đổi</value>
+    </data>
   <data name="Changelog_NoChangelog" xml:space="preserve">
-    <value>Không có nhật ký thay đổi</value>
-  </data>
+        <value>Không có nhật ký thay đổi</value>
+    </data>
   <data name="Message_AudioAutoloaded" xml:space="preserve">
-    <value>Track âm thanh {0} đã được tự động tải</value>
-  </data>
+        <value>Track âm thanh {0} đã được tự động tải</value>
+    </data>
   <data name="Message_KeyframesNotFound" xml:space="preserve">
-    <value>Không tìm thấy tệp keyframe liên kết với "{0}".</value>
-  </data>
+        <value>Không tìm thấy tệp keyframe liên kết với "{0}".</value>
+    </data>
   <data name="FileDialog_OpenKeyframes_Title" xml:space="preserve">
-    <value>Mở tệp Keyframe</value>
-  </data>
+        <value>Mở tệp Keyframe</value>
+    </data>
   <data name="FileDialog_FileType_Kf" xml:space="preserve">
-    <value>Tệp Keyframe</value>
-  </data>
+        <value>Tệp Keyframe</value>
+    </data>
   <data name="SelectFolderDialog_Title" xml:space="preserve">
-    <value>Chọn thư mục</value>
-  </data>
+        <value>Chọn thư mục</value>
+    </data>
   <data name="SelectFolderDialog_Body" xml:space="preserve">
-    <value>Chọn một thư mục:</value>
-  </data>
+        <value>Chọn một thư mục:</value>
+    </data>
   <data name="SelectFolderDialog_Root" xml:space="preserve">
-    <value>/ (thư mục gốc)</value>
-  </data>
+        <value>/ (thư mục gốc)</value>
+    </data>
   <data name="SelectFolderDialog_Button_Select" xml:space="preserve">
-    <value>Chọn</value>
-  </data>
+        <value>Chọn</value>
+    </data>
   <data name="MsgBox_SaveProject_Body" xml:space="preserve">
-    <value>{0} có các thay đổi chưa lưu. Bạn có muốn lưu lại không?</value>
-  </data>
+        <value>{0} có các thay đổi chưa lưu. Bạn có muốn lưu lại không?</value>
+    </data>
   <data name="MsgBox_SaveProject_Title" xml:space="preserve">
-    <value>Lưu dự án?</value>
-  </data>
+        <value>Lưu dự án?</value>
+    </data>
   <data name="MsgBox_IoError_Title" xml:space="preserve">
-    <value>I/O Error</value>
-  </data>
+        <value>I/O Error</value>
+    </data>
   <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
-    <value>Unauthorized.</value>
-  </data>
+        <value>Unauthorized.</value>
+    </data>
   <data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
-    <value>An I/O error occurred.</value>
-  </data>
+        <value>An I/O error occured.</value>
+    </data>
   <data name="MsgBox_IoError_Body_Json" xml:space="preserve">
-    <value>Failed to parse JSON.</value>
-  </data>
+        <value>Failed to parse JSON.</value>
+    </data>
+  <data name="Message_StyleNotFound" xml:space="preserve">
+        <value>Style "{0}" was not found</value>
+    </data>
+  <data name="FileDialog_FileType_Csv" xml:space="preserve">
+        <value>CSV Files</value>
+    </data>
+  <data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
+        <value>Save Profile Result</value>
+    </data>
+  <data name="SourceViewer_Title" xml:space="preserve">
+        <value>Source Viewer - {0}</value>
+    </data>
+  <data name="SourceViewer_Button_Save" xml:space="preserve">
+        <value>Lưu</value>
+    </data>
+  <data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
+        <value>Enable Editing</value>
+    </data>
+  <data name="SourceViewer_Disclaimer" xml:space="preserve">
+        <value>Edits will be overwritten if the package is updated.</value>
+    </data>
+  <data name="SourceViewer_Button_Restore" xml:space="preserve">
+        <value>Restore</value>
+    </data>
+  <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
+        <value>Restore package to its original state</value>
+    </data>
+  <data name="SourceViewer_Notice" xml:space="preserve">
+        <value>"Update All" will skip modified packages.</value>
+    </data>
 </root>

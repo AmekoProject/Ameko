@@ -20,7 +20,7 @@
   <data name="CommandPalette_Title" xml:space="preserve">
         <value>Befehlspalette</value>
     </data>
-    <data name="CmdP_Button" xml:space="preserve">
+  <data name="CmdP_Button" xml:space="preserve">
         <value>Los</value>
     </data>
 </root>

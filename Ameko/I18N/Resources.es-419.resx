@@ -402,30 +402,39 @@
         <value>Ordena_r líneas...</value>
     </data>
   <data name="Menu_SnapFrame_End" xml:space="preserve">
-        <value>Snap End to Current F_rame</value>
+        <value>Ajustar fin al f_otograma actual</value>
     </data>
   <data name="Menu_SnapFrame_Start" xml:space="preserve">
-        <value>Snap Start to _Current Frame</value>
+        <value>Ajustar inicio al fotograma _actua</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Root" xml:space="preserve">
-        <value>Create New Root Folder...</value>
+        <value>Crear nueva carpeta raíz...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_CreateFolder_Folder" xml:space="preserve">
-        <value>Create New Folder Here...</value>
+        <value>Crear nueva carpeta aquí...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_MoveToFolder" xml:space="preserve">
-        <value>Move to Folder...</value>
+        <value>Mover a carpeta...</value>
     </data>
   <data name="Video_Button_Mute_ToolTip" xml:space="preserve">
-        <value>Play audio with video</value>
+        <value>Reproducir audio con video</value>
     </data>
   <data name="Editor_MarginTop_ToolTip" xml:space="preserve">
-        <value>Top Margin (0 is style default)</value>
+        <value>Margen superior (0 es el estilo predeterminado)</value>
     </data>
   <data name="Editor_MarginBottom_ToolTip" xml:space="preserve">
-        <value>Bottom Margin (0 is style default)</value>
+        <value>Margen Inferior (0 es el estilo predeterminado)</value>
     </data>
   <data name="Menu_OpenKnp" xml:space="preserve">
-        <value>_Key Names &amp; Terms...</value>
+        <value>_Nombres Clave y Términos...</value>
+    </data>
+  <data name="Video_NothingLoaded" xml:space="preserve">
+        <value>No hay video cargado</value>
+    </data>
+  <data name="Audio_NothingLoaded" xml:space="preserve">
+        <value>No hay audio cargado</value>
+    </data>
+  <data name="Menu_Profile_Subtitles" xml:space="preserve">
+        <value>Per_filar subtítulos...</value>
     </data>
 </root>

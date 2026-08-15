@@ -1,151 +1,136 @@
-Ameko's user interface draws heavily from Aegisub, and should feel familiar to existing Aegisub users. Here is a general
-overview of Ameko's user interface.
+La interfaz de usuario de Ameko se inspira en gran medida en Aegisub, y debería resultar familiar para quienes ya usan Aegisub. Aquí tienes un resumen general de la interfaz de usuario de Ameko.
 
-## The Editing Area
+## El área de edición
 
 ![](../assets/editing-area.png)
 
-Most users will probably spend the bulk of their time in the editing area. The editing area is linked to the active
-line, and consists of a large textbox for the line's text content, and a host of auxiliary buttons and textboxes for
-adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
-reference will be displayed in an additional box below the main textbox.
+La mayoría de los usuarios probablemente pasarán la mayor parte de su tiempo en el área de edición. El área de edición está vinculada a la línea activa, y consiste en un cuadro de texto grande para el contenido de texto de la línea (1), y una serie de botones y cuadros de texto auxiliares para ajustar los metadatos y el formato de la línea. Si hay un archivo de referencia adjunto, las líneas correspondientes de la referencia se mostrarán en un cuadro adicional debajo del cuadro de texto principal (2).
 
-If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
-the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
-Alternate forms are present in the reference file lines (2).
+Si el proyecto tiene Nombres Clave y Frases (KNP), se mostrará una cuadrícula con los términos coincidentes en la parte inferior del área. Un término se mostrará si su Traducción está presente en el contenido de texto (1), o si sus formas
+Original o Alternativa están presentes en las líneas del archivo de referencia (2).
 
-A brief overview of each item and its function:
+Un resumen breve de cada elemento y su función:
 
-- Top row
-  - Comment toggle. When checked, the line is a comment, and will not be displayed in the video.
-  - Style selector
-  - Edit style button
-  - Name of the character speaking the line. Not displayed in the video, but can be useful for editing and automation.
-  - Effect to use on the line. Generally only used for automation scripts.
-  - The number of characters in the longest line of the subtitle.
-- Bottom row
-  - Layer (Z-index). Lines with a higher layer will be placed on top of lines with a lower layer.
-  - Time the line appears on the screen
-  - Time the line disappears from the screen
-  - Offset from style's left margin. Offset from style's vertical margin.
-  - Offset from style's right margin. Offset from style's vertical margin.
-  - Set to 0 to use the style's margin Offset from style's vertical margin.
-  - Inserts a bold `\b1` tag at the cursor position, `\b0` if the text is already bold, or both if text is selected.
-  - Inserts an italic `\i1` tag at the cursor position, `\i0` if the text is already italic, or both if text is
-    selected.
-  - Inserts an underline `\u1` tag at the cursor position, `\u0` if the text is already underlined, or both if text is
-    selected.
-  - Inserts a strikethrough `\s` tag at the cursor position, `\s0` if the text is already struck through, or both if
-    text is selected.
-  - Opens a font dialog and inserts the corresponding `\fn` tag at the cursor position.
-  - Commit changes to this line and move to the next one, creating one if needed.
+- Fila superior
+  - Alternar comentario. Cuando está marcado, la línea es un comentario y no se mostrará en el video.
+  - Selector de estilo
+  - Botón de editar estilo
+  - Nombre del personaje que dice la línea. No se muestra en el video, pero puede ser útil para edición y automatización.
+  - Efecto a usar en la línea. Generalmente solo se usa para scripts de automatización.
+  - El número de caracteres en la línea más larga del subtítulo.
+- Fila inferior
+  - Capa (índice Z). Las líneas con una capa más alta se colocarán encima de las líneas con una capa más baja.
+  - Tiempo en que la línea aparece en pantalla
+  - Tiempo en que la línea desaparece de la pantalla
+  - Desplazamiento respecto al margen izquierdo del estilo. Establece en 0 para usar el margen del estilo
+  - Desplazamiento respecto al margen derecho del estilo. Establece en 0 para usar el margen del estilo
+  - Desplazamiento respecto al margen vertical del estilo. Establece en 0 para usar el margen del estilo
+  - Inserta una etiqueta de negrita `\b1` en la posición del cursor, `\b0` si el texto ya está en negrita, o ambas si hay texto seleccionado.
+  - Inserta una etiqueta de itálica `\i1` en la posición del cursor, `\i0` si el texto ya está en cursiva, o ambas si hay texto seleccionado.
+  - Inserta una etiqueta de subrayado `\u1` en la posición del cursor, `\u0` si el texto ya está subrayado, o ambas si hay texto seleccionado.
+  - Inserta una etiqueta de tachado `\s` en la posición del cursor, `\s0` si el texto ya está tachado, o ambas si hay texto seleccionado.
+  - Abre un diálogo de fuente e inserta la etiqueta `\fn` correspondiente en la posición del cursor.
+  - Confirma los cambios en esta línea y pasa a la siguiente, creando una nueva si es necesario.
 
-### Editing Area Context Menu
+### Menú Contextual del Área de Edición
 
 ![](../assets/editing-area-context-menu.png)
 
-Right-click within the textbox to open the context menu.
+Haz clic derecho dentro del cuadro de texto para abrir el menú contextual.
 
-- Opens the spellchecking dialog to the selected line.
-- Split the line into two at the cursor position, with estimated start and end times.
-- Split the line into two at the cursor position, both with the same start and end times.
+- Abre el diálogo de corrección ortográfica para la línea seleccionada.
+- Divide la línea en dos en la posición del cursor, con tiempos de inicio y fin estimados.
+- Divide la línea en dos en la posición del cursor, ambas con los mismos tiempos de inicio y fin.
 
-## The Subtitle Grid
+## La Cuadrícula de Subtítulos
 
 ![](../assets/subtitle-grid.png)
 
-The subtitle grid displays all lines in the file and an overview of their metadata (start time, actor, etc.)
+La cuadrícula de subtítulos muestra todas las líneas del archivo y un resumen de sus metadatos (tiempo de inicio, actor, etc.)
 
-### Subtitle Grid Context Menu
+### Menú Contextual de la Cuadrícula de Subtítulos
 
 ![](../assets/subtitle-grid-context-menu.png)
 
-Right-click on any line in the subtitle grid to open the context menu.
+Haz clic derecho en cualquier línea de la cuadrícula de subtítulos para abrir el menú contextual.
 
-- Create a duplicate of the selected lines
-- Merge two or more lines together
-- Split the selected lines on linebreaks `\N`, with estimated start and end times.
-- Split the selected lines on linebreaks `\N`, with the same start and end times.
-- Insert a new line before the selected line.
-- Insert a new line after the selected line.
-- Insert a new line before the selected line, starting at the current video time.
-- Insert a new line after the selected line, starting at the current video time.
-- Copy the selected lines to the clipboard.
-- Copy just the text content of the lines to the clipboard.
-- Cut the selected lines to the clipboard.
-- Paste lines from the clipboard.
-- Paste over (replace fields) with lines from the clipboard. A dialog will be displayed to allow you to choose which
-  fields to replace.
-- Delete the selected lines.
+- Crea un duplicado de las líneas seleccionadas
+- Combina dos o más líneas en una sola
+- Divide las líneas seleccionadas en los saltos de línea `\N`, con tiempos de inicio y fin estimados.
+- Divide las líneas seleccionadas en los saltos de línea `\N`, con los mismos tiempos de inicio y fin.
+- Inserta una nueva línea antes de la línea seleccionada.
+- Inserta una nueva línea después de la línea seleccionada.
+- Inserta una nueva línea antes de la línea seleccionada, comenzando en el tiempo actual del video.
+- Inserta una nueva línea después de la línea seleccionada, comenzando en el tiempo actual del video.
+- Copia las líneas seleccionadas al portapapeles.
+- Copia solo el contenido de texto de las líneas al portapapeles.
+- Corta las líneas seleccionadas al portapapeles.
+- Pega líneas desde el portapapeles.
+- Pega sobre (reemplaza campos) con líneas del portapapeles. Se mostrará un diálogo para que elijas qué campos
+  reemplazar.
+- Elimina las líneas seleccionadas.
 
-## The Video Area
+## El área de vídeo
 
 ![](../assets/video-area.png)
 
-When you have a video loaded, the video area serves as your preview window and media player. The video (and your
-subtitles!) will be displayed here as you edit and play back your work.
+Cuando tienes un video cargado, el área de video funciona como tu ventana de vista previa y reproductor multimedia. El video (¡y tus subtítulos!) se mostrarán aquí mientras editas y reproduces tu trabajo.
 
-Aegisub users will quickly realize that Ameko's zoom feature behaves completely different to how they're used to. Rather
-than scale the size of the video area to the video, shrinking the rest of the UI, Ameko scales the video _within_ the
-video area, and provides scrollbars to pan the video when it gets too big. Of course, the area is also resizable should
-you want more screen real estate dedicated to the video.
+Los usuarios de Aegisub notarán rápidamente que la función de zoom de Ameko se comporta de forma completamente diferente a lo que están acostumbrados. En lugar de escalar el tamaño del área de video respecto al video, reduciendo el resto de la interfaz, Ameko escala el video _dentro_ del área de video, y proporciona barras de desplazamiento para desplazar el video cuando se vuelve demasiado grande. Por supuesto, el área también se puede redimensionar si deseas dedicar más espacio en pantalla al video.
 
-With that said, the other inhabitants of the video area are as follows:
+Dicho esto, los demás elementos del área de video son los siguientes:
 
-- Top row:
-  - Seek bar - Scrub through the video
-- Bottom row:
-  - Play/Pause - Plays to the end of the file, or pauses playback if currently playing.
-  - Play Selection - Plays from the earliest start time to the latest end time of the selection.
-  - Toggle Auto-Seek - Enable or disable automatic seeking to the start of the selected line. When disabled,
-    double-click on a line to seek to its start.
-  - Current timestamp (read-only).
-  - Current frame (read-only)
-  - Display rotation
-  - Toggle size lock - Make Ameko's video area behave like Aegisub's (not yet implemented).
-  - Display zoom
+- Fila superior:
+  - Barra de búsqueda - Recorre el video
+- Fila inferior:
+  - Reproducir/Pausar - Reproduce hasta el final del archivo, o pausa la reproducción si está en curso.
+  - Reproducir Selección - Reproduce desde el tiempo de inicio más temprano hasta el tiempo de fin más tardío de la selección.
+  - Alternar Auto-Búsqueda - Activa o desactiva la búsqueda automática al inicio de la línea seleccionada. Cuando está desactivada, haz doble clic en una línea para buscar su inicio.
+  - Marca de tiempo actual (solo lectura).
+  - Fotograma actual (solo lectura)
+  - Rotación de la visualización
+  - Alternar bloqueo de tamaño - Hace que el área de video de Ameko se comporte como la de Aegisub (aún no implementado).
+  - Zoom de la visualización
 
-### Video Area Context Menu
+### Menú Contextual del Área de Video
 
 ![](../assets/video-area-context-menu.png)
 
-Right-click on the video to open the context menu.
+Haz clic derecho en el video para abrir el menú contextual.
 
-- Copy the current frame, both video and subtitles, to the clipboard.
-- Copy the current frame to the clipboard; video only without the subtitles.
-- Copy the current frame to the clipboard; subtitles only without the video.
-- Save the current frame, both video and subtitles, to disk.
-- Save the current frame to disk; video only without the subtitles.
-- Save the current frame to disk; subtitles only without the video.
+- Copia el fotograma actual, tanto el video como los subtítulos, al portapapeles.
+- Copia el fotograma actual al portapapeles; solo el video, sin los subtítulos.
+- Copia el fotograma actual al portapapeles; solo los subtítulos, sin el video.
+- Guarda el fotograma actual, tanto el video como los subtítulos, en el disco.
+- Guarda el fotograma actual en el disco; solo el video, sin los subtítulos.
+- Guarda el fotograma actual en el disco; solo los subtítulos, sin el video.
 
-## The Audio Area
+## El Área de Audio
 
 ![](../assets/audio-area.png)
 
-The audio area displays an audio visualization. The visualization does not scroll automatically with the video, but it
-will move to the start of the selected line if a seek (auto or manual) is performed.
+El área de audio muestra una visualización de audio. La visualización no se desplaza automáticamente con el video,
+pero se moverá al inicio de la línea seleccionada si se realiza una búsqueda (automática o manual).
 
-Below the visualization is a seekbar and controls, and to the right are controls for horizontal and vertical scale. The
-visualization contains the following information:
+Debajo de la visualización hay una barra de búsqueda y controles, y a la derecha se encuentran los controles de escala horizontal y vertical. La visualización contiene la siguiente información:
 
-- Keyframes, indicated by a gray line.
-- Seconds and Quarter-seconds, indicated by short red ticks and shorter gray ticks at the top and bottom.
-- Current video frame, indicated by a red line.
-- Current audio position, indicated by a blue line (only displayed while audio is playing).
-- Subtitle lines, indicated by a purple box starting at the line's start time and ending at the line's end time.
+- Fotogramas clave, indicados por una línea gris.
+- Segundos y cuartos de segundo, indicados por marcas rojas cortas y marcas grises más cortas en la parte superior e inferior.
+- Fotograma de video actual, indicado por una línea roja.
+- Posición de audio actual, indicada por una línea azul (solo se muestra mientras se reproduce el audio).
+- Líneas de subtítulo, indicadas por un cuadro morado que comienza en el tiempo de inicio de la línea y termina en su tiempo de fin.
 
-The audio playback controls, in order:
+Los controles de reproducción de audio, en orden:
 
-- Play Active Event: Plays from the Start time to the End time. Also doubles as a pause button.
-- Play Before: Plays 500ms before the Start time of the active event.
-- Play First: Plays the first 500ms of the active event.
-- Play Surrounding: Plays the duration of the active event, plus 500ms before the Start time and after the End time.
-- Play Last: Plays the last 500ms of the active event.
-- Play After: Plays 500ms after the End time of the active event.
+- Reproducir Evento Activo: Reproduce desde el tiempo de Inicio hasta el tiempo de Fin. También funciona como botón de pausa.
+- Reproducir Antes: Reproduce los 500 ms antes del tiempo de Inicio del evento activo.
+- Reproducir Primero: Reproduce los primeros 500 ms del evento activo.
+- Reproducir Entorno: Reproduce la duración del evento activo, más 500 ms antes del tiempo de Inicio y después del tiempo de Fin.
+- Reproducir Último: Reproduce los últimos 500 ms del evento activo.
+- Reproducir Después: Reproduce los 500 ms después del tiempo de Fin del evento activo.
 
-## Tabs
+## Pestañas
 
 ![](../assets/tabs.png)
 
-Ameko is a tabbed application. You can open multiple subtitle and video files and switch between them at will. Be
-mindful that opening multiple video files simultaneously may consume large amounts of RAM and/or lead to unstability.
+Ameko es una aplicación con pestañas. Puedes abrir múltiples archivos de subtítulos y video y cambiar entre ellos libremente. Ten en cuenta que abrir múltiples archivos de video simultáneamente puede consumir grandes cantidades de RAM y/o provocar inestabilidad.

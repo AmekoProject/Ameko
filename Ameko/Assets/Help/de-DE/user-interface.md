@@ -5,9 +5,9 @@ Die Benutzeroberfläche von Ameko ist stark an Aegisub angelehnt und dürfte bes
 ![](../assets/editing-area.png)
 
 Wahrscheinlich werden die meisten Nutzer den Großteil ihrer Zeit im Bearbeitungsbereich verbringen. The editing area is linked to the active
-line, and consists of a large textbox for the line's text content, and a host of auxiliary buttons and textboxes for
+line, and consists of a large textbox for the line's text content (1), and a host of auxiliary buttons and textboxes for
 adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
-reference will be displayed in an additional box below the main textbox.
+reference will be displayed in an additional box below the main textbox (2).
 
 If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
 the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
@@ -26,9 +26,9 @@ Ein kurzer Überblick über jedes Element und seine Funktion:
   - Ebene (Z-Index). Zeilen mit einer höheren Ebene werden über Zeilen mit einer niedrigeren Ebene gelegt.
   - Zeitpunkt, an dem die Zeile auf dem Bildschirm erscheint
   - Zeitpunkt, an dem die Zeile vom Bildschirm verschwindet
-  - Offset from style's left margin. Offset from style's vertical margin.
-  - Offset from style's right margin. Offset from style's vertical margin.
-  - Set to 0 to use the style's margin Offset from style's vertical margin.
+  - Offset from style's left margin. Set to 0 to use the style's margin
+  - Offset from style's right margin. Set to 0 to use the style's margin
+  - Offset from style's vertical margin. Set to 0 to use the style's margin
   - Inserts a bold `\b1` tag at the cursor position, `\b0` if the text is already bold, or both if text is selected.
   - Inserts an italic `\i1` tag at the cursor position, `\i0` if the text is already italic, or both if text is
     selected.

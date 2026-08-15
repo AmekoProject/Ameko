@@ -18,141 +18,144 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PkgManWindow_Title" xml:space="preserve">
-    <value>Ameko Package Manager</value>
-  </data>
+        <value>Administrador de paquetes de Ameko</value>
+    </data>
   <data name="PkgMan_PackageStore" xml:space="preserve">
-    <value>Package Store</value>
-  </data>
+        <value>Tienda de paquetes</value>
+    </data>
   <data name="PkgMan_Info_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
+        <value>Nombre</value>
+    </data>
   <data name="PkgMan_Info_QualifiedName" xml:space="preserve">
-    <value>Qualified Name</value>
-  </data>
+        <value>Nombre calificado</value>
+    </data>
   <data name="PkgMan_Info_Version" xml:space="preserve">
-    <value>Version</value>
-  </data>
+        <value>Versión</value>
+    </data>
   <data name="PkgMan_Info_Author" xml:space="preserve">
-    <value>Author</value>
-  </data>
+        <value>Autor</value>
+    </data>
   <data name="PkgMan_Info_Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
+        <value>Descripción</value>
+    </data>
   <data name="PkgMan_Info_Dependencies" xml:space="preserve">
-    <value>Dependencies</value>
-  </data>
+        <value>Dependencias</value>
+    </data>
   <data name="PkgMan_Info_Type" xml:space="preserve">
-    <value>Type</value>
-  </data>
+        <value>Tipo</value>
+    </data>
   <data name="PkgMan_Info_NoSelection" xml:space="preserve">
-    <value>No Selection</value>
-  </data>
+        <value>Sin selección</value>
+    </data>
   <data name="PkgMan_InstalledPackages" xml:space="preserve">
-    <value>Installed Packages</value>
-  </data>
+        <value>Paquetes instalados</value>
+    </data>
   <data name="PkgMan_Info_Repository" xml:space="preserve">
-    <value>Repository</value>
-  </data>
+        <value>Repositorio</value>
+    </data>
   <data name="PkgMan_RepositoriesTab" xml:space="preserve">
-    <value>Repositories</value>
-  </data>
+        <value>Repositorios</value>
+    </data>
   <data name="PkgMan_Button_Install" xml:space="preserve">
-    <value>Install</value>
-  </data>
+        <value>Instalar</value>
+    </data>
   <data name="PkgMan_Button_UpdateAll" xml:space="preserve">
-    <value>Update All</value>
-  </data>
+        <value>Actualizar todo</value>
+    </data>
   <data name="PkgMan_Button_Update" xml:space="preserve">
-    <value>Update</value>
-  </data>
+        <value>Actualizar</value>
+    </data>
   <data name="PkgMan_Button_Uninstall" xml:space="preserve">
-    <value>Uninstall</value>
-  </data>
+        <value>Desinstalar</value>
+    </data>
   <data name="PkgMan_Button_Install_ToolTip" xml:space="preserve">
-    <value>Install the selected package</value>
-  </data>
+        <value>Instalar el paquete seleccionado</value>
+    </data>
   <data name="PkgMan_Button_UpdateAll_ToolTip" xml:space="preserve">
-    <value>Update all packages to their latest versions</value>
-  </data>
+        <value>Actualizar todos los paquetes a sus últimas versiones</value>
+    </data>
   <data name="PkgMan_Button_Update_ToolTip" xml:space="preserve">
-    <value>Update the selected package to its latest version</value>
-  </data>
+        <value>Actualizar el paquete seleccionado a su última versión</value>
+    </data>
   <data name="PkgMan_Button_Uninstall_ToolTip" xml:space="preserve">
-    <value>Uninstall the selected package</value>
-  </data>
+        <value>Desinstalar el paquete seleccionado</value>
+    </data>
   <data name="PkgMan_Result_Success" xml:space="preserve">
-    <value>Success!</value>
-  </data>
+        <value>¡Éxito!</value>
+    </data>
   <data name="PkgMan_Result_Failure" xml:space="preserve">
-    <value>Failed!</value>
-  </data>
+        <value>¡Falló!</value>
+    </data>
   <data name="PkgMan_Result_DepNotFound" xml:space="preserve">
-    <value>Could not find a required dependency</value>
-  </data>
+        <value>No se pudo encontrar una dependencia requerida</value>
+    </data>
   <data name="PkgMan_Result_AlreadyInstalled" xml:space="preserve">
-    <value>The package is already installed!</value>
-  </data>
+        <value>¡El paquete ya está instalado!</value>
+    </data>
   <data name="PkgMan_Result_NotInstalled" xml:space="preserve">
-    <value>The package is not installed</value>
-  </data>
+        <value>El paquete no está instalado</value>
+    </data>
   <data name="PkgMan_Result_FS_Failure" xml:space="preserve">
-    <value>A filesystem error occured</value>
-  </data>
+        <value>Ocurrió un error en el sistema de archivos</value>
+    </data>
   <data name="PkgMan_Result_IsRequiredDep" xml:space="preserve">
-    <value>This package is required by other packages</value>
-  </data>
+        <value>Este paquete es requerido por otros paquetes</value>
+    </data>
   <data name="PkgMan_Update_Available_ToolTip" xml:space="preserve">
-    <value>An update is available for this package</value>
-  </data>
+        <value>Una actualización está disponible para este paquete</value>
+    </data>
   <data name="PkgMan_Button_Refresh_ToolTip" xml:space="preserve">
-    <value>Refresh the Package Store</value>
-  </data>
+        <value>Actualizar la Tienda de Paquetes</value>
+    </data>
   <data name="PkgMan_MsgBox_Refreshed" xml:space="preserve">
-    <value>Refresh successful</value>
-  </data>
+        <value>Actualización exitosa</value>
+    </data>
   <data name="PkgMan_PackagesTab" xml:space="preserve">
-    <value>Packages</value>
-  </data>
+        <value>Paquetes</value>
+    </data>
   <data name="PkgMan_Button_RemoveRepo" xml:space="preserve">
-    <value>Remove</value>
-  </data>
+        <value>Eliminar</value>
+    </data>
   <data name="PkgMan_Button_AddRepo" xml:space="preserve">
-    <value>Add</value>
-  </data>
+        <value>Agregar</value>
+    </data>
   <data name="PkgMan_Button_RemoveRepo_ToolTip" xml:space="preserve">
-    <value>Remove the selected repository</value>
-  </data>
+        <value>Eliminar el repositorio seleccionado</value>
+    </data>
   <data name="PkgMan_Button_AddRepo_ToolTip" xml:space="preserve">
-    <value>Add a new repository</value>
-  </data>
+        <value>Agregar un nuevo repositorio</value>
+    </data>
   <data name="PkgMan_Info_Maintainer" xml:space="preserve">
-    <value>Maintainer</value>
-  </data>
+        <value>Mantenedor</value>
+    </data>
   <data name="PkgMan_Info_IsBetaChannel" xml:space="preserve">
-    <value>Beta Channel?</value>
-  </data>
+        <value>¿Canal Beta?</value>
+    </data>
   <data name="PkgMan_Info_SubRepoCount" xml:space="preserve">
-    <value>Sub-Repositories</value>
-  </data>
+        <value>Subrepositorios</value>
+    </data>
   <data name="PkgMan_Info_PackageCount" xml:space="preserve">
-    <value>Packages</value>
-  </data>
+        <value>Paquetes</value>
+    </data>
   <data name="PkgMan_Info_Url" xml:space="preserve">
-    <value>Url</value>
-  </data>
+        <value>Url</value>
+    </data>
   <data name="PkgMan_Result_Repository_NotInstalled" xml:space="preserve">
-    <value>The repository is not installed</value>
-  </data>
+        <value>El repositorio no está instalado</value>
+    </data>
   <data name="PkgMan_Result_Repository_AlreadyInstalled" xml:space="preserve">
-    <value>The repository is already installed!</value>
-  </data>
+        <value>¡El repositorio ya está instalado!</value>
+    </data>
   <data name="PkgMan_Result_InvalidName" xml:space="preserve">
-    <value>The package has an invalid name</value>
-  </data>
+        <value>El paquete tiene un nombre no válido</value>
+    </data>
   <data name="PkgMan_Button_Changelog_ToolTip" xml:space="preserve">
-    <value>Show Changelog</value>
-  </data>
+        <value>Ver registro de cambios</value>
+    </data>
   <data name="PkgMan_Info_License" xml:space="preserve">
-    <value>License</value>
-  </data>
+        <value>Licencia</value>
+    </data>
+  <data name="PkgMan_Button_ViewSource_ToolTip" xml:space="preserve">
+        <value>Ver código fuente</value>
+    </data>
 </root>

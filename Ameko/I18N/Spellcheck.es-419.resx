@@ -18,57 +18,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Spellcheck_WindowTitle" xml:space="preserve">
-        <value>Spellcheck</value>
+        <value>Corrector ortográfico</value>
     </data>
   <data name="Spellcheck_Install_ProjectHeader" xml:space="preserve">
-        <value>This project is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>Este proyecto está configurado para usar "{0}" para la corrección ortográfica, pero ese diccionario no está instalado.</value>
     </data>
   <data name="Spellcheck_Install_ConfigHeader" xml:space="preserve">
-        <value>Ameko is configured to use "{0}" for spellchecking, but that dictionary is not installed.</value>
+        <value>Ameko está configurado para usar "{0}" para la corrección ortográfica, pero ese diccionario no está instalado.</value>
     </data>
   <data name="Spellcheck_Install_Capabilities" xml:space="preserve">
-        <value>Ameko can download the required dictionary for you.</value>
+        <value>Ameko puede descargar el diccionario necesario para usted.</value>
     </data>
   <data name="Spellcheck_Install_Notice" xml:space="preserve">
-        <value>Spellcheck functionality will be unavailable without the dictionary.</value>
+        <value>La función de corrección ortográfica no estará disponible sin el diccionario.</value>
     </data>
   <data name="Spellcheck_Install_Button_Download" xml:space="preserve">
-        <value>Download</value>
+        <value>Descargar</value>
     </data>
   <data name="Spellcheck_Install_Button_Ignore" xml:space="preserve">
-        <value>Ignore</value>
+        <value>Ignorar</value>
     </data>
   <data name="Spellcheck_Button_Change" xml:space="preserve">
-        <value>Change</value>
+        <value>Cambiar</value>
     </data>
   <data name="Spellcheck_Button_FindNext" xml:space="preserve">
-        <value>Find Next</value>
+        <value>Buscar siguiente</value>
     </data>
   <data name="Spellcheck_Label_NotFound" xml:space="preserve">
-        <value>This word was not found in the spelling dictionary.</value>
+        <value>Esta palabra no se encontró en el diccionario ortográfico.</value>
     </data>
   <data name="Spellcheck_Button_AddToProject" xml:space="preserve">
-        <value>Add to Project</value>
+        <value>Agregar al proyecto</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals" xml:space="preserve">
-        <value>Add to Globals</value>
+        <value>Añadir a globales</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth" xml:space="preserve">
-        <value>Add to Both</value>
+        <value>Agregar a ambos</value>
     </data>
   <data name="Spellcheck_Label_Dictionary" xml:space="preserve">
-        <value>Dictionary: {0}</value>
+        <value>Diccionario: {0}</value>
     </data>
   <data name="Spellcheck_Button_AddToProject_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project's word list</value>
+        <value>Guardar esta palabra en la lista de palabras del proyecto actual</value>
     </data>
   <data name="Spellcheck_Button_AddToGlobals_ToolTip" xml:space="preserve">
-        <value>Save this word to the Global word list</value>
+        <value>Guardar esta palabra en la lista de palabras globales</value>
     </data>
   <data name="Spellcheck_Button_AddToBoth_ToolTip" xml:space="preserve">
-        <value>Save this word to the current Project and the Global word list</value>
+        <value>Guardar esta palabra en el proyecto actual y en la lista de palabras globales</value>
     </data>
   <data name="Spellcheck_Label_NoIssues" xml:space="preserve">
-        <value>No issues found in the current document.</value>
+        <value>No se encontraron problemas en el documento actual.</value>
     </data>
 </root>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Profiler_Title" xml:space="preserve">
+        <value>Perfilar subtítulos</value>
+    </data>
+  <data name="Profiler_Button_Export" xml:space="preserve">
+        <value>Exportar</value>
+    </data>
+  <data name="Profiler_Button_Start" xml:space="preserve">
+        <value>Iniciar</value>
+    </data>
+  <data name="Profiler_RB_All" xml:space="preserve">
+        <value>Todos los eventos</value>
+    </data>
+  <data name="Profiler_RB_SelectedTimeRange" xml:space="preserve">
+        <value>Rango de tiempo seleccionado</value>
+    </data>
+  <data name="Profiler_RB_SelectedEvents" xml:space="preserve">
+        <value>Eventos seleccionados</value>
+    </data>
+  <data name="Profiler_CheckBox_UseVideoRes" xml:space="preserve">
+        <value>Usar resolución de video</value>
+    </data>
+  <data name="Profiler_Axis_RenderTime" xml:space="preserve">
+        <value>Tiempo de renderizado (ms)</value>
+    </data>
+  <data name="Profiler_Axis_ImageSize" xml:space="preserve">
+        <value>Tamaño de imagen (KP)</value>
+    </data>
+  <data name="Profiler_Axis_ImageCount" xml:space="preserve">
+        <value>Cantidad de imágenes</value>
+    </data>
+  <data name="Profiler_Axis_Frame" xml:space="preserve">
+        <value>Fotograma</value>
+    </data>
+  <data name="Profiler_Description" xml:space="preserve">
+        <value>Viendo resultados de "{0}"</value>
+    </data>
+</root>

@@ -20,7 +20,7 @@
   <data name="CommandPalette_Title" xml:space="preserve">
         <value>Bảng lệnh</value>
     </data>
-    <data name="CmdP_Button" xml:space="preserve">
+  <data name="CmdP_Button" xml:space="preserve">
         <value>Thực hiện</value>
     </data>
 </root>
