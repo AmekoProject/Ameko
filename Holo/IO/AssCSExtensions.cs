@@ -16,6 +16,7 @@ public static class AssCSExtensions
     /// Write an ass document to file
     /// </summary>
     /// <param name="fileWriter">FileWriter to use</param>
+    /// <param name="document">Document to write</param>
     /// <param name="fileSystem">FileSystem to use</param>
     /// <param name="savePath">Path to write to</param>
     /// <param name="export"><see langword="true"/> if this write is an export</param>
@@ -23,6 +24,7 @@ public static class AssCSExtensions
     /// <exception cref="IOException">If writing fails</exception>
     public static bool Write(
         this FileWriter fileWriter,
+        Document document,
         IFileSystem fileSystem,
         Uri savePath,
         bool export = false
@@ -41,7 +43,7 @@ public static class AssCSExtensions
         );
         using var writer = new StreamWriter(fs, encoding: Encoding.UTF8);
 
-        var result = fileWriter.Write(writer, export);
+        var result = fileWriter.Write(document, writer, export);
 
         writer.Flush();
         fs.SetLength(fs.Position);

@@ -8,14 +8,13 @@ namespace AssCS.IO;
 /// Writes a document to a text file
 /// </summary>
 public partial class TxtWriter(
-    Document document,
     ConsumerInfo consumer,
     bool includeComments = true,
     bool includeActors = true
 ) : FileWriter
 {
     /// <inheritdoc />
-    public override bool Write(TextWriter writer, bool export = false)
+    public override bool Write(Document document, TextWriter writer, bool export = false)
     {
         writer.WriteLine($"# Exported by {consumer.Name} {consumer.Version} [AssCS]");
 

@@ -45,6 +45,8 @@ public class IoService(
     ILogger<IoService> logger
 ) : IIoService
 {
+    private static readonly AssWriter _assWriter = new(ConsumerService.AmekoInfo);
+
     /// <inheritdoc />
     public async Task<bool> SaveSubtitle(Interaction<string, Uri?> interaction, Workspace wsp)
     {
@@ -82,8 +84,7 @@ public class IoService(
         {
             wsp.SavePath = uri;
             wsp.IsSaved = true;
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
+            _assWriter.Write(wsp.Document, fileSystem, uri);
         }
         catch (Exception ex)
         {
@@ -130,8 +131,7 @@ public class IoService(
 
         try
         {
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, path);
+            _assWriter.Write(wsp.Document, fileSystem, path);
         }
         catch (Exception ex)
         {
@@ -169,8 +169,7 @@ public class IoService(
         {
             wsp.SavePath = uri;
             wsp.IsSaved = true;
-            var writer = new AssWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri);
+            _assWriter.Write(wsp.Document, fileSystem, uri);
         }
         catch (Exception ex)
         {
@@ -212,8 +211,8 @@ public class IoService(
 
         try
         {
-            var writer = new TxtWriter(wsp.Document, ConsumerService.AmekoInfo);
-            writer.Write(fileSystem, uri, true);
+            var writer = new TxtWriter(ConsumerService.AmekoInfo);
+            writer.Write(wsp.Document, fileSystem, uri, true);
         }
         catch (Exception ex)
         {

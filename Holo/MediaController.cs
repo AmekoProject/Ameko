@@ -16,6 +16,8 @@ namespace Holo;
 /// </summary>
 public class MediaController : BindableBase
 {
+    private static readonly AssWriter _assWriter = new(new ConsumerInfo("", "", ""));
+
     private readonly ISourceProvider _provider;
     private readonly ILogger _logger;
     private readonly IPersistence _persistence;
@@ -978,11 +980,9 @@ public class MediaController : BindableBase
         if (!_provider.IsInitialized || !IsVideoLoaded || IsLocked)
             return;
 
-        // TODO: preferably not create a new writer on each change
-        var writer = new AssWriter(document, new ConsumerInfo("", "", ""));
         lock (_requestLock)
         {
-            var content = writer.Write();
+            var content = _assWriter.Write(document);
             _provider.SetSubtitles(content, null);
             _subtitlesChanged = true;
         }
@@ -1045,10 +1045,9 @@ public class MediaController : BindableBase
         }
 
         // Set subtitles
-        var writer = new AssWriter(selectionDoc, new ConsumerInfo("", "", ""));
         lock (_requestLock)
         {
-            var content = writer.Write();
+            var content = _assWriter.Write(selectionDoc);
             _provider.SetSubtitles(content, null);
             _subtitlesChanged = true;
         }

@@ -8,10 +8,9 @@ namespace AssCS.IO;
 /// <summary>
 /// Write an ass document as an ass file
 /// </summary>
-/// <param name="document">Document to write</param>
 /// <param name="consumer">Program or library requesting writes</param>
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
+public class AssWriter(ConsumerInfo consumer) : FileWriter
 {
     private const string EventFormatV400 =
         "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text";
@@ -28,17 +27,17 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
         + "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding";
 
     /// <inheritdoc />
-    public override bool Write(TextWriter writer, bool export = false)
+    public override bool Write(Document document, TextWriter writer, bool export = false)
     {
         WriteHeader(writer);
-        WriteScriptInfo(writer);
+        WriteScriptInfo(document, writer);
         if (!export)
-            WriteGarbage(writer);
-        WriteStyles(writer);
-        WriteAttachments(writer);
-        WriteEvents(writer);
+            WriteGarbage(document, writer);
+        WriteStyles(document, writer);
+        WriteAttachments(document, writer);
+        WriteEvents(document, writer);
         if (!export)
-            WriteExtradata(writer);
+            WriteExtradata(document, writer);
         return true;
     }
 
@@ -49,7 +48,7 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
         writer.WriteLine($"; {consumer.Website}");
     }
 
-    private void WriteScriptInfo(TextWriter writer)
+    private static void WriteScriptInfo(Document document, TextWriter writer)
     {
         foreach (
             var info in document
@@ -62,7 +61,7 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
         writer.WriteLine();
     }
 
-    private void WriteGarbage(TextWriter writer)
+    private void WriteGarbage(Document document, TextWriter writer)
     {
         if (document.GarbageManager.Count == 0)
             return;
@@ -75,9 +74,9 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
         writer.WriteLine();
     }
 
-    private void WriteStyles(TextWriter writer)
+    private static void WriteStyles(Document document, TextWriter writer)
     {
-        string header = document.Version switch
+        var header = document.Version switch
         {
             AssVersion.V400 => "[V4 Styles]",
             AssVersion.V400P => "[V4+ Styles]",
@@ -106,13 +105,13 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
         writer.WriteLine();
     }
 
-    private void WriteAttachments(TextWriter writer)
+    private static void WriteAttachments(Document _, TextWriter _1)
     {
         // TODO: Attachments Manager
         // writer.WriteLine();
     }
 
-    private void WriteEvents(TextWriter writer)
+    private static void WriteEvents(Document document, TextWriter writer)
     {
         writer.WriteLine("[Events]");
         writer.WriteLine(
@@ -136,11 +135,12 @@ public class AssWriter(Document document, ConsumerInfo consumer) : FileWriter
     /// <summary>
     /// AssCS Extradata is written with the format char <c>b</c>, and the value is always base64 encoded.
     /// </summary>
+    /// <param name="document">Document to write</param>
     /// <param name="writer">TextWriter writing the file</param>
     /// <remarks>
     /// This breaks compatibility with Aegisub Extradata, which uses <c>e</c> and <c>u</c> for Inline and UU encoding.
     /// </remarks>
-    private void WriteExtradata(TextWriter writer)
+    private static void WriteExtradata(Document document, TextWriter writer)
     {
         if (document.ExtradataManager.Get().Count == 0)
             return;

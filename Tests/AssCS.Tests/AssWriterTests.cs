@@ -14,9 +14,9 @@ public class AssWriterTests
         var writer = new StringWriter();
 
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var aw = new AssWriter(CreateDoc(), consumer);
+        var aw = new AssWriter(consumer);
 
-        var result = aw.Write(writer);
+        var result = aw.Write(CreateDoc(), writer);
 
         await Assert.That(result).IsTrue();
 
@@ -43,9 +43,9 @@ public class AssWriterTests
     {
         var writer = new StringWriter();
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var aw = new AssWriter(CreateDoc(), consumer);
+        var aw = new AssWriter(consumer);
 
-        var result = aw.Write(writer, true);
+        var result = aw.Write(CreateDoc(), writer, true);
 
         await Assert.That(result).IsTrue();
 

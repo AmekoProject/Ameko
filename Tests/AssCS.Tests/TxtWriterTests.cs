@@ -14,9 +14,9 @@ public class TxtWriterTests
         var writer = new StringWriter();
 
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var tw = new TxtWriter(CreateDoc(), consumer);
+        var tw = new TxtWriter(consumer);
 
-        var result = tw.Write(writer);
+        var result = tw.Write(CreateDoc(), writer);
 
         await Assert.That(result).IsTrue();
 
@@ -34,9 +34,9 @@ public class TxtWriterTests
     {
         var writer = new StringWriter();
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var tw = new TxtWriter(CreateDoc(), consumer, includeComments: false);
+        var tw = new TxtWriter(consumer, includeComments: false);
 
-        var result = tw.Write(writer);
+        var result = tw.Write(CreateDoc(), writer);
 
         await Assert.That(result).IsTrue();
 
@@ -54,9 +54,9 @@ public class TxtWriterTests
     {
         var writer = new StringWriter();
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var tw = new TxtWriter(CreateDoc(), consumer, includeActors: false);
+        var tw = new TxtWriter(consumer, includeActors: false);
 
-        var result = tw.Write(writer);
+        var result = tw.Write(CreateDoc(), writer);
 
         await Assert.That(result).IsTrue();
 
@@ -74,9 +74,9 @@ public class TxtWriterTests
     {
         var writer = new StringWriter();
         var consumer = new ConsumerInfo("Test Suite", "1.0", "testsuite.com");
-        var tw = new TxtWriter(CreateDoc(), consumer, includeComments: false, includeActors: false);
+        var tw = new TxtWriter(consumer, includeComments: false, includeActors: false);
 
-        var result = tw.Write(writer);
+        var result = tw.Write(CreateDoc(), writer);
 
         await Assert.That(result).IsTrue();
 
