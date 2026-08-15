@@ -1,36 +1,28 @@
-Ameko is designed around Projects. While using Projects isn't required, and you can edit subtitles and otherwise use
-Ameko without them, Projects are designed to make working with multiple subtitle files easier, especially when
-collaborating with others.
+Ameko está diseñado alrededor de Proyectos. Aunque usar Proyectos no es obligatorio, y puedes editar subtítulos y usar Ameko sin ellos, los Proyectos están diseñados para facilitar el trabajo con múltiples archivos de subtítulos, especialmente al colaborar con otras personas.
 
-## The Project Explorer
+## El Explorador de Proyectos
 
 ![](../assets/project-explorer-empty.png)
 
-When you first open Ameko, the Project Explorer will be on the left, listing the currently-open documents. When a
-project file isn't loaded, the Default Project serves as a dumping ground for the files you open during the session. You
-can save the project to a file if you want to leverage the benefits of using a project file.
+Cuando abres Ameko por primera vez, el Explorador de Proyectos estará a la izquierda, mostrando los documentos actualmente abiertos. Cuando no hay un archivo de proyecto cargado, el Proyecto Predeterminado sirve como un lugar temporal para los archivos que abres durante la sesión. Puedes guardar el proyecto en un archivo si quieres aprovechar los beneficios de usar un archivo de proyecto.
 
-## Opening a Folder as a Project
+## Abrir una Carpeta como Proyecto
 
-If you have an established project directory, you can bring the structure into Ameko by opening the folder as a project.
-This will load all applicable sub-folders and subtitle files into the Project Explorer, where you can tailor the
-contents and save the resulting project to a file.
+Si tienes un directorio de proyecto ya establecido, puedes traer esa estructura a Ameko abriendo la carpeta como un proyecto.
+Esto cargará todas las subcarpetas y archivos de subtítulos aplicables en el Explorador de Proyectos, donde
+podrás ajustar el contenido y guardar el proyecto resultante en un archivo.
 
-## Key Names and Phrases
+## Nombres Clave y Frases
 
-Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
-Names & Phrases (KNP) bible to help keep everyone on track:
+Es probable que tu proyecto tenga nombres y frases que quieras mantener consistentes a lo largo del programa. Los Proyectos pueden tener una biblia de Nombres Clave y Frases (KNP) para ayudar a que todos se mantengan alineados:
 
 ![](../assets/knp-window.png)
 
-Terms that appear in the script or reference files will appear in the Editing Area. See the User Interface tab for more
-details.
+Los términos que aparecen en el guion o en los archivos de referencia se mostrarán en el Área de Edición. Consulta la pestaña de Interfaz de Usuario para más detalles.
 
-## Display Names and You
+## Nombres para Mostrar y Tú
 
-While Project structures and names _can_ mirror the files on disk, you can rearrange and rename them within the project
-as you please without affecting the underlying files. For example, consider the following flat hierarchy, with verbose
-file names:
+Aunque las estructuras y nombres del Proyecto _pueden_ reflejar los archivos en disco, puedes reorganizarlos y renombrarlos dentro del proyecto como prefieras, sin afectar los archivos subyacentes. Por ejemplo, considera la siguiente jerarquía plana, con nombres de archivo detallados:
 
 ```
 Kono Bijutsubu ni wa Mondai ga Aru/
@@ -44,8 +36,7 @@ Kono Bijutsubu ni wa Mondai ga Aru/
   Konobi - 02 - Captions.ja.srt
 ```
 
-This can be reorganized and cleaned up within the project using display names and folders without messing with the
-existing files:
+Esto se puede reorganizar y ordenar dentro del proyecto usando nombres para mostrar y carpetas, sin modificar los archivos existentes:
 
 ```
 01/
@@ -60,27 +51,22 @@ existing files:
   Captions.srt
 ```
 
-## Project Configuration
+## Configuración del Proyecto
 
 ![](../assets/project-config.png)
 
-One of the key benefits of using Projects when working in a team is synced configuration. Options set in the Project
-Configuration will override user preferences while the project is loaded. This is great for keeping everyone's CPS warn
-threshold is the same, and critically, keeping a shared spellcheck dictionary and making sure everyone is using the same
-spellcheck language. If the project is set to use English (GB), for example, _everyone_ will be using English (GB), and
-that extra u in colour won't be missed.
+Uno de los principales beneficios de usar Proyectos al trabajar en equipo es la configuración sincronizada. Las opciones establecidas en la Configuración del Proyecto anularán las preferencias del usuario mientras el proyecto esté cargado. Esto es ideal para mantener el mismo umbral de advertencia de CPS para todos, y de forma crítica, mantener un diccionario de corrección ortográfica compartido y asegurar que todos usen el mismo idioma de corrección. Si el proyecto está configurado para usar inglés (GB), por ejemplo, _todos_ usarán inglés (GB), y esa "u" extra en "colour" no pasará desapercibida.
 
 ![](../assets/project-install-dictionary.png)
 
-Users will be prompted to download the appropriate dictionary if they don't already have it.
+Se les pedirá a los usuarios que descarguen el diccionario correspondiente si aún no lo tienen.
 
 ![](../assets/spellcheck.png)
 
-Words can be added to the project dictionary directly from the spellchecker.
+Se pueden agregar palabras al diccionario del proyecto directamente desde el corrector ortográfico.
 
-## Git Integration
+## Integración con Git
 
 ![](../assets/git-toolbox.png)
 
-When saved in the root of a project (next to the `.git` directory), Project files allow for easy access to basic Git
-functions, like commiting, pushing, pulling, and viewing a list of recent commits.
+Cuando se guarda en la raíz de un proyecto (junto al directorio `.git`), los archivos de Proyecto permiten un acceso fácil a las funciones básicas de Git, como confirmar cambios (commit), enviar (push), descargar (pull) y ver una lista de commits recientes.

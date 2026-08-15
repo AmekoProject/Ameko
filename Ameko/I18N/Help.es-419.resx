@@ -33,6 +33,6 @@
         <value>Proyectos</value>
     </data>
   <data name="Help_Empty" xml:space="preserve">
-        <value>No scripts with help documentation installed</value>
+        <value>No hay scripts con documentación de ayuda instalados</value>
     </data>
 </root>

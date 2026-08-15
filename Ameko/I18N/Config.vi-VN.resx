@@ -152,4 +152,22 @@
   <data name="Config_Label_IndexCacheExpiration" xml:space="preserve">
         <value>Thời hạn cache chỉ mục (ngày)</value>
     </data>
+  <data name="Config_Label_TimingMode" xml:space="preserve">
+        <value>Timing mode</value>
+    </data>
+  <data name="Config_Label_TimingMode_ToolTip" xml:space="preserve">
+        <value>Controls whether times should be snapped to the nearest frame midpoint by default</value>
+    </data>
+  <data name="Config_RadioButton_SnapToFrame" xml:space="preserve">
+        <value>Snap to frame (Shift to place freely)</value>
+    </data>
+  <data name="Config_RadioButton_FreePlacement" xml:space="preserve">
+        <value>Free placement (Shift to snap)</value>
+    </data>
+  <data name="Config_RadioButton_FreePlacement_ToolTip" xml:space="preserve">
+        <value>Time is set exactly where you click. Hold Shift to snap to the nearest frame midpoint.</value>
+    </data>
+  <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
+        <value>Time is snapped to the nearest frame midpoint. Hold Shift to place freely.</value>
+    </data>
 </root>

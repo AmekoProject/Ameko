@@ -18,69 +18,69 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PasteOver_WindowTitle" xml:space="preserve">
-        <value>Paste Over</value>
+        <value>Pegar sobre</value>
     </data>
   <data name="PasteOver_Label_SelectFields" xml:space="preserve">
-        <value>Select fields to paste over:</value>
+        <value>Seleccionar campos para pegar:</value>
     </data>
   <data name="PasteOver_CB_Comment" xml:space="preserve">
-        <value>Comment</value>
+        <value>Comentario</value>
     </data>
   <data name="PasteOver_CB_Layer" xml:space="preserve">
-        <value>Layer</value>
+        <value>Capa</value>
     </data>
   <data name="PasteOver_CB_StartTime" xml:space="preserve">
-        <value>Start Time</value>
+        <value>Tiempo de inicio</value>
     </data>
   <data name="PasteOver_CB_EndTime" xml:space="preserve">
-        <value>End Time</value>
+        <value>Tiempo final</value>
     </data>
   <data name="PasteOver_CB_Style" xml:space="preserve">
-        <value>Style</value>
+        <value>Estilo</value>
     </data>
   <data name="PasteOver_CB_Actor" xml:space="preserve">
         <value>Actor</value>
     </data>
   <data name="PasteOver_CB_MarginLeft" xml:space="preserve">
-        <value>Left Margin</value>
+        <value>Margen izquierdo</value>
     </data>
   <data name="PasteOver_CB_MarginRight" xml:space="preserve">
-        <value>Right Margin</value>
+        <value>Margen derecho</value>
     </data>
   <data name="PasteOver_CB_MarginVertical" xml:space="preserve">
-        <value>Vertical Margin</value>
+        <value>Margen vertical</value>
     </data>
   <data name="PasteOver_CB_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>Efecto</value>
     </data>
   <data name="PasteOver_CB_Text" xml:space="preserve">
-        <value>Text</value>
+        <value>Texto</value>
     </data>
   <data name="PasteOver_Button_All" xml:space="preserve">
-        <value>All</value>
+        <value>Todos</value>
     </data>
   <data name="PasteOver_Button_None" xml:space="preserve">
-        <value>None</value>
+        <value>Ninguno</value>
     </data>
   <data name="PasteOver_Button_Times" xml:space="preserve">
-        <value>Times</value>
+        <value>Tiempos</value>
     </data>
   <data name="PasteOver_Button_Text" xml:space="preserve">
-        <value>Text</value>
+        <value>Texto</value>
     </data>
   <data name="PasteOver_Button_Confirm" xml:space="preserve">
-        <value>OK</value>
+        <value>Aceptar</value>
     </data>
   <data name="PasteOver_Button_All_ToolTip" xml:space="preserve">
-        <value>Select all fields</value>
+        <value>Seleccionar todos los campos</value>
     </data>
   <data name="PasteOver_Button_None_ToolTip" xml:space="preserve">
-        <value>Select no fields</value>
+        <value>No seleccionar campos</value>
     </data>
   <data name="PasteOver_Button_Times_ToolTip" xml:space="preserve">
-        <value>Select only start and end time</value>
+        <value>Seleccionar solo tiempo de inicio y fin</value>
     </data>
   <data name="PasteOver_Button_Text_ToolTip" xml:space="preserve">
-        <value>Select only text</value>
+        <value>Seleccionar solo texto</value>
     </data>
 </root>

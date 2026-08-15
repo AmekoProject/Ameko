@@ -18,213 +18,243 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LogWindow_Title" xml:space="preserve">
-    <value>Resgistros de Ameko</value>
-  </data>
+        <value>Resgistros de Ameko</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
-    <value>¿Eliminar documento?</value>
-  </data>
+        <value>¿Eliminar documento?</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
-    <value>¿Estás seguro de que quieres eliminar este documento del poyecto?</value>
-  </data>
+        <value>¿Estás seguro de que quieres eliminar este documento del poyecto?</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
-    <value>Remove Folder?</value>
-  </data>
+        <value>¿Eliminar carpeta?</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
-    <value>Are you sure you want to remove this folder from the project?</value>
-  </data>
+        <value>¿Está seguro de que desea eliminar esta carpeta del proyecto?</value>
+    </data>
   <data name="MsgBox_NameDirectory_Title" xml:space="preserve">
-    <value>Set Folder Name</value>
-  </data>
+        <value>Establecer nombre de la carpeta</value>
+    </data>
   <data name="MsgBox_NameDirectory_Body" xml:space="preserve">
-    <value>Please choose a name for the folder:</value>
-  </data>
+        <value>Por favor, elija un nombre para la carpeta:</value>
+    </data>
   <data name="MsgBox_RemoveDirectory_Disclaimer" xml:space="preserve">
-    <value>No folders will be deleted from your computer.</value>
-  </data>
+        <value>No se eliminarán carpetas de su equipo.</value>
+    </data>
   <data name="MsgBox_RemoveDocument_Disclaimer" xml:space="preserve">
-    <value>Ningún archivo será borrado de tu disco.</value>
-  </data>
+        <value>Ningún archivo será borrado de tu disco.</value>
+    </data>
   <data name="MsgBox_NameItem_Label" xml:space="preserve">
-    <value>Nombre:</value>
-  </data>
+        <value>Nombre:</value>
+    </data>
   <data name="MsgBox_NameDocument_Body" xml:space="preserve">
-    <value>Please choose a display name for the document:</value>
-  </data>
+        <value>Por favor, elija un nombre para mostrar del documento:</value>
+    </data>
   <data name="MsgBox_NameDocument_Title" xml:space="preserve">
-    <value>Set Document Name</value>
-  </data>
+        <value>Establecer nombre del documento</value>
+    </data>
   <data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
-    <value>Service of type {0} is not registered for use by scripts</value>
-  </data>
+        <value>El servicio de tipo {0} no está registrado para su uso por scripts</value>
+    </data>
   <data name="MsgBox_Save_Title" xml:space="preserve">
-    <value>Save work?</value>
-  </data>
+        <value>¿Guardar trabajo?</value>
+    </data>
   <data name="MsgBox_Save_Body" xml:space="preserve">
-    <value>{0} contains unsaved work. Do you want to save?</value>
-  </data>
+        <value>{0} contiene trabajo sin guardar. ¿Desea guardar?</value>
+    </data>
   <data name="FileDialog_FileType_Project" xml:space="preserve">
-    <value>Ameko Project Files</value>
-  </data>
+        <value>Archivos de proyecto de Ameko</value>
+    </data>
   <data name="FileDialog_OpenProject_Title" xml:space="preserve">
-    <value>Open Project File</value>
-  </data>
+        <value>Abrir archivo de proyecto</value>
+    </data>
   <data name="FileDialog_SaveProject_Title" xml:space="preserve">
-    <value>Save Project File</value>
-  </data>
+        <value>Guardar archivo de proyecto</value>
+    </data>
   <data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
-    <value>Open Subtitle File</value>
-  </data>
+        <value>Abrir archivo de subtítulos</value>
+    </data>
   <data name="FileDialog_FileType_Ass" xml:space="preserve">
-    <value>ASS Files</value>
-  </data>
+        <value>Archivos ASS</value>
+    </data>
   <data name="FileDialog_FileType_Srt" xml:space="preserve">
-    <value>SRT Files</value>
-  </data>
+        <value>Archivos SRT</value>
+    </data>
   <data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
-    <value>Save Subtitle File</value>
-  </data>
+        <value>Guardar archivo de subtítulos</value>
+    </data>
   <data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
-    <value>Export Subtitle File</value>
-  </data>
+        <value>Exportar archivo de subtítulos</value>
+    </data>
   <data name="FileDialog_FileType_Text" xml:space="preserve">
-    <value>Text Files</value>
-  </data>
+        <value>Archivos de texto</value>
+    </data>
   <data name="MsgBox_ScriptService_Title" xml:space="preserve">
-    <value>Ameko Script Service</value>
-  </data>
+        <value>Servicio de script de Ameko</value>
+    </data>
   <data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
-    <value>Scripts reloaded successfully</value>
-  </data>
+        <value>Scripts recargados con éxito</value>
+    </data>
   <data name="FileDialog_OpenVideo_Title" xml:space="preserve">
-    <value>Open Video File</value>
-  </data>
+        <value>Abrir archivo de video</value>
+    </data>
   <data name="FileDialog_FileType_Video" xml:space="preserve">
-    <value>Video Files</value>
-  </data>
+        <value>Archivos de video</value>
+    </data>
   <data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
-    <value>Open Project Folder</value>
-  </data>
+        <value>Abrir carpeta de proyecto</value>
+    </data>
   <data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
-    <value>Attach Reference File</value>
-  </data>
+        <value>Adjuntar un archivo de referencia</value>
+    </data>
   <data name="CrashReporter_WindowTitle" xml:space="preserve">
-    <value>Ameko Crash Reporter</value>
-  </data>
+        <value>Informador de fallos de Ameko</value>
+    </data>
   <data name="CrashReporter_Header" xml:space="preserve">
-    <value>Ameko has crashed :(</value>
-  </data>
+        <value>Ameko ha fallado :(</value>
+    </data>
   <data name="CrashReporter_Info" xml:space="preserve">
-    <value>The details of the error are as follows:</value>
-  </data>
+        <value>Los detalles del error son los siguientes:</value>
+    </data>
   <data name="Message_ClipboardEmpty" xml:space="preserve">
-    <value>Clipboard was empty!</value>
-  </data>
+        <value>¡El portapapeles estaba vacío!</value>
+    </data>
   <data name="MsgBox_Btn_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
+        <value>Aceptar</value>
+    </data>
   <data name="MsgBox_Btn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
+        <value>Cancelar</value>
+    </data>
   <data name="MsgBox_Btn_Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
+        <value>Sí</value>
+    </data>
   <data name="MsgBox_Btn_No" xml:space="preserve">
-    <value>No</value>
-  </data>
+        <value>No</value>
+    </data>
   <data name="MsgBox_LoadVideo_Title" xml:space="preserve">
-    <value>Load Video</value>
-  </data>
+        <value>Cargar video</value>
+    </data>
   <data name="MsgBox_LoadVideo_Body" xml:space="preserve">
-    <value>Do you want to load the associated video?</value>
-  </data>
+        <value>¿Desea cargar el vídeo asociado?</value>
+    </data>
   <data name="Message_VideoNotFound" xml:space="preserve">
-    <value>The associated video "{0}" was not found.</value>
-  </data>
+        <value>No se encontró el vídeo asociado "{0}".</value>
+    </data>
   <data name="Message_SavedFrame" xml:space="preserve">
-    <value>Saved frame to {0}</value>
-  </data>
+        <value>Fotograma guardado en {0}</value>
+    </data>
   <data name="Message_CopiedFrame" xml:space="preserve">
-    <value>Copied frame to clipboard</value>
-  </data>
+        <value>Fotograma copiado al portapapeles</value>
+    </data>
   <data name="FileDialog_SaveFrame_Title" xml:space="preserve">
-    <value>Save Frame</value>
-  </data>
+        <value>Guardar fotograma</value>
+    </data>
   <data name="FileDialog_FileType_Png" xml:space="preserve">
-    <value>PNG Files</value>
-  </data>
+        <value>Archivos PNG</value>
+    </data>
   <data name="Message_UpdateAvailable" xml:space="preserve">
-    <value>A new version of Ameko, {0}, is available!</value>
-  </data>
+        <value>¡Una nueva versión de Ameko, {0}, está disponible!</value>
+    </data>
   <data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
-    <value>Media playback is disabled! Ffms2 or libass may be missing!</value>
-  </data>
+        <value>¡La reproducción multimedia está desactivada! ¡Ffms2 o libass pueden faltar!</value>
+    </data>
   <data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
-    <value>Media Playback</value>
-  </data>
+        <value>Reproducción multimedia</value>
+    </data>
   <data name="Message_AutosaveComplete" xml:space="preserve">
-    <value>Autosave complete!</value>
-  </data>
+        <value>¡Guardado automático completado!</value>
+    </data>
   <data name="SelectTrackDialog_Title" xml:space="preserve">
-    <value>Select Track</value>
-  </data>
+        <value>Seleccionar pista</value>
+    </data>
   <data name="SelectTrackDialog_Body" xml:space="preserve">
-    <value>Select a track to load:</value>
-  </data>
+        <value>Seleccione una pista para cargar:</value>
+    </data>
   <data name="SelectTrackDialog_Button_Load" xml:space="preserve">
-    <value>Load</value>
-  </data>
+        <value>Cargar</value>
+    </data>
   <data name="FileDialog_OpenAudio_Title" xml:space="preserve">
-    <value>Open Audio File</value>
-  </data>
+        <value>Abrir archivo de audio</value>
+    </data>
   <data name="FileDialog_FileType_Audio" xml:space="preserve">
-    <value>Audio Files</value>
-  </data>
+        <value>Archivos de audio</value>
+    </data>
   <data name="ChangelogDialog_Title" xml:space="preserve">
-    <value>View Changelog</value>
-  </data>
+        <value>Ver registro de cambios</value>
+    </data>
   <data name="Changelog_NoChangelog" xml:space="preserve">
-    <value>No changelog available</value>
-  </data>
+        <value>No hay registro de cambios disponible</value>
+    </data>
   <data name="Message_AudioAutoloaded" xml:space="preserve">
-    <value>Audio track {0} was autoloaded</value>
-  </data>
+        <value>La pista de audio {0} se cargó automáticamente</value>
+    </data>
   <data name="Message_KeyframesNotFound" xml:space="preserve">
-    <value>The associated keyframes file "{0}" was not found.</value>
-  </data>
+        <value>No se encontró el archivo asociado de fotogramas clave "{0}".</value>
+    </data>
   <data name="FileDialog_OpenKeyframes_Title" xml:space="preserve">
-    <value>Open Keyframes File</value>
-  </data>
+        <value>Abrir archivo de fotogramas clave</value>
+    </data>
   <data name="FileDialog_FileType_Kf" xml:space="preserve">
-    <value>Keyframe Files</value>
-  </data>
+        <value>Archivos de fotogramas clave</value>
+    </data>
   <data name="SelectFolderDialog_Title" xml:space="preserve">
-    <value>Select Folder</value>
-  </data>
+        <value>Seleccionar carpeta</value>
+    </data>
   <data name="SelectFolderDialog_Body" xml:space="preserve">
-    <value>Select a folder:</value>
-  </data>
+        <value>Seleccione una carpeta:</value>
+    </data>
   <data name="SelectFolderDialog_Root" xml:space="preserve">
-    <value>/ (root)</value>
-  </data>
+        <value>/ (raíz)</value>
+    </data>
   <data name="SelectFolderDialog_Button_Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
+        <value>Seleccionar</value>
+    </data>
   <data name="MsgBox_SaveProject_Body" xml:space="preserve">
-    <value>{0} has unsaved changes. Do you want to save?</value>
-  </data>
+        <value>{0} tiene cambios sin guardar. ¿Desea guardar?</value>
+    </data>
   <data name="MsgBox_SaveProject_Title" xml:space="preserve">
-    <value>Save project?</value>
-  </data>
+        <value>¿Guardar proyecto?</value>
+    </data>
   <data name="MsgBox_IoError_Title" xml:space="preserve">
-    <value>I/O Error</value>
-  </data>
+        <value>Error de E/S</value>
+    </data>
   <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
-    <value>Unauthorized.</value>
-  </data>
+        <value>No autorizado.</value>
+    </data>
   <data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
-    <value>An I/O error occurred.</value>
-  </data>
+        <value>Se produjo un error de E/S.</value>
+    </data>
   <data name="MsgBox_IoError_Body_Json" xml:space="preserve">
-    <value>Failed to parse JSON.</value>
-  </data>
+        <value>Error al analizar JSON.</value>
+    </data>
+  <data name="Message_StyleNotFound" xml:space="preserve">
+        <value>No se encontró el estilo "{0}"</value>
+    </data>
+  <data name="FileDialog_FileType_Csv" xml:space="preserve">
+        <value>Archivos CSV</value>
+    </data>
+  <data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
+        <value>Guardar resultado del perfil</value>
+    </data>
+  <data name="SourceViewer_Title" xml:space="preserve">
+        <value>Visor de Código Fuente - {0}</value>
+    </data>
+  <data name="SourceViewer_Button_Save" xml:space="preserve">
+        <value>Guardar</value>
+    </data>
+  <data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
+        <value>Habilitar edición</value>
+    </data>
+  <data name="SourceViewer_Disclaimer" xml:space="preserve">
+        <value>Los cambios se sobrescribirán si se actualiza el paquete.</value>
+    </data>
+  <data name="SourceViewer_Button_Restore" xml:space="preserve">
+        <value>Restablecer</value>
+    </data>
+  <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
+        <value>Restablecer el paquete a su estado original</value>
+    </data>
+  <data name="SourceViewer_Notice" xml:space="preserve">
+        <value>La opción "Actualizar todo" omitirá los paquetes modificados.</value>
+    </data>
 </root>

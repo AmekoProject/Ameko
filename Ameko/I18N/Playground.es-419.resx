@@ -18,21 +18,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Playground_WindowTitle" xml:space="preserve">
-        <value>Scripting Playground</value>
+        <value>Entorno de pruebas de scripting</value>
     </data>
   <data name="Playground_Status_Ready" xml:space="preserve">
-        <value>Ready</value>
+        <value>Listo</value>
     </data>
   <data name="Playground_Status_Success" xml:space="preserve">
-        <value>Success</value>
+        <value>Éxito</value>
     </data>
   <data name="Playground_Status_Failure" xml:space="preserve">
-        <value>Failure: {0}</value>
+        <value>Error: {0}</value>
     </data>
   <data name="Playground_Button_Execute" xml:space="preserve">
-        <value>Execute</value>
+        <value>Ejecutar</value>
     </data>
   <data name="Playground_Button_Reset" xml:space="preserve">
-        <value>Reset</value>
+        <value>Restablecer</value>
     </data>
 </root>

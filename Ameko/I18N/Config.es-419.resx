@@ -152,4 +152,22 @@
   <data name="Config_Label_IndexCacheExpiration" xml:space="preserve">
         <value>Tiempo de expiración de la caché indexada (días)</value>
     </data>
+  <data name="Config_Label_TimingMode" xml:space="preserve">
+        <value>Modo de sincronización</value>
+    </data>
+  <data name="Config_Label_TimingMode_ToolTip" xml:space="preserve">
+        <value>Controla si los tiempos deben ajustarse al punto medio del fotograma más cercano de forma predeterminada</value>
+    </data>
+  <data name="Config_RadioButton_SnapToFrame" xml:space="preserve">
+        <value>Ajustar al fotograma (Mayús para colocar libremente)</value>
+    </data>
+  <data name="Config_RadioButton_FreePlacement" xml:space="preserve">
+        <value>Colocación libre (Mayús para ajustar)</value>
+    </data>
+  <data name="Config_RadioButton_FreePlacement_ToolTip" xml:space="preserve">
+        <value>El tiempo se ajusta exactamente donde hace clic. Mantenga pulsado Mayús para ajustar al punto medio del fotograma más cercano.</value>
+    </data>
+  <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
+        <value>El tiempo se ajusta al punto medio del fotograma más cercano. Mantenga pulsado Mayús para colocarlo libremente.</value>
+    </data>
 </root>

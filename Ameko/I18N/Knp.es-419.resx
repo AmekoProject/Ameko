@@ -18,33 +18,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KnpWindow_Title" xml:space="preserve">
-        <value>Manage Key Names and Phrases</value>
+        <value>Administrar nombres clave y frases</value>
     </data>
   <data name="Knp_ContextMenu_Delete" xml:space="preserve">
-        <value>Delete Term</value>
+        <value>Eliminar término</value>
     </data>
   <data name="Knp_Button_AddTerm" xml:space="preserve">
-        <value>Add Term</value>
+        <value>Agregar término</value>
     </data>
   <data name="Knp_Header_Category" xml:space="preserve">
-        <value>Category</value>
+        <value>Categoría</value>
     </data>
   <data name="Knp_Header_Context" xml:space="preserve">
-        <value>Context</value>
+        <value>Contexto</value>
     </data>
   <data name="Knp_Header_Original" xml:space="preserve">
         <value>Original</value>
     </data>
   <data name="Knp_Header_Alternate" xml:space="preserve">
-        <value>Alternate</value>
+        <value>Alternativo</value>
     </data>
   <data name="Knp_Header_Translation" xml:space="preserve">
-        <value>Translation</value>
+        <value>Traducción</value>
     </data>
   <data name="Knp_Header_Notes" xml:space="preserve">
-        <value>Notes</value>
+        <value>Notas</value>
     </data>
   <data name="Knp_Header_CaseSensitive" xml:space="preserve">
-        <value>Case Sensitive</value>
+        <value>Distinguir mayúsculas</value>
     </data>
 </root>
