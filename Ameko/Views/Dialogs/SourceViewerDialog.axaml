@@ -32,6 +32,8 @@
       Grid.Row="0"
       Grid.ColumnSpan="4"
       Name="ScriptSourceEditor"
+      Background="#272822"
+      Foreground="#f8f8f2"
       FontFamily="{StaticResource SarasaMono}"
       FontSize="14"
       ShowLineNumbers="True"

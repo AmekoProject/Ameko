@@ -28,6 +28,8 @@
     <avaloniaEdit:TextEditor
       Grid.Row="0"
       Name="PlaygroundEditor"
+      Background="#272822"
+      Foreground="#f8f8f2"
       FontFamily="{StaticResource SarasaMono}"
       FontSize="14"
       ShowLineNumbers="True"
