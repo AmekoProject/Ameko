@@ -1,7 +1,7 @@
 # Maintainer: 9volt <me@ninevolt.moe>
 
 pkgname='ameko-git'
-pkgver=1
+pkgver=1.1.86.89409de
 pkgrel=1
 pkgdesc='Cross-platform editor for Advanced Substation Alpha (ASS) subtitles'
 arch=('x86_64')
@@ -16,7 +16,7 @@ makedepends=(
   'git'
   'zig'
   'dotnet-sdk'
-  'aspnet-runtime',
+  'aspnet-runtime'
   'imagemagick'
 )
 provides=('ameko')
@@ -57,8 +57,8 @@ package() {
 
   install -Dm 755 "Mizuki/zig-out/lib/libmizuki.so" "${pkgdir}/usr/lib/ameko/libmizuki.so"
 
-  install -Dm 644 "Ameko/Assets/moe.ameko.Ameko.desktop" "${pkgdir}/usr/share/applications/moe.ameko.Ameko.desktop"
-  install -Dm 644 "Ameko/Assets/moe.ameko.Ameko.xml" "${pkgdir}/usr/share/mime/packages/moe.ameko.Ameko.xml"
+  install -Dm 644 "Packaging/moe.ameko.Ameko.desktop" "${pkgdir}/usr/share/applications/moe.ameko.Ameko.desktop"
+  install -Dm 644 "Packaging/moe.ameko.Ameko.xml" "${pkgdir}/usr/share/mime/packages/moe.ameko.Ameko.xml"
   install -Dm 644 "LICENSE-GPL" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-GPL"
   install -Dm 644 "LICENSE-MPL" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-MPL"
   
