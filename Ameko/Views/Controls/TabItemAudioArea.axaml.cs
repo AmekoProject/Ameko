@@ -5,9 +5,9 @@ using Ameko.Renderers;
 using Ameko.ViewModels.Controls;
 using AssCS;
 using AssCS.History;
-using Avalonia;
 using Avalonia.Input;
 using Holo;
+using Holo.Media;
 using Holo.Models;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
@@ -34,6 +34,9 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
     private const double EdgeHitPx = 6d;
     private DragMode _dragMode = DragMode.None;
 
+    private OpenAlAudioRenderer? _renderer;
+    private MediaController? _mediaController;
+
     public TabItemAudioArea()
     {
         InitializeComponent();
@@ -42,23 +45,38 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             if (ViewModel is not { } vm)
                 return;
 
-            // TODO: Don't do this!!
-            var mc = vm.Workspace.MediaController;
-            var renderer = new OpenAlAudioRenderer(mc);
-            renderer.Initialize();
-            mc.PlaybackStarted += (_, e) =>
-            {
-                // Always play audio target, only play video target if not muted
-                if (e.Target is PlaybackTarget.Audio || !mc.IsMuted)
-                    renderer.Play(e.StartTime, e.GoalTime);
-            };
-            mc.PlaybackStopped += (_, _) =>
-            {
-                renderer.Stop();
-            };
+            _mediaController = vm.Workspace.MediaController;
+            _renderer = new OpenAlAudioRenderer(_mediaController);
+            _renderer.Initialize();
 
-            new ActionDisposable(() => { }).DisposeWith(disposables);
+            _mediaController.PlaybackStarted += OnPlaybackStarted;
+            _mediaController.PlaybackStopped += OnPlaybackStopped;
+
+            new ActionDisposable(() =>
+            {
+                _mediaController.PlaybackStarted -= OnPlaybackStarted;
+                _mediaController.PlaybackStopped -= OnPlaybackStopped;
+                _renderer.Dispose();
+            }).DisposeWith(disposables);
         });
+    }
+
+    private void OnPlaybackStarted(object? _, PlaybackStartEventArgs e)
+    {
+        if (_renderer is null || _mediaController is null)
+            return;
+
+        // Always play audio target, only play video target if not muted
+        if (e.Target is PlaybackTarget.Audio || !_mediaController.IsMuted)
+            _renderer.Play(e.StartTime, e.GoalTime);
+    }
+
+    private void OnPlaybackStopped(object? o, EventArgs eventArgs)
+    {
+        if (_renderer is null || _mediaController is null)
+            return;
+
+        _renderer.Stop();
     }
 
     private void AudioTarget_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)

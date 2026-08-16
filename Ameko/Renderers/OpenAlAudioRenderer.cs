@@ -10,7 +10,7 @@ using Buffer = Ameko.DataModels.OpenAl.Buffer;
 
 namespace Ameko.Renderers;
 
-public class OpenAlAudioRenderer(MediaController mediaController) : IAudioRenderer, IDisposable
+public class OpenAlAudioRenderer(MediaController mediaController) : IAudioRenderer
 {
     [MemberNotNullWhen(true, nameof(_al))]
     [MemberNotNullWhen(true, nameof(_alc))]
@@ -108,15 +108,32 @@ public class OpenAlAudioRenderer(MediaController mediaController) : IAudioRender
         IsPlaying = false;
     }
 
-    private void Dispose(bool disposing)
+    private unsafe void Dispose(bool disposing)
     {
-        if (!disposing)
-            return;
         Stop();
 
-        _al?.Dispose();
-        _alc?.Dispose();
-        _source?.Dispose();
+        if (_context is not null)
+        {
+            _source?.Dispose();
+
+            _alc?.MakeContextCurrent(null);
+            _alc?.DestroyContext(_context);
+            _context = null;
+        }
+
+        if (_device is not null)
+        {
+            _alc?.CloseDevice(_device);
+            _device = null;
+        }
+
+        if (disposing)
+        {
+            _al?.Dispose();
+            _alc?.Dispose();
+        }
+
+        IsInitialized = false;
     }
 
     /// <inheritdoc />

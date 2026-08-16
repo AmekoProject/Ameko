@@ -46,5 +46,6 @@ public class Source : IDisposable
     public void Dispose()
     {
         _al.DeleteSource(_handle);
+        GC.SuppressFinalize(this);
     }
 }
