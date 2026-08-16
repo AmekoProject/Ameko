@@ -40,6 +40,8 @@ internal sealed class Program
 
         if (args is ["--display-crash-report", _])
         {
+            Args.AddRange(args);
+
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
             return;
@@ -151,7 +153,7 @@ internal sealed class Program
 
             // Write crash report
             var time = DateTime.UtcNow;
-            var report = GenerateCrashReport(time, category, ex.ToString());
+            var report = GenerateCrashReport(time, category, ManagedCrashExitCode, ex.ToString());
 
             // Try to write the report to disk
             WriteReportFile(time, report);
@@ -219,7 +221,12 @@ internal sealed class Program
         // Write crash report
         var monitoredErrorContents = monitoredStdErr.ToString();
         var time = DateTime.UtcNow;
-        var report = GenerateCrashReport(time, "Unmanaged", monitoredErrorContents);
+        var report = GenerateCrashReport(
+            time,
+            "Unmanaged",
+            process.ExitCode,
+            monitoredErrorContents
+        );
 
         // Try to write the report to disk
         WriteReportFile(time, report);
@@ -233,7 +240,12 @@ internal sealed class Program
         Environment.Exit(0);
     }
 
-    private static string GenerateCrashReport(DateTime time, string category, string details)
+    private static string GenerateCrashReport(
+        DateTime time,
+        string category,
+        int exitCode,
+        string details
+    )
     {
         var report = new StringBuilder();
         report.AppendLine("----- Ameko Crash Report -----");
@@ -248,6 +260,7 @@ internal sealed class Program
         report.AppendLine($"Display Server: {SystemService.WindowManager}");
         report.AppendLine($"Framework: {RuntimeInformation.FrameworkDescription}");
         report.AppendLine($"Category: {category}");
+        report.AppendLine($"Exit Code: {exitCode}");
         report.AppendLine(string.Empty);
         report.AppendLine(details);
         return report.ToString();
