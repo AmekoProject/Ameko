@@ -26,10 +26,18 @@ sha256sums=('SKIP')
 
 pkgver() {
   cd "Ameko" # repo root
-  git describe --long --abbrev=7 2>/dev/null \
-    | sed -E 's/^v([0-9]+)\.([0-9]+)\.[0-9]+-([0-9]+)-g([A-Za-z0-9]+)/\1.\2.\3.\4/' \
-    | sed -E 's/-/./g' \
-    || git rev-parse --short HEAD
+  describe="$(git describe --long --abbrev=7 2>/dev/null)"
+  
+    if [[ "$describe" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)-([0-9]+)-g([0-9A-Za-z]+)$ ]]; then
+      major="${BASH_REMATCH[1]}"
+      minor="${BASH_REMATCH[2]}"
+      patch="${BASH_REMATCH[3]}"
+      dist="${BASH_REMATCH[4]}"
+      hash="${BASH_REMATCH[5]}"
+      printf "%s.%s.%s.%s" "$major" "$minor" "$((patch + dist))" "$hash"
+    else
+      printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    fi
 }
 
 build() {
