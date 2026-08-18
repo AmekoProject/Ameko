@@ -98,7 +98,78 @@
 
     <!-- Timing -->
     <TabItem Header="{x:Static i18n:Config.Config_Header_Timing}">
-      <Grid ColumnSpacing="10" RowSpacing="2" Margin="2"></Grid>
+      <Grid
+        ColumnDefinitions="Auto, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+        ColumnSpacing="10"
+        RowSpacing="2"
+        Margin="2"
+      >
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadIn}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadIn_ToolTip}"
+        />
+        <c:NumberTextBox Grid.Column="1" Grid.Row="0" Value="{Binding Project.Timing.LeadIn}" />
+        <Label
+          Grid.Column="0"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadOut}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadOut_ToolTip}"
+        />
+        <c:NumberTextBox Grid.Column="1" Grid.Row="1" Value="{Binding Project.Timing.LeadOut}" />
+        <Label
+          Grid.Column="0"
+          Grid.Row="2"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="2"
+          Value="{Binding Project.Timing.SnapStartEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="3"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="3"
+          Value="{Binding Project.Timing.SnapStartLaterThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="4"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="4"
+          Value="{Binding Project.Timing.SnapEndEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="5"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndLater_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="5"
+          Value="{Binding Project.Timing.SnapEndLaterThreshold}"
+        />
+      </Grid>
     </TabItem>
 
     <!-- Spellchecking -->
