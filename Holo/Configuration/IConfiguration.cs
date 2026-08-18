@@ -140,7 +140,7 @@ public interface IConfiguration
     ReadOnlyDictionary<string, string> ScriptMenuOverrides { get; }
 
     /// <summary>
-    /// Timing Butler configuration
+    /// Timing configuration
     /// </summary>
     TimingConfiguration Timing { get; }
 

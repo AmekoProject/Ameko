@@ -362,5 +362,77 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Config_Label_TimingNotice", resourceCulture);
             }
         }
+        
+        public static string Config_Label_LeadIn {
+            get {
+                return ResourceManager.GetString("Config_Label_LeadIn", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_LeadIn_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_LeadIn_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_LeadOut {
+            get {
+                return ResourceManager.GetString("Config_Label_LeadOut", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_LeadOut_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_LeadOut_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapStartEarlier {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapStartEarlier", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapStartEarlier_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapStartEarlier_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapStartLater {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapStartLater", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapStartLater_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapStartLater_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapEndEarlier {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapEndEarlier", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapEndEarlier_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapEndEarlier_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapEndLater {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapEndLater", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_SnapEndLater_ToolTip {
+            get {
+                return ResourceManager.GetString("Config_Label_SnapEndLater_ToolTip", resourceCulture);
+            }
+        }
     }
 }
