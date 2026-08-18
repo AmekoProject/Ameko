@@ -171,4 +171,10 @@
     <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
         <value>Time is snapped to the nearest frame midpoint. Hold Shift to place freely.</value>
     </data>
+    <data name="Config_Header_Timing" xml:space="preserve">
+        <value>Timing</value>
+    </data>
+    <data name="Config_Label_TimingNotice" xml:space="preserve">
+        <value>Project configuration takes precedence</value>
+    </data>
 </root>

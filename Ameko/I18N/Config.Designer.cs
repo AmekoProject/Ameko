@@ -350,5 +350,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Config_RadioButton_SnapToFrame_ToolTip", resourceCulture);
             }
         }
+        
+        public static string Config_Header_Timing {
+            get {
+                return ResourceManager.GetString("Config_Header_Timing", resourceCulture);
+            }
+        }
+        
+        public static string Config_Label_TimingNotice {
+            get {
+                return ResourceManager.GetString("Config_Label_TimingNotice", resourceCulture);
+            }
+        }
     }
 }
