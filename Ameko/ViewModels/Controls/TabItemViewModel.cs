@@ -15,6 +15,7 @@ using Holo.Configuration;
 using Holo.Configuration.Keybinds;
 using Holo.Models;
 using Holo.Providers;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Primitives;
 using ReactiveUI.Primitives.Signals;
@@ -212,6 +213,7 @@ public partial class TabItemViewModel : ViewModelBase
 
     #endregion
 
+    private readonly ILogger<TabItemViewModel> _logger;
     private readonly IScriptService _scriptService;
     private readonly IMessageService _messageService;
     private readonly IIoService _ioService;
@@ -301,6 +303,7 @@ public partial class TabItemViewModel : ViewModelBase
     }
 
     public TabItemViewModel(
+        ILogger<TabItemViewModel> logger,
         IProjectProvider projectProvider,
         IConfiguration configuration,
         ICommandService commandService,
@@ -401,6 +404,7 @@ public partial class TabItemViewModel : ViewModelBase
         #endregion
 
         Workspace = workspace;
+        _logger = logger;
         _scriptService = scriptService;
         _messageService = messageService;
         _ioService = ioService;
@@ -427,14 +431,24 @@ public partial class TabItemViewModel : ViewModelBase
 
         Workspace.FileModifiedExternally += async (_, _) =>
         {
-            var result = await ShowFileModifiedDialog.Handle(
-                new FileModifiedDialogViewModel(Workspace.Title)
-            );
+            try
+            {
+                var result = await ShowFileModifiedDialog.Handle(
+                    new FileModifiedDialogViewModel(Workspace.Title)
+                );
 
-            if (result is null || result.Result == FileModifiedDialogClosedResult.Ignore)
-                return;
+                if (result is null || result.Result == FileModifiedDialogClosedResult.Ignore)
+                    return;
 
-            throw new NotImplementedException("FileModifiedDialogClosedResult.SaveAs");
+                throw new NotImplementedException("FileModifiedDialogClosedResult.SaveAs");
+            }
+            catch (Exception ex) when (ex is not NotImplementedException)
+            {
+                _logger.LogError(
+                    ex,
+                    "An exception was thrown in the FileModifiedExternally handler"
+                );
+            }
         };
     }
 }
