@@ -236,6 +236,12 @@ public class NumberTextBox : TextBox
                 ClipboardCopy();
                 e.Handled = true;
                 return;
+            // Select All
+            case Key.A when (e.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) != 0:
+                SelectionStart = 0;
+                SelectionEnd = Text?.Length ?? 0;
+                e.Handled = true;
+                return;
         }
     }
 
@@ -350,6 +356,7 @@ public class NumberTextBox : TextBox
         if (SelectionStart == SelectionEnd)
         {
             Text = Text?.Insert(CaretIndex, inserting);
+            CaretIndex += 1;
         }
         else
         {
