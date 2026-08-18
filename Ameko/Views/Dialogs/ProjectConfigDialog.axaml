@@ -38,7 +38,7 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="0"
-          Width="50"
+          Width="100"
           Minimum="0"
           Maximum="100"
           Increment="1"
@@ -112,7 +112,15 @@
           Content="{x:Static i18n:Config.Config_Label_LeadIn}"
           ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadIn_ToolTip}"
         />
-        <c:NumberTextBox Grid.Column="1" Grid.Row="0" Value="{Binding Project.Timing.LeadIn}" />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="0"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.LeadIn}"
+        />
         <Label
           Grid.Column="0"
           Grid.Row="1"
@@ -120,7 +128,15 @@
           Content="{x:Static i18n:Config.Config_Label_LeadOut}"
           ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadOut_ToolTip}"
         />
-        <c:NumberTextBox Grid.Column="1" Grid.Row="1" Value="{Binding Project.Timing.LeadOut}" />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="1"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.LeadOut}"
+        />
         <Label
           Grid.Column="0"
           Grid.Row="2"
@@ -131,6 +147,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="2"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Project.Timing.SnapStartEarlierThreshold}"
         />
         <Label
@@ -143,6 +163,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="3"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Project.Timing.SnapStartLaterThreshold}"
         />
         <Label
@@ -155,6 +179,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="4"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Project.Timing.SnapEndEarlierThreshold}"
         />
         <Label
@@ -167,6 +195,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="5"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Project.Timing.SnapEndLaterThreshold}"
         />
       </Grid>

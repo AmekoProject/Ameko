@@ -142,7 +142,15 @@
           Content="{x:Static i18n:Config.Config_Label_LeadIn}"
           ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadIn_ToolTip}"
         />
-        <c:NumberTextBox Grid.Column="1" Grid.Row="1" Value="{Binding Config.Timing.LeadIn}" />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="1"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.LeadIn}"
+        />
         <Label
           Grid.Column="0"
           Grid.Row="2"
@@ -150,7 +158,15 @@
           Content="{x:Static i18n:Config.Config_Label_LeadOut}"
           ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadOut_ToolTip}"
         />
-        <c:NumberTextBox Grid.Column="1" Grid.Row="2" Value="{Binding Config.Timing.LeadOut}" />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="2"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.LeadOut}"
+        />
         <Label
           Grid.Column="0"
           Grid.Row="3"
@@ -161,6 +177,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="3"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Config.Timing.SnapStartEarlierThreshold}"
         />
         <Label
@@ -173,6 +193,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="4"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Config.Timing.SnapStartLaterThreshold}"
         />
         <Label
@@ -185,6 +209,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="5"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Config.Timing.SnapEndEarlierThreshold}"
         />
         <Label
@@ -197,6 +225,10 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="6"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
           Value="{Binding Config.Timing.SnapEndLaterThreshold}"
         />
       </Grid>
