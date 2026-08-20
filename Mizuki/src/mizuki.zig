@@ -248,6 +248,12 @@ pub export fn GetSampleCount(g_ctx: *context.GlobalContext) c_longlong {
     return @intCast(g_ctx.*.ffms.sample_count);
 }
 
+pub export fn PreloadFontDirectory(g_ctx: *context.GlobalContext, dir_name: [*c]u8) c_int {
+    const result = libass.PreloadFontDirectory(g_ctx, dir_name);
+    if (result) return 0;
+    return 1;
+}
+
 /// Get array of profiling data
 pub export fn ProfileSubtitles(
     g_ctx: *context.GlobalContext,

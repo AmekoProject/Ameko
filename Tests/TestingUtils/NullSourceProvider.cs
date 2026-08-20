@@ -155,6 +155,12 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
+    public int PreloadFontDirectory(string dirName)
+    {
+        return 1;
+    }
+
+    /// <inheritdoc />
     public ProfilePoint[] ProfileSubtitles(
         int fromFrame,
         int toFrame,

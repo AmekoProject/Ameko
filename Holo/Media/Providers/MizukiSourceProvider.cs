@@ -295,6 +295,12 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
+    public int PreloadFontDirectory(string dirName)
+    {
+        return External.PreloadFontDirectory(_context, dirName);
+    }
+
+    /// <inheritdoc />
     public ProfilePoint[] ProfileSubtitles(
         int fromFrame,
         int toFrame,
@@ -518,6 +524,9 @@ internal static unsafe partial class External
 
     [LibraryImport("mizuki")]
     internal static partial UnmanagedArray GetFrameIntervals(GlobalContext* context);
+
+    [LibraryImport("mizuki", StringMarshalling = StringMarshalling.Utf8)]
+    internal static partial int PreloadFontDirectory(GlobalContext* context, string dirName);
 
     [LibraryImport("mizuki")]
     internal static partial UnmanagedArray ProfileSubtitles(
