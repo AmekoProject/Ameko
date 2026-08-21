@@ -50,6 +50,16 @@ public class GarbageManagerTests
     }
 
     [Test]
+    public async Task JsonValue()
+    {
+        int[] data = [1, 2, 3];
+        var gm = new GarbageManager();
+        gm.SetJson("test", data);
+
+        await Assert.That(gm.GetJson<int[]>("test")).IsEquivalentTo(data);
+    }
+
+    [Test]
     public async Task LoadDefault()
     {
         var gm = new GarbageManager();
