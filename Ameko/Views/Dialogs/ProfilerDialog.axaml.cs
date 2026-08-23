@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Ameko.ViewModels.Dialogs;
 using Avalonia.Platform.Storage;
@@ -44,6 +45,24 @@ public partial class ProfilerDialog : ReactiveWindow<ProfilerDialogViewModel>
         interaction.SetOutput(null);
     }
 
+    private async Task DoShowOpenFolderDialogAsync(IInteractionContext<RxVoid, Uri[]> interaction)
+    {
+        var directories = await StorageProvider.OpenFolderPickerAsync(
+            new FolderPickerOpenOptions
+            {
+                Title = I18N.Other.FileDialog_OpenFontDirectory_Title,
+                AllowMultiple = true,
+            }
+        );
+
+        if (directories.Count > 0)
+        {
+            interaction.SetOutput(directories.Select(d => d.Path).ToArray());
+            return;
+        }
+        interaction.SetOutput([]);
+    }
+
     public ProfilerDialog()
     {
         InitializeComponent();
@@ -54,6 +73,9 @@ public partial class ProfilerDialog : ReactiveWindow<ProfilerDialogViewModel>
             {
                 ViewModel
                     .SaveProfileAs.RegisterHandler(DoShowSaveAsDialogAsync)
+                    .DisposeWith(disposables);
+                ViewModel
+                    .OpenDirectoryPicker.RegisterHandler(DoShowOpenFolderDialogAsync)
                     .DisposeWith(disposables);
                 ViewModel
                     .DisplayProfileResult.RegisterHandler(context =>

@@ -27,25 +27,23 @@
     <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
   </Window.Resources>
   <DockPanel Margin="2">
-    <Grid
-      ColumnDefinitions="*, Auto"
-      RowDefinitions="Auto, Auto"
-      ColumnSpacing="2"
-      DockPanel.Dock="Bottom"
-    >
-      <!-- Configuration -->
-      <Grid
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*, *" RowDefinitions="*, Auto" RowSpacing="4">
+      <!-- Left side - Configuration -->
+      <StackPanel
         Grid.Column="0"
         Grid.Row="0"
-        Grid.ColumnSpan="2"
-        ColumnDefinitions="*, Auto, *"
-        RowDefinitions="Auto, Auto, Auto"
-        RowSpacing="2"
+        Spacing="4"
+        Orientation="Vertical"
         IsEnabled="{Binding !IsProcessing}"
         IsVisible="{Binding Result,
                                          Converter={StaticResource NullToBoolConverter}}"
       >
-        <StackPanel Grid.Column="1" Grid.Row="0" Spacing="2" Orientation="Horizontal">
+        <TextBlock
+          Text="{x:Static i18n:Profiler.Profiler_Label_Settings}"
+          FontWeight="Bold"
+          HorizontalAlignment="Center"
+        />
+        <StackPanel Spacing="2" Orientation="Horizontal">
           <RadioButton
             GroupName="Target"
             Content="{x:Static i18n:Profiler.Profiler_RB_All}"
@@ -68,7 +66,7 @@
                                                      ConverterParameter={x:Static holo:ProfileTarget.SelectedTimes}}"
           />
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Spacing="2" Orientation="Horizontal">
+        <StackPanel Spacing="2" Orientation="Horizontal">
           <!-- Inverted checkbox because it's more logical to present this way -->
           <CheckBox
             IsChecked="{Binding !OverrideViewportSize}"
@@ -101,49 +99,106 @@
             Value="{Binding ViewportHeight}"
           />
         </StackPanel>
+      </StackPanel>
+      <!-- Right side - Fonts -->
+      <StackPanel
+        Grid.Column="1"
+        Grid.Row="0"
+        Spacing="4"
+        IsEnabled="{Binding !IsProcessing}"
+        IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter}}"
+      >
+        <TextBlock
+          Text="{x:Static i18n:Profiler.Profiler_Label_FontDirectories}"
+          FontWeight="Bold"
+          HorizontalAlignment="Center"
+        />
+        <ListBox
+          Classes="Small"
+          VerticalAlignment="Stretch"
+          ItemsSource="{Binding FontDirectories}"
+          SelectedItems="{Binding FontDirSelection}"
+          SelectionMode="Multiple"
+          BorderThickness="2"
+          MinHeight="150"
+          MaxHeight="150"
+        />
+        <Grid ColumnDefinitions="*, *" ColumnSpacing="4">
+          <Button
+            Grid.Column="0"
+            Classes="Small"
+            HorizontalAlignment="Stretch"
+            Content="{x:Static i18n:Config.Config_Button_Add}"
+            Command="{Binding AddFontDirCommand}"
+          />
+          <Button
+            Grid.Column="1"
+            Classes="Small"
+            HorizontalAlignment="Stretch"
+            Content="{x:Static i18n:Config.Config_Button_Remove}"
+            IsEnabled="{Binding CanRemoveFontDirs}"
+            Command="{Binding RemoveFontDirCommand}"
+          />
+        </Grid>
+      </StackPanel>
+      <!-- Bottom - Progress & stuff -->
+      <Grid
+        Grid.Column="0"
+        Grid.Row="1"
+        Grid.ColumnSpan="2"
+        ColumnDefinitions="*, Auto"
+        ColumnSpacing="2"
+      >
+        <ProgressBar
+          Grid.Column="0"
+          Minimum="0"
+          Maximum="1"
+          Classes="Success"
+          ShowProgressText="True"
+          Value="{Binding CurrentProgress}"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Stretch"
+          IsVisible="{Binding IsProcessing}"
+        />
         <Button
           Grid.Column="1"
-          Grid.Row="2"
           Content="{x:Static i18n:Profiler.Profiler_Button_Start}"
           Command="{Binding StartCommand}"
+          IsEnabled="{Binding !IsProcessing}"
+          IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter}}"
+        />
+        <TextBlock
+          Grid.Column="0"
+          Text="{Binding Description}"
+          VerticalAlignment="Center"
+          IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter},
+                                         ConverterParameter=.}"
+        />
+        <Button
+          Grid.Column="1"
+          Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
+          IsVisible="{Binding Result,
+                                         Converter={StaticResource NullToBoolConverter},
+                                         ConverterParameter=.}"
+          Command="{Binding ExportCommand}"
         />
       </Grid>
-      <ProgressBar
-        Grid.Column="0"
-        Grid.Row="1"
-        Minimum="0"
-        Maximum="1"
-        Classes="Success"
-        ShowProgressText="True"
-        Value="{Binding CurrentProgress}"
-        VerticalAlignment="Center"
-        HorizontalAlignment="Stretch"
-        IsVisible="{Binding IsProcessing}"
-      />
-      <TextBlock
-        Grid.Column="0"
-        Grid.Row="1"
-        Text="{Binding Description}"
-        VerticalAlignment="Center"
-        IsVisible="{Binding Result,
-                                         Converter={StaticResource NullToBoolConverter},
-                                         ConverterParameter=.}"
-      />
-      <Button
-        Grid.Column="1"
-        Grid.Row="1"
-        Content="{x:Static i18n:Profiler.Profiler_Button_Export}"
-        IsEnabled="{Binding Result,
-                                         Converter={StaticResource NullToBoolConverter},
-                                         ConverterParameter=.}"
-        Command="{Binding ExportCommand}"
-      />
     </Grid>
     <sp:AvaPlot
       Name="ProfilePlot"
       IsVisible="{Binding Result,
                                          Converter={StaticResource NullToBoolConverter},
-                                         ConverterParameter=.}"
+                                         ConverterParameter=.,
+                                         FallbackValue=false}"
     />
   </DockPanel>
+  <Window.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="1" />
+      <Setter Property="Margin" Value="1" />
+    </Style>
+  </Window.Styles>
 </Window>

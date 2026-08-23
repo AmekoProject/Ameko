@@ -304,6 +304,16 @@ public class GarbageManager
     }
 
     /// <summary>
+    /// Removes the entry with the given <paramref name="name"/>
+    /// </summary>
+    /// <param name="name">Name of the entry to remove</param>
+    /// <returns><see langword="true"/> if the entry was removed</returns>
+    public bool Remove(string name)
+    {
+        return _data.TryRemove(name, out _);
+    }
+
+    /// <summary>
     /// Clear the entries
     /// </summary>
     public void Clear()

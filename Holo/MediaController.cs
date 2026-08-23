@@ -1010,6 +1010,7 @@ public class MediaController : BindableBase
     /// <param name="viewWidth">Width to render at, defaults to video width</param>
     /// <param name="viewHeight">Height to render at, defaults to video height</param>
     /// <param name="target">Target to profile, defaults to entire document</param>
+    /// <param name="fontDirectories">Font directories to preload</param>
     /// <param name="progressCallback">Profiling progress callback (optional)</param>
     /// <returns>Graph-friendly profile data</returns>
     /// <exception cref="InvalidOperationException">If the provider is not initialized</exception>
@@ -1019,6 +1020,7 @@ public class MediaController : BindableBase
         int viewWidth = -1,
         int viewHeight = -1,
         ProfileTarget target = ProfileTarget.All,
+        Uri[]? fontDirectories = null,
         ISourceProvider.ProgressCallback? progressCallback = null
     )
     {
@@ -1042,6 +1044,12 @@ public class MediaController : BindableBase
                 selectionDoc.StyleManager.AddOrReplace(style);
             foreach (var @event in selection)
                 selectionDoc.EventManager.AddLast(@event);
+        }
+
+        // Load fonts
+        foreach (var fontDir in fontDirectories ?? [])
+        {
+            _provider.PreloadFontDirectory(fontDir.LocalPath);
         }
 
         // Set subtitles

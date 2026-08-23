@@ -1,8 +1,13 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Ameko.Services;
+using Ameko.Utilities;
+using AssCS.Utilities;
 using Avalonia.Threading;
 using Holo;
 using Holo.Models;
@@ -15,6 +20,7 @@ namespace Ameko.ViewModels.Dialogs;
 
 public class ProfilerDialogViewModel : ViewModelBase
 {
+    private const string GarbageKey = "Profiler Font Directories";
     public Interaction<ProfileResult, RxVoid> DisplayProfileResult { get; }
     public Interaction<string, Uri?> SaveProfileAs { get; }
 
@@ -54,6 +60,10 @@ public class ProfilerDialogViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = ProfileTarget.All;
 
+    public ObservableCollection<string> FontDirectories { get; }
+    public ObservableCollection<string> FontDirSelection { get; } = [];
+    public bool CanRemoveFontDirs => FontDirSelection.Count != 0;
+
     public bool IsProcessing
     {
         get;
@@ -80,8 +90,12 @@ public class ProfilerDialogViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
+    public Interaction<RxVoid, Uri[]> OpenDirectoryPicker { get; }
+
     public ICommand StartCommand { get; }
     public ICommand ExportCommand { get; }
+    public ICommand AddFontDirCommand { get; }
+    public ICommand RemoveFontDirCommand { get; }
 
     public ProfilerDialogViewModel(
         ILogger<ProfilerDialogViewModel> logger,
@@ -101,12 +115,47 @@ public class ProfilerDialogViewModel : ViewModelBase
         DisplayProfileResult = new Interaction<ProfileResult, RxVoid>();
         SaveProfileAs = new Interaction<string, Uri?>();
 
+        if (workspace.Document.GarbageManager.TryGetJson(GarbageKey, out string[]? value))
+        {
+            FontDirectories = new ObservableCollection<string>(value);
+        }
+        else
+        {
+            FontDirectories = [];
+        }
+
+        FontDirSelection.CollectionChanged += (_, _) =>
+            this.RaisePropertyChanged(nameof(CanRemoveFontDirs));
+
+        OpenDirectoryPicker = new Interaction<RxVoid, Uri[]>();
+
         StartCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             try
             {
                 Dispatcher.UIThread.Post(() => IsProcessing = true);
                 logger.LogInformation("Starting profile operation!");
+
+                // Update font directories
+                workspace.Document.GarbageManager.Remove(GarbageKey);
+
+                Uri[]? preloadDirs = null;
+                if (FontDirectories.Count > 0)
+                {
+                    workspace.Document.GarbageManager.SetJson(
+                        GarbageKey,
+                        FontDirectories.ToArray()
+                    );
+
+                    preloadDirs = FontDirectories
+                        .Select(d => new Uri(
+                            Path.Combine(
+                                Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/",
+                                d
+                            )
+                        ))
+                        .ToArray();
+                }
 
                 var lastPercent = -1;
 
@@ -116,6 +165,7 @@ public class ProfilerDialogViewModel : ViewModelBase
                     viewWidth: OverrideViewportSize ? ViewportWidth : -1,
                     viewHeight: OverrideViewportSize ? ViewportHeight : -1,
                     target: SelectedTarget,
+                    fontDirectories: preloadDirs,
                     progressCallback: (current, total) =>
                     {
                         var progress = (double)current / total;
@@ -147,6 +197,25 @@ public class ProfilerDialogViewModel : ViewModelBase
                 return;
 
             await ioService.SaveProfileResult(SaveProfileAs, workspace, Result.Value);
+        });
+
+        AddFontDirCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var dirs = await OpenDirectoryPicker.Handle(RxVoid.Default);
+            if (dirs is null or [])
+                return;
+            var wspDir = workspace.SavePath is not null
+                ? Path.GetDirectoryName(workspace.SavePath.LocalPath) ?? "/"
+                : "/";
+            FontDirectories.AddRange(
+                dirs.Select(d => PathExtensions.GetRelativePath(wspDir, d.LocalPath))
+            );
+        });
+
+        RemoveFontDirCommand = ReactiveCommand.Create(() =>
+        {
+            FontDirectories.RemoveAll(f => FontDirSelection.Contains(f));
+            FontDirSelection.Clear();
         });
     }
 }

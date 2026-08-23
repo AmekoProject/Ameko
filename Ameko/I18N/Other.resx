@@ -258,4 +258,7 @@
     <data name="SourceViewer_Notice" xml:space="preserve">
         <value>"Update All" will skip modified packages.</value>
     </data>
+    <data name="FileDialog_OpenFontDirectory_Title" xml:space="preserve">
+        <value>Open Font Directory</value>
+    </data>
 </root>
