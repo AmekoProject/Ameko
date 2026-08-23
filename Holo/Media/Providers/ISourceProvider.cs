@@ -185,6 +185,13 @@ public interface ISourceProvider
     long GetSampleCount();
 
     /// <summary>
+    /// Preload the fonts in a directory
+    /// </summary>
+    /// <param name="dirName">Path to the directory to load</param>
+    /// <returns>0 on success</returns>
+    int PreloadFontDirectory(string dirName);
+
+    /// <summary>
     /// Profile the subtitles
     /// </summary>
     /// <param name="fromFrame">Frame to start profiling at</param>

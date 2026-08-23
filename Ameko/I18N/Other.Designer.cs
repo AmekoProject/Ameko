@@ -524,5 +524,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("SourceViewer_Notice", resourceCulture);
             }
         }
+        
+        public static string FileDialog_OpenFontDirectory_Title {
+            get {
+                return ResourceManager.GetString("FileDialog_OpenFontDirectory_Title", resourceCulture);
+            }
+        }
     }
 }

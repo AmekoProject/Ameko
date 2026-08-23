@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Text.Json;
 
 namespace AssCS;
 
@@ -74,6 +75,18 @@ public class GarbageManager
     }
 
     /// <summary>
+    /// Set a JSON entry
+    /// </summary>
+    /// <param name="name">Name of the entry</param>
+    /// <param name="value">Entry value</param>
+    /// <typeparam name="T">Type of the entry</typeparam>
+    public void SetJson<T>(string name, T value)
+    {
+        var s = JsonSerializer.Serialize(value);
+        _data[name] = new GarbageEntry(name, s);
+    }
+
+    /// <summary>
     /// Get an entry by <paramref name="name"/>
     /// </summary>
     /// <param name="name">Name of the entry</param>
@@ -81,7 +94,7 @@ public class GarbageManager
     /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
     public string GetString(string name)
     {
-        if (!_data.TryGetValue(name, out GarbageEntry value))
+        if (!_data.TryGetValue(name, out var value))
             throw new KeyNotFoundException($"Project Properties: String {name} does not exist");
         return value.Value;
     }
@@ -111,7 +124,7 @@ public class GarbageManager
     /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
     public double GetDouble(string name)
     {
-        if (!_data.TryGetValue(name, out GarbageEntry value))
+        if (!_data.TryGetValue(name, out var value))
             throw new KeyNotFoundException($"Project Properties: Double {name} does not exist");
         return Convert.ToDouble(value.Value);
     }
@@ -141,7 +154,7 @@ public class GarbageManager
     /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
     public decimal GetDecimal(string name)
     {
-        if (!_data.TryGetValue(name, out GarbageEntry value))
+        if (!_data.TryGetValue(name, out var value))
             throw new KeyNotFoundException($"Project Properties: Double {name} does not exist");
         return Convert.ToDecimal(value.Value);
     }
@@ -171,7 +184,7 @@ public class GarbageManager
     /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
     public int GetInt(string name)
     {
-        if (!_data.TryGetValue(name, out GarbageEntry value))
+        if (!_data.TryGetValue(name, out var value))
             throw new KeyNotFoundException($"Project Properties: Int {name} does not exist");
         return Convert.ToInt32(value.Value);
     }
@@ -201,7 +214,7 @@ public class GarbageManager
     /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
     public bool GetBool(string name)
     {
-        if (!_data.TryGetValue(name, out GarbageEntry value))
+        if (!_data.TryGetValue(name, out var value))
             throw new KeyNotFoundException($"Project Properties: Bool {name} does not exist");
         return Convert.ToBoolean(value.Value);
     }
@@ -224,6 +237,54 @@ public class GarbageManager
     }
 
     /// <summary>
+    /// Get an entry by <paramref name="name"/>
+    /// </summary>
+    /// <param name="name">Name of the entry</param>
+    /// <typeparam name="T">Type to deserialize to</typeparam>
+    /// <returns>Value of the entry</returns>
+    /// <exception cref="KeyNotFoundException">If the value does not exist</exception>
+    public T? GetJson<T>(string name)
+    {
+        if (!_data.TryGetValue(name, out var value))
+            throw new KeyNotFoundException($"Project Properties: Bool {name} does not exist");
+        try
+        {
+            return JsonSerializer.Deserialize<T>(value.Value);
+        }
+        catch (JsonException)
+        {
+            return default;
+        }
+    }
+
+    /// <summary>
+    /// Get an entry by <paramref name="name"/>
+    /// </summary>
+    /// <param name="name">Name of the entry</param>
+    /// <param name="value">Value of the entry</param>
+    /// <typeparam name="T">Type to deserialize to</typeparam>
+    /// <returns><see langword="true"/> if the entry was found</returns>
+    public bool TryGetJson<T>(string name, [NotNullWhen(true)] out T? value)
+    {
+        if (Contains(name))
+        {
+            try
+            {
+                value = JsonSerializer.Deserialize<T>(GetString(name));
+                return value is not null;
+            }
+            catch (JsonException)
+            {
+                value = default;
+                return false;
+            }
+        }
+
+        value = default;
+        return false;
+    }
+
+    /// <summary>
     /// Get all the entries
     /// </summary>
     /// <returns>Read-only collection of entries</returns>
@@ -240,6 +301,16 @@ public class GarbageManager
     public bool Contains(string name)
     {
         return _data.ContainsKey(name);
+    }
+
+    /// <summary>
+    /// Removes the entry with the given <paramref name="name"/>
+    /// </summary>
+    /// <param name="name">Name of the entry to remove</param>
+    /// <returns><see langword="true"/> if the entry was removed</returns>
+    public bool Remove(string name)
+    {
+        return _data.TryRemove(name, out _);
     }
 
     /// <summary>

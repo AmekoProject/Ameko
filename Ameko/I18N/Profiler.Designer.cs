@@ -116,5 +116,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Profiler_Description", resourceCulture);
             }
         }
+        
+        public static string Profiler_Label_FontDirectories {
+            get {
+                return ResourceManager.GetString("Profiler_Label_FontDirectories", resourceCulture);
+            }
+        }
+        
+        public static string Profiler_Label_Settings {
+            get {
+                return ResourceManager.GetString("Profiler_Label_Settings", resourceCulture);
+            }
+        }
     }
 }

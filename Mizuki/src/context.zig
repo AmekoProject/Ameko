@@ -73,6 +73,7 @@ pub const LibassContext = struct {
     current_hash: u32,
 
     profile_points: ?[]common.AssProfilePoint,
+    profiler_seen_fonts: ?std.AutoHashMap(u64, void),
 
     pub fn Init() LibassContext {
         return LibassContext{
@@ -80,6 +81,7 @@ pub const LibassContext = struct {
             .track = null,
             .current_hash = 0,
             .profile_points = null,
+            .profiler_seen_fonts = null,
         };
     }
 };

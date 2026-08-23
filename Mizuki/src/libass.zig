@@ -91,6 +91,10 @@ pub fn CloseVideo(g_ctx: *context.GlobalContext) void {
         common.allocator.free(profile_points);
         ctx.profile_points = null;
     }
+    if (ctx.profiler_seen_fonts != null) {
+        ctx.profiler_seen_fonts.?.deinit();
+        ctx.profiler_seen_fonts = null;
+    }
 }
 
 /// Verify a frame's hash
@@ -153,6 +157,50 @@ pub fn GetFrame(g_ctx: *context.GlobalContext, timestamp: c_longlong, out: *fram
 
         img = i.*.next;
     }
+}
+
+/// Preload the fonts in a directory
+pub fn PreloadFontDirectory(g_ctx: *context.GlobalContext, dir_name: [*c]u8) bool {
+    const ctx = &g_ctx.*.libass;
+    if (ctx.profiler_seen_fonts == null) {
+        ctx.profiler_seen_fonts = std.AutoHashMap(u64, void).init(common.allocator);
+    }
+    if (ctx.profiler_seen_fonts != null) {
+        const dir_path: []const u8 = std.mem.span(dir_name);
+        var handle = std.Io.Dir.openDir(std.Io.Dir.cwd(), common.io, dir_path, .{ .iterate = true }) catch {
+            logger.Error("Failed to open directory");
+            logger.Error(dir_path);
+            return false;
+        };
+        defer handle.close(common.io);
+
+        var iterator = handle.iterate();
+        while (iterator.next(common.io) catch return false) |entry| {
+            if (entry.kind != .file or !isFontFile(entry.name)) {
+                continue;
+            }
+
+            const path_hash = std.hash.Wyhash.hash(0, entry.name);
+            if (ctx.profiler_seen_fonts.?.contains(path_hash)) continue;
+
+            const font_data = handle.readFileAlloc(common.io, entry.name, common.allocator, .unlimited) catch {
+                logger.Error("Failed to open file");
+                logger.Error(entry.name);
+                continue;
+            };
+            defer common.allocator.free(font_data);
+
+            logger.Info(entry.name);
+
+            // null-terminated string
+            const font_name_z = common.allocator.dupeZ(u8, entry.name) catch continue;
+            defer common.allocator.free(font_name_z);
+
+            c.ass_add_font(library, font_name_z.ptr, font_data.ptr, @intCast(font_data.len));
+            ctx.profiler_seen_fonts.?.put(path_hash, {}) catch continue;
+        }
+    }
+    return true;
 }
 
 // Profile the current subtitle file
@@ -250,4 +298,16 @@ pub export fn AssLogCallback(
         const fmt_slice = std.mem.sliceTo(fmt, 0);
         logger.Info(fmt_slice);
     }
+}
+
+const font_extensions = [_][]const u8{
+    ".ttf", ".otf", ".ttc", ".otc", ".pfa", ".pfb",
+};
+
+fn isFontFile(name: []const u8) bool {
+    const ext = std.fs.path.extension(name);
+    for (font_extensions) |fe| {
+        if (std.ascii.eqlIgnoreCase(ext, fe)) return true;
+    }
+    return false;
 }
