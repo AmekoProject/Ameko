@@ -112,9 +112,7 @@ public class ScriptService : IScriptService
             var timeout = TimeSpan.FromSeconds(5);
             var engine = CreateJavaScriptEngine(logger, _projectProvider, timeout);
 
-            var success = await engine
-                .Execute(scriptlet.CompiledScript)
-                .InvokeAsync("execute", _projectProvider.Current);
+            var success = await engine.Execute(scriptlet.CompiledScript).InvokeAsync("execute");
 
             return success is JsBoolean jsBool
                 ? jsBool.AsBoolean()

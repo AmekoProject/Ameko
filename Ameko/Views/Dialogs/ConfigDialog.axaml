@@ -14,25 +14,25 @@
   x:Class="Ameko.Views.Dialogs.ConfigDialog"
   x:DataType="vm:ConfigDialogViewModel"
   Focusable="True"
-  Width="525"
+  Width="675"
+  Height="500"
   CanResize="False"
-  SizeToContent="WidthAndHeight"
   WindowStartupLocation="CenterOwner"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
   Title="{x:Static i18n:Config.ConfigDialog_Title}"
 >
   <Window.Resources>
     <converters:EnumConverter x:Key="EnumConverter" />
-    <converters:HccBorderConverter x:Key="BorderConverter" />
   </Window.Resources>
-  <StackPanel Margin="2">
+  <TabControl Margin="2">
     <!-- Substation Alpha -->
-    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Ssa}">
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Ssa}">
       <Grid
         ColumnDefinitions="Auto, Auto"
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
         ColumnSpacing="10"
         RowSpacing="2"
+        Margin="2"
       >
         <Label
           Grid.Column="0"
@@ -117,15 +117,131 @@
           Value="{Binding Config.DefaultLayer}"
         />
       </Grid>
-    </HeaderedContentControl>
+    </TabItem>
+
+    <!-- Timing -->
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Timing}">
+      <Grid
+        ColumnDefinitions="Auto, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+        ColumnSpacing="10"
+        RowSpacing="2"
+        Margin="2"
+      >
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          Grid.ColumnSpan="2"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_TimingNotice}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadIn}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadIn_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="1"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.LeadIn}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="2"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadOut}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadOut_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="2"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.LeadOut}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="3"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="3"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.SnapStartEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="4"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="4"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.SnapStartLaterThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="5"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="5"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.SnapEndEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="6"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndLater_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="6"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Config.Timing.SnapEndLaterThreshold}"
+        />
+      </Grid>
+    </TabItem>
 
     <!-- Ameko Behavior -->
-    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Behavior}">
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Behavior}">
       <Grid
         ColumnDefinitions="Auto, Auto, Auto"
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
         ColumnSpacing="10"
         RowSpacing="2"
+        Margin="2"
       >
         <Label
           Grid.Column="0"
@@ -287,15 +403,16 @@
           />
         </StackPanel>
       </Grid>
-    </HeaderedContentControl>
+    </TabItem>
 
     <!-- Ameko Appearance -->
-    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Appearance}">
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Appearance}">
       <Grid
         ColumnDefinitions="Auto, Auto"
         RowDefinitions="Auto, Auto, Auto, Auto, Auto"
         ColumnSpacing="10"
         RowSpacing="2"
+        Margin="2"
       >
         <Label
           Grid.Column="0"
@@ -381,32 +498,6 @@
           Value="{Binding Config.GridPadding}"
         />
       </Grid>
-    </HeaderedContentControl>
-  </StackPanel>
-  <Window.Styles>
-    <Style Selector="HeaderedContentControl">
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate>
-            <Border>
-              <StackPanel>
-                <ContentPresenter
-                  FontWeight="Bold"
-                  Margin="0 10 0 2"
-                  Content="{TemplateBinding Header}"
-                />
-                <Border
-                  BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
-                  BorderThickness="2"
-                  CornerRadius="5"
-                >
-                  <ContentPresenter Content="{TemplateBinding Content}" Padding="5" />
-                </Border>
-              </StackPanel>
-            </Border>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-  </Window.Styles>
+    </TabItem>
+  </TabControl>
 </Window>

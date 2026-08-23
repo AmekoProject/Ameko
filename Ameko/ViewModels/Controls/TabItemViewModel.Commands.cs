@@ -15,7 +15,7 @@ using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Controls;
 
-public partial class TabItemViewModel : ViewModelBase
+public partial class TabItemViewModel
 {
     /// <summary>
     /// Command for copying events to the clipboard

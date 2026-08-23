@@ -171,4 +171,46 @@
     <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
         <value>Time is snapped to the nearest frame midpoint. Hold Shift to place freely.</value>
     </data>
+    <data name="Config_Header_Timing" xml:space="preserve">
+        <value>Timing</value>
+    </data>
+    <data name="Config_Label_TimingNotice" xml:space="preserve">
+        <value>Project configuration takes precedence.</value>
+    </data>
+    <data name="Config_Label_LeadIn" xml:space="preserve">
+        <value>Lead In</value>
+    </data>
+    <data name="Config_Label_LeadIn_ToolTip" xml:space="preserve">
+        <value>Number of milliseconds to add as lead-in</value>
+    </data>
+    <data name="Config_Label_LeadOut" xml:space="preserve">
+        <value>Lead Out</value>
+    </data>
+    <data name="Config_Label_LeadOut_ToolTip" xml:space="preserve">
+        <value>Number of milliseconds to add as lead-out</value>
+    </data>
+    <data name="Config_Label_SnapStartEarlier" xml:space="preserve">
+        <value>Snap Start to Earlier</value>
+    </data>
+    <data name="Config_Label_SnapStartEarlier_ToolTip" xml:space="preserve">
+        <value>Threshold to snap the start of an event to an earlier goal, in milliseconds</value>
+    </data>
+    <data name="Config_Label_SnapStartLater" xml:space="preserve">
+        <value>Snap Start to Later</value>
+    </data>
+    <data name="Config_Label_SnapStartLater_ToolTip" xml:space="preserve">
+        <value>Threshold to snap the start of an event to a later goal, in milliseconds</value>
+    </data>
+    <data name="Config_Label_SnapEndEarlier" xml:space="preserve">
+        <value>Snap End to Earlier</value>
+    </data>
+    <data name="Config_Label_SnapEndEarlier_ToolTip" xml:space="preserve">
+        <value>Threshold to snap the end of an event to an earlier goal, in milliseconds</value>
+    </data>
+    <data name="Config_Label_SnapEndLater" xml:space="preserve">
+        <value>Snap End to Later</value>
+    </data>
+    <data name="Config_Label_SnapEndLater_ToolTip" xml:space="preserve">
+        <value>Threshold to snap the end of an event to a later goal, in milliseconds</value>
+    </data>
 </root>

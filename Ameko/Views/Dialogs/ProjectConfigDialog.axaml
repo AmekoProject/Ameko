@@ -7,30 +7,27 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
   xmlns:c="clr-namespace:Ameko.Views.Controls"
-  xmlns:converters="clr-namespace:Ameko.Converters"
   xmlns:i18n="clr-namespace:Ameko.I18N"
   xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
   x:Class="Ameko.Views.Dialogs.ProjectConfigDialog"
   x:DataType="vm:ProjectConfigDialogViewModel"
   Focusable="True"
-  Width="480"
+  Width="375"
+  Height="300"
   CanResize="False"
-  SizeToContent="WidthAndHeight"
   WindowStartupLocation="CenterOwner"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
   Title="{x:Static i18n:Config.ProjectConfigDialog_Title}"
 >
-  <Window.Resources>
-    <converters:HccBorderConverter x:Key="BorderConverter" />
-  </Window.Resources>
-  <StackPanel Margin="2">
+  <TabControl Margin="2">
     <!-- Substation Alpha -->
-    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Ssa}">
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Ssa}">
       <Grid
         ColumnDefinitions="Auto, Auto"
         RowDefinitions="Auto, Auto, Auto, Auto, Auto"
         ColumnSpacing="10"
         RowSpacing="2"
+        Margin="2"
       >
         <Label
           Grid.Column="0"
@@ -41,7 +38,7 @@
         <c:NumberTextBox
           Grid.Column="1"
           Grid.Row="0"
-          Width="50"
+          Width="100"
           Minimum="0"
           Maximum="100"
           Increment="1"
@@ -97,106 +94,184 @@
           Value="{Binding Project.DefaultLayer}"
         />
       </Grid>
-    </HeaderedContentControl>
+    </TabItem>
+
+    <!-- Timing -->
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Timing}">
+      <Grid
+        ColumnDefinitions="Auto, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+        ColumnSpacing="10"
+        RowSpacing="2"
+        Margin="2"
+      >
+        <Label
+          Grid.Column="0"
+          Grid.Row="0"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadIn}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadIn_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="0"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.LeadIn}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="1"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_LeadOut}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_LeadOut_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="1"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.LeadOut}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="2"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="2"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.SnapStartEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="3"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapStartLater}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="3"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.SnapStartLaterThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="4"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndEarlier}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndEarlier_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="4"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.SnapEndEarlierThreshold}"
+        />
+        <Label
+          Grid.Column="0"
+          Grid.Row="5"
+          VerticalAlignment="Center"
+          Content="{x:Static i18n:Config.Config_Label_SnapEndLater}"
+          ToolTip.Tip="{x:Static i18n:Config.Config_Label_SnapEndLater_ToolTip}"
+        />
+        <c:NumberTextBox
+          Grid.Column="1"
+          Grid.Row="5"
+          Width="100"
+          Minimum="0"
+          Increment="0"
+          FormatString="0"
+          Value="{Binding Project.Timing.SnapEndLaterThreshold}"
+        />
+      </Grid>
+    </TabItem>
 
     <!-- Spellchecking -->
-    <HeaderedContentControl Header="{x:Static i18n:Config.Config_Header_Spellchecking}">
-      <StackPanel Spacing="5">
+    <TabItem Header="{x:Static i18n:Config.Config_Header_Spellchecking}">
+      <DockPanel Margin="2">
         <!-- Custom words editor -->
-        <Grid
-          ColumnDefinitions="*, Auto"
-          RowDefinitions="Auto, 150, Auto"
-          ColumnSpacing="2"
-          RowSpacing="2"
-        >
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*, Auto" ColumnSpacing="2" RowSpacing="2">
           <TextBox
             Grid.Column="0"
-            Grid.Row="0"
             Classes="Small"
             PlaceholderText="{x:Static i18n:Config.Config_CustomWordBox_Watermark}"
             Text="{Binding NewCustomWord}"
           />
           <Button
             Grid.Column="1"
-            Grid.Row="0"
             Classes="Small"
             IsDefault="True"
             Content="{x:Static i18n:Config.Config_Button_Add}"
             IsEnabled="{Binding CanAddWord}"
             Command="{Binding AddWordCommand}"
           />
-          <ListBox
-            Grid.Column="0"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Classes="Small"
-            VerticalAlignment="Stretch"
-            ItemsSource="{Binding Project.CustomWords}"
-            SelectedItems="{Binding CustomWordSelection}"
-            SelectionMode="Multiple"
-          />
+        </Grid>
+
+        <!-- Remove button & Language selector -->
+        <Grid
+          DockPanel.Dock="Bottom"
+          ColumnDefinitions="Auto, *, Auto"
+          RowDefinitions="Auto, Auto"
+          ColumnSpacing="10"
+          RowSpacing="10"
+        >
           <Button
-            Grid.Column="0"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
+            Grid.Column="2"
+            Grid.Row="0"
             Classes="Small"
             HorizontalAlignment="Right"
             Content="{x:Static i18n:Config.Config_Button_Remove}"
             IsEnabled="{Binding CanRemoveWords}"
             Command="{Binding RemoveWordsCommand}"
           />
-        </Grid>
-        <!-- Language selector -->
-        <Grid
-          ColumnDefinitions="Auto, Auto"
-          RowDefinitions="Auto"
-          ColumnSpacing="10"
-          RowSpacing="2"
-        >
           <Label
             Grid.Column="0"
-            Grid.Row="0"
+            Grid.Row="1"
             VerticalAlignment="Center"
             Content="{x:Static i18n:Config.Config_Label_SpellcheckLanguage}"
           />
           <ComboBox
             Grid.Column="1"
-            Grid.Row="0"
-            Width="175"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Stretch"
             ItemsSource="{Binding AvailableLanguages}"
             SelectedValue="{Binding Project.SpellcheckCulture}"
             DisplayMemberBinding="{Binding Name}"
             SelectedValueBinding="{Binding Locale}"
           />
         </Grid>
-      </StackPanel>
-    </HeaderedContentControl>
-  </StackPanel>
+
+        <!-- Word list -->
+        <ListBox
+          Classes="Small"
+          VerticalAlignment="Stretch"
+          ItemsSource="{Binding Project.CustomWords}"
+          SelectedItems="{Binding CustomWordSelection}"
+          SelectionMode="Multiple"
+        />
+      </DockPanel>
+    </TabItem>
+  </TabControl>
   <Window.Styles>
-    <Style Selector="HeaderedContentControl">
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate>
-            <Border>
-              <StackPanel>
-                <ContentPresenter
-                  FontWeight="Bold"
-                  Margin="0 10 0 2"
-                  Content="{TemplateBinding Header}"
-                />
-                <Border
-                  BorderBrush="{TemplateBinding Foreground, Converter={StaticResource BorderConverter}}"
-                  BorderThickness="2"
-                  CornerRadius="5"
-                >
-                  <ContentPresenter Content="{TemplateBinding Content}" Padding="5" />
-                </Border>
-              </StackPanel>
-            </Border>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
     <Style Selector="ListBoxItem">
       <Setter Property="Padding" Value="1" />
       <Setter Property="Margin" Value="1" />

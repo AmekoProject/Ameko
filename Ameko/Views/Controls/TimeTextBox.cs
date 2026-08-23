@@ -65,6 +65,12 @@ public class TimeTextBox : TextBox
                 ClipboardCopy();
                 e.Handled = true;
                 return;
+            // Select all
+            case Key.A when (e.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) != 0:
+                SelectionStart = 0;
+                SelectionEnd = Text?.Length ?? 0;
+                e.Handled = true;
+                return;
         }
     }
 
