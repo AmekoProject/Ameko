@@ -16,11 +16,7 @@ using ReactiveUI;
 
 namespace Ameko.ViewModels.Windows;
 
-public class HelpWindowViewModel(
-    IPackageManager packageManager,
-    IFileSystem fileSystem,
-    IConfiguration config
-) : ViewModelBase
+public class HelpWindowViewModel : ViewModelBase
 {
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
@@ -41,12 +37,16 @@ public class HelpWindowViewModel(
         new(I18N.Help.Help_Section_Projects, "projects.md"),
     ];
 
+    private readonly IPackageManager _packageManager;
+    private readonly IFileSystem _fileSystem;
+    private readonly IConfiguration _config;
+
     public List<AmekoHelp> AmekoHelps
     {
         get
         {
             List<AmekoHelp> result = [];
-            var culture = config.Culture;
+            var culture = _config.Culture;
 
             foreach (var article in HelpArticles)
             {
@@ -78,15 +78,22 @@ public class HelpWindowViewModel(
     {
         get
         {
-            return packageManager
+            return _packageManager
                 .InstalledPackages.Where(m => !string.IsNullOrEmpty(m.HelpUrl))
                 .Select(m => new ScriptHelp
                 {
+                    QualifiedName = m.QualifiedName,
                     DisplayName = m.DisplayName,
                     Content = BuildScriptHelp(PackageManager.HelpPath(m)),
                 })
                 .ToList();
         }
+    }
+
+    public int SelectedTabIndex
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public ScriptHelp? SelectedScriptHelp
@@ -103,9 +110,34 @@ public class HelpWindowViewModel(
 
     public bool HasScriptHelps => ScriptHelps.Count > 0;
 
+    public HelpWindowViewModel(
+        IPackageManager packageManager,
+        IFileSystem fileSystem,
+        IConfiguration config
+    )
+    {
+        _packageManager = packageManager;
+        _fileSystem = fileSystem;
+        _config = config;
+    }
+
+    public HelpWindowViewModel(
+        IPackageManager packageManager,
+        IFileSystem fileSystem,
+        IConfiguration config,
+        string qualifiedName
+    )
+    {
+        _packageManager = packageManager;
+        _fileSystem = fileSystem;
+        _config = config;
+        SelectedTabIndex = 1;
+        SelectedScriptHelp = ScriptHelps.FirstOrDefault(h => h.QualifiedName == qualifiedName);
+    }
+
     private string BuildScriptHelp(string path)
     {
-        using var fs = fileSystem.FileStream.New(
+        using var fs = _fileSystem.FileStream.New(
             path,
             FileMode.Open,
             FileAccess.Read,

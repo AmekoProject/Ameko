@@ -22,7 +22,7 @@
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
   Title="{x:Static i18n:Help.Help_WindowTitle}"
 >
-  <TabControl TabStripPlacement="Bottom">
+  <TabControl TabStripPlacement="Bottom" SelectedIndex="{Binding SelectedTabIndex}">
     <TabItem Header="{x:Static i18n:Help.Help_Tab_Ameko}">
       <DockPanel>
         <ListBox
