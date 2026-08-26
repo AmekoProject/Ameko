@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ameko.DataModels;
+using Ameko.Utilities;
 using Ameko.ViewModels.Dialogs;
 using AssCS;
 using AssCS.History;
 using Holo.Media;
 using Holo.Models;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Primitives;
 using ReactiveUI.Primitives.Signals;
@@ -684,16 +686,22 @@ public partial class TabItemViewModel
                 return;
 
             var time = Workspace.MediaController.CurrentTime ?? Time.Zero;
-            var result = Time.Maximum;
+            var events = Workspace.Document.EventManager.Events;
 
-            foreach (var e in Workspace.Document.EventManager.Events)
+            // Get all bounds in a sorted array
+            var bounds = new long[events.Count * 2];
+            for (int i = 0, j = 0; i < events.Count; i++)
             {
-                if (e.Start > time && e.Start < result)
-                    result = e.Start;
-                if (e.End > time && e.End < result)
-                    result = e.End;
+                bounds[j++] = events[i].Start.TotalMilliseconds;
+                bounds[j++] = events[i].End.TotalMilliseconds;
             }
+            Array.Sort(bounds);
 
+            var idx = bounds.UpperBound(time.TotalMilliseconds);
+            if (idx >= bounds.Length)
+                return;
+
+            var result = Time.FromMillis(bounds[idx]);
             Workspace.MediaController.SeekTo(result);
         });
     }
@@ -708,31 +716,38 @@ public partial class TabItemViewModel
             if (!Workspace.MediaController.IsVideoLoaded)
                 return;
 
-            var superSeek = _seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now;
-
             var time = Workspace.MediaController.CurrentTime ?? Time.Zero;
-            var result = Time.Minimum;
-
             var events = Workspace.Document.EventManager.Events;
-            for (var i = 0; i < events.Count; i++)
-            {
-                var e = events[i];
-                if (e.Start < time && e.Start > result)
-                {
-                    if (i > 0 && superSeek)
-                        result = events[i - 1].End;
-                    else
-                        result = e.Start;
-                }
 
-                if (e.End < time && e.End > result)
-                {
-                    result = !superSeek ? e.End : e.Start;
-                }
+            // Get all bounds in a sorted array
+            var bounds = new long[events.Count * 2];
+            for (int i = 0, j = 0; i < events.Count; i++)
+            {
+                bounds[j++] = events[i].Start.TotalMilliseconds;
+                bounds[j++] = events[i].End.TotalMilliseconds;
+            }
+            Array.Sort(bounds);
+
+            var idx = bounds.LowerBound(time.TotalMilliseconds); // first >= time
+
+            // Only super-seek if we're within the threshold and NOT on a boundary (if we are, seek normally)
+            var onBoundary = idx < bounds.Length && bounds[idx] == time.TotalMilliseconds;
+            var canSuperSeek =
+                !onBoundary && _seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now;
+
+            idx -= 1; // first < than time
+            if (idx < 0)
+                return;
+
+            if (canSuperSeek)
+            {
+                var superSeekIdx = bounds.LowerBound(bounds[idx]) - 1;
+                if (superSeekIdx >= 0)
+                    idx = superSeekIdx;
             }
 
+            var result = Time.FromMillis(bounds[idx]);
             Workspace.MediaController.SeekTo(result);
-
             _seekToPrevInvokedAt = DateTimeOffset.Now;
         });
     }
@@ -746,12 +761,16 @@ public partial class TabItemViewModel
         {
             if (!Workspace.MediaController.IsVideoLoaded)
                 return;
-            var nextKeyframe = Workspace.MediaController.VideoInfo?.Keyframes.FirstOrDefault(kf =>
-                kf > Workspace.MediaController.CurrentFrame
-            );
 
-            if (nextKeyframe is not null)
-                Workspace.MediaController.SeekTo(nextKeyframe.Value);
+            var keyframes = Workspace.MediaController.VideoInfo?.Keyframes ?? [];
+            if (keyframes.Length == 0)
+                return;
+
+            var idx = keyframes.UpperBound(Workspace.MediaController.CurrentFrame);
+            if (idx >= keyframes.Length)
+                return;
+
+            Workspace.MediaController.SeekTo(keyframes[idx]);
         });
     }
 
@@ -764,25 +783,30 @@ public partial class TabItemViewModel
         {
             if (!Workspace.MediaController.IsVideoLoaded)
                 return;
-            var previousKeyframe = Workspace.MediaController.VideoInfo?.Keyframes.LastOrDefault(
-                kf => kf < Workspace.MediaController.CurrentFrame
-            );
 
-            if (previousKeyframe is null)
+            var keyframes = Workspace.MediaController.VideoInfo?.Keyframes ?? [];
+            if (keyframes.Length == 0)
                 return;
 
-            if (_seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now)
+            var idx = keyframes.LowerBound(Workspace.MediaController.CurrentFrame); // first >= time
+
+            var onBoundary =
+                idx < keyframes.Length && keyframes[idx] == Workspace.MediaController.CurrentFrame;
+            var canSuperSeek =
+                !onBoundary && _seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now;
+
+            idx -= 1; // first < than time
+            if (idx < 0)
+                return;
+
+            if (canSuperSeek)
             {
-                var superSeekKeyframe =
-                    Workspace.MediaController.VideoInfo?.Keyframes.LastOrDefault(kf =>
-                        kf < previousKeyframe
-                    );
-                if (superSeekKeyframe is not null)
-                    previousKeyframe = superSeekKeyframe;
+                var superSeekIdx = keyframes.LowerBound(keyframes[idx]) - 1;
+                if (superSeekIdx >= 0)
+                    idx = superSeekIdx;
             }
 
-            Workspace.MediaController.SeekTo(previousKeyframe.Value);
-
+            Workspace.MediaController.SeekTo(keyframes[idx]);
             _seekToPrevInvokedAt = DateTimeOffset.Now;
         });
     }
