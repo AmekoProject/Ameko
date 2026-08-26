@@ -213,11 +213,16 @@ public partial class TabItemViewModel : ViewModelBase
 
     #endregion
 
+    private static readonly TimeSpan FiveHundredMs = TimeSpan.FromMilliseconds(500);
+
     private readonly ILogger<TabItemViewModel> _logger;
     private readonly IScriptService _scriptService;
     private readonly IMessageService _messageService;
     private readonly IIoService _ioService;
     private readonly IViewModelFactory _vmFactory;
+
+    /// <summary>Last time <see cref="PreviousKeyframeCommand"/> was invoked</summary>
+    private DateTimeOffset _seekToPrevInvokedAt = DateTimeOffset.Now;
 
     public Workspace Workspace { get; }
 

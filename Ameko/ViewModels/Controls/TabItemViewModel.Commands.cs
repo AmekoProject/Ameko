@@ -708,18 +708,32 @@ public partial class TabItemViewModel
             if (!Workspace.MediaController.IsVideoLoaded)
                 return;
 
+            var superSeek = _seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now;
+
             var time = Workspace.MediaController.CurrentTime ?? Time.Zero;
             var result = Time.Minimum;
 
-            foreach (var e in Workspace.Document.EventManager.Events)
+            var events = Workspace.Document.EventManager.Events;
+            for (var i = 0; i < events.Count; i++)
             {
+                var e = events[i];
                 if (e.Start < time && e.Start > result)
-                    result = e.Start;
+                {
+                    if (i > 0 && superSeek)
+                        result = events[i - 1].End;
+                    else
+                        result = e.Start;
+                }
+
                 if (e.End < time && e.End > result)
-                    result = e.End;
+                {
+                    result = !superSeek ? e.End : e.Start;
+                }
             }
 
             Workspace.MediaController.SeekTo(result);
+
+            _seekToPrevInvokedAt = DateTimeOffset.Now;
         });
     }
 
@@ -750,12 +764,26 @@ public partial class TabItemViewModel
         {
             if (!Workspace.MediaController.IsVideoLoaded)
                 return;
-            var nextKeyframe = Workspace.MediaController.VideoInfo?.Keyframes.LastOrDefault(kf =>
-                kf < Workspace.MediaController.CurrentFrame
+            var previousKeyframe = Workspace.MediaController.VideoInfo?.Keyframes.LastOrDefault(
+                kf => kf < Workspace.MediaController.CurrentFrame
             );
 
-            if (nextKeyframe is not null)
-                Workspace.MediaController.SeekTo(nextKeyframe.Value);
+            if (previousKeyframe is null)
+                return;
+
+            if (_seekToPrevInvokedAt + FiveHundredMs > DateTimeOffset.Now)
+            {
+                var superSeekKeyframe =
+                    Workspace.MediaController.VideoInfo?.Keyframes.LastOrDefault(kf =>
+                        kf < previousKeyframe
+                    );
+                if (superSeekKeyframe is not null)
+                    previousKeyframe = superSeekKeyframe;
+            }
+
+            Workspace.MediaController.SeekTo(previousKeyframe.Value);
+
+            _seekToPrevInvokedAt = DateTimeOffset.Now;
         });
     }
 
