@@ -95,6 +95,7 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
 
     private void AudioTarget_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        Focus();
         e.Handled = true;
         var wsp = ViewModel?.Workspace;
         if (wsp is null || !wsp.MediaController.IsVideoLoaded || !wsp.MediaController.IsAudioLoaded)
