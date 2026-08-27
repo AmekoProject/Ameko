@@ -514,6 +514,36 @@ public partial class TabItemViewModel
     }
 
     /// <summary>
+    /// Go to the next event in the document, if one exists
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateGoToNextEventCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            var nextEvent = Workspace.Document.EventManager.GetAfter(
+                Workspace.SelectionManager.ActiveEvent.Id
+            );
+            if (nextEvent is not null)
+                Workspace.SelectionManager.Select(nextEvent);
+        });
+    }
+
+    /// <summary>
+    /// Go to the previous event in the document, if one exists
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateGoToPreviousEventCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            var previousEvent = Workspace.Document.EventManager.GetBefore(
+                Workspace.SelectionManager.ActiveEvent.Id
+            );
+            if (previousEvent is not null)
+                Workspace.SelectionManager.Select(previousEvent);
+        });
+    }
+
+    /// <summary>
     /// Get or Create the next event in the document
     /// </summary>
     private ReactiveCommand<RxVoid, RxVoid> CreateGetOrCreateAfterCommand()

@@ -95,6 +95,12 @@ public partial class TabItemViewModel : ViewModelBase
     [Command("ameko.event.delete", "Shift+Delete", KeybindContext.Grid)]
     public ICommand DeleteEventsCommand { get; }
 
+    [Command("ameko.event.next", KeybindContext.Global)]
+    public ICommand GoToNextEventCommand { get; }
+
+    [Command("ameko.event.previous", KeybindContext.Global)]
+    public ICommand GoToPreviousEventCommand { get; }
+
     // I don't think this needs a binding?
     public ICommand GetOrCreateAfterCommand { get; }
     public ICommand ToggleTagCommand { get; }
@@ -356,6 +362,10 @@ public partial class TabItemViewModel : ViewModelBase
         SplitEventsCommand = CreateSplitEventsCommand();
         SplitEventsKeepTimesCommand = CreateSplitEventsKeepTimesCommand();
         DeleteEventsCommand = CreateDeleteEventsCommand();
+        GoToNextEventCommand = CreateGoToNextEventCommand();
+        GoToPreviousEventCommand = CreateGoToPreviousEventCommand();
+
+        // No binding commands
         GetOrCreateAfterCommand = CreateGetOrCreateAfterCommand();
         ToggleTagCommand = CreateToggleTagCommand();
         ToggleCommentCommand = CreateToggleCommentCommand();
