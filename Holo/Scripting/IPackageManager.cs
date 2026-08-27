@@ -93,6 +93,13 @@ public interface IPackageManager
     List<Package> GetUpdateCandidates();
 
     /// <summary>
+    /// Get a list of installed packages with available updates
+    /// </summary>
+    /// <param name="includeModifiedPackages">When <see langword="true"/>, locally-modified packages are included</param>
+    /// <returns>List of updatable packages</returns>
+    Task<List<Package>> GetUpdateCandidates(bool includeModifiedPackages);
+
+    /// <summary>
     /// Check if a package is up to date
     /// </summary>
     /// <param name="package">Package to check</param>

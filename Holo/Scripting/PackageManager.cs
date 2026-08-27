@@ -350,6 +350,26 @@ public partial class PackageManager : IPackageManager
         return updatable;
     }
 
+    /// <inheritdoc />
+    public async Task<List<Package>> GetUpdateCandidates(bool includeModifiedPackages)
+    {
+        if (includeModifiedPackages)
+            return GetUpdateCandidates();
+
+        var updatable = new List<Package>();
+
+        foreach (var pkg in _installedPackages)
+        {
+            var match = _packageStore.FirstOrDefault(m => m.QualifiedName == pkg.QualifiedName);
+            if (match is null)
+                continue;
+
+            if (match.Version > pkg.Version && !await IsPackageModified(pkg))
+                updatable.Add(match);
+        }
+        return updatable;
+    }
+
     /// <summary>
     /// Check if a package is up to date
     /// </summary>
