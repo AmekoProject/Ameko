@@ -17,7 +17,8 @@ public class KeybindsDialogViewModel : ViewModelBase
 {
     private readonly IKeybindRegistrar _registrar;
     private readonly IMessageBoxService _messageBoxService;
-    private readonly List<string> _keybindsToRemove = [];
+    private readonly HashSet<string> _keybindsToRemove = [];
+    private readonly HashSet<string> _clearedKeybinds = [];
 
     public RangeObservableCollection<EditableKeybind> Keybinds { get; }
 
@@ -55,8 +56,15 @@ public class KeybindsDialogViewModel : ViewModelBase
             return false;
         }
 
-        foreach (var keybind in Keybinds)
+        foreach (var keybind in Keybinds.Where(k => !_keybindsToRemove.Contains(k.QualifiedName)))
         {
+            // Null check to make sure only still-empty entries are cleared
+            if (_clearedKeybinds.Contains(keybind.QualifiedName) && keybind.OverrideKey is null)
+            {
+                _registrar.ClearOverride(keybind.QualifiedName);
+            }
+
+            // Apply even after clearing to make sure any other changes are captured
             _registrar.ApplyOverride(
                 keybind.QualifiedName,
                 keybind.OverrideKey,
@@ -116,6 +124,7 @@ public class KeybindsDialogViewModel : ViewModelBase
             (EditableKeybind keybind) =>
             {
                 keybind.Key = string.Empty;
+                _clearedKeybinds.Add(keybind.QualifiedName);
             }
         );
         ResetCommand = ReactiveCommand.Create(() =>
