@@ -10,7 +10,6 @@ using AssCS;
 using AssCS.History;
 using Holo.Media;
 using Holo.Models;
-using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Primitives;
 using ReactiveUI.Primitives.Signals;
@@ -1035,6 +1034,38 @@ public partial class TabItemViewModel
                 Workspace.SelectionManager.ActiveEvent,
                 AudioPlaybackKind.After
             );
+        });
+    }
+
+    /// <summary>
+    /// Add lead-in
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateAddLeadInCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            if (!Workspace.MediaController.IsVideoLoaded)
+                return;
+
+            var leadIn = Configuration.Timing.LeadIn;
+            Workspace.SelectionManager.ActiveEvent.Start -= Time.FromMillis(leadIn);
+            Workspace.Commit(Workspace.SelectionManager.ActiveEvent, ChangeType.ModifyEventMeta);
+        });
+    }
+
+    /// <summary>
+    /// Add lead-out
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateAddLeadOutCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            if (!Workspace.MediaController.IsVideoLoaded)
+                return;
+
+            var leadOut = Configuration.Timing.LeadOut;
+            Workspace.SelectionManager.ActiveEvent.End += Time.FromMillis(leadOut);
+            Workspace.Commit(Workspace.SelectionManager.ActiveEvent, ChangeType.ModifyEventMeta);
         });
     }
 

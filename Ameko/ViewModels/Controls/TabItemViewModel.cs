@@ -191,6 +191,12 @@ public partial class TabItemViewModel : ViewModelBase
     [Command("ameko.audio.play.after", KeybindContext.Audio)]
     public ICommand PlayAudioAfterCommand { get; }
 
+    [Command("ameko.event.addLeadIn", KeybindContext.Audio)]
+    public ICommand AddLeadInCommand { get; }
+
+    [Command("ameko.event.addLeadOut", KeybindContext.Audio)]
+    public ICommand AddLeadOutCommand { get; }
+
     // References
     [Command("ameko.reference.shift.forward", KeybindContext.Editor)]
     public ICommand ShiftReferenceForwardCommand { get; }
@@ -407,6 +413,8 @@ public partial class TabItemViewModel : ViewModelBase
         PlayAudioSurroundCommand = CreatePlayAudioSurroundCommand();
         PlayAudioLastCommand = CreatePlayAudioLastCommand();
         PlayAudioAfterCommand = CreatePlayAudioAfterCommand();
+        AddLeadInCommand = CreateAddLeadInCommand();
+        AddLeadOutCommand = CreateAddLeadOutCommand();
 
         // Frame Saving & Copying
         SaveFrameCommand = CreateSaveFrameCommand(SaveFrameMode.Full);
