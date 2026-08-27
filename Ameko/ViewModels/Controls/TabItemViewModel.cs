@@ -115,34 +115,34 @@ public partial class TabItemViewModel : ViewModelBase
     public ICommand EditStyleCommand { get; }
 
     // Video
-    [Command("ameko.video.play", KeybindContext.Video)]
+    [Command("ameko.video.play", KeybindContext.Global)]
     public ICommand PlayPauseCommand { get; }
 
-    [Command("ameko.video.stop", KeybindContext.Video)]
+    [Command("ameko.video.stop", KeybindContext.Global)]
     public ICommand StopPlayingCommand { get; }
 
-    [Command("ameko.video.playSelection", KeybindContext.Video)]
+    [Command("ameko.video.playSelection", KeybindContext.Global)]
     public ICommand PlaySelectionCommand { get; }
 
     [Command("ameko.video.toggleAutoSeek", KeybindContext.Video)]
     public ICommand ToggleAutoSeekCommand { get; }
 
-    [Command("ameko.video.frame.next", KeybindContext.Video)]
+    [Command("ameko.video.frame.next", KeybindContext.Global)]
     public ICommand NextFrameCommand { get; }
 
-    [Command("ameko.video.frame.previous", KeybindContext.Video)]
+    [Command("ameko.video.frame.previous", KeybindContext.Global)]
     public ICommand PreviousFrameCommand { get; }
 
-    [Command("ameko.video.boundary.next", KeybindContext.Video)]
+    [Command("ameko.video.boundary.next", KeybindContext.Global)]
     public ICommand NextBoundaryCommand { get; }
 
-    [Command("ameko.video.boundary.previous", KeybindContext.Video)]
+    [Command("ameko.video.boundary.previous", KeybindContext.Global)]
     public ICommand PreviousBoundaryCommand { get; }
 
-    [Command("ameko.video.keyframe.next", KeybindContext.Video)]
+    [Command("ameko.video.keyframe.next", KeybindContext.Global)]
     public ICommand NextKeyframeCommand { get; }
 
-    [Command("ameko.video.keyframe.previous", KeybindContext.Video)]
+    [Command("ameko.video.keyframe.previous", KeybindContext.Global)]
     public ICommand PreviousKeyframeCommand { get; }
 
     [Command("ameko.video.active.start", "Ctrl+D1", KeybindContext.Global)]
