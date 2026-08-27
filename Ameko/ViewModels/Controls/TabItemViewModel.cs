@@ -128,28 +128,28 @@ public partial class TabItemViewModel : ViewModelBase
     public ICommand ToggleAutoSeekCommand { get; }
 
     [Command("ameko.video.frame.next", KeybindContext.Global)]
-    public ICommand NextFrameCommand { get; }
+    public ICommand SeekToNextFrameCommand { get; }
 
     [Command("ameko.video.frame.previous", KeybindContext.Global)]
-    public ICommand PreviousFrameCommand { get; }
+    public ICommand SeekToPreviousFrameCommand { get; }
 
     [Command("ameko.video.boundary.next", KeybindContext.Global)]
-    public ICommand NextBoundaryCommand { get; }
+    public ICommand SeekToNextBoundaryCommand { get; }
 
     [Command("ameko.video.boundary.previous", KeybindContext.Global)]
-    public ICommand PreviousBoundaryCommand { get; }
+    public ICommand SeekToPreviousBoundaryCommand { get; }
 
     [Command("ameko.video.keyframe.next", KeybindContext.Global)]
-    public ICommand NextKeyframeCommand { get; }
+    public ICommand SeekToNextKeyframeCommand { get; }
 
     [Command("ameko.video.keyframe.previous", KeybindContext.Global)]
-    public ICommand PreviousKeyframeCommand { get; }
+    public ICommand SeekToPreviousKeyframeCommand { get; }
 
     [Command("ameko.video.active.start", "Ctrl+D1", KeybindContext.Global)]
-    public ICommand ActiveStartCommand { get; }
+    public ICommand SeekToActiveStartCommand { get; }
 
     [Command("ameko.video.active.end", "Ctrl+D2", KeybindContext.Global)]
-    public ICommand ActiveEndCommand { get; }
+    public ICommand SeekToActiveEndCommand { get; }
 
     [Command("ameko.video.zoom.in", "Ctrl+OemPlus", KeybindContext.Video)]
     public ICommand ZoomInCommand { get; }
@@ -221,7 +221,7 @@ public partial class TabItemViewModel : ViewModelBase
     private readonly IIoService _ioService;
     private readonly IViewModelFactory _vmFactory;
 
-    /// <summary>Last time <see cref="PreviousKeyframeCommand"/> was invoked</summary>
+    /// <summary>Last time <see cref="SeekToPreviousKeyframeCommand"/> was invoked</summary>
     private DateTimeOffset _seekToPrevInvokedAt = DateTimeOffset.Now;
 
     public Workspace Workspace { get; }
@@ -376,14 +376,14 @@ public partial class TabItemViewModel : ViewModelBase
         StopPlayingCommand = CreateStopPlayingCommand();
         PlaySelectionCommand = CreatePlaySelectionCommand();
         ToggleAutoSeekCommand = CreateToggleAutoseekCommand();
-        NextFrameCommand = CreateNextFrameCommand();
-        PreviousFrameCommand = CreatePreviousFrameCommand();
-        NextBoundaryCommand = CreateNextBoundaryCommand();
-        PreviousBoundaryCommand = CreatePreviousBoundaryCommand();
-        NextKeyframeCommand = CreateNextKeyframeCommand();
-        PreviousKeyframeCommand = CreatePreviousKeyframeCommand();
-        ActiveStartCommand = CreateActiveStartCommand();
-        ActiveEndCommand = CreateActiveEndCommand();
+        SeekToNextFrameCommand = CreateSeekToNextFrameCommand();
+        SeekToPreviousFrameCommand = CreateSeekToPreviousFrameCommand();
+        SeekToNextBoundaryCommand = CreateSeekToNextBoundaryCommand();
+        SeekToPreviousBoundaryCommand = CreateSeekToPreviousBoundaryCommand();
+        SeekToNextKeyframeCommand = CreateSeekToNextKeyframeCommand();
+        SeekToPreviousKeyframeCommand = CreateSeekToPreviousKeyframeCommand();
+        SeekToActiveStartCommand = CreateSeekToActiveStartCommand();
+        SeekToActiveEndCommand = CreateSeekToActiveEndCommand();
         ZoomInCommand = CreateZoomInCommand();
         ZoomOutCommand = CreateZoomOutCommand();
         RotateClockwiseCommand = CreateRotateClockwiseCommand();

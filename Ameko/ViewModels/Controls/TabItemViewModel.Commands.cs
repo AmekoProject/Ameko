@@ -652,7 +652,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to next frame
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreateNextFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToNextFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -665,7 +665,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to previous frame
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousFrameCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToPreviousFrameCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -678,7 +678,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to next boundary
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreateNextBoundaryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToNextBoundaryCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -709,7 +709,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to previous boundary
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousBoundaryCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToPreviousBoundaryCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -755,7 +755,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to next keyframe
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreateNextKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToNextKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -777,7 +777,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to previous keyframe
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreatePreviousKeyframeCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToPreviousKeyframeCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -814,7 +814,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to start of active event
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreateActiveStartCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToActiveStartCommand()
     {
         return ReactiveCommand.Create(() =>
         {
@@ -828,7 +828,7 @@ public partial class TabItemViewModel
     /// <summary>
     /// Go to end of active event
     /// </summary>
-    private ReactiveCommand<RxVoid, RxVoid> CreateActiveEndCommand()
+    private ReactiveCommand<RxVoid, RxVoid> CreateSeekToActiveEndCommand()
     {
         return ReactiveCommand.Create(() =>
         {
