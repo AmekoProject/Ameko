@@ -24,6 +24,13 @@ internal static class ProjectMigrator
             return null;
         var version = versionProp.GetInt32();
 
+        if (version > ProjectModelBase.CurrentApiVersion)
+        {
+            throw new InvalidDataException(
+                $"Unsupported project version: {version}. The maximum supported version is: {ProjectModelBase.CurrentApiVersion}."
+            );
+        }
+
         switch (version)
         {
             case 1:
