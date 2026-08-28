@@ -50,6 +50,7 @@ public class MediaController : BindableBase
     private int _destinationFrame;
 
     private long[] _eventBounds = [];
+    private int _activeEventIndex;
 
     /// <summary>
     /// If a video or audio file is currently being loaded
@@ -766,6 +767,7 @@ public class MediaController : BindableBase
                     0,
                     -1,
                     null,
+                    0,
                     0
                 );
             }
@@ -971,6 +973,16 @@ public class MediaController : BindableBase
     }
 
     /// <summary>
+    /// Set the currently-active subtitle
+    /// </summary>
+    /// <param name="event"></param>
+    public void SetActiveSubtitle(Event @event)
+    {
+        _activeEventIndex = @event.Index - 1;
+        RequestFrame(CurrentFrame);
+    }
+
+    /// <summary>
     /// Set the subtitles to be displayed
     /// </summary>
     /// <param name="document">Document being displayed</param>
@@ -1169,7 +1181,8 @@ public class MediaController : BindableBase
                         videoMid,
                         audioTime,
                         ptr,
-                        _eventBounds.Length
+                        _eventBounds.Length,
+                        _activeEventIndex
                     );
                 }
             }

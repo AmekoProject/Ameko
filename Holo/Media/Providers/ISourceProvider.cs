@@ -129,6 +129,7 @@ public interface ISourceProvider
     /// <param name="audioTime">Timestamp of the current audio frame</param>
     /// <param name="eventBounds">Array of bounds of events to display, in milliseconds</param>
     /// <param name="eventBoundsLength">Length of the <paramref name="eventBounds"> array</paramref></param>
+    /// <param name="selectedEventIndex">Index of the currently-selected event</param>
     /// <returns>Output bitmap</returns>
     unsafe Bitmap* GetVisualization(
         int width,
@@ -139,7 +140,8 @@ public interface ISourceProvider
         long videoTime,
         long audioTime,
         long* eventBounds,
-        int eventBoundsLength
+        int eventBoundsLength,
+        int selectedEventIndex
     );
 
     /// <summary>

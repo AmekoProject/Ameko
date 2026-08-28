@@ -687,6 +687,7 @@ public class IoService(
             progressCallback?.Invoke(0, 1); // Reset
             await OpenAudioFileAsync(uri, workspace, progressCallback);
             workspace.MediaController.SetSubtitles(workspace.Document);
+            workspace.MediaController.SetActiveSubtitle(workspace.SelectionManager.ActiveEvent);
             return true;
         }
         catch (Exception ex)

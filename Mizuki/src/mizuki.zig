@@ -179,6 +179,7 @@ pub export fn GetVisualization(
     audio_time: i64,
     event_bounds: [*]i64,
     event_bounds_len: c_int,
+    selected_event_idx: c_int,
 ) ?*frames.Bitmap {
     return buffers.ProcVisualizationFrame(
         g_ctx,
@@ -191,6 +192,7 @@ pub export fn GetVisualization(
         @floatFromInt(audio_time),
         event_bounds,
         @intCast(event_bounds_len),
+        @intCast(selected_event_idx),
     ) catch {
         return null;
     };

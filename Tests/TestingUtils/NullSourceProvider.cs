@@ -106,7 +106,8 @@ public unsafe class NullSourceProvider : ISourceProvider
         long videoTime,
         long audioTime,
         long* eventBounds,
-        int eventBoundsLength
+        int eventBoundsLength,
+        int selectedEventIndex
     )
     {
         return null;

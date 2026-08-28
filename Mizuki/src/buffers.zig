@@ -143,6 +143,7 @@ pub fn ProcVisualizationFrame(
     audio_time: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
+    selected_event_idx: usize,
 ) !*frames.Bitmap {
     const ctx = &g_ctx.*.buffers;
     const result: *frames.Bitmap = try GetOrCreateVisualizationFrame(ctx, width, height);
@@ -157,6 +158,7 @@ pub fn ProcVisualizationFrame(
         audio_time,
         event_bounds,
         event_bounds_len,
+        selected_event_idx,
     );
     return result;
 }

@@ -13,7 +13,9 @@ const color_v_playhead: u32 = 0xffff0000;
 const color_a_playhead: u32 = 0xff00aeff;
 const color_qseconds: u32 = 0xffd0d0d0;
 const color_seconds: u32 = 0xfff85797;
-const color_event: u32 = 0xff937df8;
+const color_event_deactivated: u32 = 0xff899499;
+const color_event_activated: u32 = 0xff937df8;
+const color_event_shade: u32 = 0xff462B46;
 const color_event_start: u32 = 0xff61e7b4;
 const color_event_end: u32 = 0xffe76194;
 const color_kf: u32 = 0xffffb300;
@@ -29,6 +31,7 @@ pub fn RenderWaveform(
     a_playhead_ms: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
+    selected_event_idx: usize,
 ) void {
     const audio_data = g_ctx.*.buffers.audio_buffer;
     const is_stereo = g_ctx.*.ffms.channel_count == 2;
@@ -72,6 +75,20 @@ pub fn RenderWaveform(
         // Clear the bitmap
         const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
         @memset(bmp.*.data[0..bmp_total_bytes], 0);
+
+        // Behind everything else, draw the shading for the selected event
+        DrawSelectedEventShading(
+            bmp,
+            bmp_width_f,
+            bmp_height,
+            gutter_half,
+            pixels_per_ms,
+            start_ms,
+            end_ms,
+            event_bounds,
+            event_bounds_len,
+            selected_event_idx,
+        );
 
         // Draw hashes for seconds and quarter-seconds in the gutter
         DrawTimeScale(
@@ -160,6 +177,7 @@ pub fn RenderWaveform(
             end_ms,
             event_bounds,
             event_bounds_len,
+            selected_event_idx,
         );
 
         // Draw playheads over everything
@@ -272,7 +290,7 @@ fn DrawKeyframes(
     }
 }
 
-/// Draw event bounding boxes
+/// Draw bounding boxes around all events
 fn DrawEventBounds(
     bmp: *frames.Bitmap,
     bmp_width_f: f64,
@@ -283,51 +301,163 @@ fn DrawEventBounds(
     end_ms: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
+    selected_event_idx: usize,
 ) void {
     // Assert that we have a list of pairs
     std.debug.assert((event_bounds_len & 1) == 0);
 
+    const selected_event_pair_idx = selected_event_idx * 2;
+
     var ei: usize = 0;
     while (ei < event_bounds_len) : (ei += 2) {
-        const evt_start_ms: f64 = @floatFromInt(event_bounds[ei]);
-        const evt_end_ms: f64 = @floatFromInt(event_bounds[ei + 1]);
-
-        if (evt_end_ms < evt_start_ms)
+        if (ei == selected_event_pair_idx)
             continue;
 
-        if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
-            continue;
+        DrawEventBound(
+            bmp,
+            bmp_width_f,
+            bmp_height,
+            gutter_half,
+            pixels_per_ms,
+            start_ms,
+            end_ms,
+            event_bounds,
+            ei,
+            false,
+        );
+    }
 
-        const start_x = ((evt_start_ms - start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
-        const end_x = (evt_end_ms - start_ms) / pixels_per_ms;
+    if (selected_event_pair_idx < event_bounds_len) {
+        DrawEventBound(
+            bmp,
+            bmp_width_f,
+            bmp_height,
+            gutter_half,
+            pixels_per_ms,
+            start_ms,
+            end_ms,
+            event_bounds,
+            selected_event_pair_idx,
+            true,
+        );
+    }
+}
 
-        // Draw starting post
-        if (start_x >= 0) {
-            DrawLine(bmp, @intFromFloat(start_x), gutter_half, bmp_height - gutter_half, color_event_start);
-        }
-        // Make thicker if we can
-        if (start_x + 1 >= 0 and start_x + 1 < bmp_width_f and start_x + 1 < end_x) {
-            DrawLine(bmp, @intFromFloat(start_x + 1), gutter_half, bmp_height - gutter_half, color_event_start);
-        }
+/// Draw bounding boxes around an event
+fn DrawEventBound(
+    bmp: *frames.Bitmap,
+    bmp_width_f: f64,
+    bmp_height: u32,
+    gutter_half: u32,
+    pixels_per_ms: f64,
+    start_ms: f64,
+    end_ms: f64,
+    event_bounds: [*]i64,
+    event_start_idx: usize,
+    is_active: bool,
+) void {
+    const evt_start_ms: f64 = @floatFromInt(event_bounds[event_start_idx]);
+    const evt_end_ms: f64 = @floatFromInt(event_bounds[event_start_idx + 1]);
 
-        if (evt_start_ms == evt_end_ms or start_x == end_x) continue; // Stop here if 0-duration or 0-width
+    if (evt_end_ms < evt_start_ms)
+        return;
 
-        // Draw ending post
-        if (end_x < bmp_width_f) {
-            DrawLine(bmp, @intFromFloat(end_x), gutter_half, bmp_height - gutter_half, color_event_end);
-        }
-        // Make thicker if we can
-        if (end_x >= 1 and end_x - 1 > start_x + 1) {
-            DrawLine(bmp, @intFromFloat(end_x - 1), gutter_half, bmp_height - gutter_half, color_event_end);
-        }
+    if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
+        return;
 
-        const start_x_u: usize = @intFromFloat(@max(0, start_x));
-        const end_x_u: usize = @intFromFloat(@min(bmp_width_f, end_x));
+    const start_x = ((evt_start_ms - start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
+    const end_x = (evt_end_ms - start_ms) / pixels_per_ms;
 
-        // Draw border
-        for (start_x_u..end_x_u) |x| {
-            DrawLine(bmp, @intCast(x), gutter_half, gutter_half + 1, color_event);
-            DrawLine(bmp, @intCast(x), bmp_height - gutter_half - 1, bmp_height - gutter_half, color_event);
+    // Draw starting post
+    if (start_x >= 0) {
+        const color = if (is_active) color_event_start else color_event_deactivated;
+        DrawLine(bmp, @intFromFloat(start_x), gutter_half, bmp_height - gutter_half, color);
+    }
+    // Make thicker if we can
+    if (start_x + 1 >= 0 and start_x + 1 < bmp_width_f and start_x + 1 < end_x) {
+        const color = if (is_active) color_event_start else color_event_deactivated;
+        DrawLine(bmp, @intFromFloat(start_x + 1), gutter_half, bmp_height - gutter_half, color);
+    }
+
+    if (evt_start_ms == evt_end_ms or start_x == end_x) return; // Stop here if 0-duration or 0-width
+
+    // Draw ending post
+    if (end_x < bmp_width_f) {
+        const color = if (is_active) color_event_end else color_event_deactivated;
+        DrawLine(bmp, @intFromFloat(end_x), gutter_half, bmp_height - gutter_half, color);
+    }
+    // Make thicker if we can
+    if (end_x >= 1 and end_x - 1 > start_x + 1) {
+        const color = if (is_active) color_event_end else color_event_deactivated;
+        DrawLine(bmp, @intFromFloat(end_x - 1), gutter_half, bmp_height - gutter_half, color);
+    }
+
+    const start_x_u: usize = @intFromFloat(@max(0, start_x));
+    const end_x_u: usize = @intFromFloat(@min(bmp_width_f, end_x));
+
+    // Draw border
+    for (start_x_u..end_x_u) |x| {
+        const color = if (is_active) color_event_activated else color_event_deactivated;
+        DrawLine(bmp, @intCast(x), gutter_half, gutter_half + 1, color);
+        DrawLine(bmp, @intCast(x), bmp_height - gutter_half - 1, bmp_height - gutter_half, color);
+    }
+}
+
+/// Shade the background of the selected event
+fn DrawSelectedEventShading(
+    bmp: *frames.Bitmap,
+    bmp_width_f: f64,
+    bmp_height: u32,
+    gutter_half: u32,
+    pixels_per_ms: f64,
+    start_ms: f64,
+    end_ms: f64,
+    event_bounds: [*]i64,
+    event_bounds_len: usize,
+    selected_event_idx: usize,
+) void {
+    if ((event_bounds_len & 1) != 0 or selected_event_idx >= (event_bounds_len / 2))
+        return;
+
+    const ei = selected_event_idx * 2;
+    const evt_start_ms: f64 = @floatFromInt(event_bounds[ei]);
+    const evt_end_ms: f64 = @floatFromInt(event_bounds[ei + 1]);
+
+    if (evt_end_ms < evt_start_ms) return;
+    if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
+        return;
+
+    const start_x = @max(0.0, ((evt_start_ms - start_ms) / pixels_per_ms) + 1.0);
+    const end_x = @min(bmp_width_f, (evt_end_ms - start_ms) / pixels_per_ms);
+    if (end_x <= start_x) return;
+
+    const x_start: usize = @intFromFloat(start_x);
+    const x_end: usize = @intFromFloat(end_x);
+    const y_start: u32 = gutter_half;
+    const y_end: u32 = if (bmp_height > gutter_half) bmp_height - gutter_half else bmp_height;
+    if (y_end <= y_start)
+        return;
+
+    const width: usize = @intCast(bmp.width);
+    const pitch: usize = @intCast(bmp.pitch);
+    const cell_size: usize = 4;
+
+    var x: usize = x_start;
+    while (x < x_end and x < width) : (x += 1) {
+        var y: u32 = y_start;
+        while (y < y_end) : (y += 1) {
+            const cell_x: usize = x / cell_size;
+            const cell_y: usize = @as(usize, y) / cell_size;
+            const dot_x: usize = x % cell_size;
+            const dot_y: usize = @as(usize, y) % cell_size;
+            const is_halftone = (((cell_x + cell_y) & 1) == 0) and dot_x >= 1 and dot_x <= 2 and dot_y >= 1 and dot_y <= 2;
+
+            if (!is_halftone)
+                continue;
+
+            const row_ptr = bmp.data + (@as(usize, @intCast(y)) * pitch);
+            const px_ptr: *u32 = @ptrCast(@alignCast(row_ptr + x * 4));
+            px_ptr.* = color_event_shade;
         }
     }
 }

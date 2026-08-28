@@ -414,6 +414,7 @@ public class Workspace : BindableBase
         {
             RaisePropertyChanged(nameof(DisplayActorsColumn));
             RaisePropertyChanged(nameof(DisplayEffectsColumn));
+            MediaController.SetActiveSubtitle(SelectionManager.ActiveEvent);
         };
 
         // TODO: Should this be here or elsewhere?

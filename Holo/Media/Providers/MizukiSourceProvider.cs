@@ -231,7 +231,8 @@ public unsafe class MizukiSourceProvider(
         long videoTime,
         long audioTime,
         long* eventBounds,
-        int eventBoundsLength
+        int eventBoundsLength,
+        int selectedEventIndex
     )
     {
         return External.GetVisualization(
@@ -244,7 +245,8 @@ public unsafe class MizukiSourceProvider(
             videoTime,
             audioTime,
             eventBounds,
-            eventBoundsLength
+            eventBoundsLength,
+            selectedEventIndex
         );
     }
 
@@ -498,7 +500,8 @@ internal static unsafe partial class External
         long frameTime,
         long audioTime,
         long* eventBounds,
-        int eventBoundsLength
+        int eventBoundsLength,
+        int selectedEventIndex
     );
 
     [LibraryImport("mizuki")]
