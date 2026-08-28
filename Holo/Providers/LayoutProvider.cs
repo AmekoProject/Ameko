@@ -412,7 +412,7 @@ public class LayoutProvider : BindableBase, ILayoutProvider
             Name = "Vertical",
             Author = "9volt",
             ColumnDefinitions = "*",
-            RowDefinitions = "0.2*, 2, 1.8*, 2, 0.75*, 2, *",
+            RowDefinitions = "0.75*, 2, 1.8*, 2, 0.75*, 2, *",
             Window = new WindowSection { IsProjectExplorerOnLeft = true },
             Video = new TabSection
             {
