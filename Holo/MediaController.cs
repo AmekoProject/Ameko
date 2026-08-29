@@ -1150,6 +1150,9 @@ public class MediaController : BindableBase
     /// </summary>
     private unsafe void FetchFrame()
     {
+        if (!IsVideoLoaded)
+            return;
+
         int frameToFetch;
         lock (_frameLock)
         {
@@ -1158,9 +1161,10 @@ public class MediaController : BindableBase
             _subtitlesChanged = false;
         }
 
-        var videoMid = VideoInfo?.MidpointFromFrame(frameToFetch) ?? 0; // For audio drawing
-        var videoTime = VideoInfo?.MillisecondsFromFrame(frameToFetch) ?? 0;
-        var audioTime = VideoInfo?.MillisecondsFromFrame(_currentAudioFrame) ?? -1;
+        var videoMid = VideoInfo.MidpointFromFrame(frameToFetch); // For audio drawing
+        var videoTime = VideoInfo.MillisecondsFromFrame(frameToFetch);
+        var audioTime =
+            _currentAudioFrame >= 0 ? VideoInfo.MillisecondsFromFrame(_currentAudioFrame) : -1;
 
         // Get audio visualization
         Bitmap* vizFrame = null;
