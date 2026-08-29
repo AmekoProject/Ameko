@@ -8,17 +8,17 @@ const logger = @import("logger.zig");
 const context = @import("context.zig");
 
 // Colors
-const color_waveform: u32 = 0xff00ff00;
-const color_v_playhead: u32 = 0xffff0000;
-const color_a_playhead: u32 = 0xff00aeff;
-const color_qseconds: u32 = 0xffd0d0d0;
-const color_seconds: u32 = 0xfff85797;
-const color_event_deactivated: u32 = 0xff899499;
-const color_event_activated: u32 = 0xff937df8;
-const color_event_shade: u32 = 0xff462B46;
-const color_event_start: u32 = 0xff61e7b4;
-const color_event_end: u32 = 0xffe76194;
-const color_kf: u32 = 0xffffb300;
+const color_waveform: u32 = 0xff3ecf8e;
+const color_v_playhead: u32 = 0xffffffff;
+const color_a_playhead: u32 = 0xff29b6f6;
+const color_qseconds: u32 = 0xff4a4a50;
+const color_seconds: u32 = 0xffa0a0a8;
+const color_event_deactivated: u32 = 0xff6b6b70;
+const color_event_activated: u32 = 0xffa78bfa;
+const color_event_shade: u32 = 0xff2a1d4d;
+const color_event_start: u32 = 0xffa3e635;
+const color_event_end: u32 = 0xfff53d3d;
+const color_kf: u32 = 0xffffc94d;
 
 /// Render a waveform representation of the audio
 pub fn RenderWaveform(
@@ -191,7 +191,7 @@ pub fn RenderWaveform(
             v_playhead_ms,
         );
 
-        if (a_playhead_ms >= 0 and a_playhead_ms != v_playhead_ms) {
+        if (a_playhead_ms >= 0) {
             DrawAudioPlayhead(
                 bmp,
                 bmp_width_f,
