@@ -45,6 +45,13 @@ public class IoService(
     ILogger<IoService> logger
 ) : IIoService
 {
+    private const string GbgVideoFile = "Video File";
+    private const string GbgAudioFile = "Audio File";
+    private const string GbgVideoPosition = "Video Position";
+    private const string GbgKeyframesFile = "Keyframes File";
+    private const string GbgReferenceFile = "Reference File";
+    private const string GbgActiveLine = "Active Line";
+
     private static readonly AssWriter _assWriter = new(ConsumerService.AmekoInfo);
 
     /// <inheritdoc />
@@ -65,20 +72,35 @@ public class IoService(
         {
             var dir = Path.GetDirectoryName(uri.LocalPath) ?? "/";
             var relPath = PathExtensions.GetRelativePath(dir, wsp.MediaController.VideoInfo.Path);
-            wsp.Document.GarbageManager.Set("Video File", relPath);
-            wsp.Document.GarbageManager.Set("Audio File", relPath);
-            wsp.Document.GarbageManager.Set("Video Position", wsp.MediaController.CurrentFrame);
+            wsp.Document.GarbageManager.Set(GbgVideoFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgAudioFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgVideoPosition, wsp.MediaController.CurrentFrame);
             if (!string.IsNullOrEmpty(wsp.MediaController.VideoInfo.KeyframesFile))
             {
                 var relKfPath = PathExtensions.GetRelativePath(
                     dir,
                     wsp.MediaController.VideoInfo.KeyframesFile
                 );
-                wsp.Document.GarbageManager.Set("Keyframes File", relKfPath);
+                wsp.Document.GarbageManager.Set(GbgKeyframesFile, relKfPath);
             }
         }
 
-        wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
+        // Set the reference file path, if applicable
+        if (wsp.ReferenceFileManager.IsReferenceLoaded)
+        {
+            var dir = Path.GetDirectoryName(uri.LocalPath) ?? "/";
+            var relPath = PathExtensions.GetRelativePath(
+                dir,
+                wsp.ReferenceFileManager.ReferencePath.LocalPath
+            );
+            wsp.Document.GarbageManager.Set(GbgReferenceFile, relPath);
+        }
+        else
+        {
+            wsp.Document.GarbageManager.Remove(GbgReferenceFile);
+        }
+
+        wsp.Document.GarbageManager.Set(GbgActiveLine, wsp.SelectionManager.ActiveEvent.Index - 1);
 
         try
         {
@@ -114,20 +136,35 @@ public class IoService(
         {
             var dir = Path.GetDirectoryName(origin.LocalPath) ?? "/";
             var relPath = PathExtensions.GetRelativePath(dir, wsp.MediaController.VideoInfo.Path);
-            wsp.Document.GarbageManager.Set("Video File", relPath);
-            wsp.Document.GarbageManager.Set("Audio File", relPath);
-            wsp.Document.GarbageManager.Set("Video Position", wsp.MediaController.CurrentFrame);
+            wsp.Document.GarbageManager.Set(GbgVideoFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgAudioFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgVideoPosition, wsp.MediaController.CurrentFrame);
             if (!string.IsNullOrEmpty(wsp.MediaController.VideoInfo.KeyframesFile))
             {
                 var relKfPath = PathExtensions.GetRelativePath(
                     dir,
                     wsp.MediaController.VideoInfo.KeyframesFile
                 );
-                wsp.Document.GarbageManager.Set("Keyframes File", relKfPath);
+                wsp.Document.GarbageManager.Set(GbgKeyframesFile, relKfPath);
             }
         }
 
-        wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
+        // Set the reference file path, if applicable
+        if (origin is not null && wsp.ReferenceFileManager.IsReferenceLoaded)
+        {
+            var dir = Path.GetDirectoryName(origin.LocalPath) ?? "/";
+            var relPath = PathExtensions.GetRelativePath(
+                dir,
+                wsp.ReferenceFileManager.ReferencePath.LocalPath
+            );
+            wsp.Document.GarbageManager.Set(GbgReferenceFile, relPath);
+        }
+        else
+        {
+            wsp.Document.GarbageManager.Remove(GbgReferenceFile);
+        }
+
+        wsp.Document.GarbageManager.Set(GbgActiveLine, wsp.SelectionManager.ActiveEvent.Index - 1);
 
         try
         {
@@ -158,12 +195,27 @@ public class IoService(
         {
             var dir = Path.GetDirectoryName(uri.LocalPath) ?? "/";
             var relPath = PathExtensions.GetRelativePath(dir, wsp.MediaController.VideoInfo.Path);
-            wsp.Document.GarbageManager.Set("Video File", relPath);
-            wsp.Document.GarbageManager.Set("Audio File", relPath);
-            wsp.Document.GarbageManager.Set("Video Position", wsp.MediaController.CurrentFrame);
+            wsp.Document.GarbageManager.Set(GbgVideoFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgAudioFile, relPath);
+            wsp.Document.GarbageManager.Set(GbgVideoPosition, wsp.MediaController.CurrentFrame);
         }
 
-        wsp.Document.GarbageManager.Set("Active Line", wsp.SelectionManager.ActiveEvent.Index - 1);
+        // Set the reference file path, if applicable
+        if (wsp.ReferenceFileManager.IsReferenceLoaded)
+        {
+            var dir = Path.GetDirectoryName(uri.LocalPath) ?? "/";
+            var relPath = PathExtensions.GetRelativePath(
+                dir,
+                wsp.ReferenceFileManager.ReferencePath.LocalPath
+            );
+            wsp.Document.GarbageManager.Set(GbgReferenceFile, relPath);
+        }
+        else
+        {
+            wsp.Document.GarbageManager.Remove(GbgReferenceFile);
+        }
+
+        wsp.Document.GarbageManager.Set(GbgActiveLine, wsp.SelectionManager.ActiveEvent.Index - 1);
 
         try
         {
@@ -530,12 +582,15 @@ public class IoService(
         var ext = Path.GetExtension(uri.LocalPath);
         try
         {
-            wsp.ReferenceFileManager.Reference = ext switch
-            {
-                ".ass" or ".ssa" => new AssParser().Parse(fileSystem, uri),
-                ".srt" => new SrtParser().Parse(fileSystem, uri),
-                _ => throw new ArgumentOutOfRangeException(nameof(uri)),
-            };
+            wsp.ReferenceFileManager.AttachReference(
+                ext switch
+                {
+                    ".ass" or ".ssa" => new AssParser().Parse(fileSystem, uri),
+                    ".srt" => new SrtParser().Parse(fileSystem, uri),
+                    _ => throw new ArgumentOutOfRangeException(nameof(uri)),
+                },
+                uri
+            );
             return true;
         }
         catch (Exception ex) when (ex is not UnauthorizedAccessException or IOException)
@@ -566,15 +621,30 @@ public class IoService(
         var doc = workspace.Document;
 
         // Active line
-        if (doc.GarbageManager.TryGetInt("Active Line", out var lineIdx))
+        if (doc.GarbageManager.TryGetInt(GbgActiveLine, out var lineIdx))
         {
             var line = doc.EventManager.Events.FirstOrDefault(e => e.Index == lineIdx + 1);
             if (line is not null)
                 workspace.SelectionManager.ForceSelect(line, [line]);
         }
 
+        // Reference
+        if (doc.GarbageManager.TryGetString(GbgReferenceFile, out var relRefPath))
+        {
+            var refPath = Path.GetFullPath(
+                Path.Combine(
+                    Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/",
+                    relRefPath
+                )
+            );
+            if (fileSystem.File.Exists(refPath))
+            {
+                await AttachReferenceFile(new Uri(refPath), workspace);
+            }
+        }
+
         // Video
-        if (!doc.GarbageManager.TryGetString("Video File", out var relVideoPath))
+        if (!doc.GarbageManager.TryGetString(GbgVideoFile, out var relVideoPath))
             return true;
         var videoPath = Path.GetFullPath(
             Path.Combine(Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/", relVideoPath)
@@ -610,11 +680,11 @@ public class IoService(
 
         await OpenVideoFileAsync(new Uri(videoPath, UriKind.Absolute), workspace, progressCallback);
 
-        if (doc.GarbageManager.TryGetInt("Video Position", out var frame))
+        if (doc.GarbageManager.TryGetInt(GbgVideoPosition, out var frame))
             workspace.MediaController.SeekTo(frame.Value); // Seek for clamp safety
 
         // Keyframes
-        if (!doc.GarbageManager.TryGetString("Keyframes File", out var relKfPath))
+        if (!doc.GarbageManager.TryGetString(GbgKeyframesFile, out var relKfPath))
             return true;
         var kfPath = Path.GetFullPath(
             Path.Combine(Path.GetDirectoryName(workspace.SavePath?.LocalPath) ?? "/", relKfPath)

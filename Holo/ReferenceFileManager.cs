@@ -15,22 +15,18 @@ public class ReferenceFileManager : BindableBase
     /// <summary>
     /// Document being referenced
     /// </summary>
-    public Document? Reference
-    {
-        get;
-        set
-        {
-            SetProperty(ref field, value);
-            IsReferenceLoaded = value is not null;
-            RaisePropertyChanged(nameof(IsReferenceLoaded));
-            GetCorrespondingLines();
-        }
-    }
+    public Document? Reference { get; private set; }
+
+    /// <summary>
+    /// Path to the referenced document
+    /// </summary>
+    public Uri? ReferencePath { get; private set; }
 
     /// <summary>
     /// If the reference file is loaded
     /// </summary>
     [MemberNotNullWhen(true, nameof(Reference))]
+    [MemberNotNullWhen(true, nameof(ReferencePath))]
     public bool IsReferenceLoaded { get; private set; }
 
     /// <summary>
@@ -41,6 +37,31 @@ public class ReferenceFileManager : BindableBase
         get;
         set => SetProperty(ref field, value);
     } = string.Empty;
+
+    /// <summary>
+    /// Attach a reference <see cref="Document"/>
+    /// </summary>
+    /// <param name="reference">Document to reference</param>
+    /// <param name="path">Reference file path</param>
+    public void AttachReference(Document reference, Uri path)
+    {
+        Reference = reference;
+        ReferencePath = path;
+        IsReferenceLoaded = true;
+        RaisePropertyChanged(nameof(IsReferenceLoaded));
+        GetCorrespondingLines();
+    }
+
+    /// <summary>
+    /// Detatch the reference file
+    /// </summary>
+    public void DetatchReference()
+    {
+        Reference = null;
+        ReferencePath = null;
+        IsReferenceLoaded = false;
+        RaisePropertyChanged(nameof(IsReferenceLoaded));
+    }
 
     /// <summary>
     /// Shift the timing of the reference file

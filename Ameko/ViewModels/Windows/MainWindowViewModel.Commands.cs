@@ -588,7 +588,7 @@ public partial class MainWindowViewModel
             var wsp = ProjectProvider.Current.WorkingSpace;
             if (wsp is null)
                 return;
-            wsp.ReferenceFileManager.Reference = null;
+            wsp.ReferenceFileManager.DetatchReference();
         });
     }
 
