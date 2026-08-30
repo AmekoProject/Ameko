@@ -545,7 +545,9 @@ public class MediaController : BindableBase
         if (_isVideoPlaying || _isAudioPlaying)
             Stop();
         CurrentFrame = VideoInfo.FrameFromTime(@event.Start);
-        VisualizerPositionMs = @event.Start.TotalMilliseconds;
+
+        var paddingPx = (long)(50 * VisualizerScaleX);
+        VisualizerPositionMs = Math.Max(0L, @event.Start.TotalMilliseconds - paddingPx);
     }
 
     /// <summary>
