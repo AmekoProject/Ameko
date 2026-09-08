@@ -24,7 +24,13 @@ public class SelectTrackDialogViewModel : ViewModelBase
     public SelectTrackDialogViewModel(TrackInfo[] tracks)
     {
         Tracks = tracks
-            .Select(t => new TrackInformation { Index = t.Index, Codec = t.Codec })
+            .Select(t => new TrackInformation
+            {
+                Index = t.Index,
+                Codec = t.Codec,
+                Language = t.Language ?? string.Empty,
+                Title = t.Title ?? string.Empty,
+            })
             .OrderBy(t => t.Index)
             .ToArray();
         SelectedTrack = Tracks[0];

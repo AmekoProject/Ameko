@@ -9,4 +9,6 @@ public class TrackInformation
 {
     public required int Index { get; init; }
     public required string Codec { get; init; }
+    public required string Language { get; init; }
+    public required string Title { get; init; }
 }

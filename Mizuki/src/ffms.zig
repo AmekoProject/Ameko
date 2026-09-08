@@ -38,6 +38,14 @@ var err_info = c.FFMS_ErrorInfo{
 };
 var is_initialized = false;
 
+/// Weakly-linked pointer to `FFMS_GetTrackMetadataI`.
+/// Resolves to a non-null zero pointer at load time if the linked ffms2 doesn't export the symbol.
+/// You must validate both before calling - not null *and* not zero.
+const GetTrackMetadataI = @extern(?*const @TypeOf(c.FFMS_GetTrackMetadataI), .{
+    .name = "FFMS_GetTrackMetadataI",
+    .linkage = .weak,
+});
+
 /// Get the current FFMS version
 ///
 /// Does not require FFMS to be initialized.
@@ -533,9 +541,19 @@ pub fn GetAudioTrackInfo(g_ctx: *context.GlobalContext, file_name: [*c]u8) FfmsE
     while (itr.next()) |entry| {
         const track_number: c_int = entry.key_ptr.*;
 
+        var track_lang: [*c]const u8 = null;
+        var track_title: [*c]const u8 = null;
+
+        if (GetTrackMetadataI) |GetTrackMetadata| if (@intFromPtr(GetTrackMetadata) != 0) {
+            track_lang = GetTrackMetadata(indexer, track_number, "language");
+            track_title = GetTrackMetadata(indexer, track_number, "title");
+        };
+
         const track: common.TrackInfo = .{
             .index = @intCast(track_number),
             .codec = c.FFMS_GetCodecNameI(indexer, track_number),
+            .language = track_lang,
+            .title = track_title,
         };
 
         try tracks_list.append(common.allocator, track);

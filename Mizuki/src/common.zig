@@ -53,8 +53,8 @@ pub const AssProfilePointArray = extern struct {
 pub const TrackInfo = extern struct {
     index: usize,
     codec: [*c]const u8,
-    // language: [*c]const u8,
-    // title: [*c]const u8,
+    language: [*c]const u8,
+    title: [*c]const u8,
 };
 
 // Interopable TrackInfo array

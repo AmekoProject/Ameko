@@ -56,8 +56,8 @@ public struct TrackInfo
 {
     public int Index;
     public string Codec;
-    // public string Language;
-    // public string Title;
+    public string? Language;
+    public string? Title;
 }
 
 [StructLayout(LayoutKind.Sequential)]
