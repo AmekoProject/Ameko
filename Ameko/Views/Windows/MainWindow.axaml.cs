@@ -637,10 +637,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
                 };
 
                 AttachKeybinds(ViewModel);
-                // Update keybinds when WorkingSpace changes
+                // Update keybinds when tab item commands are ready to be used
                 MessageBus
-                    .Current.Listen<WorkingSpaceChangedMessage>()
-                    .Subscribe(_ => AttachKeybinds(ViewModel));
+                    .Current.Listen<TabItemCommandsRegisteredMessage>()
+                    .Subscribe(_ => AttachKeybinds(ViewModel))
+                    .DisposeWith(disposables);
                 // Update keybinds when keybinds change
                 ViewModel.KeybindService.KeybindRegistrar.KeybindsChanged += (_, _) =>
                     AttachKeybinds(ViewModel);
@@ -690,6 +691,10 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             return;
 
         var contextId = vm.ProjectProvider.Current.WorkingSpace?.Id ?? -1;
+
+        vm.CommandService.RegisterCommands(contextId, vm);
+        vm.KeybindService.RegisterCommands(contextId);
+
         vm.KeybindService.AttachKeybinds(KeybindContext.Global, this, contextId);
         vm.KeybindService.AttachScriptKeybinds(
             vm.ExecuteScriptCommand,

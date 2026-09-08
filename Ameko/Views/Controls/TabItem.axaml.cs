@@ -390,5 +390,8 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
             KeybindContext.Audio,
             TabItemAudioArea
         );
+
+        // Inform the Main Window that tab item commands are ready
+        MessageBus.Current.SendMessage(new TabItemCommandsRegisteredMessage());
     }
 }

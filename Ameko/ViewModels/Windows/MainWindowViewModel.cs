@@ -38,6 +38,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public IPersistence Persistence { get; }
     public IScriptService ScriptService { get; }
     public IKeybindService KeybindService { get; }
+    public ICommandService CommandService { get; }
     public ILayoutProvider LayoutProvider { get; }
 
     public bool DisplayInWindowMenu { get; } = !OperatingSystem.IsMacOS();
@@ -445,6 +446,7 @@ public partial class MainWindowViewModel : ViewModelBase
         ProjectProvider = projectProvider;
         ScriptService = scriptService;
         KeybindService = keybindService;
+        CommandService = commandService;
 
         _dictionaryService = dictionaryService;
         _messageBoxService = messageBoxService;
@@ -603,9 +605,6 @@ public partial class MainWindowViewModel : ViewModelBase
             }
         };
         GenerateRecentsMenus();
-
-        // Register commands ASAP so they can be used for keybinds
-        commandService.RegisterCommands(-1, this);
 
         _messageService.MessageReady += (_, msg) => CurrentMessage = msg.Content;
         _messageService.QueueDrained += (_, _) => CurrentMessage = string.Empty;
