@@ -45,10 +45,7 @@
     >
       <ListBox.ItemTemplate>
         <DataTemplate x:DataType="dm:TrackInformation">
-          <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="2">
-            <TextBlock Grid.Column="0" Text="{Binding Index}" />
-            <TextBlock Grid.Column="1" Text="{Binding Codec, StringFormat='({0})'}" />
-          </Grid>
+          <TextBlock Text="{Binding .}" />
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
