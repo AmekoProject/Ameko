@@ -222,7 +222,7 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
-    public Bitmap* GetVisualization(
+    public Bitmap* GetVisualizationFrameEventsView(
         int width,
         int height,
         double pixelsPerMs,
@@ -230,12 +230,13 @@ public unsafe class MizukiSourceProvider(
         long startTime,
         long videoTime,
         long audioTime,
+        AudioVisualizationStyle style,
         long* eventBounds,
         int eventBoundsLength,
         int selectedEventIndex
     )
     {
-        return External.GetVisualization(
+        return External.GetVisualizationFrameEventsView(
             _context,
             width,
             height,
@@ -244,6 +245,7 @@ public unsafe class MizukiSourceProvider(
             startTime,
             videoTime,
             audioTime,
+            (int)style,
             eventBounds,
             eventBoundsLength,
             selectedEventIndex
@@ -490,7 +492,7 @@ internal static unsafe partial class External
     );
 
     [LibraryImport("mizuki")]
-    internal static unsafe partial Bitmap* GetVisualization(
+    internal static unsafe partial Bitmap* GetVisualizationFrameEventsView(
         GlobalContext* context,
         int width,
         int height,
@@ -499,6 +501,7 @@ internal static unsafe partial class External
         long startTime,
         long frameTime,
         long audioTime,
+        int style,
         long* eventBounds,
         int eventBoundsLength,
         int selectedEventIndex

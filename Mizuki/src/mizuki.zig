@@ -12,6 +12,7 @@ const logger = @import("logger.zig");
 const buffers = @import("buffers.zig");
 const context = @import("context.zig");
 const keyframes = @import("keyframes.zig");
+const viz = @import("visualization.zig");
 
 var is_initialized = false;
 
@@ -167,8 +168,8 @@ pub export fn GetAudio(g_ctx: *context.GlobalContext, progress_cb: common.Progre
     };
 }
 
-/// Get an audio visualization bitmap
-pub export fn GetVisualization(
+/// Get an audio visualization bitmap that displays events
+pub export fn GetVisualizationFrameEventsView(
     g_ctx: *context.GlobalContext,
     width: c_int,
     height: c_int,
@@ -177,11 +178,12 @@ pub export fn GetVisualization(
     start_time: i64,
     video_time: i64,
     audio_time: i64,
+    style: c_int,
     event_bounds: [*]i64,
     event_bounds_len: c_int,
     selected_event_idx: c_int,
 ) ?*frames.Bitmap {
-    return buffers.ProcVisualizationFrame(
+    return buffers.ProcVisualizationFrameEventsView(
         g_ctx,
         width,
         height,
@@ -190,6 +192,10 @@ pub export fn GetVisualization(
         @floatFromInt(start_time),
         @floatFromInt(video_time),
         @floatFromInt(audio_time),
+        switch (style) {
+            0 => viz.ViewStyle.waveform,
+            else => viz.ViewStyle.spectrum,
+        },
         event_bounds,
         @intCast(event_bounds_len),
         @intCast(selected_event_idx),

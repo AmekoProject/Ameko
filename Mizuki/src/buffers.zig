@@ -132,7 +132,7 @@ pub fn Deinit(g_ctx: *context.GlobalContext) void {
     }
 }
 
-pub fn ProcVisualizationFrame(
+pub fn ProcVisualizationFrameEventsView(
     g_ctx: *context.GlobalContext,
     width: c_int,
     height: c_int,
@@ -141,6 +141,7 @@ pub fn ProcVisualizationFrame(
     start_time: f64,
     video_time: f64,
     audio_time: f64,
+    style: viz.ViewStyle,
     event_bounds: [*]i64,
     event_bounds_len: usize,
     selected_event_idx: usize,
@@ -148,7 +149,7 @@ pub fn ProcVisualizationFrame(
     const ctx = &g_ctx.*.buffers;
     const result: *frames.Bitmap = try GetOrCreateVisualizationFrame(ctx, width, height);
 
-    viz.RenderWaveform(
+    viz.RenderEventsView(
         g_ctx,
         result,
         pixel_ms,
@@ -156,6 +157,7 @@ pub fn ProcVisualizationFrame(
         start_time,
         video_time,
         audio_time,
+        style,
         event_bounds,
         event_bounds_len,
         selected_event_idx,

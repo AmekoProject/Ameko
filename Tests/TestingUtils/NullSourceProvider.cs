@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using Holo.Media;
 using Holo.Media.Providers;
 
 namespace TestingUtils;
@@ -97,7 +98,7 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
-    public Bitmap* GetVisualization(
+    public Bitmap* GetVisualizationFrameEventsView(
         int width,
         int height,
         double pixelsPerMs,
@@ -105,6 +106,7 @@ public unsafe class NullSourceProvider : ISourceProvider
         long startTime,
         long videoTime,
         long audioTime,
+        AudioVisualizationStyle style,
         long* eventBounds,
         int eventBoundsLength,
         int selectedEventIndex

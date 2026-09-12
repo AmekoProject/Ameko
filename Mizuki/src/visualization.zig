@@ -20,8 +20,29 @@ const color_event_start: u32 = 0xffa3e635;
 const color_event_end: u32 = 0xfff53d3d;
 const color_kf: u32 = 0xffffc94d;
 
-/// Render a waveform representation of the audio
-pub fn RenderWaveform(
+pub const ViewStyle = enum {
+    waveform,
+    spectrum,
+};
+
+const State = struct {
+    bmp_width_f: f64,
+    bmp_height: u32,
+    bmp_mid: u32,
+    bmp_mid_i: i32,
+    gutter_height: u32,
+    gutter_half: u32,
+    gutter_quarter: u32,
+    wfv_height: u32,
+    wvf_mid: u32,
+    start_ms: f64,
+    end_ms: f64,
+    visible_duration_ms: f64,
+    samples_per_pixel: usize,
+    effective_arr_len: usize,
+};
+
+pub fn RenderEventsView(
     g_ctx: *context.GlobalContext,
     bmp: *frames.Bitmap,
     pixels_per_ms: f64,
@@ -29,6 +50,7 @@ pub fn RenderWaveform(
     start_time: f64,
     v_playhead_ms: f64,
     a_playhead_ms: f64,
+    style: ViewStyle,
     event_bounds: [*]i64,
     event_bounds_len: usize,
     selected_event_idx: usize,
@@ -40,37 +62,12 @@ pub fn RenderWaveform(
     const bmp_width_u: usize = @intCast(bmp.*.width);
     const bmp_height_u: usize = @intCast(bmp.*.height);
     const bmp_pitch_u: usize = @intCast(bmp.*.pitch);
-    const bmp_width_f: f64 = @floatFromInt(bmp.*.width);
-    const bmp_height: u32 = @intCast(bmp_height_u);
-    const bmp_mid: u32 = @divFloor(bmp_height, 2);
-    const bmp_mid_i: i32 = @intCast(bmp_mid);
-    const gutter_height: u32 = if (bmp_height >= 64) 16 else if (bmp_height >= 32) 12 else 0;
-    const gutter_half: u32 = @divFloor(gutter_height, 2);
-    const gutter_quarter: u32 = @divFloor(gutter_height, 4);
-    const wfv_height: u32 = bmp_height - (gutter_height * 2);
-    const wvf_mid: u32 = @divFloor(wfv_height, 2);
 
     if (bmp_height_u < 1 or bmp_width_u < 1 or bmp_pitch_u < 1) return;
 
     if (audio_data) |audio| {
-        const samples_per_pixel: usize = @intFromFloat(pixels_per_ms * sample_rate / 1000.0);
         const effective_arr_len: usize = if (is_stereo) audio.len / 2 else audio.len;
-        const total_duration_ms: f64 = (@as(f64, @floatFromInt(effective_arr_len)) * 1000.0) / sample_rate;
-        const visible_duration_ms = bmp_width_f * pixels_per_ms;
-
-        // Calculate start and end times
-        var start_ms = start_time;
-
-        if (total_duration_ms > visible_duration_ms) {
-            const max_start_ms = total_duration_ms - visible_duration_ms;
-            if (start_ms > max_start_ms) {
-                start_ms = max_start_ms;
-            }
-        } else {
-            start_ms = 0.0; // Audio is shorter than the viewport
-        }
-
-        const end_ms = start_ms + visible_duration_ms;
+        const view = PrepareState(bmp, pixels_per_ms, start_time, effective_arr_len, sample_rate);
 
         // Clear the bitmap
         const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
@@ -79,12 +76,12 @@ pub fn RenderWaveform(
         // Behind everything else, draw the shading for the selected event
         DrawSelectedEventShading(
             bmp,
-            bmp_width_f,
-            bmp_height,
-            gutter_half,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_half,
             pixels_per_ms,
-            start_ms,
-            end_ms,
+            view.start_ms,
+            view.end_ms,
             event_bounds,
             event_bounds_len,
             selected_event_idx,
@@ -93,88 +90,52 @@ pub fn RenderWaveform(
         // Draw hashes for seconds and quarter-seconds in the gutter
         DrawTimeScale(
             bmp,
-            bmp_width_f,
-            bmp_height,
-            gutter_height,
-            gutter_half,
-            gutter_quarter,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_height,
+            view.gutter_half,
+            view.gutter_quarter,
             pixels_per_ms,
-            start_ms,
-            end_ms,
+            view.start_ms,
+            view.end_ms,
         );
 
         // Draw keyframe indicators behind the spectrum
         if (g_ctx.*.ffms.kf_timecodes) |timecodes| {
             DrawKeyframes(
                 bmp,
-                bmp_width_f,
-                bmp_height,
+                view.bmp_width_f,
+                view.bmp_height,
                 pixels_per_ms,
-                start_ms,
-                end_ms,
+                view.start_ms,
+                view.end_ms,
                 timecodes,
             );
         }
 
-        // Draw the waveform
-        var current_sample: usize = @intFromFloat(start_ms * sample_rate / 1000.0);
-        for (0..bmp_width_u) |x| {
-            const s0: usize = current_sample;
-            const s1: usize = @min(s0 + samples_per_pixel, effective_arr_len);
-            current_sample += samples_per_pixel;
-
-            if (s0 >= effective_arr_len) break;
-
-            var peak_min: i32 = 0;
-            var peak_max: i32 = 0;
-
-            // Compute peaks
-            var i = s0;
-            if (is_stereo) { // Stereo, need to downmix
-                while (i < s1) : (i += 1) {
-                    const left = audio[2 * i];
-                    const right = audio[2 * i + 1];
-                    const mono: i32 = (@as(i32, left) + @as(i32, right)) >> 1;
-
-                    if (mono > peak_max) peak_max = mono;
-                    if (mono < peak_min) peak_min = mono;
-                }
-            } else { // Mono
-                while (i < s1) : (i += 1) {
-                    const mono = @as(i32, audio[i]);
-
-                    if (mono > peak_max) peak_max = mono;
-                    if (mono < peak_min) peak_min = mono;
-                }
-            }
-
-            const mid_f: f64 = @floatFromInt(wvf_mid);
-            const min_f: f64 = @floatFromInt(peak_min);
-            const max_f: f64 = @floatFromInt(peak_max);
-
-            // Scale according to the amplitude
-            const scaled_min_f: f64 = (min_f * amplitude_scale * mid_f) / 0x8000;
-            const scaled_max_f: f64 = (max_f * amplitude_scale * mid_f) / 0x8000;
-
-            // Clamp
-            const clamped_min_i: i32 = @intFromFloat(std.math.clamp(scaled_min_f, -mid_f, mid_f));
-            const clamped_max_i: i32 = @intFromFloat(std.math.clamp(scaled_max_f, -mid_f, mid_f));
-
-            const min_y: u32 = @intCast(bmp_mid_i - clamped_min_i);
-            const max_y: u32 = @intCast(bmp_mid_i - clamped_max_i);
-
-            DrawLine(bmp, @intCast(x), min_y, max_y, color_waveform);
+        switch (style) {
+            .waveform => DrawWaveform(
+                bmp,
+                audio,
+                is_stereo,
+                amplitude_scale,
+                sample_rate,
+                view,
+            ),
+            .spectrum => {
+                // TODO
+            },
         }
 
         // Draw event bounds over the spectrum
         DrawEventBounds(
             bmp,
-            bmp_width_f,
-            bmp_height,
-            gutter_half,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_half,
             pixels_per_ms,
-            start_ms,
-            end_ms,
+            view.start_ms,
+            view.end_ms,
             event_bounds,
             event_bounds_len,
             selected_event_idx,
@@ -183,25 +144,137 @@ pub fn RenderWaveform(
         // Draw playheads over everything
         DrawVideoPlayhead(
             bmp,
-            bmp_width_f,
-            bmp_height,
+            view.bmp_width_f,
+            view.bmp_height,
             pixels_per_ms,
-            start_ms,
-            end_ms,
+            view.start_ms,
+            view.end_ms,
             v_playhead_ms,
         );
 
         if (a_playhead_ms >= 0) {
             DrawAudioPlayhead(
                 bmp,
-                bmp_width_f,
-                bmp_height,
+                view.bmp_width_f,
+                view.bmp_height,
                 pixels_per_ms,
-                start_ms,
-                end_ms,
+                view.start_ms,
+                view.end_ms,
                 a_playhead_ms,
             );
         }
+    }
+}
+
+// TODO: RenderSyllableView
+
+fn PrepareState(
+    bmp: *frames.Bitmap,
+    pixels_per_ms: f64,
+    start_time: f64,
+    effective_arr_len: usize,
+    sample_rate: f64,
+) State {
+    const bmp_width_f: f64 = @floatFromInt(bmp.*.width);
+    const bmp_height: u32 = @intCast(bmp.*.height);
+    const bmp_mid: u32 = @divFloor(bmp_height, 2);
+    const bmp_mid_i: i32 = @intCast(bmp_mid);
+    const gutter_height: u32 = if (bmp_height >= 64) 16 else if (bmp_height >= 32) 12 else 0;
+    const gutter_half: u32 = @divFloor(gutter_height, 2);
+    const gutter_quarter: u32 = @divFloor(gutter_height, 4);
+    const wfv_height: u32 = bmp_height - (gutter_height * 2);
+    const wvf_mid: u32 = @divFloor(wfv_height, 2);
+    const total_duration_ms: f64 = (@as(f64, @floatFromInt(effective_arr_len)) * 1000.0) / sample_rate;
+    const visible_duration_ms = bmp_width_f * pixels_per_ms;
+
+    var start_ms = start_time;
+    if (total_duration_ms > visible_duration_ms) {
+        const max_start_ms = total_duration_ms - visible_duration_ms;
+        if (start_ms > max_start_ms) {
+            start_ms = max_start_ms;
+        }
+    } else {
+        start_ms = 0.0;
+    }
+
+    const end_ms = start_ms + visible_duration_ms;
+    const samples_per_pixel: usize = @intFromFloat(pixels_per_ms * sample_rate / 1000.0);
+
+    return .{
+        .bmp_width_f = bmp_width_f,
+        .bmp_height = bmp_height,
+        .bmp_mid = bmp_mid,
+        .bmp_mid_i = bmp_mid_i,
+        .gutter_height = gutter_height,
+        .gutter_half = gutter_half,
+        .gutter_quarter = gutter_quarter,
+        .wfv_height = wfv_height,
+        .wvf_mid = wvf_mid,
+        .start_ms = start_ms,
+        .end_ms = end_ms,
+        .visible_duration_ms = visible_duration_ms,
+        .samples_per_pixel = samples_per_pixel,
+        .effective_arr_len = effective_arr_len,
+    };
+}
+
+/// Draw the waveform audio visualization
+fn DrawWaveform(
+    bmp: *frames.Bitmap,
+    audio: []i16,
+    is_stereo: bool,
+    amplitude_scale: f64,
+    sample_rate: f64,
+    view: State,
+) void {
+    const bmp_width_u: usize = @intCast(bmp.*.width);
+    const effective_arr_len = view.effective_arr_len;
+    const current_sample_start: usize = @intFromFloat(view.start_ms * sample_rate / 1000.0);
+    var current_sample: usize = current_sample_start;
+
+    for (0..bmp_width_u) |x| {
+        const s0: usize = current_sample;
+        const s1: usize = @min(s0 + view.samples_per_pixel, effective_arr_len);
+        current_sample += view.samples_per_pixel;
+
+        if (s0 >= effective_arr_len) break;
+
+        var peak_min: i32 = 0;
+        var peak_max: i32 = 0;
+
+        var i = s0;
+        if (is_stereo) {
+            while (i < s1) : (i += 1) {
+                const left = audio[2 * i];
+                const right = audio[2 * i + 1];
+                const mono: i32 = (@as(i32, left) + @as(i32, right)) >> 1;
+
+                if (mono > peak_max) peak_max = mono;
+                if (mono < peak_min) peak_min = mono;
+            }
+        } else {
+            while (i < s1) : (i += 1) {
+                const mono = @as(i32, audio[i]);
+
+                if (mono > peak_max) peak_max = mono;
+                if (mono < peak_min) peak_min = mono;
+            }
+        }
+
+        const mid_f: f64 = @floatFromInt(view.wvf_mid);
+        const min_f: f64 = @floatFromInt(peak_min);
+        const max_f: f64 = @floatFromInt(peak_max);
+
+        const scaled_min_f: f64 = (min_f * amplitude_scale * mid_f) / 0x8000;
+        const scaled_max_f: f64 = (max_f * amplitude_scale * mid_f) / 0x8000;
+
+        const clamped_min_i: i32 = @intFromFloat(std.math.clamp(scaled_min_f, -mid_f, mid_f));
+        const clamped_max_i: i32 = @intFromFloat(std.math.clamp(scaled_max_f, -mid_f, mid_f));
+
+        const min_y: u32 = @intCast(view.bmp_mid_i - clamped_min_i);
+        const max_y: u32 = @intCast(view.bmp_mid_i - clamped_max_i);
+
+        DrawLine(bmp, @intCast(x), min_y, max_y, color_waveform);
     }
 }
 

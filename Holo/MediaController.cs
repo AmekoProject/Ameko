@@ -760,7 +760,7 @@ public class MediaController : BindableBase
 
                 IsAudioLoaded = true;
 
-                _lastVizFrame = _provider.GetVisualization(
+                _lastVizFrame = _provider.GetVisualizationFrameEventsView(
                     VisualizerWidth,
                     VisualizerHeight,
                     VisualizerScaleX,
@@ -768,6 +768,7 @@ public class MediaController : BindableBase
                     0,
                     0,
                     -1,
+                    AudioVisualizationStyle.Waveform,
                     null,
                     0,
                     0
@@ -1178,7 +1179,7 @@ public class MediaController : BindableBase
             {
                 fixed (long* ptr = _eventBounds)
                 {
-                    vizFrame = _provider.GetVisualization(
+                    vizFrame = _provider.GetVisualizationFrameEventsView( // TODO: Configure
                         VisualizerWidth,
                         VisualizerHeight,
                         VisualizerScaleX,
@@ -1186,6 +1187,7 @@ public class MediaController : BindableBase
                         VisualizerPositionMs,
                         videoMid,
                         audioTime,
+                        AudioVisualizationStyle.Waveform, // TODO: configure
                         ptr,
                         _eventBounds.Length,
                         _activeEventIndex
