@@ -10,6 +10,7 @@ const frames = @import("frames.zig");
 const common = @import("common.zig");
 const logger = @import("logger.zig");
 const context = @import("context.zig");
+const symbols = @import("symbols.zig");
 
 pub const FfmsError = error{
     FileNotFound,
@@ -38,13 +39,9 @@ var err_info = c.FFMS_ErrorInfo{
 };
 var is_initialized = false;
 
-/// Weakly-linked pointer to `FFMS_GetTrackMetadataI`.
-/// Resolves to a non-null zero pointer at load time if the linked ffms2 doesn't export the symbol.
-/// You must validate both before calling - not null *and* not zero.
-const GetTrackMetadataI = @extern(?*const @TypeOf(c.FFMS_GetTrackMetadataI), .{
-    .name = "FFMS_GetTrackMetadataI",
-    .linkage = .weak,
-});
+const FFMS_GetTrackMetadataType = *const @TypeOf(c.FFMS_GetTrackMetadataI);
+var ffms2_lib: ?symbols.Library = null;
+var GetTrackMetadataI: ?FFMS_GetTrackMetadataType = null;
 
 /// Get the current FFMS version
 ///
@@ -62,6 +59,10 @@ pub fn GetVersion() common.BackingVersion {
 pub fn Initialize() void {
     if (!is_initialized) {
         c.FFMS_Init(0, 0);
+        ffms2_lib = symbols.LoadFfms2();
+        if (ffms2_lib != null) {
+            GetTrackMetadataI = ffms2_lib.?.lookup(FFMS_GetTrackMetadataType, "FFMS_GetTrackMetadataI");
+        }
         is_initialized = true;
     }
 }
@@ -544,10 +545,10 @@ pub fn GetAudioTrackInfo(g_ctx: *context.GlobalContext, file_name: [*c]u8) FfmsE
         var track_lang: [*c]const u8 = null;
         var track_title: [*c]const u8 = null;
 
-        if (GetTrackMetadataI) |GetTrackMetadata| if (@intFromPtr(GetTrackMetadata) != 0) {
+        if (GetTrackMetadataI) |GetTrackMetadata| {
             track_lang = GetTrackMetadata(indexer, track_number, "language");
             track_title = GetTrackMetadata(indexer, track_number, "title");
-        };
+        }
 
         const track: common.TrackInfo = .{
             .index = @intCast(track_number),
