@@ -236,7 +236,9 @@ public class Karaoke
                     break;
                 case BlockType.Comment:
                 case BlockType.Drawing:
-                    syl.OverrideTags[syl.Text.Length] += text;
+                    if (!syl.OverrideTags.TryGetValue(syl.Text.Length, out var existing))
+                        existing = string.Empty;
+                    syl.OverrideTags[syl.Text.Length] = existing + text;
                     break;
                 case BlockType.Override:
                     var b = (OverrideBlock)block;
