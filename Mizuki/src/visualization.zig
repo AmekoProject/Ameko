@@ -244,6 +244,8 @@ pub fn RenderSyllablesView(
                 a_playhead_ms,
             );
         }
+
+        DrawText(bmp, 30, 30, "こんにちはThis is a test, here's a kanji 才! (alas, there's no カンジ、 just tofu)", color_kf);
     }
 }
 
@@ -369,7 +371,7 @@ fn DrawTimeScale(
 
     // Only draw if there's enough room
     const can_draw_qsecs = pixels_per_sec > 50;
-    const can_draw_labels = view.gutter_half > font.glyph_height;
+    const can_draw_labels = view.gutter_half >= font.glyph_height;
     const can_draw_qlabels = can_draw_labels and pixels_per_sec > 115;
 
     var label_buf: [16]u8 = undefined;
@@ -697,32 +699,36 @@ fn DrawLine(
 
 /// Draw a null-terminated ASCII string at pixel position (x, y)
 fn DrawText(bmp: *frames.Bitmap, x: u32, y: u32, text: []const u8, color: u32) void {
+    const uni_view = std.unicode.Utf8View.init(text) catch return; // draw nothing if malformed
     const bmp_w: u32 = @intCast(bmp.width);
     var cx = x;
-    for (text) |c| {
-        if (cx >= bmp_w) break;
-        DrawGlyph(bmp, cx, y, c, color);
-        cx += font.glyph_width + 1; // 4px glyph + 1px gap
+
+    var it = uni_view.iterator();
+    while (it.nextCodepoint()) |cp| {
+        if (cx > bmp_w) break;
+
+        const glyph = font.Lookup(cp);
+        DrawGlyph(bmp, cx, y, glyph, color);
+        cx += glyph.width + 1;
     }
 }
 
 /// Draw a single glyph at pixel position (x, y), clipped to bitmap bounds.
-fn DrawGlyph(bmp: *frames.Bitmap, x: u32, y: u32, char: u8, color: u32) void {
-    const idx = font.IndexOf(char) orelse return;
-    const glyph = font.glyphs[idx];
+fn DrawGlyph(bmp: *frames.Bitmap, x: u32, y: u32, glyph: font.Glyph, color: u32) void {
     const bmp_w: u32 = @intCast(bmp.width);
     const bmp_h: u32 = @intCast(bmp.height);
     const pitch: usize = @intCast(bmp.pitch);
 
-    for (0..font.glyph_height) |row| {
-        const py = y + @as(u32, @intCast(row));
-        if (py >= bmp_h) break;
-        const bits = glyph[row];
-        for (0..font.glyph_width) |col| {
-            const px = x + @as(u32, @intCast(col));
-            if (px >= bmp_w) break;
-            // Bits are stored in the high nibble, MSB = leftmost column.
-            const mask: u8 = @as(u8, 0b1000_0000) >> @intCast(col);
+    for (0..glyph.width) |col| {
+        const px = x + @as(u32, @intCast(col));
+        if (px >= bmp_w) break;
+        const bits = glyph.columns[col];
+        for (0..font.glyph_height) |row| {
+            const py = y + @as(u32, @intCast(row));
+            if (py >= bmp_h) break;
+
+            // Column-major: bit 0 = top pixel of the column.
+            const mask: u8 = @as(u8, 1) << @intCast(row);
             if ((bits & mask) != 0) {
                 const row_ptr = bmp.data + (@as(usize, py) * pitch);
                 const px_ptr: *u32 = @ptrCast(@alignCast(row_ptr + px * 4));
@@ -761,8 +767,21 @@ fn FormatQuarter(buf: []u8, t_ms: f64) []u8 {
 
 /// Compute the left x to draw `text` centered on tick position `x`
 fn LabelXPos(x: u32, text: []const u8) u32 {
-    const n: u32 = @intCast(text.len);
-    const w = if (n == 0) 0 else n * font.glyph_width + (n - 1);
+    const uni_view = std.unicode.Utf8View.init(text) catch return 0; // draw nothing if malformed
+    var w: u32 = 0;
+    var n: u32 = 0;
+
+    var it = uni_view.iterator();
+    while (it.nextCodepoint()) |cp| {
+        const glyph = font.Lookup(cp);
+        w += glyph.width;
+        n += 1;
+    }
+
+    // Account for gaps
+    if (n > 0)
+        w += n - 1;
+
     const half = w / 2;
     return if (half > x) 0 else x - half;
 }

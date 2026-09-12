@@ -7,4 +7,7 @@ pub const c = @cImport({
 
     // libass
     @cInclude("ass.h");
+
+    // misaki font
+    @cInclude("misaki_font.h");
 });
