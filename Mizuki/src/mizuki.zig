@@ -204,6 +204,44 @@ pub export fn GetVisualizationFrameEventsView(
     };
 }
 
+/// Get an audio visualization bitmap that displays syllables
+pub export fn GetVisualizationFrameSyllablesView(
+    g_ctx: *context.GlobalContext,
+    width: c_int,
+    height: c_int,
+    pixel_ms: f64,
+    amplitude_scale: f64,
+    start_time: i64,
+    video_time: i64,
+    audio_time: i64,
+    style: c_int,
+    event_start: i64,
+    event_end: i64,
+    syl_durs: [*]f64,
+    syl_durs_len: usize,
+) ?*frames.Bitmap {
+    return buffers.ProcVisualizationFrameSyllablesView(
+        g_ctx,
+        width,
+        height,
+        pixel_ms,
+        amplitude_scale,
+        @floatFromInt(start_time),
+        @floatFromInt(video_time),
+        @floatFromInt(audio_time),
+        switch (style) {
+            0 => viz.ViewStyle.waveform,
+            else => viz.ViewStyle.spectrum,
+        },
+        event_start,
+        event_end,
+        syl_durs,
+        @intCast(syl_durs_len),
+    ) catch {
+        return null;
+    };
+}
+
 /// Get the number of frames in the video
 pub export fn GetFrameCount(g_ctx: *context.GlobalContext) c_int {
     return g_ctx.*.ffms.frame_count;

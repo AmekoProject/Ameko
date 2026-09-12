@@ -253,6 +253,41 @@ public unsafe class MizukiSourceProvider(
     }
 
     /// <inheritdoc />
+    public Bitmap* GetVisualizationFrameSyllablesView(
+        int width,
+        int height,
+        double pixelsPerMs,
+        double amplitudeScale,
+        long startTime,
+        long videoTime,
+        long audioTime,
+        AudioVisualizationStyle style,
+        long eventStart,
+        long eventEnd,
+        double* syllableDurations,
+        int syllableDurationsLength,
+        int selectedEventIndex
+    )
+    {
+        return External.GetVisualizationFrameSyllablesView(
+            _context,
+            width,
+            height,
+            pixelsPerMs,
+            amplitudeScale,
+            startTime,
+            videoTime,
+            audioTime,
+            (int)style,
+            eventStart,
+            eventEnd,
+            syllableDurations,
+            syllableDurationsLength,
+            selectedEventIndex
+        );
+    }
+
+    /// <inheritdoc />
     public int[] GetKeyframes()
     {
         var ptr = External.GetKeyframes(_context);
@@ -504,6 +539,24 @@ internal static unsafe partial class External
         int style,
         long* eventBounds,
         int eventBoundsLength,
+        int selectedEventIndex
+    );
+
+    [LibraryImport("mizuki")]
+    internal static unsafe partial Bitmap* GetVisualizationFrameSyllablesView(
+        GlobalContext* context,
+        int width,
+        int height,
+        double pixelsPerMs,
+        double amplitudeScale,
+        long startTime,
+        long frameTime,
+        long audioTime,
+        int style,
+        long eventStart,
+        long eventEnd,
+        double* syllableDurations,
+        int syllableDurationsLength,
         int selectedEventIndex
     );
 

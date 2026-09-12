@@ -3,6 +3,8 @@
 using System.Diagnostics.CodeAnalysis;
 using AssCS;
 using AssCS.IO;
+using AssCS.Overrides;
+using AssCS.Overrides.Blocks;
 using Holo.Configuration;
 using Holo.Media;
 using Holo.Media.Providers;
@@ -50,7 +52,8 @@ public class MediaController : BindableBase
     private int _destinationFrame;
 
     private long[] _eventBounds = [];
-    private int _activeEventIndex;
+    private double[] _syllableDurations = [];
+    private Event _activeEvent;
 
     /// <summary>
     /// If a video or audio file is currently being loaded
@@ -153,6 +156,40 @@ public class MediaController : BindableBase
             DisplayHeight = (VideoInfo?.Height ?? 1) * _scaleFactor.Multiplier / _screenScaleFactor;
         }
     }
+
+    /// <summary>
+    /// Audio visualization style
+    /// </summary>
+    public AudioVisualizationStyle VisualizationStyle
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = AudioVisualizationStyle.Waveform;
+
+    /// <summary>
+    /// Visualization type
+    /// </summary>
+    public AudioVisualizationType VisualizationType
+    {
+        get;
+        set
+        {
+            SetProperty(ref field, value);
+            if (value is not AudioVisualizationType.Syllables)
+                return;
+            lock (_boundsLock) // TODO: This is *not* efficient - look for a better way (below, too)
+            {
+                _syllableDurations = _activeEvent
+                    .ParseBlocks()
+                    .OfType<OverrideBlock>()
+                    .SelectMany(b => b.Tags)
+                    .OfType<OverrideTag.K>()
+                    .Select(k => k.Duration)
+                    .OfType<double>()
+                    .ToArray();
+            }
+        }
+    } = AudioVisualizationType.Syllables;
 
     /// <summary>
     /// Width of the viewport
@@ -981,7 +1018,23 @@ public class MediaController : BindableBase
     /// <param name="event"></param>
     public void SetActiveSubtitle(Event @event)
     {
-        _activeEventIndex = @event.Index - 1;
+        _activeEvent = @event;
+
+        if (VisualizationType is AudioVisualizationType.Syllables)
+        {
+            lock (_boundsLock)
+            {
+                _syllableDurations = @event
+                    .ParseBlocks()
+                    .OfType<OverrideBlock>()
+                    .SelectMany(b => b.Tags)
+                    .OfType<OverrideTag.K>()
+                    .Select(k => k.Duration)
+                    .OfType<double>()
+                    .ToArray();
+            }
+        }
+
         RequestFrame(CurrentFrame);
     }
 
@@ -1177,21 +1230,46 @@ public class MediaController : BindableBase
         {
             lock (_boundsLock)
             {
-                fixed (long* ptr = _eventBounds)
+                switch (VisualizationType)
                 {
-                    vizFrame = _provider.GetVisualizationFrameEventsView( // TODO: Configure
-                        VisualizerWidth,
-                        VisualizerHeight,
-                        VisualizerScaleX,
-                        VisualizerScaleY,
-                        VisualizerPositionMs,
-                        videoMid,
-                        audioTime,
-                        AudioVisualizationStyle.Waveform, // TODO: configure
-                        ptr,
-                        _eventBounds.Length,
-                        _activeEventIndex
-                    );
+                    case AudioVisualizationType.Events:
+                        fixed (long* ptr = _eventBounds)
+                        {
+                            vizFrame = _provider.GetVisualizationFrameEventsView(
+                                VisualizerWidth,
+                                VisualizerHeight,
+                                VisualizerScaleX,
+                                VisualizerScaleY,
+                                VisualizerPositionMs,
+                                videoMid,
+                                audioTime,
+                                VisualizationStyle,
+                                ptr,
+                                _eventBounds.Length,
+                                _activeEvent.Index - 1
+                            );
+                        }
+                        break;
+                    case AudioVisualizationType.Syllables:
+                        fixed (double* ptr = _syllableDurations)
+                        {
+                            vizFrame = _provider.GetVisualizationFrameSyllablesView(
+                                VisualizerWidth,
+                                VisualizerHeight,
+                                VisualizerScaleX,
+                                VisualizerScaleY,
+                                VisualizerPositionMs,
+                                videoMid,
+                                audioTime,
+                                VisualizationStyle,
+                                _activeEvent.Start.TotalMilliseconds,
+                                _activeEvent.End.TotalMilliseconds,
+                                ptr,
+                                _syllableDurations.Length,
+                                _activeEvent.Index - 1
+                            );
+                        }
+                        break;
                 }
             }
         }
@@ -1239,6 +1317,8 @@ public class MediaController : BindableBase
 
         VisualizerScaleX = persistence.VisualizationScaleX;
         VisualizerScaleY = persistence.VisualizationScaleY;
+
+        _activeEvent = new Event(-1);
 
         var initResult = _provider.Initialize();
         IsEnabled = initResult == 0;

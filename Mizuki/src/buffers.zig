@@ -165,6 +165,41 @@ pub fn ProcVisualizationFrameEventsView(
     return result;
 }
 
+pub fn ProcVisualizationFrameSyllablesView(
+    g_ctx: *context.GlobalContext,
+    width: c_int,
+    height: c_int,
+    pixel_ms: f64,
+    amplitude_scale: f64,
+    start_time: f64,
+    video_time: f64,
+    audio_time: f64,
+    style: viz.ViewStyle,
+    event_start: i64,
+    event_end: i64,
+    syl_durs: [*]f64,
+    syl_durs_len: usize,
+) !*frames.Bitmap {
+    const ctx = &g_ctx.*.buffers;
+    const result: *frames.Bitmap = try GetOrCreateVisualizationFrame(ctx, width, height);
+
+    viz.RenderSyllablesView(
+        g_ctx,
+        result,
+        pixel_ms,
+        amplitude_scale,
+        start_time,
+        video_time,
+        audio_time,
+        style,
+        event_start,
+        event_end,
+        syl_durs,
+        syl_durs_len,
+    );
+    return result;
+}
+
 fn GetOrCreateVisualizationFrame(ctx: *context.BuffersContext, width: c_int, height: c_int) !*frames.Bitmap {
     var buffers = &ctx.viz_buffers.?;
 

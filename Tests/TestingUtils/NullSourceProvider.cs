@@ -116,6 +116,26 @@ public unsafe class NullSourceProvider : ISourceProvider
     }
 
     /// <inheritdoc />
+    public Bitmap* GetVisualizationFrameSyllablesView(
+        int width,
+        int height,
+        double pixelsPerMs,
+        double amplitudeScale,
+        long startTime,
+        long videoTime,
+        long audioTime,
+        AudioVisualizationStyle style,
+        long eventStart,
+        long eventEnd,
+        double* syllableDurations,
+        int syllableDurationsLength,
+        int selectedEventIndex
+    )
+    {
+        return null;
+    }
+
+    /// <inheritdoc />
     public int[] GetKeyframes()
     {
         return [];

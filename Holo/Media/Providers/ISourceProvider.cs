@@ -118,7 +118,7 @@ public interface ISourceProvider
     unsafe AudioFrame* GetAudio(ProgressCallback? progressCallback = null);
 
     /// <summary>
-    /// Get a waveform bitmap for the specified time
+    /// Get a visualization bitmap for the specified time that displays event bounds
     /// </summary>
     /// <param name="width">Width of the generated bitmap</param>
     /// <param name="height">Height of the generated bitmap</param>
@@ -143,6 +143,39 @@ public interface ISourceProvider
         AudioVisualizationStyle style,
         long* eventBounds,
         int eventBoundsLength,
+        int selectedEventIndex
+    );
+
+    /// <summary>
+    /// Get a visualization bitmap for the specified time that displays syllables
+    /// </summary>
+    /// <param name="width">Width of the generated bitmap</param>
+    /// <param name="height">Height of the generated bitmap</param>
+    /// <param name="pixelsPerMs">Pixels per millisecond - Horizontal scale</param>
+    /// <param name="amplitudeScale">Amplitude scale factor - Vertical scale</param>
+    /// <param name="startTime">Time to start at</param>
+    /// <param name="videoTime">Timestamp of the current video frame</param>
+    /// <param name="audioTime">Timestamp of the current audio frame</param>
+    /// <param name="style">Audio visualization style</param>
+    /// <param name="eventStart">Start time of the active event</param>
+    /// <param name="eventEnd">End time of the active event</param>
+    /// <param name="syllableDurations">Array of syllable durations</param>
+    /// <param name="syllableDurationsLength">Length of the <paramref name="syllableDurations"> array</paramref></param>
+    /// <param name="selectedEventIndex">Index of the currently-selected event</param>
+    /// <returns>Output bitmap</returns>
+    unsafe Bitmap* GetVisualizationFrameSyllablesView(
+        int width,
+        int height,
+        double pixelsPerMs,
+        double amplitudeScale,
+        long startTime,
+        long videoTime,
+        long audioTime,
+        AudioVisualizationStyle style,
+        long eventStart,
+        long eventEnd,
+        double* syllableDurations,
+        int syllableDurationsLength,
         int selectedEventIndex
     );
 

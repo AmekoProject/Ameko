@@ -18,7 +18,7 @@ const color_event_activated: u32 = 0xffa78bfa;
 const color_event_shade: u32 = 0xff2a1d4d;
 const color_event_start: u32 = 0xffa3e635;
 const color_event_end: u32 = 0xfff53d3d;
-const color_kf: u32 = 0xffffc94d;
+const color_kf: u32 = 0xffff954b;
 
 pub const ViewStyle = enum {
     waveform,
@@ -128,7 +128,7 @@ pub fn RenderEventsView(
         }
 
         // Draw event bounds over the spectrum
-        DrawEventBounds(
+        DrawEventBound(
             bmp,
             view.bmp_width_f,
             view.bmp_height,
@@ -137,8 +137,8 @@ pub fn RenderEventsView(
             view.start_ms,
             view.end_ms,
             event_bounds,
-            event_bounds_len,
-            selected_event_idx,
+            0,
+            false,
         );
 
         // Draw playheads over everything
@@ -166,7 +166,133 @@ pub fn RenderEventsView(
     }
 }
 
-// TODO: RenderSyllableView
+pub fn RenderSyllablesView(
+    g_ctx: *context.GlobalContext,
+    bmp: *frames.Bitmap,
+    pixels_per_ms: f64,
+    amplitude_scale: f64,
+    start_time: f64,
+    v_playhead_ms: f64,
+    a_playhead_ms: f64,
+    style: ViewStyle,
+    event_start: i64,
+    event_end: i64,
+    syl_durs: [*]f64,
+    syl_durs_len: usize,
+) void {
+    const audio_data = g_ctx.*.buffers.audio_buffer;
+    const is_stereo = g_ctx.*.ffms.channel_count == 2;
+    const sample_rate: f64 = @floatFromInt(g_ctx.*.ffms.sample_rate);
+
+    const bmp_width_u: usize = @intCast(bmp.*.width);
+    const bmp_height_u: usize = @intCast(bmp.*.height);
+    const bmp_pitch_u: usize = @intCast(bmp.*.pitch);
+
+    if (bmp_height_u < 1 or bmp_width_u < 1 or bmp_pitch_u < 1) return;
+
+    if (audio_data) |audio| {
+        const effective_arr_len: usize = if (is_stereo) audio.len / 2 else audio.len;
+        const view = PrepareState(bmp, pixels_per_ms, start_time, effective_arr_len, sample_rate);
+
+        // Clear the bitmap
+        const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
+        @memset(bmp.*.data[0..bmp_total_bytes], 0);
+
+        var event_bounds = [_]i64{ event_start, event_end };
+
+        // Behind everything else, draw the shading for the selected event
+        DrawSelectedEventShading(
+            bmp,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_half,
+            pixels_per_ms,
+            view.start_ms,
+            view.end_ms,
+            &event_bounds,
+            2,
+            0,
+        );
+
+        // Draw hashes for seconds and quarter-seconds in the gutter
+        DrawTimeScale(
+            bmp,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_height,
+            view.gutter_half,
+            view.gutter_quarter,
+            pixels_per_ms,
+            view.start_ms,
+            view.end_ms,
+        );
+
+        switch (style) {
+            .waveform => DrawWaveform(
+                bmp,
+                audio,
+                is_stereo,
+                amplitude_scale,
+                sample_rate,
+                view,
+            ),
+            .spectrum => {
+                // TODO
+            },
+        }
+
+        // Draw event bounds over the spectrum
+        DrawEventBounds(
+            bmp,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_half,
+            pixels_per_ms,
+            view.start_ms,
+            view.end_ms,
+            &event_bounds,
+            2,
+            0,
+        );
+
+        DrawSyllablePositions(
+            bmp,
+            view.bmp_width_f,
+            view.bmp_height,
+            view.gutter_half,
+            pixels_per_ms,
+            view.start_ms,
+            view.end_ms,
+            @floatFromInt(event_start),
+            @floatFromInt(event_end),
+            syl_durs,
+            syl_durs_len,
+        );
+
+        // Draw playheads over everything
+        DrawVideoPlayhead(
+            bmp,
+            view.bmp_width_f,
+            view.bmp_height,
+            pixels_per_ms,
+            view.start_ms,
+            view.end_ms,
+            v_playhead_ms,
+        );
+
+        if (a_playhead_ms >= 0) {
+            DrawAudioPlayhead(
+                bmp,
+                view.bmp_width_f,
+                view.bmp_height,
+                pixels_per_ms,
+                view.start_ms,
+                view.end_ms,
+                a_playhead_ms,
+            );
+        }
+    }
+}
 
 fn PrepareState(
     bmp: *frames.Bitmap,
@@ -531,6 +657,50 @@ fn DrawSelectedEventShading(
             const row_ptr = bmp.data + (@as(usize, @intCast(y)) * pitch);
             const px_ptr: *u32 = @ptrCast(@alignCast(row_ptr + x * 4));
             px_ptr.* = color_event_shade;
+        }
+    }
+}
+
+/// Draw syllable position indicators
+fn DrawSyllablePositions(
+    bmp: *frames.Bitmap,
+    bmp_width_f: f64,
+    bmp_height: u32,
+    gutter_half: u32,
+    pixels_per_ms: f64,
+    start_ms: f64,
+    end_ms: f64,
+    event_start_ms: f64,
+    event_end_ms: f64,
+    syl_durs: [*]f64,
+    syl_durs_len: usize,
+) void {
+    if (event_end_ms < event_start_ms)
+        return;
+
+    if ((event_start_ms < start_ms and event_end_ms < start_ms) or (event_start_ms > end_ms and event_end_ms > end_ms))
+        return;
+
+    var si: usize = 0;
+    var rolling: f64 = event_start_ms;
+    while (si < syl_durs_len) : (si += 1) {
+        rolling += syl_durs[si] * 10; // Add duration of current syl to total
+        if (rolling >= event_end_ms or rolling >= end_ms)
+            break;
+
+        const x = ((rolling - start_ms) / pixels_per_ms);
+
+        // Draw dotted line
+        if (x >= 0 and x < bmp_width_f) {
+            const dash_len: u32 = 6;
+            const gap_len: u32 = 4;
+
+            var y: u32 = gutter_half;
+            while (y < bmp_height - gutter_half) {
+                const y_end = @min(y + dash_len, bmp_height - gutter_half);
+                DrawLine(bmp, @intFromFloat(x), y, y_end, color_kf);
+                y += dash_len + gap_len;
+            }
         }
     }
 }
