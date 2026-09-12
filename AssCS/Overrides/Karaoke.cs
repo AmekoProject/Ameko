@@ -31,6 +31,11 @@ public class Karaoke
     }
 
     /// <summary>
+    /// Collection of syllable objects
+    /// </summary>
+    public IReadOnlyList<Syllable> Syllables => _syllables;
+
+    /// <summary>
     /// Set the syllables for a line
     /// </summary>
     /// <param name="line">Line to set the syllables of</param>
@@ -50,7 +55,8 @@ public class Karaoke
         if (normalize)
         {
             var lineEnd = line.End;
-            var lastEnd = syl.Start + Time.FromMillis(syl.Duration);
+            var lastSyl = _syllables[^1];
+            var lastEnd = lastSyl.Start + Time.FromMillis(lastSyl.Duration);
 
             if (lastEnd > lineEnd)
             {
@@ -72,7 +78,7 @@ public class Karaoke
         if (autoSplit && _syllables.Count == 1)
         {
             int pos;
-            while ((pos = _syllables.Last().Text.IndexOf(' ')) != 1)
+            while ((pos = _syllables.Last().Text.IndexOf(' ')) != -1)
             {
                 AddSplit(_syllables.Count - 1, pos + 1);
             }
@@ -121,7 +127,7 @@ public class Karaoke
         newSyl.Start = preSyl.Start + Time.FromMillis(preSyl.Duration);
         newSyl.TagType = new string(preSyl.TagType);
 
-        int len = preSyl.Text.Length;
+        var len = preSyl.Text.Length;
         foreach (var pair in preSyl.OverrideTags)
         {
             if (pair.Key < len)
@@ -189,7 +195,7 @@ public class Karaoke
     {
         if (end < start)
             return;
-        int index = 0;
+        var index = 0;
 
         // Chop off any portion of syllables starting before the new start time
         do

@@ -177,7 +177,7 @@ pub fn ProcVisualizationFrameSyllablesView(
     style: viz.ViewStyle,
     event_start: i64,
     event_end: i64,
-    syl_durs: [*]f64,
+    syl_durs: [*]i64,
     syl_durs_len: usize,
 ) !*frames.Bitmap {
     const ctx = &g_ctx.*.buffers;

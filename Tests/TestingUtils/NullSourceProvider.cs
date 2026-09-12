@@ -127,7 +127,7 @@ public unsafe class NullSourceProvider : ISourceProvider
         AudioVisualizationStyle style,
         long eventStart,
         long eventEnd,
-        double* syllableDurations,
+        long* syllableDurations,
         int syllableDurationsLength,
         int selectedEventIndex
     )

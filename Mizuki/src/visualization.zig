@@ -154,7 +154,7 @@ pub fn RenderSyllablesView(
     style: ViewStyle,
     event_start: i64,
     event_end: i64,
-    syl_durs: [*]f64,
+    syl_durs: [*]i64,
     syl_durs_len: usize,
 ) void {
     const audio_data = g_ctx.*.buffers.audio_buffer;
@@ -592,7 +592,7 @@ fn DrawSyllablePositions(
     pixels_per_ms: f64,
     event_start_ms: f64,
     event_end_ms: f64,
-    syl_durs: [*]f64,
+    syl_durs: [*]i64,
     syl_durs_len: usize,
 ) void {
     if (event_end_ms < event_start_ms)
@@ -604,7 +604,7 @@ fn DrawSyllablePositions(
     var si: usize = 0;
     var rolling: f64 = event_start_ms;
     while (si < syl_durs_len) : (si += 1) {
-        rolling += syl_durs[si] * 10; // Add duration of current syl to total
+        rolling += @floatFromInt(syl_durs[si]); // Add duration of current syl to total
         if (rolling >= event_end_ms or rolling >= view.end_ms)
             break;
 

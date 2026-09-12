@@ -264,7 +264,7 @@ public unsafe class MizukiSourceProvider(
         AudioVisualizationStyle style,
         long eventStart,
         long eventEnd,
-        double* syllableDurations,
+        long* syllableDurations,
         int syllableDurationsLength,
         int selectedEventIndex
     )
@@ -555,7 +555,7 @@ internal static unsafe partial class External
         int style,
         long eventStart,
         long eventEnd,
-        double* syllableDurations,
+        long* syllableDurations,
         int syllableDurationsLength,
         int selectedEventIndex
     );
