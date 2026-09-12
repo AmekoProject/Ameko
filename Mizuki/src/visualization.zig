@@ -76,12 +76,8 @@ pub fn RenderEventsView(
         // Behind everything else, draw the shading for the selected event
         DrawSelectedEventShading(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_half,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             event_bounds,
             event_bounds_len,
             selected_event_idx,
@@ -90,25 +86,16 @@ pub fn RenderEventsView(
         // Draw hashes for seconds and quarter-seconds in the gutter
         DrawTimeScale(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_height,
-            view.gutter_half,
-            view.gutter_quarter,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
         );
 
         // Draw keyframe indicators behind the spectrum
         if (g_ctx.*.ffms.kf_timecodes) |timecodes| {
             DrawKeyframes(
                 bmp,
-                view.bmp_width_f,
-                view.bmp_height,
+                view,
                 pixels_per_ms,
-                view.start_ms,
-                view.end_ms,
                 timecodes,
             );
         }
@@ -130,12 +117,8 @@ pub fn RenderEventsView(
         // Draw event bounds over the spectrum
         DrawEventBound(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_half,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             event_bounds,
             0,
             false,
@@ -144,22 +127,16 @@ pub fn RenderEventsView(
         // Draw playheads over everything
         DrawVideoPlayhead(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             v_playhead_ms,
         );
 
         if (a_playhead_ms >= 0) {
             DrawAudioPlayhead(
                 bmp,
-                view.bmp_width_f,
-                view.bmp_height,
+                view,
                 pixels_per_ms,
-                view.start_ms,
-                view.end_ms,
                 a_playhead_ms,
             );
         }
@@ -203,12 +180,8 @@ pub fn RenderSyllablesView(
         // Behind everything else, draw the shading for the selected event
         DrawSelectedEventShading(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_half,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             &event_bounds,
             2,
             0,
@@ -217,14 +190,8 @@ pub fn RenderSyllablesView(
         // Draw hashes for seconds and quarter-seconds in the gutter
         DrawTimeScale(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_height,
-            view.gutter_half,
-            view.gutter_quarter,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
         );
 
         switch (style) {
@@ -244,12 +211,8 @@ pub fn RenderSyllablesView(
         // Draw event bounds over the spectrum
         DrawEventBounds(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_half,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             &event_bounds,
             2,
             0,
@@ -257,12 +220,8 @@ pub fn RenderSyllablesView(
 
         DrawSyllablePositions(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
-            view.gutter_half,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             @floatFromInt(event_start),
             @floatFromInt(event_end),
             syl_durs,
@@ -272,22 +231,16 @@ pub fn RenderSyllablesView(
         // Draw playheads over everything
         DrawVideoPlayhead(
             bmp,
-            view.bmp_width_f,
-            view.bmp_height,
+            view,
             pixels_per_ms,
-            view.start_ms,
-            view.end_ms,
             v_playhead_ms,
         );
 
         if (a_playhead_ms >= 0) {
             DrawAudioPlayhead(
                 bmp,
-                view.bmp_width_f,
-                view.bmp_height,
+                view,
                 pixels_per_ms,
-                view.start_ms,
-                view.end_ms,
                 a_playhead_ms,
             );
         }
@@ -407,14 +360,8 @@ fn DrawWaveform(
 /// Draw hashes for seconds and quarter-seconds in the gutter
 fn DrawTimeScale(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
-    gutter_height: u32,
-    gutter_half: u32,
-    gutter_quarter: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
 ) void {
     // Draw seconds hashes
     const pixels_per_sec = 1000.0 / pixels_per_ms;
@@ -422,19 +369,19 @@ fn DrawTimeScale(
 
     // Only draw if there's enough room
     const can_draw_qsecs = pixels_per_sec > 50;
-    const can_draw_labels = gutter_half > font.glyph_height;
+    const can_draw_labels = view.gutter_half > font.glyph_height;
     const can_draw_qlabels = can_draw_labels and pixels_per_sec > 115;
 
     var label_buf: [16]u8 = undefined;
 
-    var t = std.math.ceil(start_ms / 1000.0) * 1000.0;
-    while (t <= end_ms) : (t += 1000.0) {
-        const delta = t - start_ms;
+    var t = std.math.ceil(view.start_ms / 1000.0) * 1000.0;
+    while (t <= view.end_ms) : (t += 1000.0) {
+        const delta = t - view.start_ms;
         const x_f = delta / pixels_per_ms;
-        if (x_f >= 0 and x_f < bmp_width_f) {
+        if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
-            DrawLine(bmp, x, gutter_half, gutter_height, color_seconds);
-            DrawLine(bmp, x, bmp_height - gutter_height, bmp_height - gutter_half, color_seconds);
+            DrawLine(bmp, x, view.gutter_half, view.gutter_height, color_seconds);
+            DrawLine(bmp, x, view.bmp_height - view.gutter_height, view.bmp_height - view.gutter_half, color_seconds);
 
             if (can_draw_labels) {
                 const label = FormatSeconds(&label_buf, t);
@@ -447,15 +394,15 @@ fn DrawTimeScale(
     // Draw quarter-seconds hashes
     if (!can_draw_qsecs) return;
 
-    t = std.math.ceil(start_ms / 250.0) * 250.0;
-    while (t <= end_ms) : (t += 250.0) {
+    t = std.math.ceil(view.start_ms / 250.0) * 250.0;
+    while (t <= view.end_ms) : (t += 250.0) {
         if (@rem(t, 1000.0) == 0) continue;
-        const delta = t - start_ms;
+        const delta = t - view.start_ms;
         const x_f = delta / pixels_per_ms;
-        if (x_f >= 0 and x_f < bmp_width_f) {
+        if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
-            DrawLine(bmp, x, gutter_half, gutter_half + gutter_quarter, color_qseconds);
-            DrawLine(bmp, x, bmp_height - gutter_half - gutter_quarter, bmp_height - gutter_half, color_qseconds);
+            DrawLine(bmp, x, view.gutter_half, view.gutter_half + view.gutter_quarter, color_qseconds);
+            DrawLine(bmp, x, view.bmp_height - view.gutter_half - view.gutter_quarter, view.bmp_height - view.gutter_half, color_qseconds);
 
             if (can_draw_qlabels) {
                 const label = FormatQuarter(&label_buf, t);
@@ -469,22 +416,19 @@ fn DrawTimeScale(
 /// Draw keyframe indicators
 fn DrawKeyframes(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     timecodes: []c_longlong,
 ) void {
     for (timecodes) |kf| {
         const t: f64 = @floatFromInt(kf);
-        if (t < start_ms or t > end_ms) continue;
+        if (t < view.start_ms or t > view.end_ms) continue;
 
-        const delta = t - start_ms;
+        const delta = t - view.start_ms;
         const x_f = delta / pixels_per_ms;
-        if (x_f >= 0 and x_f < bmp_width_f) {
+        if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
-            DrawLine(bmp, x, 0, bmp_height, color_kf);
+            DrawLine(bmp, x, 0, view.bmp_height, color_kf);
         }
     }
 }
@@ -492,12 +436,8 @@ fn DrawKeyframes(
 /// Draw bounding boxes around all events
 fn DrawEventBounds(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
-    gutter_half: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
     selected_event_idx: usize,
@@ -514,12 +454,8 @@ fn DrawEventBounds(
 
         DrawEventBound(
             bmp,
-            bmp_width_f,
-            bmp_height,
-            gutter_half,
+            view,
             pixels_per_ms,
-            start_ms,
-            end_ms,
             event_bounds,
             ei,
             false,
@@ -529,12 +465,8 @@ fn DrawEventBounds(
     if (selected_event_pair_idx < event_bounds_len) {
         DrawEventBound(
             bmp,
-            bmp_width_f,
-            bmp_height,
-            gutter_half,
+            view,
             pixels_per_ms,
-            start_ms,
-            end_ms,
             event_bounds,
             selected_event_pair_idx,
             true,
@@ -545,12 +477,8 @@ fn DrawEventBounds(
 /// Draw bounding boxes around an event
 fn DrawEventBound(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
-    gutter_half: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     event_bounds: [*]i64,
     event_start_idx: usize,
     is_active: bool,
@@ -561,56 +489,52 @@ fn DrawEventBound(
     if (evt_end_ms < evt_start_ms)
         return;
 
-    if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
+    if ((evt_start_ms < view.start_ms and evt_end_ms < view.start_ms) or (evt_start_ms > view.end_ms and evt_end_ms > view.end_ms))
         return;
 
-    const start_x = ((evt_start_ms - start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
-    const end_x = (evt_end_ms - start_ms) / pixels_per_ms;
+    const start_x = ((evt_start_ms - view.start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
+    const end_x = (evt_end_ms - view.start_ms) / pixels_per_ms;
 
     // Draw starting post
     if (start_x >= 0) {
         const color = if (is_active) color_event_start else color_event_deactivated;
-        DrawLine(bmp, @intFromFloat(start_x), gutter_half, bmp_height - gutter_half, color);
+        DrawLine(bmp, @intFromFloat(start_x), view.gutter_half, view.bmp_height - view.gutter_half, color);
     }
     // Make thicker if we can
-    if (start_x + 1 >= 0 and start_x + 1 < bmp_width_f and start_x + 1 < end_x) {
+    if (start_x + 1 >= 0 and start_x + 1 < view.bmp_width_f and start_x + 1 < end_x) {
         const color = if (is_active) color_event_start else color_event_deactivated;
-        DrawLine(bmp, @intFromFloat(start_x + 1), gutter_half, bmp_height - gutter_half, color);
+        DrawLine(bmp, @intFromFloat(start_x + 1), view.gutter_half, view.bmp_height - view.gutter_half, color);
     }
 
     if (evt_start_ms == evt_end_ms or start_x == end_x) return; // Stop here if 0-duration or 0-width
 
     // Draw ending post
-    if (end_x < bmp_width_f) {
+    if (end_x < view.bmp_width_f) {
         const color = if (is_active) color_event_end else color_event_deactivated;
-        DrawLine(bmp, @intFromFloat(end_x), gutter_half, bmp_height - gutter_half, color);
+        DrawLine(bmp, @intFromFloat(end_x), view.gutter_half, view.bmp_height - view.gutter_half, color);
     }
     // Make thicker if we can
     if (end_x >= 1 and end_x - 1 > start_x + 1) {
         const color = if (is_active) color_event_end else color_event_deactivated;
-        DrawLine(bmp, @intFromFloat(end_x - 1), gutter_half, bmp_height - gutter_half, color);
+        DrawLine(bmp, @intFromFloat(end_x - 1), view.gutter_half, view.bmp_height - view.gutter_half, color);
     }
 
     const start_x_u: usize = @intFromFloat(@max(0, start_x));
-    const end_x_u: usize = @intFromFloat(@min(bmp_width_f, end_x));
+    const end_x_u: usize = @intFromFloat(@min(view.bmp_width_f, end_x));
 
     // Draw border
     for (start_x_u..end_x_u) |x| {
         const color = if (is_active) color_event_activated else color_event_deactivated;
-        DrawLine(bmp, @intCast(x), gutter_half, gutter_half + 1, color);
-        DrawLine(bmp, @intCast(x), bmp_height - gutter_half - 1, bmp_height - gutter_half, color);
+        DrawLine(bmp, @intCast(x), view.gutter_half, view.gutter_half + 1, color);
+        DrawLine(bmp, @intCast(x), view.bmp_height - view.gutter_half - 1, view.bmp_height - view.gutter_half, color);
     }
 }
 
 /// Shade the background of the selected event
 fn DrawSelectedEventShading(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
-    gutter_half: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
     selected_event_idx: usize,
@@ -623,17 +547,17 @@ fn DrawSelectedEventShading(
     const evt_end_ms: f64 = @floatFromInt(event_bounds[ei + 1]);
 
     if (evt_end_ms < evt_start_ms) return;
-    if ((evt_start_ms < start_ms and evt_end_ms < start_ms) or (evt_start_ms > end_ms and evt_end_ms > end_ms))
+    if ((evt_start_ms < view.start_ms and evt_end_ms < view.start_ms) or (evt_start_ms > view.end_ms and evt_end_ms > view.end_ms))
         return;
 
-    const start_x = @max(0.0, ((evt_start_ms - start_ms) / pixels_per_ms) + 1.0);
-    const end_x = @min(bmp_width_f, (evt_end_ms - start_ms) / pixels_per_ms);
+    const start_x = @max(0.0, ((evt_start_ms - view.start_ms) / pixels_per_ms) + 1.0);
+    const end_x = @min(view.bmp_width_f, (evt_end_ms - view.start_ms) / pixels_per_ms);
     if (end_x <= start_x) return;
 
     const x_start: usize = @intFromFloat(start_x);
     const x_end: usize = @intFromFloat(end_x);
-    const y_start: u32 = gutter_half;
-    const y_end: u32 = if (bmp_height > gutter_half) bmp_height - gutter_half else bmp_height;
+    const y_start: u32 = view.gutter_half;
+    const y_end: u32 = if (view.bmp_height > view.gutter_half) view.bmp_height - view.gutter_half else view.bmp_height;
     if (y_end <= y_start)
         return;
 
@@ -664,12 +588,8 @@ fn DrawSelectedEventShading(
 /// Draw syllable position indicators
 fn DrawSyllablePositions(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
-    gutter_half: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     event_start_ms: f64,
     event_end_ms: f64,
     syl_durs: [*]f64,
@@ -678,26 +598,26 @@ fn DrawSyllablePositions(
     if (event_end_ms < event_start_ms)
         return;
 
-    if ((event_start_ms < start_ms and event_end_ms < start_ms) or (event_start_ms > end_ms and event_end_ms > end_ms))
+    if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
         return;
 
     var si: usize = 0;
     var rolling: f64 = event_start_ms;
     while (si < syl_durs_len) : (si += 1) {
         rolling += syl_durs[si] * 10; // Add duration of current syl to total
-        if (rolling >= event_end_ms or rolling >= end_ms)
+        if (rolling >= event_end_ms or rolling >= view.end_ms)
             break;
 
-        const x = ((rolling - start_ms) / pixels_per_ms);
+        const x = ((rolling - view.start_ms) / pixels_per_ms);
 
         // Draw dotted line
-        if (x >= 0 and x < bmp_width_f) {
+        if (x >= 0 and x < view.bmp_width_f) {
             const dash_len: u32 = 6;
             const gap_len: u32 = 4;
 
-            var y: u32 = gutter_half;
-            while (y < bmp_height - gutter_half) {
-                const y_end = @min(y + dash_len, bmp_height - gutter_half);
+            var y: u32 = view.gutter_half;
+            while (y < view.bmp_height - view.gutter_half) {
+                const y_end = @min(y + dash_len, view.bmp_height - view.gutter_half);
                 DrawLine(bmp, @intFromFloat(x), y, y_end, color_kf);
                 y += dash_len + gap_len;
             }
@@ -708,40 +628,34 @@ fn DrawSyllablePositions(
 /// Draw the current video time
 fn DrawVideoPlayhead(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     playhead_ms: f64,
 ) void {
-    if (playhead_ms < start_ms or playhead_ms > end_ms) return;
+    if (playhead_ms < view.start_ms or playhead_ms > view.end_ms) return;
 
-    const delta = playhead_ms - start_ms;
+    const delta = playhead_ms - view.start_ms;
     const x_f = delta / pixels_per_ms;
-    if (x_f >= 0 and x_f < bmp_width_f) {
+    if (x_f >= 0 and x_f < view.bmp_width_f) {
         const x: u32 = @intFromFloat(x_f);
-        DrawLine(bmp, x, 0, bmp_height, color_v_playhead);
+        DrawLine(bmp, x, 0, view.bmp_height, color_v_playhead);
     }
 }
 
 /// Draw the current autio time
 fn DrawAudioPlayhead(
     bmp: *frames.Bitmap,
-    bmp_width_f: f64,
-    bmp_height: u32,
+    view: State,
     pixels_per_ms: f64,
-    start_ms: f64,
-    end_ms: f64,
     playhead_ms: f64,
 ) void {
-    if (playhead_ms < start_ms or playhead_ms > end_ms) return;
+    if (playhead_ms < view.start_ms or playhead_ms > view.end_ms) return;
 
-    const delta = playhead_ms - start_ms;
+    const delta = playhead_ms - view.start_ms;
     const x_f = delta / pixels_per_ms;
-    if (x_f >= 0 and x_f < bmp_width_f) {
+    if (x_f >= 0 and x_f < view.bmp_width_f) {
         const x: u32 = @intFromFloat(x_f);
-        DrawLine(bmp, x, 0, bmp_height, color_a_playhead);
+        DrawLine(bmp, x, 0, view.bmp_height, color_a_playhead);
     }
 }
 
