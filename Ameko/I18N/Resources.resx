@@ -462,4 +462,10 @@
     <data name="Audio_Button_DisableKaraoke_ToolTip" xml:space="preserve">
         <value>Disable karaoke mode</value>
     </data>
+    <data name="Audio_Button_Spectrum_ToolTip" xml:space="preserve">
+        <value>Switch to spectrum view</value>
+    </data>
+    <data name="Audio_Button_Waveform_ToolTip" xml:space="preserve">
+        <value>Switch to waveform view</value>
+    </data>
 </root>

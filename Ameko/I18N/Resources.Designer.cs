@@ -932,5 +932,17 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Audio_Button_DisableKaraoke_ToolTip", resourceCulture);
             }
         }
+        
+        public static string Audio_Button_Spectrum_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_Spectrum_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_Waveform_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_Waveform_ToolTip", resourceCulture);
+            }
+        }
     }
 }

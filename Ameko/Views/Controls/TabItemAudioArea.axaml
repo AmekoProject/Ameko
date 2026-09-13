@@ -134,6 +134,24 @@
           Command="{Binding DisableKaraokeViewCommand}"
           Classes="Small"
         />
+        <Button
+          Content="{icons:MaterialIconExt Kind=BlurLinear}"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_Spectrum_ToolTip}"
+          IsVisible="{Binding Workspace.MediaController.VisualizationStyle,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:AudioVisualizationStyle.Waveform}}"
+          Classes="Small"
+          IsEnabled="False"
+        />
+        <Button
+          Content="{icons:MaterialIconExt Kind=Waveform}"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_Waveform_ToolTip}"
+          IsVisible="{Binding Workspace.MediaController.VisualizationStyle,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:AudioVisualizationStyle.Spectrum}}"
+          Classes="Small"
+          IsEnabled="False"
+        />
       </StackPanel>
     </Grid>
 
