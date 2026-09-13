@@ -884,5 +884,53 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Menu_Profile_Subtitles", resourceCulture);
             }
         }
+        
+        public static string Audio_Button_PlayPause_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlayPause_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_PlayBefore_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlayBefore_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_PlayFirst_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlayFirst_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_PlaySurround_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlaySurround_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_PlayLast_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlayLast_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_PlayAfter_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_PlayAfter_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_EnableKaraoke_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_EnableKaraoke_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Audio_Button_DisableKaraoke_ToolTip {
+            get {
+                return ResourceManager.GetString("Audio_Button_DisableKaraoke_ToolTip", resourceCulture);
+            }
+        }
     }
 }

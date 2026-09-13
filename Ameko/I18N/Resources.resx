@@ -438,4 +438,28 @@
     <data name="Menu_Profile_Subtitles" xml:space="preserve">
         <value>Pro_file Subtitles...</value>
     </data>
+    <data name="Audio_Button_PlayPause_ToolTip" xml:space="preserve">
+        <value>Play/Pause audio for the active line</value>
+    </data>
+    <data name="Audio_Button_PlayBefore_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio before the active line</value>
+    </data>
+    <data name="Audio_Button_PlayFirst_ToolTip" xml:space="preserve">
+        <value>Play first 500ms of audio from the active line</value>
+    </data>
+    <data name="Audio_Button_PlaySurround_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio before and after the active line</value>
+    </data>
+    <data name="Audio_Button_PlayLast_ToolTip" xml:space="preserve">
+        <value>Play last 500ms of audio from the active line</value>
+    </data>
+    <data name="Audio_Button_PlayAfter_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio after the active line</value>
+    </data>
+    <data name="Audio_Button_EnableKaraoke_ToolTip" xml:space="preserve">
+        <value>Enable karaoke mode</value>
+    </data>
+    <data name="Audio_Button_DisableKaraoke_ToolTip" xml:space="preserve">
+        <value>Disable karaoke mode</value>
+    </data>
 </root>

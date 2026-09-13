@@ -71,7 +71,7 @@
       <!-- Controls -->
       <StackPanel Orientation="Horizontal" Grid.Row="1" Spacing="2">
         <Button
-          ToolTip.Tip="Play/Pause audio for the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlayPause_ToolTip}"
           Command="{Binding PlayPauseAudioEventCommand}"
           Classes="Small"
         >
@@ -88,37 +88,37 @@
         </Button>
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowCollapseRight}"
-          ToolTip.Tip="Play 500ms of audio before the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlayBefore_ToolTip}"
           Command="{Binding PlayAudioBeforeCommand}"
           Classes="Small"
         />
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowExpandRight}"
-          ToolTip.Tip="Play first 500ms of audio from the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlayFirst_ToolTip}"
           Command="{Binding PlayAudioFirstCommand}"
           Classes="Small"
         />
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowSplitVertical}"
-          ToolTip.Tip="Play 500ms of audio before and after the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlaySurround_ToolTip}"
           Command="{Binding PlayAudioSurroundCommand}"
           Classes="Small"
         />
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowCollapseRight}"
-          ToolTip.Tip="Play last 500ms of audio from the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlayLast_ToolTip}"
           Command="{Binding PlayAudioLastCommand}"
           Classes="Small"
         />
         <Button
           Content="{icons:MaterialIconExt Kind=ArrowExpandRight}"
-          ToolTip.Tip="Play 500ms of audio after the active line"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_PlayAfter_ToolTip}"
           Command="{Binding PlayAudioAfterCommand}"
           Classes="Small"
         />
         <Button
           Content="{icons:MaterialIconExt Kind=TimerMusicOutline}"
-          ToolTip.Tip="Enable karaoke mode"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_EnableKaraoke_ToolTip}"
           IsVisible="{Binding Workspace.MediaController.VisualizationType,
                                                      Converter={StaticResource EnumConverter},
                                                      ConverterParameter={x:Static holo:AudioVisualizationType.Events}}"
@@ -127,7 +127,7 @@
         />
         <Button
           Content="{icons:MaterialIconExt Kind=TimerMusic}"
-          ToolTip.Tip="Disable karaoke mode"
+          ToolTip.Tip="{x:Static i18n:Resources.Audio_Button_DisableKaraoke_ToolTip}"
           IsVisible="{Binding Workspace.MediaController.VisualizationType,
                                                      Converter={StaticResource EnumConverter},
                                                      ConverterParameter={x:Static holo:AudioVisualizationType.Syllables}}"
