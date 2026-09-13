@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 using System.Runtime.InteropServices;
+using Holo.Models;
 
 namespace Holo.Media.Providers;
 
@@ -159,8 +160,8 @@ public interface ISourceProvider
     /// <param name="style">Audio visualization style</param>
     /// <param name="eventStart">Start time of the active event</param>
     /// <param name="eventEnd">End time of the active event</param>
-    /// <param name="syllableDurations">Array of syllable durations</param>
-    /// <param name="syllableDurationsLength">Length of the <paramref name="syllableDurations"> array</paramref></param>
+    /// <param name="syllables">Array of syllables</param>
+    /// <param name="syllablesLength">Length of the <paramref name="syllables"> array</paramref></param>
     /// <param name="selectedEventIndex">Index of the currently-selected event</param>
     /// <returns>Output bitmap</returns>
     unsafe Bitmap* GetVisualizationFrameSyllablesView(
@@ -174,8 +175,8 @@ public interface ISourceProvider
         AudioVisualizationStyle style,
         long eventStart,
         long eventEnd,
-        long* syllableDurations,
-        int syllableDurationsLength,
+        SyllableInfo* syllables,
+        int syllablesLength,
         int selectedEventIndex
     );
 

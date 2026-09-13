@@ -18,6 +18,7 @@ const color_event_activated: u32 = 0xffa78bfa;
 const color_event_shade: u32 = 0xff2a1d4d;
 const color_event_start: u32 = 0xffa3e635;
 const color_event_end: u32 = 0xfff53d3d;
+const color_syl_text: u32 = 0xffffffff;
 const color_kf: u32 = 0xffff954b;
 
 pub const ViewStyle = enum {
@@ -157,8 +158,8 @@ pub fn RenderSyllablesView(
     style: ViewStyle,
     event_start: i64,
     event_end: i64,
-    syl_durs: [*]i64,
-    syl_durs_len: usize,
+    syls: [*]frames.SyllableInfo,
+    syls_len: usize,
 ) void {
     const audio_data = g_ctx.*.buffers.audio_buffer;
     const is_stereo = g_ctx.*.ffms.channel_count == 2;
@@ -226,8 +227,18 @@ pub fn RenderSyllablesView(
             pixels_per_ms,
             @floatFromInt(event_start),
             @floatFromInt(event_end),
-            syl_durs,
-            syl_durs_len,
+            syls,
+            syls_len,
+        );
+
+        DrawSyllableText(
+            bmp,
+            view,
+            pixels_per_ms,
+            @floatFromInt(event_start),
+            @floatFromInt(event_end),
+            syls,
+            syls_len,
         );
 
         // Draw playheads over everything
@@ -586,9 +597,12 @@ fn DrawSyllablePositions(
     pixels_per_ms: f64,
     event_start_ms: f64,
     event_end_ms: f64,
-    syl_durs: [*]i64,
-    syl_durs_len: usize,
+    syls: [*]frames.SyllableInfo,
+    syls_len: usize,
 ) void {
+    if (syls_len < 1 or (syls_len == 1 and syls[0].duration == 0))
+        return;
+
     if (event_end_ms < event_start_ms)
         return;
 
@@ -596,13 +610,12 @@ fn DrawSyllablePositions(
         return;
 
     var si: usize = 0;
-    var rolling: f64 = event_start_ms;
-    while (si < syl_durs_len) : (si += 1) {
-        rolling += @floatFromInt(syl_durs[si]); // Add duration of current syl to total
-        if (rolling >= event_end_ms or rolling >= view.end_ms)
+    while (si < syls_len) : (si += 1) {
+        const syl_start_time: f64 = @floatFromInt(syls[si].start_time);
+        if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms)
             break;
 
-        const x = ((rolling - view.start_ms) / pixels_per_ms);
+        const x = ((syl_start_time - view.start_ms) / pixels_per_ms);
 
         // Draw dotted line
         if (x >= 0 and x < view.bmp_width_f) {
@@ -616,6 +629,50 @@ fn DrawSyllablePositions(
                 y += dash_len + gap_len;
             }
         }
+    }
+}
+
+/// Draw syllable text content
+fn DrawSyllableText(
+    bmp: *frames.Bitmap,
+    view: State,
+    pixels_per_ms: f64,
+    event_start_ms: f64,
+    event_end_ms: f64,
+    syls: [*]frames.SyllableInfo,
+    syls_len: usize,
+) void {
+    if (syls_len < 1 or (syls_len == 1 and syls[0].duration == 0))
+        return;
+
+    if (event_end_ms < event_start_ms)
+        return;
+
+    if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
+        return;
+
+    var si: usize = 0;
+    while (si < syls_len) : (si += 1) {
+        const syl = syls[si];
+        if (syl.duration == 0)
+            continue;
+
+        const syl_start_time: f64 = @floatFromInt(syl.start_time);
+        const syl_end_time: f64 = @floatFromInt(syl.start_time + syl.duration);
+        if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms or syl_end_time < view.start_ms)
+            continue;
+
+        const text: []const u8 = std.mem.sliceTo(&syl.text, 0);
+        if (text.len == 0)
+            continue;
+
+        // const syl_start_x = ((syl_start_time - view.start_ms) / pixels_per_ms);
+        // const syl_end_x = ((syl_end_time - view.start_ms) / pixels_per_ms);
+
+        const x = ((syl_start_time + @divFloor(syl_end_time - syl_start_time, 2)) - view.start_ms) / pixels_per_ms;
+        const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
+
+        DrawText(bmp, lx, view.gutter_height + 2, text, color_syl_text);
     }
 }
 

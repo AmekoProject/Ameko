@@ -54,8 +54,7 @@ public class MediaController : BindableBase
 
     private Event _activeEvent;
     private long[] _eventBounds = [];
-    private long[] _syllableDurations = [];
-    private List<Syllable> _syllables = [];
+    private SyllableInfo[] _syllables = [];
 
     /// <summary>
     /// If a video or audio file is currently being loaded
@@ -1233,7 +1232,7 @@ public class MediaController : BindableBase
                         }
                         break;
                     case AudioVisualizationType.Syllables:
-                        fixed (long* ptr = _syllableDurations)
+                        fixed (SyllableInfo* ptr = _syllables)
                         {
                             vizFrame = _provider.GetVisualizationFrameSyllablesView(
                                 VisualizerWidth,
@@ -1247,7 +1246,7 @@ public class MediaController : BindableBase
                                 _activeEvent.Start.TotalMilliseconds,
                                 _activeEvent.End.TotalMilliseconds,
                                 ptr,
-                                _syllableDurations.Length,
+                                _syllables.Length,
                                 _activeEvent.Index - 1
                             );
                         }
@@ -1281,11 +1280,9 @@ public class MediaController : BindableBase
         lock (_boundsLock)
         {
             _karaoke.SetLine(_activeEvent, autoSplit: false, normalize: false);
-            _syllables.Clear();
-            _syllables.AddRange(_karaoke.Syllables);
             lock (_boundsLock)
             {
-                _syllableDurations = _syllables.Select(s => s.Duration).ToArray();
+                _syllables = _karaoke.Syllables.Select(SyllableInfo.From).ToArray();
             }
         }
     }

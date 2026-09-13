@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using Holo.IO;
+using Holo.Models;
 using Holo.Providers;
 using Microsoft.Extensions.Logging;
 
@@ -264,8 +265,8 @@ public unsafe class MizukiSourceProvider(
         AudioVisualizationStyle style,
         long eventStart,
         long eventEnd,
-        long* syllableDurations,
-        int syllableDurationsLength,
+        SyllableInfo* syllables,
+        int syllablesLength,
         int selectedEventIndex
     )
     {
@@ -281,8 +282,8 @@ public unsafe class MizukiSourceProvider(
             (int)style,
             eventStart,
             eventEnd,
-            syllableDurations,
-            syllableDurationsLength,
+            syllables,
+            syllablesLength,
             selectedEventIndex
         );
     }
@@ -555,8 +556,8 @@ internal static unsafe partial class External
         int style,
         long eventStart,
         long eventEnd,
-        long* syllableDurations,
-        int syllableDurationsLength,
+        SyllableInfo* syllables,
+        int syllablesLength,
         int selectedEventIndex
     );
 

@@ -2,6 +2,7 @@
 
 using Holo.Media;
 using Holo.Media.Providers;
+using Holo.Models;
 
 namespace TestingUtils;
 
@@ -127,8 +128,8 @@ public unsafe class NullSourceProvider : ISourceProvider
         AudioVisualizationStyle style,
         long eventStart,
         long eventEnd,
-        long* syllableDurations,
-        int syllableDurationsLength,
+        SyllableInfo* syllables,
+        int syllablesLength,
         int selectedEventIndex
     )
     {

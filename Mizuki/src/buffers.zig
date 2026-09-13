@@ -177,8 +177,8 @@ pub fn ProcVisualizationFrameSyllablesView(
     style: viz.ViewStyle,
     event_start: i64,
     event_end: i64,
-    syl_durs: [*]i64,
-    syl_durs_len: usize,
+    syls: [*]frames.SyllableInfo,
+    syls_len: usize,
 ) !*frames.Bitmap {
     const ctx = &g_ctx.*.buffers;
     const result: *frames.Bitmap = try GetOrCreateVisualizationFrame(ctx, width, height);
@@ -194,8 +194,8 @@ pub fn ProcVisualizationFrameSyllablesView(
         style,
         event_start,
         event_end,
-        syl_durs,
-        syl_durs_len,
+        syls,
+        syls_len,
     );
     return result;
 }

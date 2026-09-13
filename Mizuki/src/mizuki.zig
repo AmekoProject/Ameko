@@ -217,8 +217,8 @@ pub export fn GetVisualizationFrameSyllablesView(
     style: c_int,
     event_start: i64,
     event_end: i64,
-    syl_durs: [*]i64,
-    syl_durs_len: usize,
+    syls: [*]frames.SyllableInfo,
+    syls_len: usize,
 ) ?*frames.Bitmap {
     return buffers.ProcVisualizationFrameSyllablesView(
         g_ctx,
@@ -235,8 +235,8 @@ pub export fn GetVisualizationFrameSyllablesView(
         },
         event_start,
         event_end,
-        syl_durs,
-        @intCast(syl_durs_len),
+        syls,
+        @intCast(syls_len),
     ) catch {
         return null;
     };

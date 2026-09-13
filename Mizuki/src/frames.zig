@@ -53,3 +53,10 @@ pub const Bitmap = extern struct {
     data: [*]u8,
     refcount: c_int = 0,
 };
+
+/// Syllable information
+pub const SyllableInfo = extern struct {
+    start_time: i64,
+    duration: i64,
+    text: [48]u8,
+};
