@@ -74,14 +74,17 @@ pub fn RenderEventsView(
         @memset(bmp.*.data[0..bmp_total_bytes], 0);
 
         // Behind everything else, draw the shading for the selected event
-        DrawSelectedEventShading(
-            bmp,
-            view,
-            pixels_per_ms,
-            event_bounds,
-            event_bounds_len,
-            selected_event_idx,
-        );
+        if ((event_bounds_len & 1) == 0 and selected_event_idx < (event_bounds_len / 2)) {
+            const selected_event_start = @as(f64, @floatFromInt(event_bounds[selected_event_idx * 2]));
+            const selected_event_end = @as(f64, @floatFromInt(event_bounds[selected_event_idx * 2 + 1]));
+            DrawSelectionShading(
+                bmp,
+                view,
+                pixels_per_ms,
+                selected_event_start,
+                selected_event_end,
+            );
+        }
 
         // Draw hashes for seconds and quarter-seconds in the gutter
         DrawTimeScale(
@@ -178,13 +181,12 @@ pub fn RenderSyllablesView(
         var event_bounds = [_]i64{ event_start, event_end };
 
         // Behind everything else, draw the shading for the selected event
-        DrawSelectedEventShading(
+        DrawSelectionShading(
             bmp,
             view,
             pixels_per_ms,
-            &event_bounds,
-            2,
-            0,
+            @floatFromInt(event_start),
+            @floatFromInt(event_end),
         );
 
         // Draw hashes for seconds and quarter-seconds in the gutter
@@ -530,28 +532,20 @@ fn DrawEventBound(
     }
 }
 
-/// Shade the background of the selected event
-fn DrawSelectedEventShading(
+/// Shade the background of the selection
+fn DrawSelectionShading(
     bmp: *frames.Bitmap,
     view: State,
     pixels_per_ms: f64,
-    event_bounds: [*]i64,
-    event_bounds_len: usize,
-    selected_event_idx: usize,
+    start_ms: f64,
+    end_ms: f64,
 ) void {
-    if ((event_bounds_len & 1) != 0 or selected_event_idx >= (event_bounds_len / 2))
+    if (end_ms < start_ms) return;
+    if ((start_ms < view.start_ms and end_ms < view.start_ms) or (start_ms > view.end_ms and end_ms > view.end_ms))
         return;
 
-    const ei = selected_event_idx * 2;
-    const evt_start_ms: f64 = @floatFromInt(event_bounds[ei]);
-    const evt_end_ms: f64 = @floatFromInt(event_bounds[ei + 1]);
-
-    if (evt_end_ms < evt_start_ms) return;
-    if ((evt_start_ms < view.start_ms and evt_end_ms < view.start_ms) or (evt_start_ms > view.end_ms and evt_end_ms > view.end_ms))
-        return;
-
-    const start_x = @max(0.0, ((evt_start_ms - view.start_ms) / pixels_per_ms) + 1.0);
-    const end_x = @min(view.bmp_width_f, (evt_end_ms - view.start_ms) / pixels_per_ms);
+    const start_x = @max(0.0, ((start_ms - view.start_ms) / pixels_per_ms) + 1.0);
+    const end_x = @min(view.bmp_width_f, (end_ms - view.start_ms) / pixels_per_ms);
     if (end_x <= start_x) return;
 
     const x_start: usize = @intFromFloat(start_x);
