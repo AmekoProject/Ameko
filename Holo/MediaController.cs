@@ -164,7 +164,12 @@ public class MediaController : BindableBase
     public AudioVisualizationStyle VisualizationStyle
     {
         get;
-        set => SetProperty(ref field, value);
+        set
+        {
+            SetProperty(ref field, value);
+            if (IsVideoLoaded)
+                RequestFrame(CurrentFrame);
+        }
     } = AudioVisualizationStyle.Waveform;
 
     /// <summary>
@@ -178,8 +183,10 @@ public class MediaController : BindableBase
             SetProperty(ref field, value);
             if (value is AudioVisualizationType.Syllables)
                 ParseSyllables();
+            if (IsVideoLoaded)
+                RequestFrame(CurrentFrame);
         }
-    } = AudioVisualizationType.Syllables;
+    } = AudioVisualizationType.Events;
 
     /// <summary>
     /// Width of the viewport

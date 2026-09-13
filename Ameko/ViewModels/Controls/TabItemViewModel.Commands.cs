@@ -1070,6 +1070,32 @@ public partial class TabItemViewModel
     }
 
     /// <summary>
+    /// Enable karaoke view
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateEnableKaraokeViewCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            if (!Workspace.MediaController.IsAudioLoaded)
+                return;
+            Workspace.MediaController.VisualizationType = AudioVisualizationType.Syllables;
+        });
+    }
+
+    /// <summary>
+    /// Disable karaoke view
+    /// </summary>
+    private ReactiveCommand<RxVoid, RxVoid> CreateDisableKaraokeViewCommand()
+    {
+        return ReactiveCommand.Create(() =>
+        {
+            if (!Workspace.MediaController.IsAudioLoaded)
+                return;
+            Workspace.MediaController.VisualizationType = AudioVisualizationType.Events;
+        });
+    }
+
+    /// <summary>
     /// Shift reference file forwards
     /// </summary>
     private ReactiveCommand<RxVoid, RxVoid> CreateShiftReferenceForwardCommand()

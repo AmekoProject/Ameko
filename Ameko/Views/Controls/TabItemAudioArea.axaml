@@ -8,12 +8,14 @@
   xmlns:i18n="clr-namespace:Ameko.I18N"
   xmlns:c="clr-namespace:Ameko.Views.Controls"
   xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:holo="clr-namespace:Holo.Media;assembly=Holo"
   xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
   xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
   x:Class="Ameko.Views.Controls.TabItemAudioArea"
   x:DataType="vm:TabItemViewModel"
 >
   <Control.Resources>
+    <converters:EnumConverter x:Key="EnumConverter" />
     <converters:IsMediaIndexingConverter x:Key="IndexingConverter" />
   </Control.Resources>
   <DockPanel Margin="2">
@@ -112,6 +114,24 @@
           Content="{icons:MaterialIconExt Kind=ArrowExpandRight}"
           ToolTip.Tip="Play 500ms of audio after the active line"
           Command="{Binding PlayAudioAfterCommand}"
+          Classes="Small"
+        />
+        <Button
+          Content="{icons:MaterialIconExt Kind=TimerMusicOutline}"
+          ToolTip.Tip="Enable karaoke mode"
+          IsVisible="{Binding Workspace.MediaController.VisualizationType,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:AudioVisualizationType.Events}}"
+          Command="{Binding EnableKaraokeViewCommand}"
+          Classes="Small"
+        />
+        <Button
+          Content="{icons:MaterialIconExt Kind=TimerMusic}"
+          ToolTip.Tip="Disable karaoke mode"
+          IsVisible="{Binding Workspace.MediaController.VisualizationType,
+                                                     Converter={StaticResource EnumConverter},
+                                                     ConverterParameter={x:Static holo:AudioVisualizationType.Syllables}}"
+          Command="{Binding DisableKaraokeViewCommand}"
           Classes="Small"
         />
       </StackPanel>

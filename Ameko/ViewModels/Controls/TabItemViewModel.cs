@@ -197,6 +197,9 @@ public partial class TabItemViewModel : ViewModelBase
     [Command("ameko.event.addLeadOut", KeybindContext.Audio)]
     public ICommand AddLeadOutCommand { get; }
 
+    public ICommand EnableKaraokeViewCommand { get; }
+    public ICommand DisableKaraokeViewCommand { get; }
+
     // References
     [Command("ameko.reference.shift.forward", KeybindContext.Editor)]
     public ICommand ShiftReferenceForwardCommand { get; }
@@ -415,6 +418,8 @@ public partial class TabItemViewModel : ViewModelBase
         PlayAudioAfterCommand = CreatePlayAudioAfterCommand();
         AddLeadInCommand = CreateAddLeadInCommand();
         AddLeadOutCommand = CreateAddLeadOutCommand();
+        EnableKaraokeViewCommand = CreateEnableKaraokeViewCommand();
+        DisableKaraokeViewCommand = CreateDisableKaraokeViewCommand();
 
         // Frame Saving & Copying
         SaveFrameCommand = CreateSaveFrameCommand(SaveFrameMode.Full);
