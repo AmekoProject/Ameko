@@ -244,8 +244,6 @@ pub fn RenderSyllablesView(
                 a_playhead_ms,
             );
         }
-
-        DrawText(bmp, 30, 30, "こんにちはThis is a test, here's a kanji 才! (alas, there's no カンジ、 just tofu)", color_kf);
     }
 }
 
@@ -260,7 +258,7 @@ fn PrepareState(
     const bmp_height: u32 = @intCast(bmp.*.height);
     const bmp_mid: u32 = @divFloor(bmp_height, 2);
     const bmp_mid_i: i32 = @intCast(bmp_mid);
-    const gutter_height: u32 = if (bmp_height >= 64) 16 else if (bmp_height >= 32) 12 else 0;
+    const gutter_height: u32 = if (bmp_height >= 128) 26 else if (bmp_height >= 64) 18 else 0;
     const gutter_half: u32 = @divFloor(gutter_height, 2);
     const gutter_quarter: u32 = @divFloor(gutter_height, 4);
     const wfv_height: u32 = bmp_height - (gutter_height * 2);
@@ -728,7 +726,7 @@ fn DrawGlyph(bmp: *frames.Bitmap, x: u32, y: u32, glyph: font.Glyph, color: u32)
             if (py >= bmp_h) break;
 
             // Column-major: bit 0 = top pixel of the column.
-            const mask: u8 = @as(u8, 1) << @intCast(row);
+            const mask: u16 = @as(u16, 1) << @intCast(row);
             if ((bits & mask) != 0) {
                 const row_ptr = bmp.data + (@as(usize, py) * pitch);
                 const px_ptr: *u32 = @ptrCast(@alignCast(row_ptr + px * 4));
