@@ -600,7 +600,7 @@ fn DrawSyllablePositions(
     syls: [*]frames.SyllableInfo,
     syls_len: usize,
 ) void {
-    if (syls_len < 1 or (syls_len == 1 and syls[0].duration == 0))
+    if (syls_len < 1)
         return;
 
     if (event_end_ms < event_start_ms)
@@ -609,7 +609,7 @@ fn DrawSyllablePositions(
     if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
         return;
 
-    var si: usize = 0;
+    var si: usize = 1; // Skip the first syl, which always starts at the event start time
     while (si < syls_len) : (si += 1) {
         const syl_start_time: f64 = @floatFromInt(syls[si].start_time);
         if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms)
