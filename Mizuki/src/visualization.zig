@@ -666,13 +666,25 @@ fn DrawSyllableText(
         if (text.len == 0)
             continue;
 
-        // const syl_start_x = ((syl_start_time - view.start_ms) / pixels_per_ms);
-        // const syl_end_x = ((syl_end_time - view.start_ms) / pixels_per_ms);
+        // Visible boundaries of the syl
+        const syl_start_x: f64 = @max(0, ((syl_start_time - view.start_ms) / pixels_per_ms) - 1);
+        const syl_end_x: f64 = @min(view.end_ms, ((syl_end_time - view.start_ms) / pixels_per_ms) + 1);
+
+        if (syl_start_x >= syl_end_x)
+            continue;
 
         const x = ((syl_start_time + @divFloor(syl_end_time - syl_start_time, 2)) - view.start_ms) / pixels_per_ms;
         const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
 
-        DrawText(bmp, lx, view.gutter_height + 2, text, color_syl_text);
+        DrawClippedText(
+            bmp,
+            lx,
+            view.gutter_height + 2,
+            @intFromFloat(syl_start_x),
+            @intFromFloat(syl_end_x),
+            text,
+            color_syl_text,
+        );
     }
 }
 
@@ -757,6 +769,32 @@ fn DrawText(bmp: *frames.Bitmap, x: u32, y: u32, text: []const u8, color: u32) v
         if (cx > bmp_w) break;
 
         const glyph = font.Lookup(cp);
+        DrawGlyph(bmp, cx, y, glyph, color);
+        cx += glyph.width + 1;
+    }
+}
+
+/// Draw a null-terminated ASCII string at pixel position (x, y), restricted between min_x and max_x
+fn DrawClippedText(bmp: *frames.Bitmap, x: u32, y: u32, min_x: u32, max_x: u32, text: []const u8, color: u32) void {
+    const uni_view = std.unicode.Utf8View.init(text) catch return; // draw nothing if malformed
+    const bmp_w: u32 = @intCast(bmp.width);
+    var cx = x;
+
+    var it = uni_view.iterator();
+    while (it.nextCodepoint()) |cp| {
+        if (cx > bmp_w) break;
+
+        const glyph = font.Lookup(cp);
+        const new_x = cx + glyph.width; // Right edge of this syl
+
+        if (new_x >= max_x) {
+            return;
+        }
+        if (cx <= min_x) {
+            cx = new_x + 1;
+            continue;
+        }
+
         DrawGlyph(bmp, cx, y, glyph, color);
         cx += glyph.width + 1;
     }
