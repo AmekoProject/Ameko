@@ -119,13 +119,13 @@ pub fn RenderEventsView(
         }
 
         // Draw event bounds over the spectrum
-        DrawEventBound(
+        DrawEventBounds(
             bmp,
             view,
             pixels_per_ms,
             event_bounds,
-            0,
-            false,
+            event_bounds_len,
+            selected_event_idx,
         );
 
         // Draw playheads over everything
@@ -179,8 +179,6 @@ pub fn RenderSyllablesView(
         const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
         @memset(bmp.*.data[0..bmp_total_bytes], 0);
 
-        var event_bounds = [_]i64{ event_start, event_end };
-
         // Behind everything else, draw the shading for the selected event
         DrawSelectionShading(
             bmp,
@@ -212,13 +210,14 @@ pub fn RenderSyllablesView(
         }
 
         // Draw event bounds over the spectrum
-        DrawEventBounds(
+        var event_bounds = [_]i64{ event_start, event_end };
+        DrawEventBound(
             bmp,
             view,
             pixels_per_ms,
             &event_bounds,
-            2,
             0,
+            false,
         );
 
         DrawSyllablePositions(
