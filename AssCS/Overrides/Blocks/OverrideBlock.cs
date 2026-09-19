@@ -12,9 +12,30 @@ namespace AssCS.Overrides.Blocks;
 /// of override brackets <c>{ }</c> containing
 /// one or more override tags
 /// </remarks>
-public class OverrideBlock(ReadOnlySpan<char> data) : Block(data.ToString(), BlockType.Override)
+public class OverrideBlock : Block
 {
-    private readonly string _data = data.ToString();
+    private readonly string _data;
+
+    /// <summary>
+    /// Create an override block from text
+    /// </summary>
+    /// <param name="data">Text data to create block from</param>
+    public OverrideBlock(ReadOnlySpan<char> data)
+        : base(data.ToString(), BlockType.Override)
+    {
+        _data = data.ToString();
+    }
+
+    /// <summary>
+    /// Create an override block from pre-existing tags
+    /// </summary>
+    /// <param name="tags">Tags to construct the block with</param>
+    public OverrideBlock(IEnumerable<OverrideTag> tags)
+        : base(string.Empty, BlockType.Override)
+    {
+        _data = string.Empty;
+        Tags = tags.ToList();
+    }
 
     /// <summary>
     /// Gets the list of <see cref="OverrideTag"/> objects parsed from this block.

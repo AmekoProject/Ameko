@@ -58,6 +58,11 @@ public class Time : BindableBase, IComparable<Time>
     public long TotalMilliseconds => (long)_local.TotalMilliseconds;
 
     /// <summary>
+    /// Total number of centiseconds
+    /// </summary>
+    public long TotalCentiseconds => TotalMilliseconds / 10;
+
+    /// <summary>
     /// Ass-formatted string
     /// </summary>
     public string TextContent => AsAss();

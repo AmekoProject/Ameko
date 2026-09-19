@@ -7,6 +7,146 @@ namespace AssCS.Tests;
 public class KaraokeTests
 {
     [Test]
+    public async Task Parse_EmptyEvent_Returns_EmptySyl()
+    {
+        var @event = CreateEventWithSyllables(string.Empty);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(@"{\k0}");
+    }
+
+    [Test]
+    public async Task Parse_PlaintextEvent_Returns_Syl()
+    {
+        const string content = "I'm whispering a lullaby for you to come back home";
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo($@"{{\k0}}{content}");
+    }
+
+    [Test]
+    public async Task Parse_Event_With_Syl_Returns_Syl()
+    {
+        const string content = @"{\k10}I'm whispering a lullaby for you to come back home";
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(content);
+    }
+
+    [Test]
+    public async Task Parse_Event_With_Syls_Returns_Syls()
+    {
+        const string syl1 = @"{\k10}I'm whispering a lullaby ";
+        const string syl2 = @"{\k25}for you to come back home";
+        const string content = syl1 + syl2;
+
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(25);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(syl1);
+        await Assert.That(karaoke.Syllables[1].Text).IsEqualTo(syl2);
+    }
+
+    [Test]
+    public async Task Parse_Event_With_Syl_And_Tags_Returns_Syl()
+    {
+        const string content =
+            @"{\k10\fs150\fnArial}I'm whispering a lullaby for you to come back home";
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[0].Tags.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(content);
+    }
+
+    [Test]
+    public async Task Parse_Event_With_Syl_And_Blocks_Returns_Syl()
+    {
+        const string content =
+            @"{\k10}I'm whispering a {\fscx105}lullaby for you to come back home";
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[0].Blocks.Count).IsEqualTo(3);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(content);
+    }
+
+    [Test]
+    public async Task Split_Splits_PlainSyl()
+    {
+        const string syl1 = @"I'm whispering a lullaby ";
+        const string syl2 = @"for you to come back home";
+        const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        karaoke.Split(0, 25);
+
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(5);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(5);
+        await Assert.That(karaoke.Syllables[0].InnerText).IsEqualTo(syl1);
+        await Assert.That(karaoke.Syllables[1].InnerText).IsEqualTo(syl2);
+    }
+
+    [Test]
+    public async Task Split_Early_Splits_PlainSyl()
+    {
+        const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        karaoke.Split(0, 0);
+
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(0);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(@"{\k0}");
+        await Assert.That(karaoke.Syllables[1].Text).IsEqualTo(content);
+    }
+
+    [Test]
+    public async Task Split_Late_Splits_PlainSyl()
+    {
+        const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        karaoke.Split(0, 50);
+
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(0);
+        await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(content);
+        await Assert.That(karaoke.Syllables[1].Text).IsEqualTo(@"{\k0}");
+    }
+
+    [Test]
+    public async Task Split_WithBlocks_Splits_Syl()
+    {
+        const string syl1 = @"I'm whispering a lullaby ";
+        const string syl2 = @"for you to come back home";
+        const string content =
+            @"{\k10}I'm whispering a {\xshad100}lullaby for you to come back home"; // 50 inner chars
+        var @event = CreateEventWithSyllables(content);
+        var karaoke = new Karaoke2(@event);
+        karaoke.Split(0, 25);
+
+        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(5);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(5);
+        await Assert.That(karaoke.Syllables[0].Blocks.Count).IsEqualTo(3);
+        await Assert.That(karaoke.Syllables[0].InnerText).IsEqualTo(syl1);
+        await Assert.That(karaoke.Syllables[1].InnerText).IsEqualTo(syl2);
+    }
+
+    // Original implementation below
+
+    [Test]
     public async Task Text_ReturnsSyllableTextWithKTags()
     {
         var karaoke = new Karaoke();
