@@ -5,106 +5,203 @@ using AssCS.Overrides.Blocks;
 namespace AssCS.Overrides;
 
 /// <summary>
-/// A verse of karaoke
+/// Provides methods for working with karaoke <see cref="Syllable"/>s
 /// </summary>
-public class Karaoke
+public class Karaoke(Event @event)
 {
+    private int? _hash;
     private readonly List<Syllable> _syllables = [];
 
     /// <summary>
-    /// Text content of the verse
+    /// List of syllables in the line
     /// </summary>
-    public string Text => string.Join("", _syllables.Select(s => s.GetFormattedText(true)));
-
-    /// <summary>
-    /// Karaoke tag type
-    /// </summary>
-    /// <remarks>Returns an empty string if there are no syllables</remarks>
-    public string TagType
+    public IReadOnlyList<Syllable> Syllables
     {
-        get => _syllables.FirstOrDefault()?.TagType ?? string.Empty;
-        set
+        get
         {
-            foreach (var syl in _syllables)
-                syl.TagType = value;
+            var currentHash = @event.Text.GetHashCode();
+            if (currentHash == _hash)
+                return _syllables;
+            return ParseSyllables();
         }
     }
 
     /// <summary>
-    /// Collection of syllable objects
+    /// Parses the event into syllables
     /// </summary>
-    public IReadOnlyList<Syllable> Syllables => _syllables;
-
-    /// <summary>
-    /// Set the syllables for a line
-    /// </summary>
-    /// <param name="line">Line to set the syllables of</param>
-    /// <param name="autoSplit">Whether to split on spaces</param>
-    /// <param name="normalize">Whether to normalize syllable durations</param>
-    public void SetLine(Event line, bool autoSplit, bool normalize)
+    /// <returns>List of syllable objects</returns>
+    public IReadOnlyList<Syllable> ParseSyllables()
     {
+        _hash = @event.Text.GetHashCode();
+        List<Syllable> syllables = [];
+
+        var syl = new Syllable(new OverrideTag.K(0));
+        foreach (var block in @event.ParseBlocks())
+        {
+            switch (block.Type)
+            {
+                case BlockType.Plain:
+                case BlockType.Comment:
+                case BlockType.Drawing:
+                    syl.Blocks.Add(block);
+                    break;
+                case BlockType.Override:
+                    var ob = (OverrideBlock)block;
+                    if (!ob.Tags.OfType<OverrideTag.K>().Any())
+                    {
+                        syl.Blocks.Add(block);
+                        break;
+                    }
+
+                    // New syllable!
+                    if (!syl.IsEmpty())
+                        syllables.Add(syl);
+                    syl = new Syllable(
+                        kTag: ob.Tags.OfType<OverrideTag.K>().Last(),
+                        overrideTags: ob.Tags.Where(t => t is not OverrideTag.K)
+                    );
+                    break;
+            }
+        }
+
+        syllables.Add(syl);
+
         _syllables.Clear();
-        Syllable syl = new()
-        {
-            Start = Time.FromTime(line.Start),
-            Duration = 0,
-            TagType = @"\k",
-        };
-        ParseSyllables(line, syl);
+        _syllables.AddRange(syllables);
+        return syllables;
+    }
 
-        if (normalize)
-        {
-            var lineEnd = line.End;
-            var lastSyl = _syllables[^1];
-            var lastEnd = lastSyl.Start + Time.FromMillis(lastSyl.Duration);
+    /// <summary>
+    /// Sets <see cref="Event.Text"/> by joining the <see cref="Syllable.Text"/> of each syllable in <paramref name="syllables"></paramref>
+    /// </summary>
+    /// <param name="syllables">The syllables to set</param>
+    public void SetSyllables(IEnumerable<Syllable> syllables)
+    {
+        var list = syllables.ToList();
+        @event.Text = string.Join(string.Empty, list.Select(s => s.Text));
 
-            if (lastEnd > lineEnd)
-            {
-                foreach (var s in _syllables)
-                {
-                    if (s.Start > lineEnd)
-                    {
-                        s.Start = Time.FromTime(lineEnd);
-                        s.Duration = 0;
-                    }
-                    else
-                    {
-                        s.Duration = Math.Min(s.Duration, (lineEnd - s.Start).TotalMilliseconds);
-                    }
-                }
-            }
-        }
+        _hash = @event.Text.GetHashCode();
+        ParseSyllables();
+    }
 
-        if (autoSplit && _syllables.Count == 1)
+    /// <summary>
+    /// Normalize the duration of syllables according to syllable text length
+    /// </summary>
+    public void Normalize()
+    {
+        if (_syllables.Count == 0)
+            ParseSyllables();
+
+        var charCount = _syllables.Sum(s => s.InnerText.Length);
+        var duration = (@event.End - @event.Start).TotalCentiseconds;
+        foreach (var syl in _syllables)
         {
-            int pos;
-            while ((pos = _syllables.Last().Text.IndexOf(' ')) != -1)
-            {
-                AddSplit(_syllables.Count - 1, pos + 1);
-            }
+            syl.Duration = (long)(syl.InnerText.Length / (double)charCount * duration);
         }
     }
 
     /// <summary>
-    /// Add a split
+    /// Distribute syllables evenly across the event
     /// </summary>
-    /// <param name="index">Syllable index</param>
-    /// <param name="position">Position in the text</param>
+    public void Distribute()
+    {
+        if (_syllables.Count == 0)
+            ParseSyllables();
+
+        var duration = (@event.End - @event.Start).TotalCentiseconds / _syllables.Count;
+        foreach (var syl in _syllables)
+        {
+            syl.Duration = duration;
+        }
+    }
+
+    /// <summary>
+    /// Automatically split the event into syllables
+    /// </summary>
+    /// <remarks>Removes all existing syllables</remarks>
+    public void AutoSplit()
+    {
+        if (string.IsNullOrWhiteSpace(@event.Text))
+            return;
+
+        // Remove existing syllables
+        _syllables.Clear();
+        var blocks = @event.ParseBlocks();
+        foreach (var block in blocks.OfType<OverrideBlock>())
+        {
+            block.SetTags(block.Tags.Where(t => t is not OverrideTag.K));
+        }
+        @event.SetBlocks(blocks);
+
+        ParseSyllables(); // Generate initial syl
+
+        int pos;
+        while ((pos = _syllables.Last().InnerText.IndexOf(' ')) != -1)
+        {
+            AddSplit(_syllables.Count - 1, pos + 1);
+        }
+    }
+
+    /// <summary>
+    /// Split a syllable
+    /// </summary>
+    /// <param name="index">Index of the syllable to split</param>
+    /// <param name="position">Position relative to <see cref="Syllable.InnerText"/> to split at</param>
     public void AddSplit(int index, int position)
     {
-        var preSyl = _syllables[index];
-        var newSyl = new Syllable();
-        _syllables.Insert(index + 1, newSyl);
+        if (_syllables.Count == 0)
+            ParseSyllables();
 
-        if (position < preSyl.Text.Length)
+        if (index >= _syllables.Count || index < 0)
+            return;
+        var preSyl = _syllables[index];
+
+        if (position > preSyl.InnerText.Length || position < 0)
+            return;
+
+        // Find the block-level index
+        var blockIndex = 0;
+        Block? plainBlock = null;
+        var remaining = position;
+        while (blockIndex < preSyl.Blocks.Count)
         {
-            newSyl.Text = preSyl.Text[position..];
-            preSyl.Text = preSyl.Text[..position];
+            var block = preSyl.Blocks[blockIndex++];
+            if (block is not PlainBlock)
+                continue;
+
+            if (remaining > block.Text.Length)
+            {
+                remaining -= block.Text.Length;
+                continue;
+            }
+
+            plainBlock = block;
+            break;
         }
 
-        if (newSyl.Text == string.Empty)
+        if (plainBlock is null)
+            return;
+        remaining = Math.Min(remaining, plainBlock.Text.Length);
+
+        // Create syl and split text between preSyl and newSyl
+        var newSyl = Syllable.FromTagName(preSyl.Tag.Name);
+        var newText = plainBlock.Text[remaining..];
+        if (!string.IsNullOrEmpty(newText))
+            newSyl.Blocks.Add(new PlainBlock(newText));
+        plainBlock.Text = plainBlock.Text[..remaining];
+
+        // Move subsequent blocks to newSyl and truncate oldSyl
+        var blocks = preSyl.Blocks.ToList();
+        newSyl.Blocks.AddRange(blocks[blockIndex..]);
+        preSyl.Blocks.Clear();
+        preSyl.Blocks.AddRange(blocks[..blockIndex]);
+
+        // Timing
+        if (preSyl.Duration == 0 || string.IsNullOrWhiteSpace(newSyl.InnerText))
+        {
             newSyl.Duration = 0;
-        else if (preSyl.Text == string.Empty)
+        }
+        else if (string.IsNullOrWhiteSpace(preSyl.InnerText))
         {
             newSyl.Duration = preSyl.Duration;
             preSyl.Duration = 0;
@@ -112,190 +209,44 @@ public class Karaoke
         else
         {
             newSyl.Duration =
-                (
-                    preSyl.Duration * newSyl.Text.Length / (preSyl.Text.Length + newSyl.Text.Length)
-                    + 5
-                )
-                / 10
-                * 10; // lol
+                (preSyl.Duration * newSyl.InnerText.Length)
+                / (preSyl.InnerText.Length + newSyl.InnerText.Length);
             preSyl.Duration -= newSyl.Duration;
         }
 
         if (preSyl.Duration < 0)
             return;
 
-        newSyl.Start = preSyl.Start + Time.FromMillis(preSyl.Duration);
-        newSyl.TagType = new string(preSyl.TagType);
-
-        var len = preSyl.Text.Length;
-        foreach (var pair in preSyl.OverrideTags)
-        {
-            if (pair.Key < len)
-                continue;
-
-            newSyl.OverrideTags[pair.Key - len] = pair.Value;
-            preSyl.OverrideTags.Remove(pair.Key);
-        }
+        _syllables.Insert(index + 1, newSyl);
     }
 
     /// <summary>
-    /// Remove a split
+    /// Remove a syllable split
     /// </summary>
-    /// <param name="index">Index to remove the split at</param>
-    /// <remarks>First syllable can not be removed</remarks>
+    /// <param name="index">Index of the syllable to combine</param>
+    /// <remarks>First syllable cannot be removed</remarks>
     public void RemoveSplit(int index)
     {
-        if (index == 0)
+        if (_syllables.Count == 0)
+            ParseSyllables();
+
+        if (index <= 0 || index >= _syllables.Count)
             return;
 
         var syl = _syllables[index];
         var pre = _syllables[index - 1];
 
         pre.Duration += syl.Duration;
-        foreach (var tag in syl.OverrideTags)
-            pre.OverrideTags[tag.Key + pre.Text.Length] = tag.Value;
 
-        pre.Text += syl.Text;
+        // Inject override block if needed
+        if (syl.Tags.Count > 0)
+        {
+            pre.Blocks.Add(new OverrideBlock(syl.Tags));
+        }
+
+        // Move the blocks over
+        pre.Blocks.AddRange(syl.Blocks);
 
         _syllables.RemoveAt(index);
-    }
-
-    /// <summary>
-    /// Set the start time of a syllable
-    /// </summary>
-    /// <param name="index">Index to set the time of</param>
-    /// <param name="time">Time to set</param>
-    /// <remarks>First syllable cannot be set</remarks>
-    public void SetStartTime(int index, Time time)
-    {
-        if (index == 0)
-            return;
-
-        var syl = _syllables[index];
-        var pre = _syllables[index - 1];
-
-        if (time < pre.Start)
-            return;
-        if (time > syl.Start + Time.FromMillis(syl.Duration))
-            return;
-
-        var delta = time.TotalMilliseconds - syl.Start.TotalMilliseconds;
-        syl.Start = Time.FromTime(time);
-        syl.Duration -= delta;
-        pre.Duration += delta;
-    }
-
-    /// <summary>
-    /// Contain syllables within line start and end times
-    /// </summary>
-    /// <param name="start">New line start time</param>
-    /// <param name="end">New line end time</param>
-    /// <remarks>Syllables outside the new times will be truncated</remarks>
-    public void SetLineTimes(Time start, Time end)
-    {
-        if (end < start)
-            return;
-        var index = 0;
-
-        // Chop off any portion of syllables starting before the new start time
-        do
-        {
-            var delta = start.TotalMilliseconds - _syllables[index].Start.TotalMilliseconds;
-            _syllables[index].Start = Time.FromTime(start);
-            _syllables[index].Duration = Math.Max(0, _syllables[index].Duration - delta);
-        } while (++index < _syllables.Count && _syllables[index].Start < start);
-
-        // Truncate syllables ending after the new end time
-        index = _syllables.Count - 1;
-
-        while (_syllables[index].Start > end)
-        {
-            _syllables[index].Start = Time.FromTime(end);
-            _syllables[index].Duration = 0;
-            --index;
-        }
-
-        _syllables[index].Duration =
-            end.TotalMilliseconds - _syllables[index].Start.TotalMilliseconds;
-    }
-
-    /// <summary>
-    /// Parse the syllables in an event
-    /// </summary>
-    /// <param name="line">Event to parse</param>
-    /// <param name="syl">Syllable</param>
-    private void ParseSyllables(Event line, Syllable syl)
-    {
-        foreach (var block in line.ParseBlocks())
-        {
-            var text = block.Text;
-            switch (block.Type)
-            {
-                case BlockType.Plain:
-                    syl.Text += text;
-                    break;
-                case BlockType.Comment:
-                case BlockType.Drawing:
-                    if (!syl.OverrideTags.TryGetValue(syl.Text.Length, out var existing))
-                        existing = string.Empty;
-                    syl.OverrideTags[syl.Text.Length] = existing + text;
-                    break;
-                case BlockType.Override:
-                    var b = (OverrideBlock)block;
-                    var inTag = false;
-
-                    foreach (var tag in b.Tags)
-                    {
-                        if (tag is OverrideTag.K kTag)
-                        {
-                            if (inTag)
-                            {
-                                syl.OverrideTags[syl.Text.Length] += '}';
-                                inTag = false;
-                            }
-
-                            // Exclude zero syllables
-                            if (syl.Duration > 0 || syl.Text.Length != 0)
-                            {
-                                _syllables.Add(syl);
-                                syl = new Syllable
-                                {
-                                    Start = syl.Start,
-                                    Duration = syl.Duration,
-                                    TagType = syl.TagType,
-                                    Text = string.Empty,
-                                };
-                            }
-
-                            syl.TagType = kTag.Name;
-                            syl.Start += Time.FromMillis(syl.Duration);
-                            syl.Duration = (long)(kTag.Duration ?? 0) * 10;
-                        }
-                        else
-                        {
-                            // Get or create the override tag string at the index of syl.Text.Length
-                            if (!syl.OverrideTags.TryGetValue(syl.Text.Length, out var oText))
-                                syl.OverrideTags[syl.Text.Length] = oText = string.Empty;
-
-                            text = text.TrimEnd('}');
-
-                            if (!inTag)
-                                oText += "{";
-
-                            inTag = true;
-                            oText += tag;
-
-                            // Save the updated string back
-                            syl.OverrideTags[syl.Text.Length] = oText;
-                        }
-                    }
-                    if (inTag)
-                        syl.OverrideTags[syl.Text.Length] += '}';
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(syl));
-            }
-        }
-        _syllables.Add(syl);
     }
 }

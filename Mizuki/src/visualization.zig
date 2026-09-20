@@ -608,13 +608,14 @@ fn DrawSyllablePositions(
     if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
         return;
 
+    var rolling_start_time: f64 = event_start_ms;
     var si: usize = 1; // Skip the first syl, which always starts at the event start time
     while (si < syls_len) : (si += 1) {
-        const syl_start_time: f64 = @floatFromInt(syls[si].start_time);
-        if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms)
+        rolling_start_time += @floatFromInt(syls[si].duration);
+        if (rolling_start_time >= event_end_ms or rolling_start_time >= view.end_ms)
             break;
 
-        const x = ((syl_start_time - view.start_ms) / pixels_per_ms);
+        const x = ((rolling_start_time - view.start_ms) / pixels_per_ms);
 
         // Draw dotted line
         if (x >= 0 and x < view.bmp_width_f) {
@@ -641,24 +642,50 @@ fn DrawSyllableText(
     syls: [*]frames.SyllableInfo,
     syls_len: usize,
 ) void {
-    if (syls_len < 1 or (syls_len == 1 and syls[0].duration == 0))
-        return;
-
-    if (event_end_ms < event_start_ms)
+    if (syls_len <= 0 or event_end_ms < event_start_ms)
         return;
 
     if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
         return;
 
+    // "Fake" syllable
+    if (syls_len == 1 and syls[0].duration == 0) {
+        const syl = syls[0];
+        const text: []const u8 = std.mem.sliceTo(&syl.text, 0);
+        if (text.len == 0)
+            return;
+
+        const event_start_x: f64 = @max(0, ((event_start_ms - view.start_ms) / pixels_per_ms) - 1);
+        const event_end_x: f64 = @min(view.end_ms, ((event_end_ms - view.start_ms) / pixels_per_ms) + 1);
+
+        if (event_start_x >= event_end_x)
+            return;
+
+        const x = ((event_start_ms + @divFloor(event_end_ms - event_start_ms, 2)) - view.start_ms) / pixels_per_ms;
+        const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
+
+        DrawClippedText(
+            bmp,
+            lx,
+            view.gutter_height + 2,
+            @intFromFloat(event_start_x),
+            @intFromFloat(event_end_x),
+            text,
+            color_syl_text,
+        );
+        return;
+    }
+
+    // "Real" syllables
+    var rolling_start_time: f64 = event_start_ms;
     var si: usize = 0;
     while (si < syls_len) : (si += 1) {
         const syl = syls[si];
         if (syl.duration == 0)
             continue;
 
-        const syl_start_time: f64 = @floatFromInt(syl.start_time);
-        const syl_end_time: f64 = @floatFromInt(syl.start_time + syl.duration);
-        if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms or syl_end_time < view.start_ms)
+        const syl_end_time: f64 = rolling_start_time + @as(f64, @floatFromInt(syl.duration));
+        if (rolling_start_time >= event_end_ms or rolling_start_time >= view.end_ms or syl_end_time < view.start_ms)
             continue;
 
         const text: []const u8 = std.mem.sliceTo(&syl.text, 0);
@@ -666,13 +693,13 @@ fn DrawSyllableText(
             continue;
 
         // Visible boundaries of the syl
-        const syl_start_x: f64 = @max(0, ((syl_start_time - view.start_ms) / pixels_per_ms) - 1);
+        const syl_start_x: f64 = @max(0, ((rolling_start_time - view.start_ms) / pixels_per_ms) - 1);
         const syl_end_x: f64 = @min(view.end_ms, ((syl_end_time - view.start_ms) / pixels_per_ms) + 1);
 
         if (syl_start_x >= syl_end_x)
             continue;
 
-        const x = ((syl_start_time + @divFloor(syl_end_time - syl_start_time, 2)) - view.start_ms) / pixels_per_ms;
+        const x = ((rolling_start_time + @divFloor(syl_end_time - rolling_start_time, 2)) - view.start_ms) / pixels_per_ms;
         const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
 
         DrawClippedText(
@@ -684,6 +711,7 @@ fn DrawSyllableText(
             text,
             color_syl_text,
         );
+        rolling_start_time += @floatFromInt(syls[si].duration);
     }
 }
 

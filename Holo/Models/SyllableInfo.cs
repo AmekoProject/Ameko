@@ -13,11 +13,6 @@ namespace Holo.Models;
 public unsafe struct SyllableInfo
 {
     /// <summary>
-    /// Start time in milliseconds
-    /// </summary>
-    public long StartTime;
-
-    /// <summary>
     /// Duration in milliseconds
     /// </summary>
     public long Duration;
@@ -36,22 +31,18 @@ public unsafe struct SyllableInfo
     /// <returns>Thin SyllableInfo</returns>
     public static SyllableInfo From(Syllable syl)
     {
-        var info = new SyllableInfo
-        {
-            StartTime = syl.Start.TotalMilliseconds,
-            Duration = syl.Duration,
-        };
+        var info = new SyllableInfo { Duration = syl.Duration * 10 };
 
         var span = new Span<byte>(info.Text, MaxSyllableTextBytes);
         span.Clear();
 
-        if (Encoding.UTF8.GetByteCount(syl.Text) <= MaxSyllableTextBytes - 1)
+        if (Encoding.UTF8.GetByteCount(syl.InnerText) <= MaxSyllableTextBytes - 1)
         {
-            Encoding.UTF8.GetBytes(syl.Text, span);
+            Encoding.UTF8.GetBytes(syl.InnerText, span);
         }
         else
         {
-            Encoding.UTF8.GetBytes(TruncateUtf8(syl.Text, MaxSyllableTextBytes - 1), span);
+            Encoding.UTF8.GetBytes(TruncateUtf8(syl.InnerText, MaxSyllableTextBytes - 1), span);
         }
 
         return info;

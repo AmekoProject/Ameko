@@ -1,64 +1,114 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 
 using System.Text;
+using AssCS.Overrides.Blocks;
 
 namespace AssCS.Overrides;
 
 /// <summary>
-/// An individual syllable in a karaoke line
+/// Representation of a syllable in a line of <see cref="Karaoke"/>
 /// </summary>
 public class Syllable
 {
     /// <summary>
-    /// Start time of the syllable
+    /// Karaoke tag representing the syllable
     /// </summary>
-    /// <remarks>
-    /// The start time is relative to "time zero" (the beginning of the file),
-    /// not the start of the line containing the syllable
-    /// </remarks>
-    public Time Start { get; set; } = new();
+    public OverrideTag.K Tag { get; set; }
 
     /// <summary>
-    /// Duration of the syllable in milliseconds
+    /// Passthrough for <see cref="Tag"/>'s duration in centiseconds
     /// </summary>
-    public long Duration { get; set; }
-
-    /// <summary>
-    /// Type of karaoke tag
-    /// </summary>
-    public string TagType { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Contents of the syllable
-    /// </summary>
-    public string Text { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Override tags applied to the syllable
-    /// </summary>
-    public Dictionary<int, string> OverrideTags { get; private set; } = [];
-
-    /// <summary>
-    /// Get the formatted textual representation of the syllable
-    /// </summary>
-    /// <param name="includeKTag">Whether to include the k-tag in the output</param>
-    /// <returns>Text representation of the syllable</returns>
-    public string GetFormattedText(bool includeKTag)
+    /// <seealso cref="OverrideTag.K.Duration"/>
+    public long Duration
     {
-        var sb = new StringBuilder();
+        get => (long)(Tag.Duration ?? 0);
+        set => Tag.Duration = value;
+    }
 
-        if (includeKTag)
-            sb.Append($"{{\\{TagType}{(Duration + 5) / 10}}}");
+    /// <summary>
+    /// Override tags attached directly to the <see cref="Tag"/>
+    /// </summary>
+    public List<OverrideTag> Tags { get; }
 
-        var i = 0;
-        foreach (var pair in OverrideTags)
+    /// <summary>
+    /// Blocks included in the syllable
+    /// </summary>
+    public List<Block> Blocks { get; } = [];
+
+    /// <summary>
+    /// Text representation of the syllable and its contents
+    /// </summary>
+    /// <example><c>{\k100\b1}Hel{\b0}lo</c></example>
+    public string Text
+    {
+        get
         {
-            sb.Append(Text[i..pair.Key]);
-            sb.Append(pair.Value);
-            i = pair.Key;
+            var sb = new StringBuilder();
+            sb.Append('{');
+            sb.Append(Tag);
+            foreach (var tag in Tags)
+                sb.Append(tag);
+            sb.Append('}');
+            foreach (var block in Blocks)
+                sb.Append(block);
+            return sb.ToString();
         }
+    }
 
-        sb.Append(Text[i..]);
-        return sb.ToString();
+    /// <summary>
+    /// Inner (stripped) text
+    /// </summary>
+    /// <example><c>Hello</c></example>
+    public string InnerText =>
+        string.Join(string.Empty, Blocks.OfType<PlainBlock>().Select(b => b.Text));
+
+    /// <summary>
+    /// Construct an empty syllable
+    /// </summary>
+    /// <param name="tagName">Name of the tag to create</param>
+    public static Syllable FromTagName(string tagName)
+    {
+        return new Syllable(
+            tagName switch
+            {
+                OverrideTags.K => new OverrideTag.K(0),
+                OverrideTags.Kf => new OverrideTag.Kf(0),
+                OverrideTags.Ko => new OverrideTag.Ko(0),
+                OverrideTags.Kt => new OverrideTag.Kt(0),
+                _ => throw new ArgumentException("Invalid K-tag name", nameof(tagName)),
+            }
+        );
+    }
+
+    /// <summary>
+    /// Construct a Syllable
+    /// </summary>
+    /// <param name="kTag">Karaoke tag</param>
+    public Syllable(OverrideTag.K kTag)
+    {
+        Tag = kTag;
+        Tags = [];
+    }
+
+    /// <summary>
+    /// Construct a Syllable
+    /// </summary>
+    /// <param name="kTag">Karaoke tag</param>
+    /// <param name="overrideTags">Override tags attached to the syllable</param>
+    public Syllable(OverrideTag.K kTag, IEnumerable<OverrideTag> overrideTags)
+    {
+        Tag = kTag;
+        Tags = overrideTags.ToList();
+    }
+
+    internal bool IsEmpty()
+    {
+        return Duration == 0 && Tags.Count == 0 && Blocks.Count == 0;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return Text;
     }
 }

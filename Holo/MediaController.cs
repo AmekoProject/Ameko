@@ -29,8 +29,6 @@ public class MediaController : BindableBase
     private readonly Lock _frameLock = new();
     private readonly Lock _boundsLock = new();
 
-    private readonly Karaoke _karaoke = new();
-
     private unsafe FrameGroup* _lastFrame;
     private unsafe FrameGroup* _nextFrame;
     private unsafe AudioFrame* _audioFrame;
@@ -1286,11 +1284,7 @@ public class MediaController : BindableBase
     {
         lock (_boundsLock)
         {
-            _karaoke.SetLine(_activeEvent, autoSplit: false, normalize: false);
-            lock (_boundsLock)
-            {
-                _syllables = _karaoke.Syllables.Select(SyllableInfo.From).ToArray();
-            }
+            _syllables = _activeEvent.Karaoke.Syllables.Select(SyllableInfo.From).ToArray();
         }
     }
 
