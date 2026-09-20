@@ -72,16 +72,24 @@ public class Karaoke(Event @event)
     }
 
     /// <summary>
-    /// Sets <see cref="Event.Text"/> by joining the <see cref="Syllable.Text"/> of each syllable in <paramref name="syllables"></paramref>
+    /// Set the <see cref="Syllables"/>
     /// </summary>
     /// <param name="syllables">The syllables to set</param>
+    /// <remarks>Side effect: updates <see cref="Event.Text"/></remarks>
     public void SetSyllables(IEnumerable<Syllable> syllables)
     {
-        var list = syllables.ToList();
-        @event.Text = string.Join(string.Empty, list.Select(s => s.Text));
+        _syllables.Clear();
+        _syllables.AddRange(syllables);
+        CommitSyllables();
+    }
 
+    /// <summary>
+    /// Update <see cref="Event.Text"/> with the current <see cref="Syllables"/>
+    /// </summary>
+    public void CommitSyllables()
+    {
+        @event.Text = string.Join(string.Empty, _syllables.Select(s => s.Text));
         _hash = @event.Text.GetHashCode();
-        ParseSyllables();
     }
 
     /// <summary>
