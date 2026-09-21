@@ -7,6 +7,10 @@ namespace AssCS.Overrides;
 /// <summary>
 /// Provides methods for working with karaoke <see cref="Syllable"/>s
 /// </summary>
+/// <remarks>
+/// Methods work on internal copy of event contents —
+/// <paramref name="event"/>'s text is not updated unless/until <see cref="CommitSyllables"/> is called
+/// </remarks>
 public class Karaoke(Event @event)
 {
     private int? _hash;
@@ -20,10 +24,7 @@ public class Karaoke(Event @event)
     {
         get
         {
-            if (@event.Text.GetHashCode() == _hash)
-                return _syllables;
-
-            RepopulateBlocksAndSyllables();
+            EnsureUpToDate();
             return _syllables;
         }
     }
@@ -55,9 +56,7 @@ public class Karaoke(Event @event)
     /// </summary>
     public void Normalize()
     {
-        if (_blocks.Count == 0)
-            RepopulateBlocksAndSyllables();
-
+        EnsureUpToDate();
         var charCount = _syllables.Sum(s => s.InnerText.Length);
         var duration = (@event.End - @event.Start).TotalCentiseconds;
         foreach (var syl in _syllables)
@@ -71,9 +70,7 @@ public class Karaoke(Event @event)
     /// </summary>
     public void Distribute()
     {
-        if (_blocks.Count == 0)
-            RepopulateBlocksAndSyllables();
-
+        EnsureUpToDate();
         var duration = (@event.End - @event.Start).TotalCentiseconds / _syllables.Count;
         foreach (var syl in _syllables)
         {
@@ -87,8 +84,7 @@ public class Karaoke(Event @event)
     /// <remarks>Removes all existing syllables</remarks>
     public void AutoSplit()
     {
-        if (_blocks.Count == 0)
-            RepopulateBlocksAndSyllables();
+        EnsureUpToDate();
 
         // Remove existing syllables
         _syllables.Clear();
@@ -113,9 +109,7 @@ public class Karaoke(Event @event)
     /// <param name="position">Position relative to <see cref="Syllable.InnerText"/> to split at</param>
     public void AddSplit(int index, int position)
     {
-        if (_blocks.Count == 0)
-            RepopulateBlocksAndSyllables();
-
+        EnsureUpToDate();
         if (index >= _syllables.Count || index < 0)
             return;
         var preSyl = _syllables[index];
@@ -191,9 +185,7 @@ public class Karaoke(Event @event)
     /// <remarks>First syllable cannot be removed</remarks>
     public void RemoveSplit(int index)
     {
-        if (_blocks.Count == 0)
-            RepopulateBlocksAndSyllables();
-
+        EnsureUpToDate();
         if (index <= 0 || index >= _syllables.Count)
             return;
 
@@ -212,6 +204,16 @@ public class Karaoke(Event @event)
         pre.Blocks.AddRange(syl.Blocks);
 
         _syllables.RemoveAt(index);
+    }
+
+    /// <summary>
+    /// Ensure local state is up-to-date
+    /// </summary>
+    private void EnsureUpToDate()
+    {
+        if (@event.Text.GetHashCode() == _hash)
+            return;
+        RepopulateBlocksAndSyllables();
     }
 
     /// <summary>
