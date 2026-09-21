@@ -11,6 +11,7 @@ public class Karaoke(Event @event)
 {
     private int? _hash;
     private readonly List<Syllable> _syllables = [];
+    private readonly List<Block> _blocks = [];
 
     /// <summary>
     /// List of syllables in the line
@@ -19,56 +20,12 @@ public class Karaoke(Event @event)
     {
         get
         {
-            var currentHash = @event.Text.GetHashCode();
-            if (currentHash == _hash)
+            if (@event.Text.GetHashCode() == _hash)
                 return _syllables;
-            return ParseSyllables();
+
+            RepopulateBlocksAndSyllables();
+            return _syllables;
         }
-    }
-
-    /// <summary>
-    /// Parses the event into syllables
-    /// </summary>
-    /// <returns>List of syllable objects</returns>
-    public IReadOnlyList<Syllable> ParseSyllables()
-    {
-        _hash = @event.Text.GetHashCode();
-        List<Syllable> syllables = [];
-
-        var syl = new Syllable(new OverrideTag.K(0));
-        foreach (var block in @event.ParseBlocks())
-        {
-            switch (block.Type)
-            {
-                case BlockType.Plain:
-                case BlockType.Comment:
-                case BlockType.Drawing:
-                    syl.Blocks.Add(block);
-                    break;
-                case BlockType.Override:
-                    var ob = (OverrideBlock)block;
-                    if (!ob.Tags.OfType<OverrideTag.K>().Any())
-                    {
-                        syl.Blocks.Add(block);
-                        break;
-                    }
-
-                    // New syllable!
-                    if (!syl.IsEmpty())
-                        syllables.Add(syl);
-                    syl = new Syllable(
-                        kTag: ob.Tags.OfType<OverrideTag.K>().Last(),
-                        overrideTags: ob.Tags.Where(t => t is not OverrideTag.K)
-                    );
-                    break;
-            }
-        }
-
-        syllables.Add(syl);
-
-        _syllables.Clear();
-        _syllables.AddRange(syllables);
-        return syllables;
     }
 
     /// <summary>
@@ -90,6 +47,7 @@ public class Karaoke(Event @event)
     {
         @event.Text = string.Join(string.Empty, _syllables.Select(s => s.Text));
         _hash = @event.Text.GetHashCode();
+        RepopulateBlocksAndSyllables();
     }
 
     /// <summary>
@@ -97,8 +55,8 @@ public class Karaoke(Event @event)
     /// </summary>
     public void Normalize()
     {
-        if (_syllables.Count == 0)
-            ParseSyllables();
+        if (_blocks.Count == 0)
+            RepopulateBlocksAndSyllables();
 
         var charCount = _syllables.Sum(s => s.InnerText.Length);
         var duration = (@event.End - @event.Start).TotalCentiseconds;
@@ -113,8 +71,8 @@ public class Karaoke(Event @event)
     /// </summary>
     public void Distribute()
     {
-        if (_syllables.Count == 0)
-            ParseSyllables();
+        if (_blocks.Count == 0)
+            RepopulateBlocksAndSyllables();
 
         var duration = (@event.End - @event.Start).TotalCentiseconds / _syllables.Count;
         foreach (var syl in _syllables)
@@ -129,19 +87,17 @@ public class Karaoke(Event @event)
     /// <remarks>Removes all existing syllables</remarks>
     public void AutoSplit()
     {
-        if (string.IsNullOrWhiteSpace(@event.Text))
-            return;
+        if (_blocks.Count == 0)
+            RepopulateBlocksAndSyllables();
 
         // Remove existing syllables
         _syllables.Clear();
-        var blocks = @event.ParseBlocks();
-        foreach (var block in blocks.OfType<OverrideBlock>())
+        foreach (var block in _blocks.OfType<OverrideBlock>())
         {
             block.SetTags(block.Tags.Where(t => t is not OverrideTag.K));
         }
-        @event.SetBlocks(blocks);
 
-        ParseSyllables(); // Generate initial syl
+        _syllables.AddRange(ParseSyllables(_blocks)); // Generate initial syl
 
         int pos;
         while ((pos = _syllables.Last().InnerText.IndexOf(' ')) != -1)
@@ -157,8 +113,8 @@ public class Karaoke(Event @event)
     /// <param name="position">Position relative to <see cref="Syllable.InnerText"/> to split at</param>
     public void AddSplit(int index, int position)
     {
-        if (_syllables.Count == 0)
-            ParseSyllables();
+        if (_blocks.Count == 0)
+            RepopulateBlocksAndSyllables();
 
         if (index >= _syllables.Count || index < 0)
             return;
@@ -235,8 +191,8 @@ public class Karaoke(Event @event)
     /// <remarks>First syllable cannot be removed</remarks>
     public void RemoveSplit(int index)
     {
-        if (_syllables.Count == 0)
-            ParseSyllables();
+        if (_blocks.Count == 0)
+            RepopulateBlocksAndSyllables();
 
         if (index <= 0 || index >= _syllables.Count)
             return;
@@ -256,5 +212,61 @@ public class Karaoke(Event @event)
         pre.Blocks.AddRange(syl.Blocks);
 
         _syllables.RemoveAt(index);
+    }
+
+    /// <summary>
+    /// Clear and re-populate the blocks and syllables lists
+    /// </summary>
+    private void RepopulateBlocksAndSyllables()
+    {
+        _hash = @event.Text.GetHashCode();
+        _blocks.Clear();
+        _syllables.Clear();
+        _blocks.AddRange(@event.ParseBlocks());
+        _syllables.AddRange(ParseSyllables(_blocks));
+    }
+
+    /// <summary>
+    /// Parses the event into syllables
+    /// </summary>
+    /// <returns>List of syllable objects</returns>
+    private static List<Syllable> ParseSyllables(IEnumerable<Block> blocks)
+    {
+        List<Syllable> syllables = [];
+
+        var syl = new Syllable(new OverrideTag.K(0));
+        foreach (var block in blocks)
+        {
+            switch (block.Type)
+            {
+                case BlockType.Plain:
+                case BlockType.Comment:
+                case BlockType.Drawing:
+                    syl.Blocks.Add(block);
+                    break;
+                case BlockType.Override:
+                    var ob = (OverrideBlock)block;
+                    if (!ob.Tags.OfType<OverrideTag.K>().Any())
+                    {
+                        syl.Blocks.Add(block);
+                        break;
+                    }
+
+                    // New syllable!
+                    if (!syl.IsEmpty())
+                        syllables.Add(syl);
+                    syl = new Syllable(
+                        kTag: ob.Tags.OfType<OverrideTag.K>().Last(),
+                        overrideTags: ob.Tags.Where(t => t is not OverrideTag.K)
+                    );
+                    break;
+                default:
+                    syl.Blocks.Add(block);
+                    break;
+            }
+        }
+
+        syllables.Add(syl);
+        return syllables;
     }
 }
