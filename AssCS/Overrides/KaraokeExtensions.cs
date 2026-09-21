@@ -16,17 +16,6 @@ public static class KaraokeExtensions
         /// <summary>
         /// Karaoke API
         /// </summary>
-        public Karaoke Karaoke
-        {
-            get
-            {
-                if (_cache.TryGetValue(@event, out var karaoke))
-                    return karaoke;
-
-                karaoke = new Karaoke(@event);
-                _cache.Add(@event, karaoke);
-                return karaoke;
-            }
-        }
+        public Karaoke Karaoke => _cache.GetValue(@event, e => new Karaoke(e));
     }
 }
