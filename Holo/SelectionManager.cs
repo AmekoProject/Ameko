@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using AssCS;
+using AssCS.Overrides;
 
 namespace Holo;
 
@@ -11,6 +12,7 @@ namespace Holo;
 public class SelectionManager : BindableBase
 {
     private Event _activeEvent;
+    private Syllable? _selectedSyllable;
     private readonly RangeObservableCollection<Event> _selectedEventCollection;
 
     /// <summary>
@@ -64,6 +66,16 @@ public class SelectionManager : BindableBase
     public ReadOnlyObservableCollection<Event> SelectedEventCollection { get; }
 
     /// <summary>
+    /// Currently-selected karaoke syllable
+    /// </summary>
+    /// <remarks>Null if no syllable is selected</remarks>
+    public Syllable? SelectedSyllable
+    {
+        get => _selectedSyllable;
+        private set => SetProperty(ref _selectedSyllable, value);
+    }
+
+    /// <summary>
     /// Set the active and currently-selected events
     /// </summary>
     /// <param name="active">Event to set as active</param>
@@ -90,8 +102,10 @@ public class SelectionManager : BindableBase
 
         _activeEvent = active;
         _selectedEventCollection.ReplaceRange(selection);
+        _selectedSyllable = null;
         RaisePropertyChanged(nameof(ActiveEvent));
         RaisePropertyChanged(nameof(SelectedEventCollection));
+        RaisePropertyChanged(nameof(SelectedSyllable));
         SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -109,6 +123,22 @@ public class SelectionManager : BindableBase
         RaisePropertyChanged(nameof(ActiveEvent));
         RaisePropertyChanged(nameof(SelectedEventCollection));
         SelectionChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Set the currently-selected karaoke syllable.
+    /// </summary>
+    /// <param name="syllable">Syllable to set as selected</param>
+    public void Select(Syllable syllable)
+    {
+        if (IsSelectionChanging)
+            return;
+
+        if (syllable == SelectedSyllable)
+            return;
+
+        _selectedSyllable = syllable;
+        RaisePropertyChanged(nameof(SelectedSyllable));
     }
 
     /// <summary>
