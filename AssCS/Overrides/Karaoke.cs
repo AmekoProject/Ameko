@@ -14,6 +14,7 @@ namespace AssCS.Overrides;
 public class Karaoke(Event @event)
 {
     private int? _hash;
+    private Time? _start;
     private readonly List<Syllable> _syllables = [];
     private readonly List<Block> _blocks = [];
 
@@ -63,6 +64,7 @@ public class Karaoke(Event @event)
         {
             syl.Duration = (long)(syl.InnerText.Length / (double)charCount * duration);
         }
+        UpdateStartTimes();
     }
 
     /// <summary>
@@ -76,6 +78,7 @@ public class Karaoke(Event @event)
         {
             syl.Duration = duration;
         }
+        UpdateStartTimes();
     }
 
     /// <summary>
@@ -176,6 +179,7 @@ public class Karaoke(Event @event)
             return;
 
         _syllables.Insert(index + 1, newSyl);
+        UpdateStartTimes();
     }
 
     /// <summary>
@@ -204,6 +208,7 @@ public class Karaoke(Event @event)
         pre.Blocks.AddRange(syl.Blocks);
 
         _syllables.RemoveAt(index);
+        UpdateStartTimes();
     }
 
     /// <summary>
@@ -211,9 +216,10 @@ public class Karaoke(Event @event)
     /// </summary>
     private void EnsureUpToDate()
     {
-        if (@event.Text.GetHashCode() == _hash)
-            return;
-        RepopulateBlocksAndSyllables();
+        if (@event.Text.GetHashCode() != _hash)
+            RepopulateBlocksAndSyllables();
+        else if (@event.Start != _start)
+            UpdateStartTimes();
     }
 
     /// <summary>
@@ -226,6 +232,21 @@ public class Karaoke(Event @event)
         _syllables.Clear();
         _blocks.AddRange(@event.ParseBlocks());
         _syllables.AddRange(ParseSyllables(_blocks));
+        UpdateStartTimes();
+    }
+
+    /// <summary>
+    /// Update syllable absolute start times
+    /// </summary>
+    private void UpdateStartTimes()
+    {
+        _start = @event.Start;
+        var running = Time.Zero;
+        foreach (var syl in _syllables)
+        {
+            syl.Start = _start + running;
+            running += Time.FromCentis(syl.Duration);
+        }
     }
 
     /// <summary>

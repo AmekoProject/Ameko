@@ -16,6 +16,11 @@ public class Syllable
     public OverrideTag.K Tag { get; set; }
 
     /// <summary>
+    /// Absolute time the syllable starts at, relative to <c>t=0</c>
+    /// </summary>
+    public Time Start { get; internal set; }
+
+    /// <summary>
     /// Passthrough for <see cref="Tag"/>'s duration in centiseconds
     /// </summary>
     /// <seealso cref="OverrideTag.K.Duration"/>
@@ -88,6 +93,7 @@ public class Syllable
     {
         Tag = kTag;
         Tags = [];
+        Start = Time.Zero;
     }
 
     /// <summary>
@@ -99,6 +105,7 @@ public class Syllable
     {
         Tag = kTag;
         Tags = overrideTags.ToList();
+        Start = Time.Zero;
     }
 
     internal bool IsEmpty()
