@@ -34,6 +34,7 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
 
     private const double EdgeHitPx = 6d;
     private DragMode _dragMode = DragMode.None;
+    private Syllable? _draggedSyllable = null;
 
     private OpenAlAudioRenderer? _renderer;
     private MediaController? _mediaController;
@@ -204,6 +205,7 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             case PointerUpdateKind.LeftButtonPressed:
             {
                 // Check if we're near a syllable boundary
+                // TODO: Select the syl if not a boundary
                 var startTimes = karaoke.CalculateStartTimes();
                 for (var i = 1; i < startTimes.Count; i++)
                 {
@@ -212,7 +214,7 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
                         continue;
                     _dragMode = DragMode.EdgeStart;
                     if (karaoke.TryGetSyl(i, out var syl))
-                        wsp.SelectionManager.Select(syl); // select the syllable
+                        _draggedSyllable = syl;
                     break;
                 }
                 e.Pointer.Capture(sender as IInputElement);
@@ -347,14 +349,14 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             return;
         }
 
-        if (wsp.SelectionManager.SelectedSyllable is null)
+        if (_draggedSyllable is null)
             return;
 
         var time = PositionToTime(x, modifiers, allowSnap: false);
         switch (_dragMode)
         {
             case DragMode.EdgeStart:
-                karaoke.SetStartTime(wsp.SelectionManager.SelectedSyllable, time);
+                karaoke.SetStartTime(_draggedSyllable, time);
                 wsp.MediaController.UpdateSyllables();
                 break;
             case DragMode.Seek:

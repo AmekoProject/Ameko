@@ -139,6 +139,7 @@ public class SelectionManager : BindableBase
 
         _selectedSyllable = syllable;
         RaisePropertyChanged(nameof(SelectedSyllable));
+        SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
