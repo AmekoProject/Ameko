@@ -350,7 +350,7 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         if (wsp.SelectionManager.SelectedSyllable is null)
             return;
 
-        var time = PositionToTime(x, modifiers);
+        var time = PositionToTime(x, modifiers, allowSnap: false);
         switch (_dragMode)
         {
             case DragMode.EdgeStart:
@@ -407,12 +407,15 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         }
     }
 
-    private Time PositionToTime(double x, KeyModifiers modifiers)
+    private Time PositionToTime(double x, KeyModifiers modifiers, bool allowSnap = true)
     {
         var mc = ViewModel!.Workspace.MediaController;
 
         var startMs = GetClampedPositionMs(mc);
         var ms = Convert.ToInt32(x * mc.VisualizerScaleX + startMs);
+
+        if (!allowSnap)
+            return Time.FromMillis(ms);
 
         var mode = ViewModel.Configuration.TimingMode;
         var shift = (modifiers & KeyModifiers.Shift) != 0;
