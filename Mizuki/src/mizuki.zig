@@ -198,7 +198,7 @@ pub export fn GetVisualizationFrameEventsView(
         },
         event_bounds,
         @intCast(event_bounds_len),
-        @intCast(selected_event_idx),
+        @intCast(@max(selected_event_idx, 0)),
     ) catch {
         return null;
     };
