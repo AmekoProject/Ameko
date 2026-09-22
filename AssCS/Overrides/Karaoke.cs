@@ -1,5 +1,6 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 
+using System.Diagnostics.CodeAnalysis;
 using AssCS.Overrides.Blocks;
 
 namespace AssCS.Overrides;
@@ -33,13 +34,13 @@ public class Karaoke(Event @event)
     /// Calculate the absolute start times of each syllable, relative to <c>t=0</c>
     /// </summary>
     /// <returns>Map between syllables and their start times</returns>
-    public IReadOnlyDictionary<Syllable, Time> CalculateStartTimes()
+    public IReadOnlyList<Time> CalculateStartTimes()
     {
-        var result = new Dictionary<Syllable, Time>();
+        var result = new List<Time>();
         var rolling = @event.Start;
         foreach (var syl in _syllables)
         {
-            result[syl] = rolling;
+            result.Add(rolling);
             rolling += Time.FromCentis(syl.Duration);
         }
         return result;
@@ -49,16 +50,33 @@ public class Karaoke(Event @event)
     /// Calculate the absolute end times of each syllable, relative to <c>t=0</c>
     /// </summary>
     /// <returns>Map between syllables and their end times</returns>
-    public IReadOnlyDictionary<Syllable, Time> CalculateEndTimes()
+    public IReadOnlyList<Time> CalculateEndTimes()
     {
-        var result = new Dictionary<Syllable, Time>();
+        var result = new List<Time>();
         var rolling = @event.Start;
         foreach (var syl in _syllables)
         {
             rolling += Time.FromCentis(syl.Duration);
-            result[syl] = rolling;
+            result.Add(rolling);
         }
         return result;
+    }
+
+    /// <summary>
+    /// Get the syllable at the <paramref name="index"/>
+    /// </summary>
+    /// <param name="index">Index of the syllable to look up</param>
+    /// <param name="syllable">Syllable, if it exists</param>
+    /// <returns><see langword="true"/> if there was a syllable at the <paramref name="index"/></returns>
+    public bool TryGetSyl(int index, [NotNullWhen(true)] out Syllable? syllable)
+    {
+        if (index < 0 || index > _syllables.Count - 1)
+        {
+            syllable = null;
+            return false;
+        }
+        syllable = _syllables[index];
+        return true;
     }
 
     /// <summary>
@@ -261,10 +279,10 @@ public class Karaoke(Event @event)
         var pre = _syllables[sylIdx - 1];
 
         // Keep within the bounds of the syl
-        if (time < times[pre] || time > times[syl] + Time.FromCentis(syl.Duration))
+        if (time < times[sylIdx - 1] || time > times[sylIdx] + Time.FromCentis(syl.Duration))
             return;
 
-        var delta = time.TotalCentiseconds - times[syl].TotalCentiseconds;
+        var delta = time.TotalCentiseconds - times[sylIdx].TotalCentiseconds;
         syl.Duration -= delta;
         pre.Duration += delta;
     }

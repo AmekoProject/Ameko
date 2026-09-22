@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
-using System.Linq;
 using Ameko.Renderers;
 using Ameko.ViewModels.Controls;
 using AssCS;
@@ -205,13 +204,15 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             case PointerUpdateKind.LeftButtonPressed:
             {
                 // Check if we're near a syllable boundary
-                foreach (var kvp in karaoke.CalculateStartTimes())
+                var startTimes = karaoke.CalculateStartTimes();
+                for (var i = 1; i < startTimes.Count; i++)
                 {
-                    var boundX = TimeToPosition(kvp.Value);
+                    var boundX = TimeToPosition(startTimes[i]);
                     if (!(Math.Abs(x - boundX) <= EdgeHitPx))
                         continue;
                     _dragMode = DragMode.EdgeStart;
-                    wsp.SelectionManager.Select(kvp.Key); // select the syllable
+                    if (karaoke.TryGetSyl(i, out var syl))
+                        wsp.SelectionManager.Select(syl); // select the syllable
                     break;
                 }
                 e.Pointer.Capture(sender as IInputElement);
@@ -329,9 +330,10 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             {
                 // Check if we're near a syllable boundary
                 var near = false;
-                foreach (var kvp in karaoke.CalculateStartTimes())
+                var startTimes = karaoke.CalculateStartTimes();
+                for (var i = 1; i < startTimes.Count; i++)
                 {
-                    var boundX = TimeToPosition(kvp.Value);
+                    var boundX = TimeToPosition(startTimes[i]);
                     if (!(Math.Abs(x - boundX) <= EdgeHitPx))
                         continue;
 
