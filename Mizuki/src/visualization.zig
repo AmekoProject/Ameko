@@ -608,10 +608,9 @@ fn DrawSyllablePositions(
     if ((event_start_ms < view.start_ms and event_end_ms < view.start_ms) or (event_start_ms > view.end_ms and event_end_ms > view.end_ms))
         return;
 
-    var rolling_start_time: f64 = event_start_ms;
+    var rolling_start_time: f64 = event_start_ms + @as(f64, @floatFromInt(syls[0].duration));
     var si: usize = 1; // Skip the first syl, which always starts at the event start time
     while (si < syls_len) : (si += 1) {
-        rolling_start_time += @floatFromInt(syls[si].duration);
         if (rolling_start_time >= event_end_ms or rolling_start_time >= view.end_ms)
             break;
 
@@ -629,6 +628,8 @@ fn DrawSyllablePositions(
                 y += dash_len + gap_len;
             }
         }
+
+        rolling_start_time += @floatFromInt(syls[si].duration);
     }
 }
 
@@ -649,7 +650,7 @@ fn DrawSyllableText(
         return;
 
     // "Fake" syllable
-    if (syls_len == 1 and syls[0].duration == 0) {
+    if (syls_len == 1) {
         const syl = syls[0];
         const text: []const u8 = std.mem.sliceTo(&syl.text, 0);
         if (text.len == 0)

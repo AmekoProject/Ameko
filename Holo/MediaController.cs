@@ -1280,6 +1280,15 @@ public class MediaController : BindableBase
         }
     }
 
+    /// <summary>
+    /// Update non-committed syllables in the current line
+    /// </summary>
+    public void UpdateSyllables()
+    {
+        ParseSyllables();
+        RequestFrame(CurrentFrame);
+    }
+
     private void ParseSyllables()
     {
         lock (_boundsLock)

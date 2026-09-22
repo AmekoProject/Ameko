@@ -30,6 +30,38 @@ public class Karaoke(Event @event)
     }
 
     /// <summary>
+    /// Calculate the absolute start times of each syllable, relative to <c>t=0</c>
+    /// </summary>
+    /// <returns>Map between syllables and their start times</returns>
+    public IReadOnlyDictionary<Syllable, Time> CalculateStartTimes()
+    {
+        var result = new Dictionary<Syllable, Time>();
+        var rolling = @event.Start;
+        foreach (var syl in _syllables)
+        {
+            result[syl] = rolling;
+            rolling += Time.FromCentis(syl.Duration);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Calculate the absolute end times of each syllable, relative to <c>t=0</c>
+    /// </summary>
+    /// <returns>Map between syllables and their end times</returns>
+    public IReadOnlyDictionary<Syllable, Time> CalculateEndTimes()
+    {
+        var result = new Dictionary<Syllable, Time>();
+        var rolling = @event.Start;
+        foreach (var syl in _syllables)
+        {
+            rolling += Time.FromCentis(syl.Duration);
+            result[syl] = rolling;
+        }
+        return result;
+    }
+
+    /// <summary>
     /// Set the <see cref="Syllables"/>
     /// </summary>
     /// <param name="syllables">The syllables to set</param>
@@ -204,6 +236,37 @@ public class Karaoke(Event @event)
         pre.Blocks.AddRange(syl.Blocks);
 
         _syllables.RemoveAt(index);
+    }
+
+    /// <summary>
+    /// Specify the new start time for a syllable
+    /// </summary>
+    /// <param name="syl">Target syllable</param>
+    /// <param name="time">Time the syllable should start at</param>
+    /// <remarks>
+    /// <para>This method will update the duration of both the specified <paramref name="syl"/>
+    /// and the preceding syl such that <paramref name="syl"/> starts at the specified <paramref name="time"/>.
+    /// </para><para>
+    /// This method is a no-op if <paramref name="syl"/> is the first syllable in the line,
+    /// or if <paramref name="time"/> is outside the bounds of the bounding syllables.
+    /// </para>
+    /// </remarks>
+    public void SetStartTime(Syllable syl, Time time)
+    {
+        var sylIdx = _syllables.IndexOf(syl);
+        if (sylIdx <= 0)
+            return;
+
+        var times = CalculateStartTimes();
+        var pre = _syllables[sylIdx - 1];
+
+        // Keep within the bounds of the syl
+        if (time < times[pre] || time > times[syl] + Time.FromCentis(syl.Duration))
+            return;
+
+        var delta = time.TotalCentiseconds - times[syl].TotalCentiseconds;
+        syl.Duration -= delta;
+        pre.Duration += delta;
     }
 
     /// <summary>

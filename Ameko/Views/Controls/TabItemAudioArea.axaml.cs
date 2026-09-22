@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 using System;
+using System.Linq;
 using Ameko.Renderers;
 using Ameko.ViewModels.Controls;
 using AssCS;
 using AssCS.History;
+using AssCS.Overrides;
 using Avalonia.Input;
 using Holo;
 using Holo.Media;
@@ -101,6 +103,23 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         if (wsp is null || !wsp.MediaController.IsVideoLoaded || !wsp.MediaController.IsAudioLoaded)
             return;
 
+        switch (wsp.MediaController.VisualizationType)
+        {
+            case AudioVisualizationType.Events:
+                AudioTarget_OnPointerPressed_WhenEventsView(sender, e, wsp);
+                return;
+            case AudioVisualizationType.Syllables:
+                AudioTarget_OnPointerPressed_WhenSyllablesView(sender, e, wsp);
+                return;
+        }
+    }
+
+    private void AudioTarget_OnPointerPressed_WhenEventsView(
+        object? sender,
+        PointerPressedEventArgs e,
+        Workspace wsp
+    )
+    {
         var modifiers = e.KeyModifiers;
         var @event = wsp.SelectionManager.ActiveEvent;
         var x = e.GetPosition(this).X;
@@ -159,7 +178,50 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             {
                 _dragMode = DragMode.Seek;
                 var time = PositionToTime(x, modifiers);
-                var frame = wsp.MediaController.VideoInfo.FrameFromTime(time);
+                var frame = wsp.MediaController.VideoInfo!.FrameFromTime(time);
+                wsp.MediaController.SeekTo(frame);
+
+                e.Pointer.Capture(sender as IInputElement);
+                break;
+            }
+        }
+    }
+
+    private void AudioTarget_OnPointerPressed_WhenSyllablesView(
+        object? sender,
+        PointerPressedEventArgs e,
+        Workspace wsp
+    )
+    {
+        var modifiers = e.KeyModifiers;
+        var x = e.GetPosition(this).X;
+        var @event = wsp.SelectionManager.ActiveEvent;
+        var karaoke = @event.Karaoke;
+        if (karaoke.Syllables.Count == 0)
+            return;
+
+        switch (e.Properties.PointerUpdateKind)
+        {
+            case PointerUpdateKind.LeftButtonPressed:
+            {
+                // Check if we're near a syllable boundary
+                foreach (var kvp in karaoke.CalculateStartTimes())
+                {
+                    var boundX = TimeToPosition(kvp.Value);
+                    if (!(Math.Abs(x - boundX) <= EdgeHitPx))
+                        continue;
+                    _dragMode = DragMode.EdgeStart;
+                    wsp.SelectionManager.Select(kvp.Key); // select the syllable
+                    break;
+                }
+                e.Pointer.Capture(sender as IInputElement);
+                break;
+            }
+            case PointerUpdateKind.MiddleButtonPressed:
+            {
+                _dragMode = DragMode.Seek;
+                var time = PositionToTime(x, modifiers);
+                var frame = wsp.MediaController.VideoInfo!.FrameFromTime(time);
                 wsp.MediaController.SeekTo(frame);
 
                 e.Pointer.Capture(sender as IInputElement);
@@ -175,6 +237,23 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
         if (wsp is null || !wsp.MediaController.IsVideoLoaded || !wsp.MediaController.IsAudioLoaded)
             return;
 
+        switch (wsp.MediaController.VisualizationType)
+        {
+            case AudioVisualizationType.Events:
+                AudioTarget_OnPointerMoved_WhenEventsView(sender, e, wsp);
+                return;
+            case AudioVisualizationType.Syllables:
+                AudioTarget_OnPointerMoved_WhenSyllablesView(sender, e, wsp);
+                return;
+        }
+    }
+
+    private void AudioTarget_OnPointerMoved_WhenEventsView(
+        object? sender,
+        PointerEventArgs e,
+        Workspace wsp
+    )
+    {
         var modifiers = e.KeyModifiers;
         var @event = wsp.SelectionManager.ActiveEvent;
         var x = e.GetPosition(this).X;
@@ -225,7 +304,59 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
                 @event.End = time > @event.Start ? time : @event.Start;
                 break;
             case DragMode.Seek:
-                var frame = wsp.MediaController.VideoInfo.FrameFromTime(time);
+                var frame = wsp.MediaController.VideoInfo!.FrameFromTime(time);
+                wsp.MediaController.SeekTo(frame);
+                break;
+        }
+    }
+
+    private void AudioTarget_OnPointerMoved_WhenSyllablesView(
+        object? sender,
+        PointerEventArgs e,
+        Workspace wsp
+    )
+    {
+        var modifiers = e.KeyModifiers;
+        var x = e.GetPosition(this).X;
+        var @event = wsp.SelectionManager.ActiveEvent;
+        var karaoke = @event.Karaoke;
+        if (karaoke.Syllables.Count == 0)
+            return;
+
+        if (_dragMode is DragMode.None)
+        {
+            if (sender is InputElement element)
+            {
+                // Check if we're near a syllable boundary
+                var near = false;
+                foreach (var kvp in karaoke.CalculateStartTimes())
+                {
+                    var boundX = TimeToPosition(kvp.Value);
+                    if (!(Math.Abs(x - boundX) <= EdgeHitPx))
+                        continue;
+
+                    near = true;
+                    element.Cursor = new Cursor(StandardCursorType.SizeWestEast);
+                    break;
+                }
+                if (!near)
+                    element.Cursor = Cursor.Default;
+            }
+            return;
+        }
+
+        if (wsp.SelectionManager.SelectedSyllable is null)
+            return;
+
+        var time = PositionToTime(x, modifiers);
+        switch (_dragMode)
+        {
+            case DragMode.EdgeStart:
+                karaoke.SetStartTime(wsp.SelectionManager.SelectedSyllable, time);
+                wsp.MediaController.UpdateSyllables();
+                break;
+            case DragMode.Seek:
+                var frame = wsp.MediaController.VideoInfo!.FrameFromTime(time);
                 wsp.MediaController.SeekTo(frame);
                 break;
         }
@@ -249,7 +380,20 @@ public partial class TabItemAudioArea : ReactiveUserControl<TabItemViewModel>
             default:
             {
                 var wsp = ViewModel?.Workspace;
-                wsp?.Commit(wsp.SelectionManager.ActiveEvent, ChangeType.ModifyEventMeta);
+                if (wsp is null)
+                    break;
+
+                switch (wsp.MediaController.VisualizationType)
+                {
+                    case AudioVisualizationType.Events:
+                        wsp.Commit(wsp.SelectionManager.ActiveEvent, ChangeType.ModifyEventMeta);
+                        break;
+                    case AudioVisualizationType.Syllables:
+                        var k = wsp.SelectionManager.ActiveEvent.Karaoke;
+                        k.CommitSyllables();
+                        wsp.Commit(wsp.SelectionManager.ActiveEvent, ChangeType.ModifyEventText);
+                        break;
+                }
 
                 _dragMode = DragMode.None;
                 e.Pointer.Capture(null);
