@@ -198,46 +198,62 @@ public class KaraokeTests
     }
 
     [Test]
-    public async Task Normalize_Syl_Returns_NormalizedSyl()
+    public async Task Normalize_Normalized_Syls_Returns_Syls()
     {
-        const string content = @"{\k10}I'm whispering a lullaby for you to come back home";
+        const string content = @"{\k50}I'm whispering a lullaby {\k50}for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var duration = (@event.End - @event.Start).TotalCentiseconds;
+        @event.Start = Time.Zero;
+        @event.End = Time.FromSeconds(1);
         var karaoke = new Karaoke(@event);
         karaoke.Normalize();
 
-        await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
-        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(duration);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(50);
     }
 
     [Test]
-    public async Task Normalize_EqualSyls_Returns_NormalizedSyls()
+    public async Task Normalize_Short_Syls_Returns_Normalized_Syls()
     {
-        const string content = @"{\k10}I'm whispering a lullaby {\k25}for you to come back home";
-
+        const string content = @"{\k50}I'm whispering a lullaby {\k25}for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var duration = (@event.End - @event.Start).TotalCentiseconds;
+        @event.Start = Time.Zero;
+        @event.End = Time.FromSeconds(1);
         var karaoke = new Karaoke(@event);
         karaoke.Normalize();
 
-        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
-        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(duration / 2);
-        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(duration / 2);
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(50);
     }
 
     [Test]
-    public async Task Normalize_UnequalSyls_Returns_NormalizedSyls()
+    public async Task Normalize_Long_Syl_Returns_Normalized_Syls()
     {
-        const string content = @"{\k10}I'm whispe{\k25}ring a lullaby for you to come back home";
-
+        const string content = @"{\k50}I'm whispering a lullaby {\k75}for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var duration = (@event.End - @event.Start).TotalCentiseconds;
+        @event.Start = Time.Zero;
+        @event.End = Time.FromSeconds(1);
         var karaoke = new Karaoke(@event);
         karaoke.Normalize();
 
-        await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
-        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo((long)(duration * 0.2));
-        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo((long)(duration * 0.8));
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(50);
+    }
+
+    [Test]
+    public async Task Normalize_Long_Syls_Returns_Normalized_Syls()
+    {
+        const string content =
+            @"{\k80}I'm whispering {\k40}a lullaby {\k25}for you to come {\k25}back home";
+        var @event = CreateEventWithSyllables(content);
+        @event.Start = Time.Zero;
+        @event.End = Time.FromSeconds(1);
+        var karaoke = new Karaoke(@event);
+        karaoke.Normalize();
+
+        await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(80);
+        await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(20);
+        await Assert.That(karaoke.Syllables[2].Duration).IsEqualTo(0);
+        await Assert.That(karaoke.Syllables[3].Duration).IsEqualTo(0);
     }
 
     [Test]

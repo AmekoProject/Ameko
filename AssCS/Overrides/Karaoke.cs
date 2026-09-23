@@ -102,16 +102,35 @@ public class Karaoke(Event @event)
     }
 
     /// <summary>
-    /// Normalize the duration of syllables according to syllable text length
+    /// Normalize the syllables
     /// </summary>
     public void Normalize()
     {
-        EnsureUpToDate();
-        var charCount = _syllables.Sum(s => s.InnerText.Length);
-        var duration = (@event.End - @event.Start).TotalCentiseconds;
-        foreach (var syl in _syllables)
+        EnsureUpToDate(false);
+        var starts = CalculateStartTimes();
+        var ends = CalculateEndTimes();
+        var lastEnd = ends[^1];
+
+        // Total duration is shorter than the line length, so extend the last syllable
+        if (lastEnd < @event.End)
         {
-            syl.Duration = (long)(syl.InnerText.Length / (double)charCount * duration);
+            _syllables[^1].Duration += (@event.End - lastEnd).TotalCentiseconds;
+        }
+        // Truncate any syllables that extend past the end of the line
+        else if (lastEnd > @event.End)
+        {
+            for (var i = 0; i < starts.Count; i++)
+            {
+                var syl = _syllables[i];
+
+                if (starts[i] > @event.End)
+                    syl.Duration = 0;
+                else
+                    syl.Duration = Math.Min(
+                        syl.Duration,
+                        (@event.End - starts[i]).TotalCentiseconds
+                    );
+            }
         }
     }
 
@@ -290,23 +309,25 @@ public class Karaoke(Event @event)
     /// <summary>
     /// Ensure local state is up-to-date
     /// </summary>
-    private void EnsureUpToDate()
+    private void EnsureUpToDate(bool normalize = true)
     {
         if (@event.Text.GetHashCode() == _hash)
             return;
-        RepopulateBlocksAndSyllables();
+        RepopulateBlocksAndSyllables(normalize);
     }
 
     /// <summary>
     /// Clear and re-populate the blocks and syllables lists
     /// </summary>
-    private void RepopulateBlocksAndSyllables()
+    private void RepopulateBlocksAndSyllables(bool normalize = true)
     {
         _hash = @event.Text.GetHashCode();
         _blocks.Clear();
         _syllables.Clear();
         _blocks.AddRange(@event.ParseBlocks());
         _syllables.AddRange(ParseSyllables(_blocks));
+        if (normalize)
+            Normalize();
     }
 
     /// <summary>
