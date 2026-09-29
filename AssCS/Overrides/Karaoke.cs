@@ -19,6 +19,11 @@ public class Karaoke(Event @event)
     private readonly List<Block> _blocks = [];
 
     /// <summary>
+    /// Enable automatic syllable normalization
+    /// </summary>
+    internal bool AutoNormalize { get; init; } = true;
+
+    /// <summary>
     /// List of syllables in the line
     /// </summary>
     public IReadOnlyList<Syllable> Syllables
@@ -326,7 +331,7 @@ public class Karaoke(Event @event)
         _syllables.Clear();
         _blocks.AddRange(@event.ParseBlocks());
         _syllables.AddRange(ParseSyllables(_blocks));
-        if (normalize)
+        if (normalize && AutoNormalize)
             Normalize();
     }
 

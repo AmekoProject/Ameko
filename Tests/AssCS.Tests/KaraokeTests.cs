@@ -10,7 +10,7 @@ public class KaraokeTests
     public async Task Parse_EmptyEvent_Returns_EmptySyl()
     {
         var @event = CreateEventWithSyllables(string.Empty);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(@"{\k0}");
     }
@@ -20,7 +20,7 @@ public class KaraokeTests
     {
         const string content = "I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Text).IsEqualTo($@"{{\k0}}{content}");
     }
@@ -30,7 +30,7 @@ public class KaraokeTests
     {
         const string content = @"{\k10}I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(content);
@@ -44,7 +44,7 @@ public class KaraokeTests
         const string content = syl1 + syl2;
 
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[1].Duration).IsEqualTo(25);
@@ -58,7 +58,7 @@ public class KaraokeTests
         const string content =
             @"{\k10\fs150\fnArial}I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[0].Tags.Count).IsEqualTo(2);
@@ -71,7 +71,7 @@ public class KaraokeTests
         const string content =
             @"{\k10}I'm whispering a {\fscx105}lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[0].Blocks.Count).IsEqualTo(3);
@@ -85,7 +85,7 @@ public class KaraokeTests
         const string syl2 = @"for you to come back home";
         const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AddSplit(0, 25);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -100,7 +100,7 @@ public class KaraokeTests
     {
         const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AddSplit(0, 0);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -115,7 +115,7 @@ public class KaraokeTests
     {
         const string content = @"{\k10}I'm whispering a lullaby for you to come back home"; // 50 inner chars
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AddSplit(0, 50);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -133,7 +133,7 @@ public class KaraokeTests
         const string content =
             @"{\k10}I'm whispering a {\xshad100}lullaby for you to come back home"; // 50 inner chars
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AddSplit(0, 25);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -150,7 +150,7 @@ public class KaraokeTests
         const string split = @"{\k5}I'm whispering a lullaby {\k5}for you to come back home";
         const string joined = @"I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(split);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.RemoveSplit(1);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
@@ -163,7 +163,7 @@ public class KaraokeTests
     {
         const string split = @"{\k5}I'm whispering a lullaby {\k5}for you to come back home";
         var @event = CreateEventWithSyllables(split);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.RemoveSplit(0);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -175,7 +175,7 @@ public class KaraokeTests
         const string split = @"{\k5}I'm whispering a lullaby {\k5\b1}for you to come back home";
         const string joined = @"{\k10}I'm whispering a lullaby {\b1}for you to come back home";
         var @event = CreateEventWithSyllables(split);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.RemoveSplit(1);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
@@ -189,7 +189,7 @@ public class KaraokeTests
         const string split = @"{\k5}I'm whispering a lullaby {\k5}for you {\b1}to come back home";
         const string joined = @"{\k10}I'm whispering a lullaby for you {\b1}to come back home";
         var @event = CreateEventWithSyllables(split);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.RemoveSplit(1);
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
@@ -204,7 +204,7 @@ public class KaraokeTests
         var @event = CreateEventWithSyllables(content);
         @event.Start = Time.Zero;
         @event.End = Time.FromSeconds(1);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Normalize();
 
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
@@ -218,7 +218,7 @@ public class KaraokeTests
         var @event = CreateEventWithSyllables(content);
         @event.Start = Time.Zero;
         @event.End = Time.FromSeconds(1);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Normalize();
 
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
@@ -232,7 +232,7 @@ public class KaraokeTests
         var @event = CreateEventWithSyllables(content);
         @event.Start = Time.Zero;
         @event.End = Time.FromSeconds(1);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Normalize();
 
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(50);
@@ -247,7 +247,7 @@ public class KaraokeTests
         var @event = CreateEventWithSyllables(content);
         @event.Start = Time.Zero;
         @event.End = Time.FromSeconds(1);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Normalize();
 
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(80);
@@ -262,7 +262,7 @@ public class KaraokeTests
         const string content = @"{\k10}I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
         var duration = (@event.End - @event.Start).TotalCentiseconds;
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Distribute();
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
@@ -276,7 +276,7 @@ public class KaraokeTests
 
         var @event = CreateEventWithSyllables(content);
         var duration = (@event.End - @event.Start).TotalCentiseconds;
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Distribute();
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -291,7 +291,7 @@ public class KaraokeTests
 
         var @event = CreateEventWithSyllables(content);
         var duration = (@event.End - @event.Start).TotalCentiseconds;
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.Distribute();
 
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(2);
@@ -303,7 +303,7 @@ public class KaraokeTests
     public async Task AutoSplit_EmptyEvent_Returns_EmptySyl()
     {
         var @event = CreateEventWithSyllables(string.Empty);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AutoSplit();
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(1);
         await Assert.That(karaoke.Syllables[0].Text).IsEqualTo(@"{\k0}");
@@ -314,7 +314,7 @@ public class KaraokeTests
     {
         const string content = "I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AutoSplit();
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(10);
     }
@@ -324,7 +324,7 @@ public class KaraokeTests
     {
         const string content = @"{\k6}I'm whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AutoSplit();
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[0].Duration).IsEqualTo(0);
@@ -335,7 +335,7 @@ public class KaraokeTests
     {
         const string content = @"I'm {\b1}whispering a lullaby for you to come back home";
         var @event = CreateEventWithSyllables(content);
-        var karaoke = new Karaoke(@event);
+        var karaoke = new Karaoke(@event) { AutoNormalize = false };
         karaoke.AutoSplit();
         await Assert.That(karaoke.Syllables.Count).IsEqualTo(10);
         await Assert.That(karaoke.Syllables[1].Blocks.Count).IsEqualTo(2);
