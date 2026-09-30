@@ -86,5 +86,17 @@
                                              ConverterParameter={x:Static dm:SearchFilter.Effect}}"
       />
     </StackPanel>
+    <StackPanel Orientation="Horizontal" Margin="2" Spacing="12">
+      <CheckBox
+        Content="{x:Static i18n:Search.Search_CB_MatchCase}"
+        IsChecked="{Binding MatchCase}"
+        IsEnabled="{Binding !UseRegex}"
+      />
+      <CheckBox
+        Content="{x:Static i18n:Search.Search_CB_Regex}"
+        ToolTip.Tip="{x:Static i18n:Search.Search_CB_Regex_ToolTip}"
+        IsChecked="{Binding UseRegex}"
+      />
+    </StackPanel>
   </StackPanel>
 </Window>

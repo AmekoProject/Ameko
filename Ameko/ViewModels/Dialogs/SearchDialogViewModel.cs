@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Ameko.DataModels;
 using Ameko.Utilities;
@@ -20,13 +21,21 @@ public class SearchDialogViewModel : ViewModelBase
 
     public string Query { get; set; } = string.Empty;
     public SearchFilter Filter { get; set; } = SearchFilter.Text;
+    public bool MatchCase { get; set; }
+    public bool UseRegex
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
     public ICommand FindNextCommand { get; }
 
     private string? _previousQuery;
     private SearchFilter? _previousFilter;
+    private bool? _previousCase;
+    private bool? _previousRegex;
 
     private List<Event> _results = [];
-    private int _resultIndex = 0;
+    private int _resultIndex;
     private Workspace? _lastWorkspace;
 
     public SearchDialogViewModel(IProjectProvider projectProvider, ITabFactory tabFactory)
@@ -40,11 +49,19 @@ public class SearchDialogViewModel : ViewModelBase
                 return;
 
             // Check if this is a new query or a continuation of the previous one
-            if (wsp != _lastWorkspace || Query != _previousQuery || Filter != _previousFilter)
+            if (
+                wsp != _lastWorkspace
+                || Query != _previousQuery
+                || Filter != _previousFilter
+                || UseRegex != _previousRegex
+                || MatchCase != _previousCase
+            )
             {
                 GenerateResults();
                 _previousQuery = Query;
                 _previousFilter = Filter;
+                _previousRegex = UseRegex;
+                _previousCase = MatchCase;
                 _lastWorkspace = wsp;
             }
 
@@ -63,34 +80,50 @@ public class SearchDialogViewModel : ViewModelBase
 
     private void GenerateResults()
     {
+        var currentCultureCase = MatchCase
+            ? StringComparison.CurrentCulture
+            : StringComparison.CurrentCultureIgnoreCase;
+        var invariantCase = MatchCase
+            ? StringComparison.InvariantCulture
+            : StringComparison.InvariantCultureIgnoreCase;
+
         _resultIndex = 0;
-        _results =
-            _projectProvider
-                .Current.WorkingSpace?.Document.EventManager.Events.Where(e =>
-                    Filter switch
-                    {
-                        SearchFilter.Text => e.Text.Contains(
-                            Query,
-                            StringComparison.CurrentCultureIgnoreCase
-                        ),
-                        SearchFilter.StrippedText => e.GetStrippedText()
-                            .Contains(Query, StringComparison.CurrentCultureIgnoreCase),
-                        SearchFilter.Style => e.Style.Contains(
-                            Query,
-                            StringComparison.InvariantCultureIgnoreCase
-                        ),
-                        SearchFilter.Actor => e.Actor.Contains(
-                            Query,
-                            StringComparison.InvariantCultureIgnoreCase
-                        ),
-                        SearchFilter.Effect => e.Effect.Contains(
-                            Query,
-                            StringComparison.InvariantCultureIgnoreCase
-                        ),
-                        _ => false,
-                    }
-                )
-                .ToList()
-            ?? [];
+        if (UseRegex)
+        {
+            _results =
+                _projectProvider
+                    .Current.WorkingSpace?.Document.EventManager.Events.Where(e =>
+                        Filter switch
+                        {
+                            SearchFilter.Text => Regex.IsMatch(e.Text, Query),
+                            SearchFilter.StrippedText => Regex.IsMatch(e.GetStrippedText(), Query),
+                            SearchFilter.Style => Regex.IsMatch(e.Style, Query),
+                            SearchFilter.Actor => Regex.IsMatch(e.Actor, Query),
+                            SearchFilter.Effect => Regex.IsMatch(e.Effect, Query),
+                            _ => false,
+                        }
+                    )
+                    .ToList()
+                ?? [];
+        }
+        else
+        {
+            _results =
+                _projectProvider
+                    .Current.WorkingSpace?.Document.EventManager.Events.Where(e =>
+                        Filter switch
+                        {
+                            SearchFilter.Text => e.Text.Contains(Query, currentCultureCase),
+                            SearchFilter.StrippedText => e.GetStrippedText()
+                                .Contains(Query, currentCultureCase),
+                            SearchFilter.Style => e.Style.Contains(Query, invariantCase),
+                            SearchFilter.Actor => e.Actor.Contains(Query, invariantCase),
+                            SearchFilter.Effect => e.Effect.Contains(Query, invariantCase),
+                            _ => false,
+                        }
+                    )
+                    .ToList()
+                ?? [];
+        }
     }
 }

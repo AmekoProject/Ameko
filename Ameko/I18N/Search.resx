@@ -78,4 +78,13 @@
     <data name="Sort_Label_ThenBy" xml:space="preserve">
         <value>Then By:</value>
     </data>
+    <data name="Search_CB_Regex" xml:space="preserve">
+        <value>RegEx</value>
+    </data>
+    <data name="Search_CB_Regex_ToolTip" xml:space="preserve">
+        <value>Search using regular expressions</value>
+    </data>
+    <data name="Search_CB_MatchCase" xml:space="preserve">
+        <value>Match Case</value>
+    </data>
 </root>

@@ -164,5 +164,23 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Sort_Label_ThenBy", resourceCulture);
             }
         }
+        
+        public static string Search_CB_Regex {
+            get {
+                return ResourceManager.GetString("Search_CB_Regex", resourceCulture);
+            }
+        }
+        
+        public static string Search_CB_Regex_ToolTip {
+            get {
+                return ResourceManager.GetString("Search_CB_Regex_ToolTip", resourceCulture);
+            }
+        }
+        
+        public static string Search_CB_MatchCase {
+            get {
+                return ResourceManager.GetString("Search_CB_MatchCase", resourceCulture);
+            }
+        }
     }
 }
