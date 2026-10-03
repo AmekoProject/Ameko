@@ -944,5 +944,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("Audio_Button_Waveform_ToolTip", resourceCulture);
             }
         }
+        
+        public static string Message_PackageUpdates {
+            get {
+                return ResourceManager.GetString("Message_PackageUpdates", resourceCulture);
+            }
+        }
     }
 }

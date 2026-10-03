@@ -468,4 +468,7 @@
     <data name="Audio_Button_Waveform_ToolTip" xml:space="preserve">
         <value>Switch to waveform view</value>
     </data>
+    <data name="Message_PackageUpdates" xml:space="preserve">
+        <value>Updates available for {0} package(s)</value>
+    </data>
 </root>

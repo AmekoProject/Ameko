@@ -199,6 +199,18 @@ public class App : Application
                 await pkgMan.AddAdditionalRepositories(
                     provider.GetRequiredService<IConfiguration>().RepositoryUrls
                 );
+
+                var updateable = await pkgMan.GetUpdateCandidates(includeModifiedPackages: false);
+                if (updateable.Count > 0)
+                {
+                    var message = string.Format(
+                        I18N.Resources.Message_PackageUpdates,
+                        updateable.Count
+                    );
+                    provider
+                        .GetRequiredService<IMessageService>()
+                        .Enqueue(message, TimeSpan.FromSeconds(5));
+                }
             }
             catch (Exception ex)
             {
