@@ -302,14 +302,14 @@ public class Configuration : BindableBase, IConfiguration
             model.Set(RepositoryUrls.ToArray(), nameof(RepositoryUrls));
             model.Set(ScriptMenuOverrides.ToDictionary(), nameof(ScriptMenuOverrides));
             model.Set(
-                new
+                new TimingConfiguration
                 {
-                    Timing.LeadIn,
-                    Timing.LeadOut,
-                    Timing.SnapStartEarlierThreshold,
-                    Timing.SnapStartLaterThreshold,
-                    Timing.SnapEndEarlierThreshold,
-                    Timing.SnapEndLaterThreshold,
+                    LeadIn = Timing.LeadIn,
+                    LeadOut = Timing.LeadOut,
+                    SnapStartEarlierThreshold = Timing.SnapStartEarlierThreshold,
+                    SnapStartLaterThreshold = Timing.SnapStartLaterThreshold,
+                    SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
+                    SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
                 },
                 nameof(Timing)
             );
@@ -374,7 +374,7 @@ public class Configuration : BindableBase, IConfiguration
                 return @default;
             }
 
-            var timing = model.GetOrDefault(@default.Timing);
+            var timing = model.GetOrDefault(nameof(Timing), new TimingConfiguration());
 
             var result = new Configuration(fileSystem, logger)
             {

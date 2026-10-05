@@ -99,12 +99,9 @@ public class Globals : BindableBase, IGlobals
             var model = new Dictionary<string, object?>();
             model.SetVersion(CurrentApiVersion);
 
-            model.Set(
-                "Styles",
-                StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)).ToArray()
-            );
-            model.Set(nameof(Colors), Colors.Select(s => s.AsStyleColor()).ToArray());
-            model.Set(nameof(CustomWords), CustomWords.ToArray());
+            model.Set("Styles", StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)));
+            model.Set(Colors.Select(s => s.AsStyleColor()), nameof(Colors));
+            model.Set(CustomWords);
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);

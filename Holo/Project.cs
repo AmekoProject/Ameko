@@ -5,11 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using AssCS;
 using AssCS.IO;
 using AssCS.Utilities;
 using Holo.Configuration;
-using Holo.Configuration.Migration;
 using Holo.IO;
 using Holo.Models;
 using Holo.Providers;
@@ -37,11 +37,13 @@ namespace Holo;
 /// </remarks>
 public class Project : BindableBase
 {
+    internal const int CurrentApiVersion = 2;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
         WriteIndented = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
     };
 
     private readonly RangeObservableCollection<ProjectItem> _referencedItems;
@@ -675,21 +677,22 @@ public class Project : BindableBase
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new ProjectModel
-            {
-                Version = ProjectModelBase.CurrentApiVersion,
-                ReferencedDocuments = ConvertToModels(_referencedItems, dir),
-                Styles = StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)).ToArray(), // TODO: Detect style version
-                Colors = Colors.Select(c => c.AsStyleColor()).ToArray(),
-                Cps = _cps,
-                CpsIncludesWhitespace = _cpsIncludesWhitespace,
-                CpsIncludesPunctuation = _cpsIncludesPunctuation,
-                UseSoftLinebreaks = _useSoftLinebreaks,
-                DefaultLayer = _defaultLayer,
-                SpellcheckCulture = _spellcheckCulture,
-                CustomWords = _customWords.ToArray(),
-                Terms = _terms.Where(t => !t.IsEmpty).ToArray(),
-                Timing = new TimingModel
+            var model = new Dictionary<string, object?>();
+            model.SetVersion(CurrentApiVersion);
+
+            model.Set("ReferencedDocuments", ConvertToModels(_referencedItems, dir));
+            model.Set("Styles", StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P))); // TODO: Detect style version
+            model.Set(Colors.Select(c => c.AsStyleColor()), nameof(Colors));
+            model.Set(Cps);
+            model.Set(CpsIncludesWhitespace);
+            model.Set(CpsIncludesPunctuation);
+            model.Set(UseSoftLinebreaks);
+            model.Set(DefaultLayer);
+            model.Set(SpellcheckCulture);
+            model.Set(_customWords, nameof(CustomWords));
+            model.Set(_terms.Where(t => !t.IsEmpty), nameof(Terms));
+            model.Set(
+                new TimingConfiguration
                 {
                     LeadIn = Timing.LeadIn,
                     LeadOut = Timing.LeadOut,
@@ -698,8 +701,9 @@ public class Project : BindableBase
                     SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
                     SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
                 },
-                ScriptConfiguration = ScriptConfiguration,
-            };
+                nameof(Timing)
+            );
+            model.Set(ScriptConfiguration);
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -1052,44 +1056,66 @@ public class Project : BindableBase
                 FileShare.ReadWrite
             );
 
-            using var reader = new StreamReader(fs);
-            var content = reader.ReadToEnd();
-            var model = ProjectMigrator.MigrateToCurrent(content);
-
-            if (model is null)
-                throw new InvalidDataException("Project model migration failed");
+            Dictionary<string, object?>? model;
+            try
+            {
+                using var reader = new StreamReader(fs);
+                var content = reader.ReadToEnd();
+                model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                    content,
+                    JsonOptions
+                );
+                model ??= [];
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Project deserialization failed");
+                model = [];
+            }
 
             // De-relative the file paths in the project
-            _referencedItems.AddRange(
-                ConvertFromModels(model.ReferencedDocuments, dir, ref _docId)
-            );
-            _colors.AddRange(model.Colors.Select(Color.FromAss));
-            _cps = model.Cps;
-            _cpsIncludesWhitespace = model.CpsIncludesWhitespace;
-            _cpsIncludesPunctuation = model.CpsIncludesPunctuation;
-            _defaultLayer = model.DefaultLayer;
-            _useSoftLinebreaks = model.UseSoftLinebreaks;
-            _spellcheckCulture = model.SpellcheckCulture;
-            _customWords = new ObservableCollection<string>(model.CustomWords);
-            _terms.AddRange(model.Terms);
+            var referencedItems = model.GetOrDefault<ProjectItemModel[]>("ReferencedDocuments", []);
+            _referencedItems.AddRange(ConvertFromModels(referencedItems, dir, ref _docId));
+
+            var colors = model.GetOrDefault<string[]>(nameof(Colors), []);
+            var words = model.GetOrDefault<string[]>(nameof(CustomWords), []);
+            var terms = model.GetOrDefault<Term[]>(nameof(Terms), []);
+            var timing = model.GetOrDefault(nameof(Timing), new TimingConfiguration());
+
+            _colors.AddRange(colors.Select(Color.FromAss));
+            _customWords = new ObservableCollection<string>(words);
+            _terms.AddRange(terms);
+
+            _cps = model.GetOrNull<uint?>(nameof(Cps));
+            _cpsIncludesWhitespace = model.GetOrNull<bool?>(nameof(CpsIncludesWhitespace));
+            _cpsIncludesPunctuation = model.GetOrNull<bool?>(nameof(CpsIncludesPunctuation));
+            _defaultLayer = model.GetOrNull<int?>(nameof(DefaultLayer));
+            _useSoftLinebreaks = model.GetOrNull<bool?>(nameof(UseSoftLinebreaks));
+            _spellcheckCulture = model.GetOrNull<string?>(nameof(SpellcheckCulture));
 
             Timing = new TimingConfiguration
             {
-                LeadIn = model.Timing.LeadIn,
-                LeadOut = model.Timing.LeadOut,
-                SnapStartEarlierThreshold = model.Timing.SnapStartEarlierThreshold,
-                SnapStartLaterThreshold = model.Timing.SnapStartLaterThreshold,
-                SnapEndEarlierThreshold = model.Timing.SnapEndEarlierThreshold,
-                SnapEndLaterThreshold = model.Timing.SnapEndLaterThreshold,
+                LeadIn = timing.LeadIn,
+                LeadOut = timing.LeadOut,
+                SnapStartEarlierThreshold = timing.SnapStartEarlierThreshold,
+                SnapStartLaterThreshold = timing.SnapStartLaterThreshold,
+                SnapEndEarlierThreshold = timing.SnapEndEarlierThreshold,
+                SnapEndLaterThreshold = timing.SnapEndLaterThreshold,
             };
 
-            ScriptConfiguration = model.ScriptConfiguration;
+            ScriptConfiguration = model.GetOrDefault(
+                nameof(ScriptConfiguration),
+                new Dictionary<string, Dictionary<string, JsonElement>>()
+            );
 
-            model
-                .Styles.Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P)) // TODO: Detect style version
-                .Where(s => s is not null)
-                .ToList()
-                .ForEach(StyleManager.Add!);
+            // TODO: Detect style version
+            foreach (
+                var style in model
+                    .GetOrDefault<string[]>("Styles", [])
+                    .Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P))
+                    .OfType<Style>()
+            )
+                StyleManager.Add(style);
 
             IsSaved = true;
         }

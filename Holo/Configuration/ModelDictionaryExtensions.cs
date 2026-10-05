@@ -62,6 +62,26 @@ internal static class ModelDictionaryExtensions
         }
 
         /// <summary>
+        /// Retrieve a value from the dictionary
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <returns>The value in the model, or <see langword="null"/></returns>
+        public T? GetOrNull<T>(string key)
+        {
+            if (!model.TryGetValue(key, out var value) || value is not JsonElement element)
+                return default;
+
+            try
+            {
+                return element.Deserialize<T>(JsonOptions);
+            }
+            catch
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
         /// Set a value
         /// </summary>
         /// <param name="value">Value to set</param>
