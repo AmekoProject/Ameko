@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -13,7 +14,6 @@ using Ameko.ViewModels.Windows;
 using Ameko.Views.Windows;
 using AssCS.Utilities;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -96,21 +96,25 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
 
         // Start long process loading in the background after GUI finishes loading
-        Dispatcher.UIThread.InvokeAsync(async () =>
-        {
-            // Check if there's anything to open
-            if (Program.Args.Count > 0)
-                InitializeStartupProject(provider, desktop.MainWindow);
+        Dispatcher.UIThread.InvokeAsync(
+            async () =>
+            {
+                // Check if there's anything to open
+                if (Program.Args.Count > 0)
+                    InitializeStartupProject(provider);
 
-            InitializeKeybindService(provider);
-            InitializeScriptService(provider);
-            InitializePackageManager(provider);
-            InitializeDiscordRpcService(provider);
-            InitializeAutosaveService(provider);
-#if !DEBUG // Skip update checking on debug builds
-            await InitializeUpdateService(provider);
-#endif
-        });
+                InitializeKeybindService(provider);
+                InitializeScriptService(provider);
+                InitializePackageManager(provider);
+                InitializeDiscordRpcService(provider);
+                InitializeAutosaveService(provider);
+
+                // Skip update checking on debug builds
+                if (!Debugger.IsAttached)
+                    await InitializeUpdateService(provider);
+            },
+            DispatcherPriority.Background
+        );
     }
 
     /// <summary>
@@ -221,7 +225,7 @@ public class App : Application
         });
     }
 
-    private void InitializeStartupProject(IServiceProvider provider, Window mainWindow)
+    private void InitializeStartupProject(IServiceProvider provider)
     {
         var fs = provider.GetRequiredService<IFileSystem>();
         var projectProvider = provider.GetRequiredService<IProjectProvider>();
