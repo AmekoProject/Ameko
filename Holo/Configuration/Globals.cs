@@ -3,8 +3,8 @@
 using System.Collections.ObjectModel;
 using System.IO.Abstractions;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using AssCS;
-using Holo.Configuration.Migration;
 using Holo.IO;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +15,12 @@ namespace Holo.Configuration;
 /// </summary>
 public class Globals : BindableBase, IGlobals
 {
-    private static readonly JsonSerializerOptions JsonOptions = new() { IncludeFields = true };
+    private const int CurrentApiVersion = 1;
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        IncludeFields = true,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
+    };
 
     private readonly ObservableCollection<Color> _colors;
     private readonly ObservableCollection<string> _customWords;
@@ -91,13 +96,15 @@ public class Globals : BindableBase, IGlobals
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new GlobalsModel
-            {
-                Version = GlobalsModelBase.CurrentApiVersion,
-                Styles = StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)).ToArray(), // TODO: Detect style version
-                Colors = Colors.Select(s => s.AsStyleColor()).ToArray(),
-                CustomWords = CustomWords.ToArray(),
-            };
+            var model = new Dictionary<string, object?>();
+            model.SetVersion(CurrentApiVersion);
+
+            model.Set(
+                "Styles",
+                StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)).ToArray()
+            );
+            model.Set(nameof(Colors), Colors.Select(s => s.AsStyleColor()).ToArray());
+            model.Set(nameof(CustomWords), CustomWords.ToArray());
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -126,10 +133,11 @@ public class Globals : BindableBase, IGlobals
             if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
                 fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
 
+            var @default = new Globals(fileSystem, logger);
             if (!fileSystem.File.Exists(path))
             {
                 logger.LogWarning("Globals file does not exist, using defaults...");
-                return new Globals(fileSystem, logger);
+                return @default;
             }
 
             using var fs = fileSystem.FileStream.New(
@@ -139,29 +147,42 @@ public class Globals : BindableBase, IGlobals
                 FileShare.ReadWrite
             );
 
-            using var reader = new StreamReader(fs);
-            var content = reader.ReadToEnd();
-            var model = GlobalsMigrator.MigrateToCurrent(content);
-
-            if (model is null)
+            Dictionary<string, object?>? model;
+            try
             {
-                logger.LogError("Globals migration failed");
-                return new Globals(fileSystem, logger);
+                using var reader = new StreamReader(fs);
+                var content = reader.ReadToEnd();
+                model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                    content,
+                    JsonOptions
+                );
+
+                if (model is null)
+                    return @default;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Globals deserialization failed");
+                return @default;
             }
 
             var g = new Globals(fileSystem, logger);
-            foreach (
-                var style in model.Styles.Select(s =>
-                    Style.FromAss(g.StyleManager.NextId, s, AssVersion.V400P) // TODO: Detect style version
-                )
-            )
-                if (style is not null)
-                    g.StyleManager.Add(style);
 
-            foreach (var color in model.Colors.Select(Color.FromAss))
+            // TODO: Detect style version
+            foreach (
+                var style in model
+                    .GetOrDefault<string[]>("Styles", [])
+                    .Select(s => Style.FromAss(g.StyleManager.NextId, s, AssVersion.V400P))
+                    .OfType<Style>()
+            )
+                g.StyleManager.Add(style);
+
+            foreach (
+                var color in model.GetOrDefault<string[]>(nameof(Colors), []).Select(Color.FromAss)
+            )
                 g._colors.Add(color);
 
-            foreach (var word in model.CustomWords)
+            foreach (var word in model.GetOrDefault<string[]>(nameof(CustomWords), []))
                 g._customWords.Add(word);
 
             logger.LogInformation("Done!");
