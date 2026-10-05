@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AssCS;
-using Holo.Configuration.Migration;
 using Holo.IO;
 using Holo.Models;
 using Microsoft.Extensions.Logging;
@@ -26,6 +25,7 @@ namespace Holo.Configuration;
 /// </remarks>
 public class Configuration : BindableBase, IConfiguration
 {
+    private const int CurrentApiVersion = 3;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -273,43 +273,46 @@ public class Configuration : BindableBase, IConfiguration
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new ConfigurationModel
-            {
-                Version = ConfigurationModelBase.CurrentApiVersion,
-                Cps = _cps,
-                CpsIncludesWhitespace = _cpsIncludesWhitespace,
-                CpsIncludesPunctuation = _cpsIncludesPunctuation,
-                UseSoftLinebreaks = _useSoftLinebreaks,
-                AutosaveEnabled = _autosaveEnabled,
-                AutosaveInterval = _autosaveInterval,
-                IndexCacheExpiration = _indexCacheExpiration,
-                AutoloadAudioTracks = _autoloadAudioTracks,
-                LineWidthIncludesWhitespace = _lineWidthIncludesWhitespace,
-                LineWidthIncludesPunctuation = _lineWidthIncludesPunctuation,
-                RichPresenceLevel = _richPresenceLevel,
-                SaveFrames = _saveFrames,
-                TimingMode = _timingMode,
-                DefaultLayer = _defaultLayer,
-                Culture = _culture,
-                SpellcheckCulture = _spellcheckCulture,
-                Theme = _theme,
-                GridPadding = _gridPadding,
-                EditorFontSize = _editorFontSize,
-                GridFontSize = _gridFontSize,
-                ReferenceFontSize = _referenceFontSize,
-                PropagateFields = _propagateFields,
-                RepositoryUrls = RepositoryUrls.ToArray(),
-                ScriptMenuOverrides = ScriptMenuOverrides.ToDictionary(),
-                Timing = new TimingModel
+            var model = new Dictionary<string, object?>();
+            model.SetVersion(CurrentApiVersion);
+
+            model.Set(Cps);
+            model.Set(CpsIncludesWhitespace);
+            model.Set(CpsIncludesPunctuation);
+            model.Set(UseSoftLinebreaks);
+            model.Set(AutosaveEnabled);
+            model.Set(AutosaveInterval);
+            model.Set(IndexCacheExpiration);
+            model.Set(AutoloadAudioTracks);
+            model.Set(LineWidthIncludesWhitespace);
+            model.Set(LineWidthIncludesPunctuation);
+            model.Set(RichPresenceLevel);
+            model.Set(SaveFrames);
+            model.Set(TimingMode);
+            model.Set(DefaultLayer);
+            model.Set(Culture);
+            model.Set(SpellcheckCulture);
+            model.Set(Theme);
+            model.Set(GridPadding);
+            model.Set(EditorFontSize);
+            model.Set(GridFontSize);
+            model.Set(ReferenceFontSize);
+            model.Set(PropagateFields);
+            model.Set(EditorFontSize);
+            model.Set(RepositoryUrls.ToArray(), nameof(RepositoryUrls));
+            model.Set(ScriptMenuOverrides.ToDictionary(), nameof(ScriptMenuOverrides));
+            model.Set(
+                new
                 {
-                    LeadIn = Timing.LeadIn,
-                    LeadOut = Timing.LeadOut,
-                    SnapStartEarlierThreshold = Timing.SnapStartEarlierThreshold,
-                    SnapStartLaterThreshold = Timing.SnapStartLaterThreshold,
-                    SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
-                    SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
+                    Timing.LeadIn,
+                    Timing.LeadOut,
+                    Timing.SnapStartEarlierThreshold,
+                    Timing.SnapStartLaterThreshold,
+                    Timing.SnapEndEarlierThreshold,
+                    Timing.SnapEndLaterThreshold,
                 },
-            };
+                nameof(Timing)
+            );
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -338,10 +341,11 @@ public class Configuration : BindableBase, IConfiguration
             if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
                 fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
 
+            var @default = new Configuration(fileSystem, logger);
             if (!fileSystem.File.Exists(path))
             {
                 logger.LogWarning("Configuration file does not exist, using defaults...");
-                return new Configuration(fileSystem, logger);
+                return @default;
             }
 
             using var fs = fileSystem.FileStream.New(
@@ -351,50 +355,69 @@ public class Configuration : BindableBase, IConfiguration
                 FileShare.ReadWrite
             );
 
-            using var reader = new StreamReader(fs);
-            var content = reader.ReadToEnd();
-            var model = ConfigurationMigrator.MigrateToCurrent(content);
-
-            if (model is null)
+            Dictionary<string, object?>? model;
+            try
             {
-                logger.LogError("Configuration migration failed");
-                return new Configuration(fileSystem, logger);
+                using var reader = new StreamReader(fs);
+                var content = reader.ReadToEnd();
+                model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                    content,
+                    JsonOptions
+                );
+
+                if (model is null)
+                    return @default;
             }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Configuration deserialization failed");
+                return @default;
+            }
+
+            var timing = model.GetOrDefault(@default.Timing);
 
             var result = new Configuration(fileSystem, logger)
             {
-                _cps = model.Cps,
-                _cpsIncludesWhitespace = model.CpsIncludesWhitespace,
-                _cpsIncludesPunctuation = model.CpsIncludesPunctuation,
-                _useSoftLinebreaks = model.UseSoftLinebreaks,
-                _autosaveEnabled = model.AutosaveEnabled,
-                _autosaveInterval = model.AutosaveInterval,
-                _indexCacheExpiration = model.IndexCacheExpiration,
-                _autoloadAudioTracks = model.AutoloadAudioTracks,
-                _lineWidthIncludesWhitespace = model.LineWidthIncludesWhitespace,
-                _lineWidthIncludesPunctuation = model.LineWidthIncludesPunctuation,
-                _richPresenceLevel = model.RichPresenceLevel,
-                _saveFrames = model.SaveFrames,
-                _timingMode = model.TimingMode,
-                _defaultLayer = model.DefaultLayer,
-                _culture = model.Culture,
-                _spellcheckCulture = model.SpellcheckCulture,
-                _theme = model.Theme,
-                _gridPadding = model.GridPadding,
-                _editorFontSize = model.EditorFontSize,
-                _gridFontSize = model.GridFontSize,
-                _referenceFontSize = model.ReferenceFontSize,
-                _propagateFields = model.PropagateFields,
-                _repositoryUrls = new RangeObservableCollection<string>(model.RepositoryUrls),
-                _scriptMenuOverrides = new Dictionary<string, string>(model.ScriptMenuOverrides),
+                _cps = model.GetOrDefault(@default.Cps),
+                _cpsIncludesWhitespace = model.GetOrDefault(@default.CpsIncludesWhitespace),
+                _cpsIncludesPunctuation = model.GetOrDefault(@default.CpsIncludesPunctuation),
+                _useSoftLinebreaks = model.GetOrDefault(@default.UseSoftLinebreaks),
+                _autosaveEnabled = model.GetOrDefault(@default.AutosaveEnabled),
+                _autosaveInterval = model.GetOrDefault(@default.AutosaveInterval),
+                _indexCacheExpiration = model.GetOrDefault(@default.IndexCacheExpiration),
+                _autoloadAudioTracks = model.GetOrDefault(@default.AutoloadAudioTracks),
+                _lineWidthIncludesWhitespace = model.GetOrDefault(
+                    @default.LineWidthIncludesWhitespace
+                ),
+                _lineWidthIncludesPunctuation = model.GetOrDefault(
+                    @default.LineWidthIncludesPunctuation
+                ),
+                _richPresenceLevel = model.GetOrDefault(@default.RichPresenceLevel),
+                _saveFrames = model.GetOrDefault(@default.SaveFrames),
+                _timingMode = model.GetOrDefault(@default.TimingMode),
+                _defaultLayer = model.GetOrDefault(@default.DefaultLayer),
+                _culture = model.GetOrDefault(@default.Culture),
+                _spellcheckCulture = model.GetOrDefault(@default.SpellcheckCulture),
+                _theme = model.GetOrDefault(@default.Theme),
+                _gridPadding = model.GetOrDefault(@default.GridPadding),
+                _editorFontSize = model.GetOrDefault(@default.EditorFontSize),
+                _gridFontSize = model.GetOrDefault(@default.GridFontSize),
+                _referenceFontSize = model.GetOrDefault(@default.ReferenceFontSize),
+                _propagateFields = model.GetOrDefault(@default.PropagateFields),
+                _repositoryUrls = new RangeObservableCollection<string>(
+                    model.GetOrDefault(nameof(RepositoryUrls), @default._repositoryUrls)
+                ),
+                _scriptMenuOverrides = new Dictionary<string, string>(
+                    model.GetOrDefault(nameof(ScriptMenuOverrides), @default.ScriptMenuOverrides)
+                ),
                 Timing =
                 {
-                    LeadIn = model.Timing.LeadIn,
-                    LeadOut = model.Timing.LeadOut,
-                    SnapStartEarlierThreshold = model.Timing.SnapStartEarlierThreshold,
-                    SnapStartLaterThreshold = model.Timing.SnapStartLaterThreshold,
-                    SnapEndEarlierThreshold = model.Timing.SnapEndEarlierThreshold,
-                    SnapEndLaterThreshold = model.Timing.SnapEndLaterThreshold,
+                    LeadIn = timing.LeadIn,
+                    LeadOut = timing.LeadOut,
+                    SnapStartEarlierThreshold = timing.SnapStartEarlierThreshold,
+                    SnapStartLaterThreshold = timing.SnapStartLaterThreshold,
+                    SnapEndEarlierThreshold = timing.SnapEndEarlierThreshold,
+                    SnapEndLaterThreshold = timing.SnapEndLaterThreshold,
                 },
             };
             logger.LogInformation("Done!");
@@ -463,5 +486,62 @@ public class Configuration : BindableBase, IConfiguration
         storage = value;
         RaisePropertyChanged(propertyName);
         return true;
+    }
+}
+
+file static class ModelExtensions
+{
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        IncludeFields = true,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
+    };
+
+    extension(Dictionary<string, object?> model)
+    {
+        /// Specifically designed to take in <c>@default.Property</c> calls
+        public T GetOrDefault<T>(
+            T defaultValue,
+            [CallerArgumentExpression(nameof(defaultValue))] string? defaultValueExpression = null
+        )
+        {
+            var separator = defaultValueExpression?.LastIndexOf('.') ?? -1;
+            if (separator < 0 || separator == defaultValueExpression!.Length - 1)
+                throw new ArgumentException(
+                    "The default value must be a property access expression.",
+                    nameof(defaultValueExpression)
+                );
+
+            var key = defaultValueExpression[(separator + 1)..].TrimStart('@');
+            return model.GetOrDefault(key, defaultValue);
+        }
+
+        public T GetOrDefault<T>(string key, T defaultValue)
+        {
+            if (!model.TryGetValue(key, out var value) || value is not JsonElement element)
+                return defaultValue;
+
+            try
+            {
+                return element.Deserialize<T>(JsonOptions) ?? defaultValue;
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
+        public void Set<T>(T value, [CallerArgumentExpression(nameof(value))] string? key = null)
+        {
+            if (key is null)
+                return;
+
+            model[key] = value;
+        }
+
+        public void SetVersion(int version)
+        {
+            model["Version"] = version;
+        }
     }
 }
