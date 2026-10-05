@@ -82,7 +82,7 @@ public sealed class ScriptServiceLocator
     /// <param name="qualifiedName">Qualified name of the script</param>
     /// <returns>A logger with its category set to the <paramref name="qualifiedName"/></returns>
     /// <exception cref="InvalidOperationException">Thrown if this method is called before the locator is initialized</exception>
-    public static ILogger GetLogger(string qualifiedName)
+    public static HoloLogger GetLogger(string qualifiedName)
     {
         if (LoggerFactory is null)
         {
@@ -90,7 +90,7 @@ public sealed class ScriptServiceLocator
                 $"{nameof(ScriptServiceLocator)} is not initialized."
             );
         }
-        return LoggerFactory.CreateLogger(qualifiedName);
+        return new HoloLogger(LoggerFactory.CreateLogger(qualifiedName));
     }
 
     /// <summary>
