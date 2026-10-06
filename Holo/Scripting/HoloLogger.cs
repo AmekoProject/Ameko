@@ -78,6 +78,29 @@ public class HoloLogger
     }
 
     /// <summary>
+    /// Log an exception
+    /// </summary>
+    /// <param name="ex">Exception to log</param>
+    public void LogError(Exception ex)
+    {
+        _logs.Add(new LogEntry(LogLevel.Error, DateTimeOffset.Now, ex.ToString()));
+        _base.LogError("{HoloScriptMessage}", ex.ToString());
+    }
+
+    /// <summary>
+    /// Log an exception
+    /// </summary>
+    /// <param name="ex">Exception to log</param>
+    /// <param name="message">Message to log</param>
+    public void LogError(Exception ex, string message)
+    {
+        _logs.Add(new LogEntry(LogLevel.Error, DateTimeOffset.Now, message));
+        _logs.Add(new LogEntry(LogLevel.Error, DateTimeOffset.Now, ex.ToString()));
+        _base.LogError("{HoloScriptMessage}", message);
+        _base.LogError("{HoloScriptMessage}", ex.ToString());
+    }
+
+    /// <summary>
     /// Log a message with <see cref="LogLevel.Critical"/>
     /// </summary>
     /// <param name="message">Message to log</param>
