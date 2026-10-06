@@ -530,5 +530,29 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("FileDialog_OpenFontDirectory_Title", resourceCulture);
             }
         }
+        
+        public static string ScriptExecutionStatus_Success {
+            get {
+                return ResourceManager.GetString("ScriptExecutionStatus_Success", resourceCulture);
+            }
+        }
+        
+        public static string ScriptExecutionStatus_Warning {
+            get {
+                return ResourceManager.GetString("ScriptExecutionStatus_Warning", resourceCulture);
+            }
+        }
+        
+        public static string ScriptExecutionStatus_Failure {
+            get {
+                return ResourceManager.GetString("ScriptExecutionStatus_Failure", resourceCulture);
+            }
+        }
+        
+        public static string ScriptExecution_Exception {
+            get {
+                return ResourceManager.GetString("ScriptExecution_Exception", resourceCulture);
+            }
+        }
     }
 }

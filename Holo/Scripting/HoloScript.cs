@@ -2,7 +2,6 @@
 
 using Holo.Providers;
 using Holo.Scripting.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Holo.Scripting;
 
@@ -41,5 +40,5 @@ public abstract class HoloScript : IHoloExecutable
     /// <summary>
     /// Logger instance
     /// </summary>
-    protected ILogger Logger { get; }
+    public HoloLogger Logger { get; }
 }

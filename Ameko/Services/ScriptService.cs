@@ -9,6 +9,8 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Ameko.DataModels;
+using Ameko.ViewModels.Dialogs;
+using Ameko.Views.Dialogs;
 using AssCS.History;
 using Avalonia.Threading;
 using CSScriptLib;
@@ -36,6 +38,7 @@ public class ScriptService : IScriptService
     private readonly IProjectProvider _projectProvider;
     private readonly IKeybindRegistrar _keybindRegistrar;
     private readonly IMessageBoxService _messageBoxService;
+    private readonly IWindowService _windowService;
     private readonly ObservableCollection<IHoloExecutable> _scripts;
     private readonly Dictionary<string, HoloScript?> _scriptMap;
     private readonly Dictionary<string, HoloScriptlet?> _scriptletMap;
@@ -66,17 +69,33 @@ public class ScriptService : IScriptService
         {
             try
             {
-                return await script.ExecuteAsync(null, args);
+                var result = await script.ExecuteAsync(null, args);
+
+                if (
+                    script.Info.LogDisplay is LogDisplay.Forced
+                    || result.Status is not ExecutionStatus.Success
+                )
+                {
+                    await DisplayLogDialog(script.Info.DisplayName, result, script.Logger);
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error executing script");
+                _logger.LogError(ex, "An unhandled exception occured during script execution");
                 _logger.LogError("{Error}", ex.Message);
-                return new ExecutionResult
+                var result = new ExecutionResult
                 {
                     Status = ExecutionStatus.Failure,
-                    Message = ex.ToString(),
+                    Message = I18N.Other.ScriptExecution_Exception + Environment.NewLine + ex,
                 };
+                await DisplayLogDialog(script.Info.DisplayName, result, script.Logger);
+                return result;
+            }
+            finally
+            {
+                script.Logger.Reset();
             }
         }
 
@@ -90,17 +109,43 @@ public class ScriptService : IScriptService
             {
                 try
                 {
-                    return await script.ExecuteAsync(methodName, args);
+                    var result = await script.ExecuteAsync(methodName, args);
+
+                    if (
+                        script.Info.LogDisplay is LogDisplay.Forced
+                        || result.Status is not ExecutionStatus.Success
+                    )
+                    {
+                        var methodDisplayName =
+                            script
+                                .Info.Exports.FirstOrDefault(m => m.QualifiedName == methodName)
+                                ?.DisplayName
+                            ?? methodName;
+                        await DisplayLogDialog(methodDisplayName, result, script.Logger);
+                    }
+
+                    return result;
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error executing script");
+                    _logger.LogError(ex, "An unhandled exception occured during script execution");
                     _logger.LogError("{Error}", ex.Message);
-                    return new ExecutionResult
+                    var result = new ExecutionResult
                     {
                         Status = ExecutionStatus.Failure,
                         Message = ex.ToString(),
                     };
+                    var methodDisplayName =
+                        script
+                            .Info.Exports.FirstOrDefault(m => m.QualifiedName == methodName)
+                            ?.DisplayName
+                        ?? methodName;
+                    await DisplayLogDialog(methodDisplayName, result, script.Logger);
+                    return result;
+                }
+                finally
+                {
+                    script.Logger.Reset();
                 }
             }
         }
@@ -108,17 +153,42 @@ public class ScriptService : IScriptService
         // Try running a scriptlet
         if (TryGetScriptlet(qualifiedName, out var scriptlet))
         {
-            var logger = _loggerFactory.CreateLogger(scriptlet.Info.QualifiedName);
+            var logger = new HoloLogger(_loggerFactory.CreateLogger(scriptlet.Info.QualifiedName));
             var timeout = TimeSpan.FromSeconds(5);
             var engine = CreateJavaScriptEngine(logger, _projectProvider, timeout);
 
-            var success = await engine.Execute(scriptlet.CompiledScript).InvokeAsync("execute");
+            try
+            {
+                var result = await engine.Execute(scriptlet.CompiledScript).InvokeAsync("execute");
+                var isSuccess = result is not JsBoolean jsBool || jsBool.AsBoolean(); // false only if false explicitly returned
 
-            return success is JsBoolean jsBool
-                ? jsBool.AsBoolean()
-                    ? ExecutionResult.Success
-                    : new ExecutionResult { Status = ExecutionStatus.Failure }
-                : ExecutionResult.Success;
+                if (scriptlet.Info.LogDisplay is LogDisplay.Forced || !isSuccess)
+                {
+                    await DisplayLogDialog(
+                        scriptlet.Info.DisplayName,
+                        ExecutionResult.Failure,
+                        logger
+                    );
+                }
+
+                return ExecutionResult.Success;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unhandled exception occured during scriptlet execution");
+                _logger.LogError("{Error}", ex.Message);
+                var result = new ExecutionResult
+                {
+                    Status = ExecutionStatus.Failure,
+                    Message = I18N.Other.ScriptExecution_Exception + Environment.NewLine + ex,
+                };
+                await DisplayLogDialog(scriptlet.Info.DisplayName, result, logger);
+                return result;
+            }
+            finally
+            {
+                logger.Reset();
+            }
         }
 
         // Not found
@@ -142,7 +212,7 @@ public class ScriptService : IScriptService
             {
                 try
                 {
-                    var logger = _loggerFactory.CreateLogger("Playground");
+                    var logger = new HoloLogger(_loggerFactory.CreateLogger("Playground"));
                     var timeout = TimeSpan.FromSeconds(5);
                     var engine = CreateJavaScriptEngine(logger, _projectProvider, timeout);
                     await engine.ExecuteAsync(content);
@@ -309,8 +379,21 @@ public class ScriptService : IScriptService
     /// <inheritdoc />
     public event EventHandler<EventArgs>? Reloaded;
 
+    private async Task DisplayLogDialog(
+        string displayName,
+        ExecutionResult result,
+        HoloLogger logger
+    )
+    {
+        var dialog = new ScriptLogDialog
+        {
+            DataContext = new ScriptLogDialogViewModel(displayName, result, logger),
+        };
+        await _windowService.ShowDialogAsync(dialog);
+    }
+
     private static Engine CreateJavaScriptEngine(
-        ILogger logger,
+        HoloLogger logger,
         IProjectProvider projectProvider,
         TimeSpan timeoutInterval
     )
@@ -320,7 +403,6 @@ public class ScriptService : IScriptService
             options.AllowClr(); // TODO: Do we want to keep this?
             options.LimitRecursion(500);
             options.TimeoutInterval(timeoutInterval);
-            // options.AddExtensionMethods(typeof(Enumerable));
         });
 
         engine.SetValue("ChangeType", typeof(ChangeType));
@@ -380,7 +462,8 @@ public class ScriptService : IScriptService
         IFileSystem fileSystem,
         IProjectProvider projectProvider,
         IKeybindRegistrar keybindRegistrar,
-        IMessageBoxService messageBoxService
+        IMessageBoxService messageBoxService,
+        IWindowService windowService
     )
     {
         _logger = logger;
@@ -389,6 +472,7 @@ public class ScriptService : IScriptService
         _projectProvider = projectProvider;
         _keybindRegistrar = keybindRegistrar;
         _messageBoxService = messageBoxService;
+        _windowService = windowService;
 
         _scripts = [];
         _scriptMap = [];
@@ -402,14 +486,14 @@ public class ScriptService : IScriptService
     /// </summary>
     private static class JavaScriptApi
     {
-        public static void Log(ILogger logger, string? message)
+        public static void Log(HoloLogger logger, string? message)
         {
-            logger.LogInformation("{Message}", message);
+            logger.LogInformation(message ?? "null");
         }
 
-        public static void Err(ILogger logger, string? message)
+        public static void Err(HoloLogger logger, string? message)
         {
-            logger.LogError("{Message}", message);
+            logger.LogError(message ?? "null");
         }
 
         public static void CommitOne(
