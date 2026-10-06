@@ -2,6 +2,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Ameko.Utilities;
+using Ameko.ViewModels.Windows;
 using Ameko.Views.Windows;
 using Avalonia.Controls;
 using Avalonia.Platform;
@@ -9,7 +11,7 @@ using Holo.Providers;
 
 namespace Ameko.Services;
 
-public class WindowService(MainWindow mainWindow) : IWindowService
+public class WindowService(IViewModelFactory vmFactory, MainWindow mainWindow) : IWindowService
 {
     /// <inheritdoc />
     public void ShowWindow(
@@ -72,6 +74,14 @@ public class WindowService(MainWindow mainWindow) : IWindowService
         win.CanResize = canResize;
         CalculateSize(win, width, height);
         return await win.ShowDialog<T>(mainWindow);
+    }
+
+    /// <inheritdoc />
+    public void ShowHelpWindow(string qualifiedName)
+    {
+        var vm = vmFactory.Create<HelpWindowViewModel>(qualifiedName);
+        var win = new HelpWindow { DataContext = vm };
+        win.Show();
     }
 
     /// <summary>

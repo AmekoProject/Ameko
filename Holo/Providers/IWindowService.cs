@@ -46,4 +46,14 @@ public interface IWindowService
         bool canResize = false
     )
         where T : class;
+
+    /// <summary>
+    /// Open the help window to the page corresponding to the script's
+    /// <paramref name="qualifiedName"/>
+    /// </summary>
+    /// <param name="qualifiedName">Qualified name of the page to open</param>
+    /// <remarks>
+    /// <paramref name="qualifiedName"/>s beginning with <c>ameko</c> are expected to be builtin pages, not scripts
+    /// </remarks>
+    void ShowHelpWindow(string qualifiedName);
 }

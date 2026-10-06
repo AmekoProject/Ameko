@@ -33,8 +33,8 @@ public class HelpWindowViewModel : ViewModelBase
 
     private static readonly HelpArticle[] HelpArticles =
     [
-        new(I18N.Help.Help_Section_UserInterface, "user-interface.md"),
-        new(I18N.Help.Help_Section_Projects, "projects.md"),
+        new("ameko.ui", I18N.Help.Help_Section_UserInterface, "user-interface.md"),
+        new("ameko.projects", I18N.Help.Help_Section_Projects, "projects.md"),
     ];
 
     private readonly IPackageManager _packageManager;
@@ -68,7 +68,14 @@ public class HelpWindowViewModel : ViewModelBase
                 sb.AppendLine(Markdig.Markdown.ToHtml(md, Pipeline));
                 sb.AppendLine("</article></body></html>");
 
-                result.Add(new AmekoHelp { DisplayName = article.Name, Content = sb.ToString() });
+                result.Add(
+                    new AmekoHelp
+                    {
+                        QualifiedName = article.QualifiedName,
+                        DisplayName = article.Name,
+                        Content = sb.ToString(),
+                    }
+                );
             }
             return result;
         }
@@ -119,6 +126,9 @@ public class HelpWindowViewModel : ViewModelBase
         _packageManager = packageManager;
         _fileSystem = fileSystem;
         _config = config;
+
+        SelectedAmekoHelp = AmekoHelps.FirstOrDefault();
+        SelectedScriptHelp = ScriptHelps.FirstOrDefault();
     }
 
     public HelpWindowViewModel(
@@ -132,7 +142,16 @@ public class HelpWindowViewModel : ViewModelBase
         _fileSystem = fileSystem;
         _config = config;
         SelectedTabIndex = 1;
-        SelectedScriptHelp = ScriptHelps.FirstOrDefault(h => h.QualifiedName == qualifiedName);
+        if (qualifiedName.StartsWith("ameko"))
+        {
+            SelectedAmekoHelp = AmekoHelps.FirstOrDefault(h => h.QualifiedName == qualifiedName);
+            SelectedScriptHelp = ScriptHelps.FirstOrDefault();
+        }
+        else
+        {
+            SelectedScriptHelp = ScriptHelps.FirstOrDefault(h => h.QualifiedName == qualifiedName);
+            SelectedAmekoHelp = AmekoHelps.FirstOrDefault();
+        }
     }
 
     private string BuildScriptHelp(string path)
@@ -158,5 +177,5 @@ public class HelpWindowViewModel : ViewModelBase
         return sb.ToString();
     }
 
-    private record HelpArticle(string Name, string FileName);
+    private record HelpArticle(string QualifiedName, string Name, string FileName);
 }
