@@ -10,4 +10,11 @@ namespace Holo.Models;
 /// <param name="Level">Log level</param>
 /// <param name="Timestamp">Log timestamp</param>
 /// <param name="Message">Log message</param>
-public record LogEntry(LogLevel Level, DateTimeOffset Timestamp, string Message);
+public record LogEntry(LogLevel Level, DateTimeOffset Timestamp, string Message)
+{
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return $"{Timestamp:T} [{Level}] {Message}";
+    }
+}

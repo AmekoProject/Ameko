@@ -14,12 +14,13 @@
   x:DataType="vm:ScriptLogDialogViewModel"
   Focusable="True"
   CanResize="False"
-  SizeToContent="WidthAndHeight"
+  Width="800"
+  Height="300"
   WindowStartupLocation="CenterOwner"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
   Title="{Binding WindowTitle}"
 >
-  <DockPanel Margin="4">
+  <DockPanel Margin="4" VerticalSpacing="2">
     <TextBlock DockPanel.Dock="Top" Text="{Binding Status}" />
     <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*, Auto, *">
       <Button
@@ -31,8 +32,11 @@
       />
     </Grid>
     <TextBox
-      Text="{Binding Logs}"
       IsReadOnly="True"
+      VerticalAlignment="Stretch"
+      VerticalContentAlignment="Top"
+      ClearSelectionOnLostFocus="False"
+      Text="{Binding Logs}"
       FontFamily="{StaticResource SarasaMono}"
     ></TextBox>
   </DockPanel>
