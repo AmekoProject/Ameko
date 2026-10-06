@@ -64,9 +64,23 @@ public class ScriptService : IScriptService
         // Try running as a script
         if (TryGetScript(qualifiedName, out var script))
         {
+            var display = script.Info.LogDisplay;
             try
             {
-                return await script.ExecuteAsync(null, args);
+                var result = await script.ExecuteAsync(null, args);
+                if (display is LogDisplay.OnError && result.Status is ExecutionStatus.Failure)
+                {
+                    // TODO: Open log window
+                    return result;
+                }
+                if (display is LogDisplay.Ephemeral && result.Status is ExecutionStatus.Success)
+                {
+                    // TODO: Close log window
+                    return result;
+                }
+
+                // TODO: Enable close button in log window
+                return result;
             }
             catch (Exception ex)
             {
