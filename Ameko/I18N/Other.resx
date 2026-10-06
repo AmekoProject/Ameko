@@ -261,4 +261,16 @@
     <data name="FileDialog_OpenFontDirectory_Title" xml:space="preserve">
         <value>Open Font Directory</value>
     </data>
+    <data name="ScriptExecutionStatus_Success" xml:space="preserve">
+        <value>Script executed successfully.</value>
+    </data>
+    <data name="ScriptExecutionStatus_Warning" xml:space="preserve">
+        <value>Script executed with warnings.</value>
+    </data>
+    <data name="ScriptExecutionStatus_Failure" xml:space="preserve">
+        <value>Script execution failed.</value>
+    </data>
+    <data name="ScriptExecution_Exception" xml:space="preserve">
+        <value>An unhandled exception occured during script execution:</value>
+    </data>
 </root>

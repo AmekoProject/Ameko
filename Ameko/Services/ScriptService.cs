@@ -64,32 +64,26 @@ public class ScriptService : IScriptService
         // Try running as a script
         if (TryGetScript(qualifiedName, out var script))
         {
-            var display = script.Info.LogDisplay;
             try
             {
                 var result = await script.ExecuteAsync(null, args);
-                if (display is LogDisplay.OnError && result.Status is ExecutionStatus.Failure)
-                {
-                    // TODO: Open log window
-                    return result;
-                }
-                if (display is LogDisplay.Ephemeral && result.Status is ExecutionStatus.Success)
-                {
-                    // TODO: Close log window
-                    return result;
-                }
 
-                // TODO: Enable close button in log window
-                return result;
+                if (
+                    script.Info.LogDisplay is LogDisplay.Forced
+                    || result.Status is not ExecutionStatus.Success
+                )
+                {
+                    //
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error executing script");
+                _logger.LogError(ex, "An unhandled exception occured during script execution");
                 _logger.LogError("{Error}", ex.Message);
                 return new ExecutionResult
                 {
                     Status = ExecutionStatus.Failure,
-                    Message = ex.ToString(),
+                    Message = I18N.Other.ScriptExecution_Exception + Environment.NewLine + ex,
                 };
             }
         }

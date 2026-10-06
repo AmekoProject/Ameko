@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using System.Collections.ObjectModel;
 using Holo.Models;
 using Microsoft.Extensions.Logging;
 
@@ -8,20 +9,22 @@ namespace Holo.Scripting;
 /// <summary>
 /// Wrapper around <see cref="ILogger"/> for capturing logs emitted during script execution
 /// </summary>
-/// <param name="base">Base logger</param>
-public class HoloLogger(ILogger @base)
+public class HoloLogger
 {
-    private readonly List<LogEntry> _logs = [];
+    private readonly ILogger _base;
+    private readonly ObservableCollection<LogEntry> _logs = [];
 
     /// <summary>
-    /// Get the list of emitted logs and reset the logger for the next run
+    /// Observable collection of emitted logs
     /// </summary>
-    /// <returns>List of logs</returns>
-    public IReadOnlyCollection<LogEntry> GetLogsAndReset()
+    public AssCS.Utilities.ReadOnlyObservableCollection<LogEntry> Logs { get; }
+
+    /// <summary>
+    /// Reset the logger for the next run
+    /// </summary>
+    public void Reset()
     {
-        var result = _logs.AsReadOnly();
         _logs.Clear();
-        return result;
     }
 
     /// <summary>
@@ -31,7 +34,7 @@ public class HoloLogger(ILogger @base)
     public void LogTrace(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Trace, DateTimeOffset.Now, message));
-        @base.LogTrace("{HoloScriptMessage}", message);
+        _base.LogTrace("{HoloScriptMessage}", message);
     }
 
     /// <summary>
@@ -41,7 +44,7 @@ public class HoloLogger(ILogger @base)
     public void LogDebug(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Debug, DateTimeOffset.Now, message));
-        @base.LogDebug("{HoloScriptMessage}", message);
+        _base.LogDebug("{HoloScriptMessage}", message);
     }
 
     /// <summary>
@@ -51,7 +54,7 @@ public class HoloLogger(ILogger @base)
     public void LogInformation(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Information, DateTimeOffset.Now, message));
-        @base.LogInformation("{HoloScriptMessage}", message);
+        _base.LogInformation("{HoloScriptMessage}", message);
     }
 
     /// <summary>
@@ -61,7 +64,7 @@ public class HoloLogger(ILogger @base)
     public void LogWarning(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Warning, DateTimeOffset.Now, message));
-        @base.LogWarning("{HoloScriptMessage}", message);
+        _base.LogWarning("{HoloScriptMessage}", message);
     }
 
     /// <summary>
@@ -71,7 +74,7 @@ public class HoloLogger(ILogger @base)
     public void LogError(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Error, DateTimeOffset.Now, message));
-        @base.LogError("{HoloScriptMessage}", message);
+        _base.LogError("{HoloScriptMessage}", message);
     }
 
     /// <summary>
@@ -81,6 +84,16 @@ public class HoloLogger(ILogger @base)
     public void LogCritical(string message)
     {
         _logs.Add(new LogEntry(LogLevel.Critical, DateTimeOffset.Now, message));
-        @base.LogCritical("{HoloScriptMessage}", message);
+        _base.LogCritical("{HoloScriptMessage}", message);
+    }
+
+    /// <summary>
+    /// Initialize the logger
+    /// </summary>
+    /// <param name="base">Base logger</param>
+    public HoloLogger(ILogger @base)
+    {
+        _base = @base;
+        Logs = new AssCS.Utilities.ReadOnlyObservableCollection<LogEntry>(_logs);
     }
 }

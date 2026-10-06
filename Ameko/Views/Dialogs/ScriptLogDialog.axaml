@@ -1,0 +1,39 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="775"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ScriptLogDialog"
+  x:DataType="vm:ScriptLogDialogViewModel"
+  Focusable="True"
+  CanResize="False"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{Binding WindowTitle}"
+>
+  <DockPanel Margin="4">
+    <TextBlock DockPanel.Dock="Top" Text="{Binding Status}" />
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*, Auto, *">
+      <Button
+        Grid.Column="1"
+        Width="75"
+        IsDefault="True"
+        Content="{x:Static i18n:Other.MsgBox_Btn_OK}"
+        Command="{Binding OkCommand}"
+      />
+    </Grid>
+    <TextBox
+      Text="{Binding Logs}"
+      IsReadOnly="True"
+      FontFamily="{StaticResource SarasaMono}"
+    ></TextBox>
+  </DockPanel>
+</Window>
