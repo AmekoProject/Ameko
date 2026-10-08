@@ -104,7 +104,18 @@ internal sealed class Program
             .LogToTrace()
             .UseReactiveUI(ConfigureReactiveUi)
             .With(new MacOSPlatformOptions { DisableDefaultApplicationMenuItems = true })
-            .With(new X11PlatformOptions { EnableIme = true });
+            .With(new X11PlatformOptions { EnableIme = true })
+            .With(
+                new AvaloniaNativePlatformOptions
+                {
+                    RenderingMode =
+                    [
+                        AvaloniaNativeRenderingMode.OpenGl,
+                        AvaloniaNativeRenderingMode.Metal,
+                        AvaloniaNativeRenderingMode.Software,
+                    ],
+                }
+            );
 
     /// <summary>
     /// Avoid everything being wrapped with ReactiveUI.UnhandledErrorException in release mode
