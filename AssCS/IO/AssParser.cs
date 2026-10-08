@@ -121,11 +121,11 @@ public partial class AssParser(bool loadDefaults = true) : FileParser
 
         if (key.ToUpperInvariant().Equals("SCRIPTTYPE"))
         {
-            doc.Version = value switch
+            doc.Version = value.ToUpperInvariant() switch
             {
-                "v4.00" => AssVersion.V400,
-                "v4.00+" => AssVersion.V400P,
-                "v4.00++" => AssVersion.V400PP,
+                "V4.00" => AssVersion.V400,
+                "V4.00+" => AssVersion.V400P,
+                "V4.00++" => AssVersion.V400PP,
                 _ => AssVersion.UNKNOWN,
             };
         }
