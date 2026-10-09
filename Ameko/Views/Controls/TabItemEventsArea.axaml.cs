@@ -16,6 +16,14 @@ namespace Ameko.Views.Controls;
 
 public partial class TabItemEventsArea : ReactiveUserControl<TabItemViewModel>
 {
+    private void ScrollToActiveEvent()
+    {
+        if (ViewModel?.Workspace.SelectionManager.ActiveEvent is not { } active)
+            return;
+        EventsGrid.ScrollIntoView(active, null);
+        EventsGrid.SelectedItem = active;
+    }
+
     private void DoScrollToAndSelectEvent(IInteractionContext<Event, RxVoid> interaction)
     {
         EventsGrid.ScrollIntoView(interaction.Input, null);
@@ -60,6 +68,8 @@ public partial class TabItemEventsArea : ReactiveUserControl<TabItemViewModel>
                 DataGrid_OnDoubleTapped,
                 RoutingStrategies.Bubble
             );
+
+            Dispatcher.UIThread.Post(ScrollToActiveEvent, DispatcherPriority.Background);
         });
     }
 
