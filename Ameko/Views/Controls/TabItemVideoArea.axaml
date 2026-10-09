@@ -185,6 +185,7 @@
           ToolTip.Tip="{x:Static i18n:Resources.Video_LockAR_ToolTip}"
           VerticalAlignment="Center"
           IsEnabled="False"
+          IsVisible="False"
         />
         <ComboBox
           ItemsSource="{x:Static holo:ScaleFactor.Scales}"
