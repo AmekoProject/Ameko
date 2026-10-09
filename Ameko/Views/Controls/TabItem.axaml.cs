@@ -11,7 +11,6 @@ using Ameko.ViewModels.Dialogs;
 using Ameko.Views.Dialogs;
 using AssCS;
 using AssCS.History;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Platform.Storage;
@@ -303,10 +302,16 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         if (vm is null || layout is null)
             return;
 
+        vm.LayoutStateManager.ActivateLayout(layout);
+
         TabItemGrid.Children.RemoveAll(TabItemGrid.Children.OfType<GridSplitter>());
 
         TabItemGrid.ColumnDefinitions = new ColumnDefinitions(layout.ColumnDefinitions);
         TabItemGrid.RowDefinitions = new RowDefinitions(layout.RowDefinitions);
+
+        vm.LayoutStateManager.GetRatios(out var columnRatios, out var rowRatios);
+        ApplyColumnRatios(TabItemGrid.ColumnDefinitions, columnRatios);
+        ApplyRowRatios(TabItemGrid.RowDefinitions, rowRatios);
 
         var video = layout.Video;
         TabItemVideoArea.IsVisible = video.IsVisible;
@@ -349,7 +354,75 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
             splitter.SetValue(Grid.RowProperty, split.Row);
             splitter.SetValue(Grid.ColumnSpanProperty, split.ColumnSpan);
             splitter.SetValue(Grid.RowSpanProperty, split.RowSpan);
+            splitter.DragCompleted += (_, _) =>
+                Dispatcher.UIThread.Post(
+                    () => CaptureLayoutSizeState(vm, layout),
+                    DispatcherPriority.Background
+                );
             TabItemGrid.Children.Add(splitter);
+        }
+    }
+
+    private void CaptureLayoutSizeState(TabItemViewModel vm, Layout layout)
+    {
+        var columnSizes = TabItemGrid
+            .ColumnDefinitions.Where(definition => definition.Width.IsStar)
+            .Select(definition => definition.ActualWidth)
+            .ToArray();
+        var rowSizes = TabItemGrid
+            .RowDefinitions.Where(definition => definition.Height.IsStar)
+            .Select(definition => definition.ActualHeight)
+            .ToArray();
+
+        vm.LayoutStateManager.Update(
+            layout,
+            GetLayoutRatios(columnSizes),
+            GetLayoutRatios(rowSizes)
+        );
+    }
+
+    private static double[] GetLayoutRatios(double[] sizes)
+    {
+        var total = sizes.Sum();
+        if (
+            !double.IsFinite(total)
+            || total <= 0
+            || sizes.Any(size => !double.IsFinite(size) || size < 0)
+        )
+            return [];
+
+        return sizes.Select(size => size / total).ToArray();
+    }
+
+    private static void ApplyColumnRatios(ColumnDefinitions definitions, double[]? ratios)
+    {
+        var starDefinitions = definitions.Where(definition => definition.Width.IsStar).ToArray();
+        if (ratios is null || ratios.Length != starDefinitions.Length)
+            return;
+
+        var totalWeight = starDefinitions.Sum(definition => definition.Width.Value);
+        for (var index = 0; index < starDefinitions.Length; index++)
+        {
+            starDefinitions[index].Width = new GridLength(
+                ratios[index] * totalWeight,
+                GridUnitType.Star
+            );
+        }
+    }
+
+    private static void ApplyRowRatios(RowDefinitions definitions, double[]? ratios)
+    {
+        var starDefinitions = definitions.Where(definition => definition.Height.IsStar).ToArray();
+        if (ratios is null || ratios.Length != starDefinitions.Length)
+            return;
+
+        var totalWeight = starDefinitions.Sum(definition => definition.Height.Value);
+        for (var index = 0; index < starDefinitions.Length; index++)
+        {
+            starDefinitions[index].Height = new GridLength(
+                ratios[index] * totalWeight,
+                GridUnitType.Star
+            );
         }
     }
 

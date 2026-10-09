@@ -247,6 +247,7 @@ public partial class TabItemViewModel : ViewModelBase
     public IKeybindService KeybindService { get; }
     public ILayoutProvider LayoutProvider { get; }
     public IMacOsClipboardService MacosClipboardService { get; }
+    public LayoutStateManager LayoutStateManager { get; }
 
     public bool IsIndexing
     {
@@ -334,6 +335,7 @@ public partial class TabItemViewModel : ViewModelBase
         IViewModelFactory vmFactory,
         IIoService ioService,
         IMacOsClipboardService macosClipboardService,
+        LayoutStateManager layoutStateManager,
         Workspace workspace
     )
     {
@@ -442,6 +444,7 @@ public partial class TabItemViewModel : ViewModelBase
         KeybindService = keybindService;
         LayoutProvider = layoutProvider;
         MacosClipboardService = macosClipboardService;
+        LayoutStateManager = layoutStateManager;
         _vmFactory = vmFactory;
 
         Workspace.SelectionManager.SelectionChanged += async (_, _) =>
