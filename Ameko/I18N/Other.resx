@@ -273,4 +273,28 @@
     <data name="ScriptExecution_Exception" xml:space="preserve">
         <value>An unhandled exception occured during script execution:</value>
     </data>
+    <data name="ResDialog_Option_LeaveUnset" xml:space="preserve">
+        <value>Leave the layout resolution unset</value>
+    </data>
+    <data name="ResDialog_Option_SetToVideo" xml:space="preserve">
+        <value>Set the layout resolution to the video's resolution ({0} × {1})</value>
+    </data>
+    <data name="ResDialog_Option_SetToScript" xml:space="preserve">
+        <value>Set the layout reolution to the script's resolution ({0} × {1})</value>
+    </data>
+    <data name="ResDialog_Option_SetToScript_Undefined" xml:space="preserve">
+        <value>Set the layout resolution to the script's resolution (undefined)</value>
+    </data>
+    <data name="ResDialog_Intro" xml:space="preserve">
+        <value>This subtitle file does not have a layout resolution set.</value>
+    </data>
+    <data name="ResDialog_UseVideoRes" xml:space="preserve">
+        <value>If you plan to use this subtitle file on the newly-opened video file, you should set the layout resolution to the video's resolution.</value>
+    </data>
+    <data name="ResDialog_LeaveUnset" xml:space="preserve">
+        <value>If you plan to use a different video file, you may want to leave the layout resolution unset until you open the correct video file.</value>
+    </data>
+    <data name="ResDialog_UseScriptRes" xml:space="preserve">
+        <value>If you are adapting a pre-existing subtitle file, you shoud set the layout resolution to the script resolution.</value>
+    </data>
 </root>

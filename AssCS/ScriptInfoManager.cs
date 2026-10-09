@@ -67,6 +67,16 @@ public partial class ScriptInfoManager
     }
 
     /// <summary>
+    /// Check if an entry exists in the script info
+    /// </summary>
+    /// <param name="key">Entry key</param>
+    /// <returns><see langword="true" /> if the entry exists</returns>
+    public bool Contains(string key)
+    {
+        return _data.ContainsKey(key);
+    }
+
+    /// <summary>
     /// Clear all the infos
     /// </summary>
     public void Clear()

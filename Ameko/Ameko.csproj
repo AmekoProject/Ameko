@@ -252,6 +252,10 @@
       <DependentUpon>ScriptLogDialog.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\ResolutionDialog.axaml.cs">
+      <DependentUpon>ResolutionDialog.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="I18N\Resources.resx">

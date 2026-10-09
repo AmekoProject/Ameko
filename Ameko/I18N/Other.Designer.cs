@@ -554,5 +554,53 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("ScriptExecution_Exception", resourceCulture);
             }
         }
+        
+        public static string ResDialog_Option_LeaveUnset {
+            get {
+                return ResourceManager.GetString("ResDialog_Option_LeaveUnset", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_Option_SetToVideo {
+            get {
+                return ResourceManager.GetString("ResDialog_Option_SetToVideo", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_Option_SetToScript {
+            get {
+                return ResourceManager.GetString("ResDialog_Option_SetToScript", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_Option_SetToScript_Undefined {
+            get {
+                return ResourceManager.GetString("ResDialog_Option_SetToScript_Undefined", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_Intro {
+            get {
+                return ResourceManager.GetString("ResDialog_Intro", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_UseVideoRes {
+            get {
+                return ResourceManager.GetString("ResDialog_UseVideoRes", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_LeaveUnset {
+            get {
+                return ResourceManager.GetString("ResDialog_LeaveUnset", resourceCulture);
+            }
+        }
+        
+        public static string ResDialog_UseScriptRes {
+            get {
+                return ResourceManager.GetString("ResDialog_UseScriptRes", resourceCulture);
+            }
+        }
     }
 }

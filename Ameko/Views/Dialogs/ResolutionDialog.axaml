@@ -1,0 +1,69 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
+<Window
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="350"
+  d:DesignHeight="200"
+  xmlns:converters="clr-namespace:Ameko.Converters"
+  xmlns:dm="clr-namespace:Ameko.DataModels"
+  xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:vm="clr-namespace:Ameko.ViewModels.Dialogs"
+  x:Class="Ameko.Views.Dialogs.ResolutionDialog"
+  x:DataType="vm:ResolutionDialogViewModel"
+  Focusable="True"
+  SizeToContent="WidthAndHeight"
+  MaxWidth="500"
+  CanResize="False"
+  WindowStartupLocation="CenterOwner"
+  Icon="/Assets/Ameko-Simplified-BG-64.ico"
+  Title="{x:Static i18n:Other.SelectTrackDialog_Title}"
+>
+  <Window.Resources>
+    <converters:EnumConverter x:Key="EnumConverter" />
+  </Window.Resources>
+  <StackPanel Spacing="5" Margin="5">
+    <StackPanel Spacing="10">
+      <TextBlock Text="{x:Static i18n:Other.ResDialog_Intro}" TextWrapping="Wrap" />
+      <TextBlock Text="{x:Static i18n:Other.ResDialog_UseVideoRes}" TextWrapping="Wrap" />
+      <TextBlock Text="{x:Static i18n:Other.ResDialog_LeaveUnset}" TextWrapping="Wrap" />
+      <TextBlock Text="{x:Static i18n:Other.ResDialog_UseScriptRes}" TextWrapping="Wrap" />
+    </StackPanel>
+    <RadioButton
+      GroupName="Res"
+      VerticalAlignment="Center"
+      Content="{x:Static i18n:Other.ResDialog_Option_LeaveUnset}"
+      IsChecked="{Binding SelectedOption,
+                                             Converter={StaticResource EnumConverter},
+                                             ConverterParameter={x:Static dm:ResolutionSelection.LeaveUnset}}"
+    />
+    <RadioButton
+      GroupName="Res"
+      VerticalAlignment="Center"
+      Content="{Binding VideoResOption}"
+      IsChecked="{Binding SelectedOption,
+                                             Converter={StaticResource EnumConverter},
+                                             ConverterParameter={x:Static dm:ResolutionSelection.SetToVideoRes}}"
+    />
+    <RadioButton
+      GroupName="Res"
+      VerticalAlignment="Center"
+      Content="{Binding ScriptResOption}"
+      IsEnabled="{Binding CanSetToScriptRes}"
+      IsChecked="{Binding SelectedOption,
+                                             Converter={StaticResource EnumConverter},
+                                             ConverterParameter={x:Static dm:ResolutionSelection.SetToScriptRes}}"
+    />
+    <Button
+      Name="OkButton"
+      Width="75"
+      IsDefault="True"
+      HorizontalAlignment="Right"
+      Content="{x:Static i18n:Other.MsgBox_Btn_OK}"
+      Command="{Binding OkCommand}"
+    />
+  </StackPanel>
+</Window>

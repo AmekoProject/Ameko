@@ -755,9 +755,18 @@ public class IoService(
                 return false;
             }
             progressCallback?.Invoke(0, 1); // Reset
-            await OpenAudioFileAsync(uri, workspace, progressCallback);
+
+            var audioTask = OpenAudioFileAsync(uri, workspace, progressCallback);
+
+            // Resolution check
+            var resTask = ConfigureLayoutResolution(workspace);
+
             workspace.MediaController.SetSubtitles(workspace.Document);
             workspace.MediaController.SetActiveSubtitle(workspace.SelectionManager.ActiveEvent);
+
+            // Wait for all tasks to complete.
+            // This allows the audio to load in the background while the resolution prompt is open
+            await Task.WhenAll(resTask, audioTask);
             return true;
         }
         catch (Exception ex)
@@ -1022,6 +1031,81 @@ public class IoService(
 
         logger.LogInformation("Saved profile result file for {WspTitle}", wsp.Title);
         return true;
+    }
+
+    /// <summary>
+    /// Check the LayoutRes headers and prompt the user to set them if unset
+    /// </summary>
+    /// <param name="workspace">Workspace being checked</param>
+    private async Task ConfigureLayoutResolution(Workspace workspace)
+    {
+        var sim = workspace.Document.ScriptInfoManager;
+        if (!sim.Contains("LayoutResX") || !sim.Contains("LayoutResY"))
+        {
+            logger.LogInformation(
+                "Prompting the user to configure LayoutRes for {WorkspaceTitle}",
+                workspace.Title
+            );
+            var info = workspace.MediaController.VideoInfo;
+            var vm = new ResolutionDialogViewModel(
+                sim.Get("PlayResX"),
+                sim.Get("PlayResY"),
+                info?.Width ?? 0,
+                info?.Height ?? 0
+            );
+            var result =
+                await windowService.ShowDialogAsync<ResolutionSelectionMessage>(
+                    new ResolutionDialog { DataContext = vm }
+                ) ?? new ResolutionSelectionMessage(ResolutionSelection.LeaveUnset); // Fallback for close / escape
+            switch (result.Selection)
+            {
+                case ResolutionSelection.LeaveUnset:
+                    logger.LogInformation(
+                        "Leaving LayoutRes unset for {WorkspaceTitle}",
+                        workspace.Title
+                    );
+                    break;
+                case ResolutionSelection.SetToVideoRes:
+                    var width = info?.Width ?? 0;
+                    var height = info?.Height ?? 0;
+                    logger.LogInformation(
+                        "Setting {WorkspaceTitle}'s LayoutRes to video resolution ({Width}, {Height})",
+                        workspace.Title,
+                        width,
+                        height
+                    );
+                    sim.Set("LayoutResX", width.ToString(CultureInfo.InvariantCulture));
+                    sim.Set("LayoutResY", height.ToString(CultureInfo.InvariantCulture));
+
+                    if (
+                        string.IsNullOrEmpty(sim.Get("PlayResX"))
+                        || string.IsNullOrEmpty(sim.Get("PlayResY"))
+                    )
+                    {
+                        logger.LogInformation(
+                            "Setting {WorkspaceTitle}'s PlayRes to video resolution ({Width}, {Height})",
+                            workspace.Title,
+                            width,
+                            height
+                        );
+                        sim.Set("PlayResX", width.ToString(CultureInfo.InvariantCulture));
+                        sim.Set("PlayResY", height.ToString(CultureInfo.InvariantCulture));
+                    }
+                    workspace.IsSaved = false;
+                    break;
+                case ResolutionSelection.SetToScriptRes:
+                    logger.LogInformation(
+                        "Setting {WorkspaceTitle}'s LayoutRes to script resolution ({Width}, {Height})",
+                        workspace.Title,
+                        sim.Get("PlayResX"),
+                        sim.Get("PlayResY")
+                    );
+                    sim.Set("LayoutResX", sim.Get("PlayResX")!);
+                    sim.Set("LayoutResY", sim.Get("PlayResY")!);
+                    workspace.IsSaved = false;
+                    break;
+            }
+        }
     }
 
     /// <summary>
