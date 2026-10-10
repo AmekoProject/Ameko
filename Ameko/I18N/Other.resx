@@ -254,7 +254,7 @@
     </data>
     <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
         <value>Restore package to its original state</value>
-    </data>
+    </data>shoud
     <data name="SourceViewer_Notice" xml:space="preserve">
         <value>"Update All" will skip modified packages.</value>
     </data>
@@ -280,7 +280,7 @@
         <value>Set the layout resolution to the video's resolution ({0} × {1})</value>
     </data>
     <data name="ResDialog_Option_SetToScript" xml:space="preserve">
-        <value>Set the layout reolution to the script's resolution ({0} × {1})</value>
+        <value>Set the layout resolution to the script's resolution ({0} × {1})</value>
     </data>
     <data name="ResDialog_Option_SetToScript_Undefined" xml:space="preserve">
         <value>Set the layout resolution to the script's resolution (undefined)</value>
@@ -295,6 +295,9 @@
         <value>If you plan to use a different video file, you may want to leave the layout resolution unset until you open the correct video file.</value>
     </data>
     <data name="ResDialog_UseScriptRes" xml:space="preserve">
-        <value>If you are adapting a pre-existing subtitle file, you shoud set the layout resolution to the script resolution.</value>
+        <value>If you are adapting a pre-existing subtitle file, you should set the layout resolution to the script resolution.</value>
+    </data>
+    <data name="CrashReporter_DirectoryButton_ToolTip" xml:space="preserve">
+        <value>Open crash report directory</value>
     </data>
 </root>

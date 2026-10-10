@@ -602,5 +602,11 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("ResDialog_UseScriptRes", resourceCulture);
             }
         }
+        
+        public static string CrashReporter_DirectoryButton_ToolTip {
+            get {
+                return ResourceManager.GetString("CrashReporter_DirectoryButton_ToolTip", resourceCulture);
+            }
+        }
     }
 }

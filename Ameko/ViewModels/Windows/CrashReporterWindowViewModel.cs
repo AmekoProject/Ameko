@@ -1,13 +1,29 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-only
 
-using System;
 using System.IO;
-using Ameko.Services;
-using Avalonia.Platform;
+using System.Windows.Input;
+using Holo.IO;
+using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Signals;
 
 namespace Ameko.ViewModels.Windows;
 
-public class CrashReporterWindowViewModel(string content) : ViewModelBase
+public class CrashReporterWindowViewModel : ViewModelBase
 {
-    public string Content { get; } = content;
+    public CrashReporterWindowViewModel(string content)
+    {
+        Content = content;
+        OpenDirectory = new Interaction<string, RxVoid>();
+        OpenDirectoryCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await OpenDirectory.Handle(Path.Combine(Directories.DataHome, "crash-reports"));
+        });
+    }
+
+    public string Content { get; }
+
+    public Interaction<string, RxVoid> OpenDirectory { get; }
+
+    public ICommand OpenDirectoryCommand { get; }
 }

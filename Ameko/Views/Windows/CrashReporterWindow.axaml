@@ -10,6 +10,7 @@
   d:DesignHeight="480"
   xmlns:vm="clr-namespace:Ameko.ViewModels.Windows"
   xmlns:i18n="clr-namespace:Ameko.I18N"
+  xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
   x:Class="Ameko.Views.Windows.CrashReporterWindow"
   x:DataType="vm:CrashReporterWindowViewModel"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
@@ -21,12 +22,21 @@
   Title="{x:Static i18n:Other.CrashReporter_WindowTitle}"
 >
   <Grid RowDefinitions="Auto, Auto, *" Margin="10">
-    <TextBlock
-      Grid.Row="0"
-      FontSize="24"
-      FontWeight="Bold"
-      Text="{x:Static i18n:Other.CrashReporter_Header}"
-    />
+    <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto">
+      <TextBlock
+        FontSize="24"
+        FontWeight="Bold"
+        Text="{x:Static i18n:Other.CrashReporter_Header}"
+      />
+      <Button
+        Grid.Column="2"
+        Content="{icons:MaterialIconExt Kind=FolderText}"
+        ToolTip.Tip="{x:Static i18n:Other.CrashReporter_DirectoryButton_ToolTip}"
+        Command="{Binding OpenDirectoryCommand}"
+        IsDefault="False"
+        Classes="Small"
+      />
+    </Grid>
     <TextBlock Grid.Row="1" FontSize="14" Text="{x:Static i18n:Other.CrashReporter_Info}" />
     <TextBox
       Grid.Row="2"
