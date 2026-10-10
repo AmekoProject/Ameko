@@ -557,7 +557,7 @@ public partial class TabItemViewModel
             {
                 Workspace.Commit(nextEvent, ChangeType.AddEvent);
             }
-            Workspace.SelectionManager.Select(nextEvent);
+            Workspace.SelectionManager.ForceSelect(nextEvent, [nextEvent]);
         });
     }
 
