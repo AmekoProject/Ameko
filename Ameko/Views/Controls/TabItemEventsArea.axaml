@@ -20,7 +20,7 @@
     <converters:GridPaddingConverter x:Key="PaddingConverter" />
     <converters:EventTextLengthConverter x:Key="EventTextLengthConverter" />
     <converters:TextLengthConverter x:Key="TextLengthConverter" />
-    <converters:CommentConverter x:Key="CommentConverter" />
+    <converters:GridBackgroundColorConverter x:Key="BackgroundConverter" />
   </UserControl.Resources>
   <DataGrid
     Name="EventsGrid"
@@ -186,12 +186,37 @@
     </DataGrid.ContextMenu>
     <DataGrid.Styles>
       <Style Selector="DataGridRow">
-        <Setter
-          Property="Background"
-          x:DataType="ass:Event"
-          Value="{Binding IsComment,
-										Converter={StaticResource CommentConverter}}"
-        />
+        <Setter Property="Background" x:DataType="ass:Event">
+          <MultiBinding Converter="{StaticResource BackgroundConverter}">
+            <Binding Path="IsComment" />
+            <Binding Path="." />
+            <Binding
+              Path="$parent[UserControl].((vm:TabItemViewModel)DataContext).Workspace.SelectionManager.SelectedEventCollection"
+              FallbackValue="."
+            />
+            <Binding
+              Path="$parent[UserControl].((vm:TabItemViewModel)DataContext).Workspace.SelectionManager.ActiveEvent"
+              FallbackValue="."
+            />
+            <Binding
+              Path="$parent[UserControl].((vm:TabItemViewModel)DataContext).Workspace.MediaController.CurrentTime"
+              FallbackValue="."
+            />
+            <Binding Path="Start" />
+            <Binding Path="End" />
+            <Binding
+              Path="$parent[UserControl].((vm:TabItemViewModel)DataContext).Workspace.SelectionManager.ActiveEvent.Start"
+              FallbackValue="."
+            />
+            <Binding
+              Path="$parent[UserControl].((vm:TabItemViewModel)DataContext).Workspace.SelectionManager.ActiveEvent.End"
+              FallbackValue="."
+            />
+          </MultiBinding>
+        </Setter>
+      </Style>
+      <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="Opacity" Value="0" />
       </Style>
       <Style Selector="TextBlock">
         <Setter
