@@ -62,7 +62,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-      - uses: mlugg/setup-zig@v2
+      - uses: mlugg/setup-zig@272b55e6c4fcef353f6d923050ff32f018636378
         with:
           version: "${{ env.ZIG_VERSION }}"
       - uses: actions/setup-dotnet@v5
@@ -102,7 +102,7 @@ jobs:
           cp -Force "Mizuki/lib/*" "Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/win-x64/publish/"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ameko-win-x64-${{ needs.calculate-version.outputs.version }}
           path: Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/win-x64/publish
@@ -116,7 +116,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-      - uses: mlugg/setup-zig@v2
+      - uses: mlugg/setup-zig@272b55e6c4fcef353f6d923050ff32f018636378
         with:
           version: "${{ env.ZIG_VERSION }}"
       - uses: actions/setup-dotnet@v5
@@ -169,7 +169,7 @@ jobs:
           echo "Because Ameko is unsigned, you will need to run the following in a terminal to open Ameko: xattr -cr ./Ameko.app" > "publish/OPENING.txt"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ameko-mac-arm64-${{ needs.calculate-version.outputs.version }}
           path: publish
@@ -182,7 +182,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: mlugg/setup-zig@v2
+      - uses: mlugg/setup-zig@272b55e6c4fcef353f6d923050ff32f018636378
         with:
           version: "${{ env.ZIG_VERSION }}"
       - uses: actions/setup-dotnet@v5
@@ -226,7 +226,7 @@ jobs:
           EOF
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ameko-linux-x64-${{ needs.calculate-version.outputs.version }}
           path: Ameko/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/publish
@@ -263,7 +263,7 @@ jobs:
           cp AssCS/bin/Release/net${{ env.DOTNET_VERSION }}/AssCS.xml Holo.Sdk/ref/AssCS.xml
   
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: holo-sdk-${{ needs.calculate-version.outputs.version }}
           path: Holo.Sdk
