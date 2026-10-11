@@ -20,7 +20,7 @@
   CanResize="False"
   WindowStartupLocation="CenterOwner"
   Icon="/Assets/Ameko-Simplified-BG-64.ico"
-  Title="{x:Static i18n:Other.SelectTrackDialog_Title}"
+  Title="{x:Static i18n:Other.MsgBox_LoadVideo_Title}"
 >
   <Window.Resources>
     <converters:EnumConverter x:Key="EnumConverter" />
