@@ -145,6 +145,11 @@ public interface IConfiguration
     TimingConfiguration Timing { get; }
 
     /// <summary>
+    /// Color configuration
+    /// </summary>
+    ColorConfiguration Colors { get; }
+
+    /// <summary>
     /// Add a repository
     /// </summary>
     /// <param name="url">Repository to add</param>

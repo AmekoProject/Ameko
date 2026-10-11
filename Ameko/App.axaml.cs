@@ -15,6 +15,7 @@ using Ameko.Views.Windows;
 using AssCS.Utilities;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Holo.Configuration;
@@ -28,6 +29,12 @@ namespace Ameko;
 
 public class App : Application
 {
+    public static IValueConverter? CpsWarnConverter =>
+        Current?.Resources["CpsWarnConverter"] as IValueConverter;
+
+    public static IMultiValueConverter? GridBackgroundColorConverter =>
+        Current?.Resources["GridBackgroundColorConverter"] as IMultiValueConverter;
+
     public override void Initialize()
     {
         CultureService.SetCulture();
@@ -78,6 +85,11 @@ public class App : Application
         // Set up the CPS warn converter
         Resources["CpsWarnConverter"] = new CpsWarnConverter(
             provider.GetRequiredService<IProjectProvider>(),
+            provider.GetRequiredService<IConfiguration>()
+        );
+
+        // Set up the grid background color converter
+        Resources["GridBackgroundColorConverter"] = new GridBackgroundColorConverter(
             provider.GetRequiredService<IConfiguration>()
         );
 

@@ -3,19 +3,18 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using AssCS;
 using Avalonia.Data.Converters;
-using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using Color = Avalonia.Media.Color;
+using Holo.Configuration;
+using Holo.Models;
 
 namespace Ameko.Converters;
 
 /// <summary>
 /// Converter for displaying event state in the grid
 /// </summary>
-public class GridBackgroundColorConverter : IMultiValueConverter
+public class GridBackgroundColorConverter(IConfiguration configuration) : IMultiValueConverter
 {
     // Expected binding order
     private const int ExpectedValueCount = 9;
@@ -29,12 +28,27 @@ public class GridBackgroundColorConverter : IMultiValueConverter
     private const int ActiveStartIndex = 7;
     private const int ActiveEndIndex = 8;
 
-    private static readonly IBrush SelectedBrush = Tint(Colors.DodgerBlue, 0.25);
-    private static readonly IBrush CommentBrush = Tint(Colors.Gray, 0.5);
-    private static readonly IBrush CommentSelectedBrush = Tint(Colors.SlateGray, 0.5);
-    private static readonly IBrush FrameActiveBrush = Tint(Colors.MediumSeaGreen, 0.25);
-    private static readonly IBrush CollisionBrush = Tint(Colors.Orange, 0.25);
-    private static readonly IBrush ActiveCollisionBrush = Tint(Colors.MediumOrchid, 0.25);
+    private readonly ImmutableSolidColorBrush DefaultBrush = CreateBrush(
+        configuration.Colors.Default
+    );
+    private readonly ImmutableSolidColorBrush SelectionBrush = CreateBrush(
+        configuration.Colors.Selection
+    );
+    private readonly ImmutableSolidColorBrush CommentBrush = CreateBrush(
+        configuration.Colors.Comment
+    );
+    private readonly ImmutableSolidColorBrush CommentSelectionBrush = CreateBrush(
+        configuration.Colors.CommentSelection
+    );
+    private readonly ImmutableSolidColorBrush InFrameBrush = CreateBrush(
+        configuration.Colors.InFrame
+    );
+    private readonly ImmutableSolidColorBrush CollisionBrush = CreateBrush(
+        configuration.Colors.Collision
+    );
+    private readonly ImmutableSolidColorBrush CollisionInFrameBrush = CreateBrush(
+        configuration.Colors.CollisionInFrame
+    );
 
     public object Convert(
         IList<object?> values,
@@ -44,7 +58,7 @@ public class GridBackgroundColorConverter : IMultiValueConverter
     )
     {
         if (values.Count != ExpectedValueCount || values[EventIndex] is not Event @event)
-            return Brushes.Transparent;
+            return DefaultBrush;
 
         var isComment = values[IsCommentIndex] is true;
         var isSelected =
@@ -54,16 +68,16 @@ public class GridBackgroundColorConverter : IMultiValueConverter
         switch (isSelected, isComment)
         {
             case (true, true):
-                return CommentSelectedBrush;
+                return CommentSelectionBrush;
             case (true, false):
-                return SelectedBrush;
+                return SelectionBrush;
             case (false, true):
                 return CommentBrush;
         }
 
         // Timing-based states need the row's time range
         if (values[RowStartIndex] is not Time rowStart || values[RowEndIndex] is not Time rowEnd)
-            return Brushes.Transparent;
+            return DefaultBrush;
 
         var isCollision =
             values[ActiveEventIndex] is Event activeEvent
@@ -80,13 +94,13 @@ public class GridBackgroundColorConverter : IMultiValueConverter
 
         return (isCollision, isFrameActive) switch
         {
-            (true, true) => ActiveCollisionBrush,
-            (false, true) => FrameActiveBrush,
+            (true, true) => CollisionInFrameBrush,
+            (false, true) => InFrameBrush,
             (true, false) => CollisionBrush,
-            _ => Brushes.Transparent,
+            _ => DefaultBrush,
         };
     }
 
-    private static ImmutableSolidColorBrush Tint(Color color, double opacity) =>
-        new(color, opacity);
+    private static ImmutableSolidColorBrush CreateBrush(HoloColor color) =>
+        new(Avalonia.Media.Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue));
 }

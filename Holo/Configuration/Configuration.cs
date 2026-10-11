@@ -227,6 +227,9 @@ public class Configuration : BindableBase, IConfiguration
     public TimingConfiguration Timing { get; }
 
     /// <inheritdoc />
+    public ColorConfiguration Colors { get; }
+
+    /// <inheritdoc />
     public void AddRepositoryUrl(string url)
     {
         _logger.LogDebug("Adding repository url {Url}", url);
@@ -301,18 +304,8 @@ public class Configuration : BindableBase, IConfiguration
             model.Set(EditorFontSize);
             model.Set(RepositoryUrls.ToArray(), nameof(RepositoryUrls));
             model.Set(ScriptMenuOverrides.ToDictionary(), nameof(ScriptMenuOverrides));
-            model.Set(
-                new TimingConfiguration
-                {
-                    LeadIn = Timing.LeadIn,
-                    LeadOut = Timing.LeadOut,
-                    SnapStartEarlierThreshold = Timing.SnapStartEarlierThreshold,
-                    SnapStartLaterThreshold = Timing.SnapStartLaterThreshold,
-                    SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
-                    SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
-                },
-                nameof(Timing)
-            );
+            model.Set(Timing);
+            model.Set(Colors);
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -375,6 +368,7 @@ public class Configuration : BindableBase, IConfiguration
             }
 
             var timing = model.GetOrDefault(nameof(Timing), new TimingConfiguration());
+            var colors = model.GetOrDefault(nameof(Colors), new ColorConfiguration());
 
             var result = new Configuration(fileSystem, logger)
             {
@@ -418,6 +412,16 @@ public class Configuration : BindableBase, IConfiguration
                     SnapStartLaterThreshold = timing.SnapStartLaterThreshold,
                     SnapEndEarlierThreshold = timing.SnapEndEarlierThreshold,
                     SnapEndLaterThreshold = timing.SnapEndLaterThreshold,
+                },
+                Colors =
+                {
+                    Default = colors.Default,
+                    Selection = colors.Selection,
+                    Comment = colors.Comment,
+                    CommentSelection = colors.CommentSelection,
+                    InFrame = colors.InFrame,
+                    Collision = colors.Collision,
+                    CollisionInFrame = colors.CollisionInFrame,
                 },
             };
             logger.LogInformation("Done!");
@@ -468,6 +472,8 @@ public class Configuration : BindableBase, IConfiguration
             SnapEndEarlierThreshold = 300,
             SnapEndLaterThreshold = 900,
         };
+
+        Colors = new ColorConfiguration();
 
         RepositoryUrls = new ReadOnlyObservableCollection<string>(_repositoryUrls);
         ScriptMenuOverrides = new ReadOnlyDictionary<string, string>(_scriptMenuOverrides);

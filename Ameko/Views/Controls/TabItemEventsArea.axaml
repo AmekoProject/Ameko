@@ -12,6 +12,7 @@
   xmlns:converters="clr-namespace:Ameko.Converters"
   xmlns:i18n="clr-namespace:Ameko.I18N"
   xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+  xmlns:local="clr-namespace:Ameko"
   xmlns:vm="clr-namespace:Ameko.ViewModels.Controls"
   x:Class="Ameko.Views.Controls.TabItemEventsArea"
   x:DataType="vm:TabItemViewModel"
@@ -20,7 +21,6 @@
     <converters:GridPaddingConverter x:Key="PaddingConverter" />
     <converters:EventTextLengthConverter x:Key="EventTextLengthConverter" />
     <converters:TextLengthConverter x:Key="TextLengthConverter" />
-    <converters:GridBackgroundColorConverter x:Key="BackgroundConverter" />
   </UserControl.Resources>
   <DataGrid
     Name="EventsGrid"
@@ -71,7 +71,7 @@
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
               Background="{Binding Cps, 
-														Converter={StaticResource CpsWarnConverter}}"
+															Converter={x:Static local:App.CpsWarnConverter}}"
             />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
@@ -187,7 +187,7 @@
     <DataGrid.Styles>
       <Style Selector="DataGridRow">
         <Setter Property="Background" x:DataType="ass:Event">
-          <MultiBinding Converter="{StaticResource BackgroundConverter}">
+          <MultiBinding Converter="{x:Static local:App.GridBackgroundColorConverter}">
             <Binding Path="IsComment" />
             <Binding Path="." />
             <Binding
