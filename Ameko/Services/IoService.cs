@@ -480,7 +480,7 @@ public class IoService(
             prj.WorkingSpace = wsp;
             return wsp;
         }
-        catch (Exception ex) when (ex is not UnauthorizedAccessException or IOException)
+        catch (Exception ex) when (ex is not (UnauthorizedAccessException or IOException))
         {
             logger.LogError(ex, "Failed to parse file {UriLocalPath}", uri.LocalPath);
             await messageBoxService.ShowAsync(
@@ -593,7 +593,7 @@ public class IoService(
             );
             return true;
         }
-        catch (Exception ex) when (ex is not UnauthorizedAccessException or IOException)
+        catch (Exception ex) when (ex is not (UnauthorizedAccessException or IOException))
         {
             logger.LogError(ex, "Failed to parse file {UriLocalPath}", uri.LocalPath);
             await messageBoxService.ShowAsync(
@@ -1186,41 +1186,53 @@ public class IoService(
 
         switch (ex)
         {
-            case UnauthorizedAccessException when uri is not null:
-                logger.LogError(
-                    "Failed to access file {Path}: {Message}",
-                    uri.LocalPath,
-                    ex.Message
-                );
-                message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
+            case UnauthorizedAccessException:
+                if (uri is not null)
+                {
+                    logger.LogError(
+                        "Failed to access file {Path}: {Message}",
+                        uri.LocalPath,
+                        ex.Message
+                    );
+                    message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
+                }
+                else
+                {
+                    logger.LogError("Failed to access file: {Message}", ex.Message);
+                    message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+                }
                 break;
-            case UnauthorizedAccessException when uri is null:
-                logger.LogError("Failed to access file: {Message}", ex.Message);
-                message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+            case IOException:
+                if (uri is not null)
+                {
+                    logger.LogError(
+                        "Failed to access file {Path}: {Message}",
+                        uri.LocalPath,
+                        ex.Message
+                    );
+                    message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
+                }
+                else
+                {
+                    logger.LogError("Failed to access file: {Message}", ex.Message);
+                    message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
+                }
                 break;
-            case IOException when uri is not null:
-                logger.LogError(
-                    "Failed to access file {Path}: {Message}",
-                    uri.LocalPath,
-                    ex.Message
-                );
-                message = $"{I18N.Other.MsgBox_IoError_Body_Unauthorized}\n{ex.Message}";
-                break;
-            case IOException when uri is null:
-                logger.LogError("Failed to access file: {Message}", ex.Message);
-                message = $"{I18N.Other.MsgBox_IoError_Body_IoError}\n{ex.Message}";
-                break;
-            case JsonException when uri is not null:
-                logger.LogError(
-                    "Failed to parse file {Path}: {Message}",
-                    uri.LocalPath,
-                    ex.Message
-                );
-                message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
-                break;
-            case JsonException when uri is null:
-                logger.LogError("Failed to parse file: {Message}", ex.Message);
-                message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
+            case JsonException:
+                if (uri is not null)
+                {
+                    logger.LogError(
+                        "Failed to parse file {Path}: {Message}",
+                        uri.LocalPath,
+                        ex.Message
+                    );
+                    message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
+                }
+                else
+                {
+                    logger.LogError("Failed to parse file: {Message}", ex.Message);
+                    message = $"{I18N.Other.MsgBox_IoError_Body_Json}\n{ex.Message}";
+                }
                 break;
             default:
                 logger.LogError("Failed to access file: {Message}", ex.Message);
