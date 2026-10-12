@@ -195,7 +195,7 @@
         Opacity="0.5"
       />
       <Panel
-        Background="Transparent"
+        Background="#16161A"
         PointerWheelChanged="AudioTarget_OnPointerWheelChanged"
         PointerPressed="AudioTarget_OnPointerPressed"
         PointerMoved="AudioTarget_OnPointerMoved"
