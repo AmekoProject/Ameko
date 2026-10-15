@@ -21,36 +21,42 @@
         <value>Profile Subtitles</value>
     </data>
   <data name="Profiler_Button_Export" xml:space="preserve">
-        <value>Export</value>
+        <value>Exportieren</value>
     </data>
   <data name="Profiler_Button_Start" xml:space="preserve">
-        <value>Start</value>
+        <value>Starten</value>
     </data>
   <data name="Profiler_RB_All" xml:space="preserve">
-        <value>All Events</value>
+        <value>Alle Ereignisse</value>
     </data>
   <data name="Profiler_RB_SelectedTimeRange" xml:space="preserve">
-        <value>Selected Time Range</value>
+        <value>Ausgewählter Zeitabschnitt</value>
     </data>
   <data name="Profiler_RB_SelectedEvents" xml:space="preserve">
-        <value>Selected Events</value>
+        <value>Ausgewählte Ereignisse</value>
     </data>
   <data name="Profiler_CheckBox_UseVideoRes" xml:space="preserve">
-        <value>Use Video Resolution</value>
+        <value>Videoauflösung verwenden</value>
     </data>
   <data name="Profiler_Axis_RenderTime" xml:space="preserve">
-        <value>Render Time (ms)</value>
+        <value>Renderzeit (ms)</value>
     </data>
   <data name="Profiler_Axis_ImageSize" xml:space="preserve">
-        <value>Image Size (KP)</value>
+        <value>Bildgröße (KP)</value>
     </data>
   <data name="Profiler_Axis_ImageCount" xml:space="preserve">
-        <value>Image Count</value>
+        <value>Bildanzahl</value>
     </data>
   <data name="Profiler_Axis_Frame" xml:space="preserve">
         <value>Frame</value>
     </data>
   <data name="Profiler_Description" xml:space="preserve">
         <value>Viewing results for "{0}"</value>
+    </data>
+  <data name="Profiler_Label_FontDirectories" xml:space="preserve">
+        <value>Font Directories</value>
+    </data>
+  <data name="Profiler_Label_Settings" xml:space="preserve">
+        <value>Einstellungen</value>
     </data>
 </root>

@@ -11,15 +11,13 @@ Khi bạn mở Ameko lần đầu, Trình duyệt Dự án sẽ nằm ở bên t
 Nếu bạn đã có một thư mục dự án được thiết lập sẵn trên máy, bạn có thể đưa cấu trúc đó vào Ameko bằng cách mở thư mục đó dưới dạng một dự án.
 Việc này sẽ tải tất cả các thư mục con và tệp phụ đề phù hợp vào Trình duyệt Dự án, nơi bạn có thể tuỳ chỉnh nội dung và lưu dự án kết quả thành một tệp.
 
-## Key Names and Phrases
+## Tên riêng và Cụm từ khóa
 
-Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
-Names & Phrases (KNP) bible to help keep everyone on track:
+Rất có thể dự án của bạn có các tên riêng và cụm từ cần được giữ nhất quán trong suốt cả bộ phim. Dự án có thể có một tài liệu chuẩn về Tên riêng & Cụm từ khóa (KNP) để giúp mọi người luôn làm việc đồng bộ:
 
 ![](../assets/knp-window.png)
 
-Terms that appear in the script or reference files will appear in the Editing Area. See the User Interface tab for more
-details.
+Các thuật ngữ xuất hiện trong tệp tin hoặc tài liệu tham khảo sẽ hiển thị ở Khu vực chỉnh sửa. Xem thẻ Giao diện người dùng để biết thêm chi tiết.
 
 ## Tên hiển thị và Cách sử dụng
 

@@ -1,5 +1,4 @@
-Ameko's user interface draws heavily from Aegisub, and should feel familiar to existing Aegisub users. Here is a general
-overview of Ameko's user interface.
+Ameko 的用戶介面大多借鑑 Aegisub，因此 Aegisub 用戶應該會感到熟悉。以下是 Ameko 用戶介面的概覽。
 
 ## The Editing Area
 

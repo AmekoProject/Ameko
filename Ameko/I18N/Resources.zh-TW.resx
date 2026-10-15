@@ -18,61 +18,61 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Menu_File" xml:space="preserve">
-        <value>_File</value>
+        <value>檔案</value>
     </data>
   <data name="Menu_Edit" xml:space="preserve">
-        <value>_Edit</value>
+        <value>編輯</value>
     </data>
   <data name="Menu_Subtitle" xml:space="preserve">
-        <value>_Subtitle</value>
+        <value>字幕</value>
     </data>
   <data name="Menu_Timing" xml:space="preserve">
-        <value>_Timing</value>
+        <value>時軸</value>
     </data>
   <data name="Menu_Video" xml:space="preserve">
-        <value>_Video</value>
+        <value>影片</value>
     </data>
   <data name="Menu_Scripts" xml:space="preserve">
-        <value>Scri_pts</value>
+        <value>指令碼</value>
     </data>
   <data name="Menu_Layouts" xml:space="preserve">
-        <value>_Layouts</value>
+        <value>版面</value>
     </data>
   <data name="Menu_Help" xml:space="preserve">
-        <value>_Help</value>
+        <value>幫助</value>
     </data>
   <data name="Menu_ShowLogs" xml:space="preserve">
-        <value>Show _Logs...</value>
+        <value>顯示日誌……</value>
     </data>
   <data name="ProjectExplorer_Header" xml:space="preserve">
-        <value>Project Explorer</value>
+        <value>專案瀏覽器</value>
     </data>
   <data name="Toolbox_Header" xml:space="preserve">
-        <value>Toolbox</value>
+        <value>工具箱</value>
     </data>
   <data name="EventsGrid_Header_Start" xml:space="preserve">
-        <value>Start</value>
+        <value>開始</value>
     </data>
   <data name="EventsGrid_Header_End" xml:space="preserve">
-        <value>End</value>
+        <value>結束</value>
     </data>
   <data name="EventsGrid_Header_Cps" xml:space="preserve">
-        <value>CPS</value>
+        <value>每秒字元數</value>
     </data>
   <data name="EventsGrid_Header_Style" xml:space="preserve">
-        <value>Style</value>
+        <value>樣式</value>
     </data>
   <data name="EventsGrid_Header_Actor" xml:space="preserve">
         <value>Actor</value>
     </data>
   <data name="EventsGrid_Header_Effect" xml:space="preserve">
-        <value>Effect</value>
+        <value>特效</value>
     </data>
   <data name="EventsGrid_Header_Content" xml:space="preserve">
         <value>Content</value>
     </data>
   <data name="EventsGrid_Menu_Duplicate" xml:space="preserve">
-        <value>Duplicate</value>
+        <value>複製</value>
     </data>
   <data name="EventsGrid_Menu_MergeLines" xml:space="preserve">
         <value>Merge Lines</value>
@@ -81,25 +81,25 @@
         <value>Split Lines on Linebreaks</value>
     </data>
   <data name="EventsGrid_Menu_InsertBefore" xml:space="preserve">
-        <value>Insert Before</value>
+        <value>在此前插入</value>
     </data>
   <data name="EventsGrid_Menu_InsertAfter" xml:space="preserve">
-        <value>Insert After</value>
+        <value>在此後插入</value>
     </data>
   <data name="EventsGrid_Menu_Copy" xml:space="preserve">
-        <value>Copy</value>
+        <value>複製</value>
     </data>
   <data name="EventsGrid_Menu_Paste" xml:space="preserve">
-        <value>Paste</value>
+        <value>貼上</value>
     </data>
   <data name="EventsGrid_Menu_PasteOver" xml:space="preserve">
-        <value>Paste Over...</value>
+        <value>貼上覆蓋……</value>
     </data>
   <data name="EventsGrid_Menu_Delete" xml:space="preserve">
-        <value>Delete</value>
+        <value>刪除</value>
     </data>
   <data name="EventsGrid_Menu_Cut" xml:space="preserve">
-        <value>Cut</value>
+        <value>剪下</value>
     </data>
   <data name="Editor_IsComment_Label" xml:space="preserve">
         <value>Comment</value>
@@ -111,7 +111,7 @@
         <value>Style for this line</value>
     </data>
   <data name="Editor_EditStyle_ToolTip" xml:space="preserve">
-        <value>Edit the current style</value>
+        <value>編輯目前樣式</value>
     </data>
   <data name="Editor_ActorAcBox_Watermark" xml:space="preserve">
         <value>Actor</value>
@@ -120,7 +120,7 @@
         <value>Actor for this line</value>
     </data>
   <data name="Editor_EffectAcBox_Watermark" xml:space="preserve">
-        <value>Effect</value>
+        <value>特效</value>
     </data>
   <data name="Editor_EffectAcBox_ToolTip" xml:space="preserve">
         <value>Effect for this line</value>
@@ -132,10 +132,10 @@
         <value>Layer</value>
     </data>
   <data name="Editor_StartBox_ToolTip" xml:space="preserve">
-        <value>Start time</value>
+        <value>開始時間</value>
     </data>
   <data name="Editor_EndBox_ToolTip" xml:space="preserve">
-        <value>End time</value>
+        <value>結束時間</value>
     </data>
   <data name="Editor_MarginLeft_ToolTip" xml:space="preserve">
         <value>Left Margin (0 is style default)</value>
@@ -165,103 +165,103 @@
         <value>Move to the next line, creating a new one if needed</value>
     </data>
   <data name="Menu_New" xml:space="preserve">
-        <value>_New</value>
+        <value>新增</value>
     </data>
   <data name="Menu_OpenSubtitle" xml:space="preserve">
-        <value>_Open Subtitle...</value>
+        <value>開啟字幕……</value>
     </data>
   <data name="Menu_SaveSubtitle" xml:space="preserve">
-        <value>_Save Subtitle...</value>
+        <value>儲存字幕……</value>
     </data>
   <data name="Menu_SaveSubtitleAs" xml:space="preserve">
-        <value>Save Subtitle _As...</value>
+        <value>另存字幕為……</value>
     </data>
   <data name="Menu_ExportSubtitles" xml:space="preserve">
-        <value>_Export Subtitle as Text...</value>
+        <value>匯出字幕為文字……</value>
     </data>
   <data name="Menu_OpenProject" xml:space="preserve">
-        <value>Open _Project...</value>
+        <value>開啟專案……</value>
     </data>
   <data name="Menu_SaveProject" xml:space="preserve">
-        <value>Save Proj_ect...</value>
+        <value>儲存專案……</value>
     </data>
   <data name="Menu_Quit" xml:space="preserve">
-        <value>_Quit</value>
+        <value>退出</value>
     </data>
   <data name="Menu_Undo" xml:space="preserve">
-        <value>_Undo</value>
+        <value>復原</value>
     </data>
   <data name="Menu_Redo" xml:space="preserve">
-        <value>_Redo</value>
+        <value>重複</value>
     </data>
   <data name="Menu_Search" xml:space="preserve">
         <value>_Search...</value>
     </data>
   <data name="Menu_StylesManager" xml:space="preserve">
-        <value>_Styles Manager...</value>
+        <value>樣式管理器……</value>
     </data>
   <data name="Menu_ScriptProperties" xml:space="preserve">
-        <value>Script _Properties...</value>
+        <value>指令碼屬性……</value>
     </data>
   <data name="Menu_Project" xml:space="preserve">
-        <value>Pro_ject</value>
+        <value>專案</value>
     </data>
   <data name="Menu_ProjectConfig" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>設定……</value>
     </data>
   <data name="Menu_ShiftTimes" xml:space="preserve">
         <value>S_hift Times...</value>
     </data>
   <data name="Menu_OpenVideo" xml:space="preserve">
-        <value>_Open Video...</value>
+        <value>開啟影片……</value>
     </data>
   <data name="Menu_JumpTo" xml:space="preserve">
         <value>_Jump To...</value>
     </data>
   <data name="Menu_Configuration" xml:space="preserve">
-        <value>_Configuration...</value>
+        <value>設定……</value>
     </data>
   <data name="Menu_Keybinds" xml:space="preserve">
-        <value>_Keybinds...</value>
+        <value>快捷鍵……</value>
     </data>
   <data name="Menu_About" xml:space="preserve">
-        <value>_About Ameko...</value>
+        <value>關於 Ameko……</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Remove" xml:space="preserve">
-        <value>Remove from Project</value>
+        <value>從專案中移除</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_Open" xml:space="preserve">
-        <value>Open</value>
+        <value>開啟</value>
     </data>
   <data name="Menu_CloseTab" xml:space="preserve">
         <value>_Close Tab</value>
     </data>
   <data name="Menu_CloseProject" xml:space="preserve">
-        <value>Close Projec_t</value>
+        <value>關閉專案</value>
     </data>
   <data name="Tab_CloseButton_ToolTip" xml:space="preserve">
         <value>Close Tab</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_ChangeDisplayName" xml:space="preserve">
-        <value>Change Display Name...</value>
+        <value>更改顯示名稱……</value>
     </data>
   <data name="Menu_ReloadScripts" xml:space="preserve">
-        <value>_Reload Scripts</value>
+        <value>重新載入指令碼</value>
     </data>
   <data name="Menu_PackageManager" xml:space="preserve">
         <value>Open _Package Manager...</value>
     </data>
   <data name="Menu_OpenProjectFolder" xml:space="preserve">
-        <value>Open _Folder as Project...</value>
+        <value>開啟資料夾為專案……</value>
     </data>
   <data name="Menu_ReloadLayouts" xml:space="preserve">
         <value>_Reload Layouts</value>
     </data>
   <data name="Video_Button_PlayPause_ToolTip" xml:space="preserve">
-        <value>Play/Pause</value>
+        <value>播放／暫停</value>
     </data>
   <data name="Video_Button_PlaySelection_ToolTip" xml:space="preserve">
-        <value>Play Selection</value>
+        <value>播放選取部分</value>
     </data>
   <data name="Video_Button_EnableAutoSeek_ToolTip" xml:space="preserve">
         <value>Enable auto seek to selected event's start time</value>
@@ -276,7 +276,7 @@
         <value>Current Frame</value>
     </data>
   <data name="Video_LockAR" xml:space="preserve">
-        <value>Lock</value>
+        <value>鎖定</value>
     </data>
   <data name="Video_LockAR_ToolTip" xml:space="preserve">
         <value>Lock aspect ratio</value>
@@ -288,13 +288,13 @@
         <value>_Detach Reference File</value>
     </data>
   <data name="Menu_Spellcheck" xml:space="preserve">
-        <value>Spell_check...</value>
+        <value>拼寫檢查……</value>
     </data>
   <data name="Menu_Playground" xml:space="preserve">
-        <value>Open Play_ground...</value>
+        <value>開啟測試區……</value>
     </data>
   <data name="Message_Welcome" xml:space="preserve">
-        <value>Welcome to Ameko!</value>
+        <value>歡迎使用 Ameko！</value>
     </data>
   <data name="EventsGrid_Menu_SplitLineKeepTimes" xml:space="preserve">
         <value>Split Lines on Linebreaks (Keep Times)</value>
@@ -303,19 +303,19 @@
         <value>Open an existing subtitle file or create a new one to begin.</value>
     </data>
   <data name="EventsGrid_Menu_CopyPlaintext" xml:space="preserve">
-        <value>Copy (Plain Text)</value>
+        <value>複製（純文字）</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_AttachAsReference" xml:space="preserve">
         <value>Attach as Reference</value>
     </data>
   <data name="Video_Angle" xml:space="preserve">
-        <value>Angle:</value>
+        <value>角度：</value>
     </data>
   <data name="Error" xml:space="preserve">
-        <value>Error</value>
+        <value>錯誤</value>
     </data>
   <data name="Error_FailedToParse" xml:space="preserve">
-        <value>Failed to parse file:</value>
+        <value>無法解析檔案：</value>
     </data>
   <data name="Video_ContextMenu_Copy_Frame" xml:space="preserve">
         <value>Copy Frame to Clipboard</value>
@@ -339,7 +339,7 @@
         <value>Indexing...</value>
     </data>
   <data name="Menu_CloseVideo" xml:space="preserve">
-        <value>_Close Video</value>
+        <value>關閉影片</value>
     </data>
   <data name="Menu_IssueTracker" xml:space="preserve">
         <value>_Issue Tracker</value>
@@ -366,25 +366,25 @@
         <value>Vertical Scale</value>
     </data>
   <data name="Menu_Audio" xml:space="preserve">
-        <value>_Audio</value>
+        <value>音訊</value>
     </data>
   <data name="Menu_OpenAudio" xml:space="preserve">
-        <value>_Open Audio...</value>
+        <value>開啟音訊……</value>
     </data>
   <data name="Menu_CloseAudio" xml:space="preserve">
-        <value>_Close Audio</value>
+        <value>關閉音訊</value>
     </data>
   <data name="Menu_ChangeTracks" xml:space="preserve">
         <value>Change _Tracks...</value>
     </data>
   <data name="Menu_RecentSubtitles" xml:space="preserve">
-        <value>Recent Subtitl_es</value>
+        <value>最近開啟的字幕</value>
     </data>
   <data name="Menu_RecentProjects" xml:space="preserve">
-        <value>Recent Proje_cts</value>
+        <value>最近開啟的專案</value>
     </data>
   <data name="Menu_RecentClear" xml:space="preserve">
-        <value>Clear</value>
+        <value>清除</value>
     </data>
   <data name="Menu_SnapKf_Start" xml:space="preserve">
         <value>Snap _Start to Nearest Keyframe</value>
@@ -414,7 +414,7 @@
         <value>Create New Folder Here...</value>
     </data>
   <data name="ProjectExplorer_ContextMenu_MoveToFolder" xml:space="preserve">
-        <value>Move to Folder...</value>
+        <value>移至資料夾……</value>
     </data>
   <data name="Video_Button_Mute_ToolTip" xml:space="preserve">
         <value>Play audio with video</value>
@@ -426,15 +426,48 @@
         <value>Bottom Margin (0 is style default)</value>
     </data>
   <data name="Menu_OpenKnp" xml:space="preserve">
-        <value>_Key Names &amp; Terms...</value>
+        <value>重要名稱及字詞……</value>
     </data>
   <data name="Video_NothingLoaded" xml:space="preserve">
-        <value>No video loaded</value>
+        <value>未載入影片</value>
     </data>
   <data name="Audio_NothingLoaded" xml:space="preserve">
-        <value>No audio loaded</value>
+        <value>未載入音訊</value>
     </data>
   <data name="Menu_Profile_Subtitles" xml:space="preserve">
         <value>Pro_file Subtitles...</value>
+    </data>
+  <data name="Audio_Button_PlayPause_ToolTip" xml:space="preserve">
+        <value>Play/Pause audio for the active line</value>
+    </data>
+  <data name="Audio_Button_PlayBefore_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio before the active line</value>
+    </data>
+  <data name="Audio_Button_PlayFirst_ToolTip" xml:space="preserve">
+        <value>Play first 500ms of audio from the active line</value>
+    </data>
+  <data name="Audio_Button_PlaySurround_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio before and after the active line</value>
+    </data>
+  <data name="Audio_Button_PlayLast_ToolTip" xml:space="preserve">
+        <value>Play last 500ms of audio from the active line</value>
+    </data>
+  <data name="Audio_Button_PlayAfter_ToolTip" xml:space="preserve">
+        <value>Play 500ms of audio after the active line</value>
+    </data>
+  <data name="Audio_Button_EnableKaraoke_ToolTip" xml:space="preserve">
+        <value>啟用卡拉OK模式</value>
+    </data>
+  <data name="Audio_Button_DisableKaraoke_ToolTip" xml:space="preserve">
+        <value>停用卡拉OK模式</value>
+    </data>
+  <data name="Audio_Button_Spectrum_ToolTip" xml:space="preserve">
+        <value>切換至頻譜圖</value>
+    </data>
+  <data name="Audio_Button_Waveform_ToolTip" xml:space="preserve">
+        <value>切換至波形圖</value>
+    </data>
+  <data name="Message_PackageUpdates" xml:space="preserve">
+        <value>Updates available for {0} package(s)</value>
     </data>
 </root>

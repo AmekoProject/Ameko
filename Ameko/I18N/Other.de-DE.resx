@@ -1,260 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root>
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:element name="root" msdata:IsDataSet="true">
+<root><xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"><xsd:element name="root" msdata:IsDataSet="true">
             
-        </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>1.3</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="LogWindow_Title" xml:space="preserve">
+        </xsd:element></xsd:schema><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="LogWindow_Title" xml:space="preserve">
         <value>Ameko-Logs</value>
-    </data>
-  <data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDocument_Title" xml:space="preserve">
         <value>Dokument entfernen?</value>
-    </data>
-  <data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDocument_Body" xml:space="preserve">
         <value>Möchtest du wirklich dieses Dokument aus dem Projekt entfernen?</value>
-    </data>
-  <data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDirectory_Title" xml:space="preserve">
         <value>Ordner entfernen?</value>
-    </data>
-  <data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDirectory_Body" xml:space="preserve">
         <value>Möchtest du wirklich diesen Ordner aus dem Projekt entfernen?</value>
-    </data>
-  <data name="MsgBox_NameDirectory_Title" xml:space="preserve">
+    </data><data name="MsgBox_NameDirectory_Title" xml:space="preserve">
         <value>Ordnernamen festlegen</value>
-    </data>
-  <data name="MsgBox_NameDirectory_Body" xml:space="preserve">
+    </data><data name="MsgBox_NameDirectory_Body" xml:space="preserve">
         <value>Wähle bitte einen Namen für den Ordner:</value>
-    </data>
-  <data name="MsgBox_RemoveDirectory_Disclaimer" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDirectory_Disclaimer" xml:space="preserve">
         <value>Es werden keine Ordner von deinem Computer gelöscht.</value>
-    </data>
-  <data name="MsgBox_RemoveDocument_Disclaimer" xml:space="preserve">
+    </data><data name="MsgBox_RemoveDocument_Disclaimer" xml:space="preserve">
         <value>Es werden keine Dateien von deinem Computer gelöscht.</value>
-    </data>
-  <data name="MsgBox_NameItem_Label" xml:space="preserve">
+    </data><data name="MsgBox_NameItem_Label" xml:space="preserve">
         <value>Name:</value>
-    </data>
-  <data name="MsgBox_NameDocument_Body" xml:space="preserve">
+    </data><data name="MsgBox_NameDocument_Body" xml:space="preserve">
         <value>Wähle bitte einen Anzeigenamen für das Dokument:</value>
-    </data>
-  <data name="MsgBox_NameDocument_Title" xml:space="preserve">
+    </data><data name="MsgBox_NameDocument_Title" xml:space="preserve">
         <value>Dokumentnamen festlegen</value>
-    </data>
-  <data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
+    </data><data name="ScriptServiceLocator_Get_UnregisteredScript" xml:space="preserve">
         <value>Service of type {0} is not registered for use by scripts</value>
-    </data>
-  <data name="MsgBox_Save_Title" xml:space="preserve">
+    </data><data name="MsgBox_Save_Title" xml:space="preserve">
         <value>Arbeit speichern?</value>
-    </data>
-  <data name="MsgBox_Save_Body" xml:space="preserve">
+    </data><data name="MsgBox_Save_Body" xml:space="preserve">
         <value>{0} enthält ungespeicherte Arbeit. Möchtest du speichern?</value>
-    </data>
-  <data name="FileDialog_FileType_Project" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Project" xml:space="preserve">
         <value>Ameko-Projektdateien</value>
-    </data>
-  <data name="FileDialog_OpenProject_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenProject_Title" xml:space="preserve">
         <value>Projektdatei öffnen</value>
-    </data>
-  <data name="FileDialog_SaveProject_Title" xml:space="preserve">
+    </data><data name="FileDialog_SaveProject_Title" xml:space="preserve">
         <value>Projektdatei speichern</value>
-    </data>
-  <data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenSubtitle_Title" xml:space="preserve">
         <value>Untertiteldatei öffnen</value>
-    </data>
-  <data name="FileDialog_FileType_Ass" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Ass" xml:space="preserve">
         <value>ASS-Dateien</value>
-    </data>
-  <data name="FileDialog_FileType_Srt" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Srt" xml:space="preserve">
         <value>SRT-Dateien</value>
-    </data>
-  <data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
+    </data><data name="FileDialog_SaveSubtitle_Title" xml:space="preserve">
         <value>Untertiteldatei speichern</value>
-    </data>
-  <data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
+    </data><data name="FileDialog_ExportSubtitle_Title" xml:space="preserve">
         <value>Untertiteldatei exportieren</value>
-    </data>
-  <data name="FileDialog_FileType_Text" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Text" xml:space="preserve">
         <value>Textdateien</value>
-    </data>
-  <data name="MsgBox_ScriptService_Title" xml:space="preserve">
+    </data><data name="MsgBox_ScriptService_Title" xml:space="preserve">
         <value>Ameko-Skript-Dienst</value>
-    </data>
-  <data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
+    </data><data name="MsgBox_ScriptService_Reload_Body" xml:space="preserve">
         <value>Skripte erfolgreich neu geladen</value>
-    </data>
-  <data name="FileDialog_OpenVideo_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenVideo_Title" xml:space="preserve">
         <value>Videodatei öffnen</value>
-    </data>
-  <data name="FileDialog_FileType_Video" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Video" xml:space="preserve">
         <value>Videodateien</value>
-    </data>
-  <data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenFolderAsProject_Title" xml:space="preserve">
         <value>Projektordner öffnen</value>
-    </data>
-  <data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
+    </data><data name="FileDialog_AttachReferenceFile_Title" xml:space="preserve">
         <value>Referenzdatei anhängen</value>
-    </data>
-  <data name="CrashReporter_WindowTitle" xml:space="preserve">
+    </data><data name="CrashReporter_WindowTitle" xml:space="preserve">
         <value>Ameko Crash Reporter</value>
-    </data>
-  <data name="CrashReporter_Header" xml:space="preserve">
+    </data><data name="CrashReporter_Header" xml:space="preserve">
         <value>Ameko ist abgestürzt :(</value>
-    </data>
-  <data name="CrashReporter_Info" xml:space="preserve">
+    </data><data name="CrashReporter_Info" xml:space="preserve">
         <value>Die Details des Fehlers sind folgende:</value>
-    </data>
-  <data name="Message_ClipboardEmpty" xml:space="preserve">
+    </data><data name="Message_ClipboardEmpty" xml:space="preserve">
         <value>Die Zwischenablage war leer!</value>
-    </data>
-  <data name="MsgBox_Btn_OK" xml:space="preserve">
+    </data><data name="MsgBox_Btn_OK" xml:space="preserve">
         <value>Ok</value>
-    </data>
-  <data name="MsgBox_Btn_Cancel" xml:space="preserve">
+    </data><data name="MsgBox_Btn_Cancel" xml:space="preserve">
         <value>Abbrechen</value>
-    </data>
-  <data name="MsgBox_Btn_Yes" xml:space="preserve">
+    </data><data name="MsgBox_Btn_Yes" xml:space="preserve">
         <value>Ja</value>
-    </data>
-  <data name="MsgBox_Btn_No" xml:space="preserve">
+    </data><data name="MsgBox_Btn_No" xml:space="preserve">
         <value>Nein</value>
-    </data>
-  <data name="MsgBox_LoadVideo_Title" xml:space="preserve">
+    </data><data name="MsgBox_LoadVideo_Title" xml:space="preserve">
         <value>Video laden</value>
-    </data>
-  <data name="MsgBox_LoadVideo_Body" xml:space="preserve">
+    </data><data name="MsgBox_LoadVideo_Body" xml:space="preserve">
         <value>Möchtest du das zugehörige Video laden?</value>
-    </data>
-  <data name="Message_VideoNotFound" xml:space="preserve">
+    </data><data name="Message_VideoNotFound" xml:space="preserve">
         <value>Das zugehörige Video „{0}“ konnte nicht gefunden werden.</value>
-    </data>
-  <data name="Message_SavedFrame" xml:space="preserve">
+    </data><data name="Message_SavedFrame" xml:space="preserve">
         <value>Frame als {0} gespeichert</value>
-    </data>
-  <data name="Message_CopiedFrame" xml:space="preserve">
+    </data><data name="Message_CopiedFrame" xml:space="preserve">
         <value>Frame wurde in die Zwischenablage kopiert</value>
-    </data>
-  <data name="FileDialog_SaveFrame_Title" xml:space="preserve">
+    </data><data name="FileDialog_SaveFrame_Title" xml:space="preserve">
         <value>Frame speichern</value>
-    </data>
-  <data name="FileDialog_FileType_Png" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Png" xml:space="preserve">
         <value>PNG-Dateien</value>
-    </data>
-  <data name="Message_UpdateAvailable" xml:space="preserve">
+    </data><data name="Message_UpdateAvailable" xml:space="preserve">
         <value>Eine neue Version von Ameko, {0}, ist verfügbar!</value>
-    </data>
-  <data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
+    </data><data name="MsgBox_MediaDisabled_Body" xml:space="preserve">
         <value>Medienwiedergabe ist deaktiviert. Ffms2 oder libass könnten fehlen!</value>
-    </data>
-  <data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
+    </data><data name="MsgBox_MediaDisabled_Title" xml:space="preserve">
         <value>Medienwiedergabe</value>
-    </data>
-  <data name="Message_AutosaveComplete" xml:space="preserve">
+    </data><data name="Message_AutosaveComplete" xml:space="preserve">
         <value>Autosave complete!</value>
-    </data>
-  <data name="SelectTrackDialog_Title" xml:space="preserve">
+    </data><data name="SelectTrackDialog_Title" xml:space="preserve">
         <value>Spur auswählen</value>
-    </data>
-  <data name="SelectTrackDialog_Body" xml:space="preserve">
+    </data><data name="SelectTrackDialog_Body" xml:space="preserve">
         <value>Wähle eine Spur zum Laden aus:</value>
-    </data>
-  <data name="SelectTrackDialog_Button_Load" xml:space="preserve">
+    </data><data name="SelectTrackDialog_Button_Load" xml:space="preserve">
         <value>Laden</value>
-    </data>
-  <data name="FileDialog_OpenAudio_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenAudio_Title" xml:space="preserve">
         <value>Audiodatei öffnen</value>
-    </data>
-  <data name="FileDialog_FileType_Audio" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Audio" xml:space="preserve">
         <value>Audiodateien</value>
-    </data>
-  <data name="ChangelogDialog_Title" xml:space="preserve">
+    </data><data name="ChangelogDialog_Title" xml:space="preserve">
         <value>Änderungsprotokoll anzeigen</value>
-    </data>
-  <data name="Changelog_NoChangelog" xml:space="preserve">
+    </data><data name="Changelog_NoChangelog" xml:space="preserve">
         <value>Kein Änderungsprotokoll verfügbar</value>
-    </data>
-  <data name="Message_AudioAutoloaded" xml:space="preserve">
+    </data><data name="Message_AudioAutoloaded" xml:space="preserve">
         <value>Audiospur {0} wurde automatisch geladen</value>
-    </data>
-  <data name="Message_KeyframesNotFound" xml:space="preserve">
+    </data><data name="Message_KeyframesNotFound" xml:space="preserve">
         <value>Die zugehörige Keyframes-Datei „{0}“ konnte nicht gefunden werden.</value>
-    </data>
-  <data name="FileDialog_OpenKeyframes_Title" xml:space="preserve">
+    </data><data name="FileDialog_OpenKeyframes_Title" xml:space="preserve">
         <value>Keyframes-Datei öffnen</value>
-    </data>
-  <data name="FileDialog_FileType_Kf" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Kf" xml:space="preserve">
         <value>Keyframe-Dateien</value>
-    </data>
-  <data name="SelectFolderDialog_Title" xml:space="preserve">
+    </data><data name="SelectFolderDialog_Title" xml:space="preserve">
         <value>Ordner auswählen</value>
-    </data>
-  <data name="SelectFolderDialog_Body" xml:space="preserve">
+    </data><data name="SelectFolderDialog_Body" xml:space="preserve">
         <value>Wähle einen Ordner aus:</value>
-    </data>
-  <data name="SelectFolderDialog_Root" xml:space="preserve">
+    </data><data name="SelectFolderDialog_Root" xml:space="preserve">
         <value>/ (root)</value>
-    </data>
-  <data name="SelectFolderDialog_Button_Select" xml:space="preserve">
+    </data><data name="SelectFolderDialog_Button_Select" xml:space="preserve">
         <value>Auswählen</value>
-    </data>
-  <data name="MsgBox_SaveProject_Body" xml:space="preserve">
+    </data><data name="MsgBox_SaveProject_Body" xml:space="preserve">
         <value>{0} hat ungespeicherte Änderungen. Möchtest du speichern?</value>
-    </data>
-  <data name="MsgBox_SaveProject_Title" xml:space="preserve">
+    </data><data name="MsgBox_SaveProject_Title" xml:space="preserve">
         <value>Projekt speichern?</value>
-    </data>
-  <data name="MsgBox_IoError_Title" xml:space="preserve">
+    </data><data name="MsgBox_IoError_Title" xml:space="preserve">
         <value>I/O Error</value>
-    </data>
-  <data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
+    </data><data name="MsgBox_IoError_Body_Unauthorized" xml:space="preserve">
         <value>Unauthorisiert.</value>
-    </data>
-  <data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
+    </data><data name="MsgBox_IoError_Body_IoError" xml:space="preserve">
         <value>An I/O error occured.</value>
-    </data>
-  <data name="MsgBox_IoError_Body_Json" xml:space="preserve">
+    </data><data name="MsgBox_IoError_Body_Json" xml:space="preserve">
         <value>Failed to parse JSON.</value>
-    </data>
-  <data name="Message_StyleNotFound" xml:space="preserve">
+    </data><data name="Message_StyleNotFound" xml:space="preserve">
         <value>Style "{0}" was not found</value>
-    </data>
-  <data name="FileDialog_FileType_Csv" xml:space="preserve">
-        <value>CSV Files</value>
-    </data>
-  <data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
+    </data><data name="FileDialog_FileType_Csv" xml:space="preserve">
+        <value>CSV-Dateien</value>
+    </data><data name="FileDialog_SaveProfileResult_Title" xml:space="preserve">
         <value>Save Profile Result</value>
-    </data>
-  <data name="SourceViewer_Title" xml:space="preserve">
+    </data><data name="SourceViewer_Title" xml:space="preserve">
         <value>Source Viewer - {0}</value>
-    </data>
-  <data name="SourceViewer_Button_Save" xml:space="preserve">
+    </data><data name="SourceViewer_Button_Save" xml:space="preserve">
         <value>Speichern</value>
-    </data>
-  <data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
+    </data><data name="SourceViewer_CheckBox_EnableEditing" xml:space="preserve">
         <value>Enable Editing</value>
-    </data>
-  <data name="SourceViewer_Disclaimer" xml:space="preserve">
+    </data><data name="SourceViewer_Disclaimer" xml:space="preserve">
         <value>Edits will be overwritten if the package is updated.</value>
-    </data>
-  <data name="SourceViewer_Button_Restore" xml:space="preserve">
+    </data><data name="SourceViewer_Button_Restore" xml:space="preserve">
         <value>Restore</value>
-    </data>
-  <data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
+    </data><data name="SourceViewer_Button_Restore_ToolTip" xml:space="preserve">
         <value>Restore package to its original state</value>
-    </data>
-  <data name="SourceViewer_Notice" xml:space="preserve">
+    </data>shoud
+    <data name="SourceViewer_Notice" xml:space="preserve">
         <value>"Update All" will skip modified packages.</value>
-    </data>
-</root>
+    </data><data name="FileDialog_OpenFontDirectory_Title" xml:space="preserve">
+        <value>Open Font Directory</value>
+    </data><data name="ScriptExecutionStatus_Success" xml:space="preserve">
+        <value>Script executed successfully.</value>
+    </data><data name="ScriptExecutionStatus_Warning" xml:space="preserve">
+        <value>Script executed with warnings.</value>
+    </data><data name="ScriptExecutionStatus_Failure" xml:space="preserve">
+        <value>Script execution failed.</value>
+    </data><data name="ScriptExecution_Exception" xml:space="preserve">
+        <value>An unhandled exception occured during script execution:</value>
+    </data><data name="ResDialog_Option_LeaveUnset" xml:space="preserve">
+        <value>Leave the layout resolution unset</value>
+    </data><data name="ResDialog_Option_SetToVideo" xml:space="preserve">
+        <value>Set the layout resolution to the video's resolution ({0} × {1})</value>
+    </data><data name="ResDialog_Option_SetToScript" xml:space="preserve">
+        <value>Set the layout resolution to the script's resolution ({0} × {1})</value>
+    </data><data name="ResDialog_Option_SetToScript_Undefined" xml:space="preserve">
+        <value>Set the layout resolution to the script's resolution (undefined)</value>
+    </data><data name="ResDialog_Intro" xml:space="preserve">
+        <value>This subtitle file does not have a layout resolution set.</value>
+    </data><data name="ResDialog_UseVideoRes" xml:space="preserve">
+        <value>If you plan to use this subtitle file on the newly-opened video file, you should set the layout resolution to the video's resolution.</value>
+    </data><data name="ResDialog_LeaveUnset" xml:space="preserve">
+        <value>If you plan to use a different video file, you may want to leave the layout resolution unset until you open the correct video file.</value>
+    </data><data name="ResDialog_UseScriptRes" xml:space="preserve">
+        <value>If you are adapting a pre-existing subtitle file, you should set the layout resolution to the script resolution.</value>
+    </data><data name="CrashReporter_DirectoryButton_ToolTip" xml:space="preserve">
+        <value>Open crash report directory</value>
+    </data></root>

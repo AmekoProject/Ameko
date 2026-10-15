@@ -102,13 +102,13 @@
         <value>This package is required by other packages</value>
     </data>
   <data name="PkgMan_Update_Available_ToolTip" xml:space="preserve">
-        <value>An update is available for this package</value>
+        <value>Für dieses Paket ist ein Update verfügbar</value>
     </data>
   <data name="PkgMan_Button_Refresh_ToolTip" xml:space="preserve">
         <value>Refresh the Package Store</value>
     </data>
   <data name="PkgMan_MsgBox_Refreshed" xml:space="preserve">
-        <value>Refresh successful</value>
+        <value>Aktualisierung erfolgreich</value>
     </data>
   <data name="PkgMan_PackagesTab" xml:space="preserve">
         <value>Pakete</value>
@@ -120,7 +120,7 @@
         <value>Hinzufügen</value>
     </data>
   <data name="PkgMan_Button_RemoveRepo_ToolTip" xml:space="preserve">
-        <value>Remove the selected repository</value>
+        <value>Ausgewähltes Repository entfernen</value>
     </data>
   <data name="PkgMan_Button_AddRepo_ToolTip" xml:space="preserve">
         <value>Neues Repository hinzufügen</value>
@@ -132,7 +132,7 @@
         <value>Beta-Kanal?</value>
     </data>
   <data name="PkgMan_Info_SubRepoCount" xml:space="preserve">
-        <value>Sub-Repositories</value>
+        <value>Sub-Repositorys</value>
     </data>
   <data name="PkgMan_Info_PackageCount" xml:space="preserve">
         <value>Pakete</value>
@@ -144,7 +144,7 @@
         <value>The repository is not installed</value>
     </data>
   <data name="PkgMan_Result_Repository_AlreadyInstalled" xml:space="preserve">
-        <value>The repository is already installed!</value>
+        <value>Das Repository wurde bereits installiert!</value>
     </data>
   <data name="PkgMan_Result_InvalidName" xml:space="preserve">
         <value>Das Paket hat einen ungültigen Namen</value>

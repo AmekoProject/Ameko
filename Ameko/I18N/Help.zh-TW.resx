@@ -33,6 +33,6 @@
         <value>專案</value>
     </data>
   <data name="Help_Empty" xml:space="preserve">
-        <value>No scripts with help documentation installed</value>
+        <value>未安裝帶有說明文件的指令碼</value>
     </data>
 </root>

@@ -77,4 +77,13 @@
   <data name="Sort_Label_ThenBy" xml:space="preserve">
         <value>Luego por:</value>
     </data>
+  <data name="Search_CB_Regex" xml:space="preserve">
+        <value>Expresión regular</value>
+    </data>
+  <data name="Search_CB_Regex_ToolTip" xml:space="preserve">
+        <value>Buscar usando expresiones regulares</value>
+    </data>
+  <data name="Search_CB_MatchCase" xml:space="preserve">
+        <value>Distinguir mayúsculas y minúsculas</value>
+    </data>
 </root>
