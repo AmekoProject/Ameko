@@ -24,48 +24,48 @@
         <value>Um Git-Funktionen nutzen zu können, öffne ein Projekt in einem Ordner, der ein Repository enthält.</value>
     </data>
   <data name="Git_StagedChanges" xml:space="preserve">
-        <value>Staged Changes</value>
+        <value>Gestagte Änderungen</value>
     </data>
   <data name="Git_UnstagedChanges" xml:space="preserve">
-        <value>Unstaged Changes</value>
+        <value>Nicht gestagte Änderungen</value>
     </data>
   <data name="Git_Button_Unstage_ToolTip" xml:space="preserve">
-        <value>Unstage changes</value>
+        <value>Änderungen entstagen</value>
     </data>
   <data name="Git_Button_Stage_ToolTip" xml:space="preserve">
-        <value>Stage changes</value>
+        <value>Änderungen stagen</value>
     </data>
   <data name="Git_Button_Commit" xml:space="preserve">
-        <value>Commit</value>
+        <value>Committen</value>
     </data>
   <data name="Git_Button_Stash" xml:space="preserve">
-        <value>Stash</value>
+        <value>Stashen</value>
     </data>
   <data name="Git_Button_Commit_ToolTip" xml:space="preserve">
-        <value>Commit changes on {0}</value>
+        <value>Änderungen auf {0} committen</value>
     </data>
   <data name="Git_Button_Stash_ToolTip" xml:space="preserve">
-        <value>Stash changes</value>
+        <value>Änderungen stashen</value>
     </data>
   <data name="Git_Button_Refresh_ToolTip" xml:space="preserve">
-        <value>Refresh</value>
+        <value>Aktualisieren</value>
     </data>
   <data name="Git_CommitBox_Watermark" xml:space="preserve">
-        <value>Commit Message</value>
+        <value>Commit-Nachricht</value>
     </data>
   <data name="Git_PotentialOwnershipIssue" xml:space="preserve">
-        <value>A .git directory was detected, but libgit2 is unable to process it. Make sure this repository is marked as "safe" in your .gitconfig.</value>
+        <value>Ein .git-Verzeichnis wurde zwar erkannt, jedoch kann libgit2 es nicht verarbeiten. Stelle sicher, dass dieses Repository in deiner .gitconfig als sicher ("safe") makiert ist.</value>
     </data>
   <data name="Git_NothingToCommit" xml:space="preserve">
-        <value>There's nothing to commit at this time.</value>
+        <value>Zur Zeit gibt es nichts zum Comitten.</value>
     </data>
   <data name="Git_Button_Pull_ToolTip" xml:space="preserve">
-        <value>Pull</value>
+        <value>Pullen</value>
     </data>
   <data name="Git_LatestCommits" xml:space="preserve">
-        <value>Latest commits on {0}:</value>
+        <value>Neuste Commits auf {0}:</value>
     </data>
   <data name="Git_Button_Push_ToolTip" xml:space="preserve">
-        <value>Push</value>
+        <value>Pushen</value>
     </data>
 </root>

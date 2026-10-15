@@ -42,7 +42,7 @@
         <value>Hiệu ứng</value>
     </data>
   <data name="Search_RB_TextStripped" xml:space="preserve">
-        <value>Text (stripped)</value>
+        <value>Văn bản (thuần)</value>
     </data>
   <data name="SelectWindow_Title" xml:space="preserve">
         <value>Chọn</value>
@@ -76,5 +76,14 @@
     </data>
   <data name="Sort_Label_ThenBy" xml:space="preserve">
         <value>Sau đó theo:</value>
+    </data>
+  <data name="Search_CB_Regex" xml:space="preserve">
+        <value>Biểu thức chính quy</value>
+    </data>
+  <data name="Search_CB_Regex_ToolTip" xml:space="preserve">
+        <value>Tìm kiếm bằng biểu thức chính quy</value>
+    </data>
+  <data name="Search_CB_MatchCase" xml:space="preserve">
+        <value>Phân biệt hoa/thường</value>
     </data>
 </root>

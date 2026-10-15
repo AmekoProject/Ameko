@@ -18,54 +18,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Git_NotInRepo" xml:space="preserve">
-        <value>No Git repository detected.</value>
+        <value>未有偵測到 Git 儲存庫。</value>
     </data>
   <data name="Git_NotInRepo_Tutorial" xml:space="preserve">
-        <value>To use Git features, open a Project in a folder containing a repository.</value>
+        <value>如要使用 Git 功能，請在包含儲存庫的資料夾中開啟專案。</value>
     </data>
   <data name="Git_StagedChanges" xml:space="preserve">
-        <value>Staged Changes</value>
+        <value>已預存的變更</value>
     </data>
   <data name="Git_UnstagedChanges" xml:space="preserve">
-        <value>Unstaged Changes</value>
+        <value>未預存的變更</value>
     </data>
   <data name="Git_Button_Unstage_ToolTip" xml:space="preserve">
-        <value>Unstage changes</value>
+        <value>取消預存</value>
     </data>
   <data name="Git_Button_Stage_ToolTip" xml:space="preserve">
-        <value>Stage changes</value>
+        <value>預存變更</value>
     </data>
   <data name="Git_Button_Commit" xml:space="preserve">
-        <value>Commit</value>
+        <value>提交</value>
     </data>
   <data name="Git_Button_Stash" xml:space="preserve">
-        <value>Stash</value>
+        <value>暫存</value>
     </data>
   <data name="Git_Button_Commit_ToolTip" xml:space="preserve">
-        <value>Commit changes on {0}</value>
+        <value>向 {0} 提交變更</value>
     </data>
   <data name="Git_Button_Stash_ToolTip" xml:space="preserve">
-        <value>Stash changes</value>
+        <value>暫存變更</value>
     </data>
   <data name="Git_Button_Refresh_ToolTip" xml:space="preserve">
-        <value>Refresh</value>
+        <value>重新整理</value>
     </data>
   <data name="Git_CommitBox_Watermark" xml:space="preserve">
-        <value>Commit Message</value>
+        <value>提交説明</value>
     </data>
   <data name="Git_PotentialOwnershipIssue" xml:space="preserve">
-        <value>A .git directory was detected, but libgit2 is unable to process it. Make sure this repository is marked as "safe" in your .gitconfig.</value>
+        <value>已偵測到 .git 目錄，但 libgit2 未能處理。請確保該儲存庫已在 .gitconfig 中標記為「safe」。</value>
     </data>
   <data name="Git_NothingToCommit" xml:space="preserve">
-        <value>There's nothing to commit at this time.</value>
+        <value>目前未有任何可提交的變更。</value>
     </data>
   <data name="Git_Button_Pull_ToolTip" xml:space="preserve">
-        <value>Pull</value>
+        <value>拉取</value>
     </data>
   <data name="Git_LatestCommits" xml:space="preserve">
-        <value>Latest commits on {0}:</value>
+        <value>{0} 的最新版本：</value>
     </data>
   <data name="Git_Button_Push_ToolTip" xml:space="preserve">
-        <value>Push</value>
+        <value>推送</value>
     </data>
 </root>

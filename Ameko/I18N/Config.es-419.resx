@@ -170,4 +170,46 @@
   <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
         <value>El tiempo se ajusta al punto medio del fotograma más cercano. Mantenga pulsado Mayús para colocarlo libremente.</value>
     </data>
+  <data name="Config_Header_Timing" xml:space="preserve">
+        <value>Sincronización</value>
+    </data>
+  <data name="Config_Label_TimingNotice" xml:space="preserve">
+        <value>La configuración del proyecto tiene prioridad.</value>
+    </data>
+  <data name="Config_Label_LeadIn" xml:space="preserve">
+        <value>Tiempo de entrada</value>
+    </data>
+  <data name="Config_Label_LeadIn_ToolTip" xml:space="preserve">
+        <value>Número de milisegundos a añadir como tiempo de entrada</value>
+    </data>
+  <data name="Config_Label_LeadOut" xml:space="preserve">
+        <value>Tiempo de salida</value>
+    </data>
+  <data name="Config_Label_LeadOut_ToolTip" xml:space="preserve">
+        <value>Número de milisegundos a añadir como tiempo de salida</value>
+    </data>
+  <data name="Config_Label_SnapStartEarlier" xml:space="preserve">
+        <value>Ajustar inicio al anterior</value>
+    </data>
+  <data name="Config_Label_SnapStartEarlier_ToolTip" xml:space="preserve">
+        <value>Umbral para ajustar el inicio de un evento a un objetivo anterior, en milisegundos</value>
+    </data>
+  <data name="Config_Label_SnapStartLater" xml:space="preserve">
+        <value>Ajustar inicio al posterior</value>
+    </data>
+  <data name="Config_Label_SnapStartLater_ToolTip" xml:space="preserve">
+        <value>Umbral para ajustar el inicio de un evento a un objetivo posterior, en milisegundos</value>
+    </data>
+  <data name="Config_Label_SnapEndEarlier" xml:space="preserve">
+        <value>Ajustar final al anterior</value>
+    </data>
+  <data name="Config_Label_SnapEndEarlier_ToolTip" xml:space="preserve">
+        <value>Umbral para ajustar el final de un evento a un objetivo anterior, en milisegundos</value>
+    </data>
+  <data name="Config_Label_SnapEndLater" xml:space="preserve">
+        <value>Ajustar final al posterior</value>
+    </data>
+  <data name="Config_Label_SnapEndLater_ToolTip" xml:space="preserve">
+        <value>Umbral para ajustar el final de un evento a un objetivo posterior, en milisegundos</value>
+    </data>
 </root>

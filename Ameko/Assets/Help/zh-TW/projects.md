@@ -1,6 +1,4 @@
-Ameko is designed around Projects. While using Projects isn't required, and you can edit subtitles and otherwise use
-Ameko without them, Projects are designed to make working with multiple subtitle files easier, especially when
-collaborating with others.
+Ameko 以專案為設計核心。雖然你並非必須使用專案，而且你也可在不用專案的情況下使用 Ameko 編輯字幕，但是專案可在多方合作時便利你同時處理多個字幕檔案。
 
 ## The Project Explorer
 
@@ -16,10 +14,9 @@ If you have an established project directory, you can bring the structure into A
 This will load all applicable sub-folders and subtitle files into the Project Explorer, where you can tailor the
 contents and save the resulting project to a file.
 
-## Key Names and Phrases
+## 重要名稱及字詞
 
-Chances are, your project has names and phrases you want to keep consistent throughout the show. Projects can have a Key
-Names & Phrases (KNP) bible to help keep everyone on track:
+你也許希望專案中的特定名稱及字詞能夠保持一致。你可在專案中使用「重要名稱及字詞」（KNP）列表，以協助其他組員貫徹通篇一致的原則：
 
 ![](../assets/knp-window.png)
 

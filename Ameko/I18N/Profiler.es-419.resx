@@ -53,4 +53,10 @@
   <data name="Profiler_Description" xml:space="preserve">
         <value>Viendo resultados de "{0}"</value>
     </data>
+  <data name="Profiler_Label_FontDirectories" xml:space="preserve">
+        <value>Directorios de fuentes</value>
+    </data>
+  <data name="Profiler_Label_Settings" xml:space="preserve">
+        <value>Ajustes</value>
+    </data>
 </root>

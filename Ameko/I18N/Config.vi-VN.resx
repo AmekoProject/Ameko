@@ -153,21 +153,63 @@
         <value>Thời hạn cache chỉ mục (ngày)</value>
     </data>
   <data name="Config_Label_TimingMode" xml:space="preserve">
-        <value>Timing mode</value>
+        <value>Chế độ căn thời gian</value>
     </data>
   <data name="Config_Label_TimingMode_ToolTip" xml:space="preserve">
-        <value>Controls whether times should be snapped to the nearest frame midpoint by default</value>
+        <value>Điều chỉnh mặc định mốc thời gian có tự động khớp vào điểm giữa của khung hình gần nhất hay không</value>
     </data>
   <data name="Config_RadioButton_SnapToFrame" xml:space="preserve">
-        <value>Snap to frame (Shift to place freely)</value>
+        <value>Khớp vào khung hình (Giữ Shift để đặt tự do)</value>
     </data>
   <data name="Config_RadioButton_FreePlacement" xml:space="preserve">
-        <value>Free placement (Shift to snap)</value>
+        <value>Đặt tự do (Giữ Shift để khớp vào khung hình)</value>
     </data>
   <data name="Config_RadioButton_FreePlacement_ToolTip" xml:space="preserve">
-        <value>Time is set exactly where you click. Hold Shift to snap to the nearest frame midpoint.</value>
+        <value>Mốc thời gian được đặt chính xác tại vị trí nhấp chuột. Giữ Shift để khớp vào điểm giữa của khung hình gần nhất.</value>
     </data>
   <data name="Config_RadioButton_SnapToFrame_ToolTip" xml:space="preserve">
-        <value>Time is snapped to the nearest frame midpoint. Hold Shift to place freely.</value>
+        <value>Mốc thời gian tự động khớp vào điểm giữa của khung hình gần nhất. Giữ Shift để đặt tự do.</value>
+    </data>
+  <data name="Config_Header_Timing" xml:space="preserve">
+        <value>Căn thời gian</value>
+    </data>
+  <data name="Config_Label_TimingNotice" xml:space="preserve">
+        <value>Cấu hình của dự án sẽ được ưu tiên áp dụng.</value>
+    </data>
+  <data name="Config_Label_LeadIn" xml:space="preserve">
+        <value>Khoảng đệm đầu</value>
+    </data>
+  <data name="Config_Label_LeadIn_ToolTip" xml:space="preserve">
+        <value>Số mili giây thêm vào phần đệm đầu</value>
+    </data>
+  <data name="Config_Label_LeadOut" xml:space="preserve">
+        <value>Khoảng đệm đuôi</value>
+    </data>
+  <data name="Config_Label_LeadOut_ToolTip" xml:space="preserve">
+        <value>Số mili giây thêm vào phần đệm đuôi</value>
+    </data>
+  <data name="Config_Label_SnapStartEarlier" xml:space="preserve">
+        <value>Khớp điểm đầu về mốc trước</value>
+    </data>
+  <data name="Config_Label_SnapStartEarlier_ToolTip" xml:space="preserve">
+        <value>Ngưỡng khớp điểm đầu của dòng phụ đề về mốc trước đó, tính bằng mili giây</value>
+    </data>
+  <data name="Config_Label_SnapStartLater" xml:space="preserve">
+        <value>Khớp điểm đầu sang mốc sau</value>
+    </data>
+  <data name="Config_Label_SnapStartLater_ToolTip" xml:space="preserve">
+        <value>Ngưỡng khớp điểm đầu của dòng phụ đề sang mốc phía sau, tính bằng mili giây</value>
+    </data>
+  <data name="Config_Label_SnapEndEarlier" xml:space="preserve">
+        <value>Khớp điểm cuối về mốc trước</value>
+    </data>
+  <data name="Config_Label_SnapEndEarlier_ToolTip" xml:space="preserve">
+        <value>Ngưỡng khớp điểm cuối của dòng phụ đề về mốc trước đó, tính bằng mili giây</value>
+    </data>
+  <data name="Config_Label_SnapEndLater" xml:space="preserve">
+        <value>Khớp điểm cuối sang mốc sau</value>
+    </data>
+  <data name="Config_Label_SnapEndLater_ToolTip" xml:space="preserve">
+        <value>Ngưỡng khớp điểm cuối của dòng phụ đề sang mốc phía sau, tính bằng mili giây</value>
     </data>
 </root>

@@ -426,15 +426,48 @@
         <value>Lề dưới (0 là mặc định theo style)</value>
     </data>
   <data name="Menu_OpenKnp" xml:space="preserve">
-        <value>_Key Names &amp; Terms...</value>
+        <value>_Tên riêng &amp; Thuật ngữ...</value>
     </data>
   <data name="Video_NothingLoaded" xml:space="preserve">
-        <value>No video loaded</value>
+        <value>Chưa nạp video</value>
     </data>
   <data name="Audio_NothingLoaded" xml:space="preserve">
-        <value>No audio loaded</value>
+        <value>Chưa nạp âm thanh</value>
     </data>
   <data name="Menu_Profile_Subtitles" xml:space="preserve">
-        <value>Pro_file Subtitles...</value>
+        <value>Đo hiệu năng phụ đề...</value>
+    </data>
+  <data name="Audio_Button_PlayPause_ToolTip" xml:space="preserve">
+        <value>Phát/Tạm dừng âm thanh của dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_PlayBefore_ToolTip" xml:space="preserve">
+        <value>Phát 500ms âm thanh trước dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_PlayFirst_ToolTip" xml:space="preserve">
+        <value>Phát 500ms âm thanh đầu tiên của dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_PlaySurround_ToolTip" xml:space="preserve">
+        <value>Phát 500ms âm thanh trước và sau dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_PlayLast_ToolTip" xml:space="preserve">
+        <value>Phát 500ms âm thanh cuối cùng của dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_PlayAfter_ToolTip" xml:space="preserve">
+        <value>Phát 500ms âm thanh sau dòng hiện tại</value>
+    </data>
+  <data name="Audio_Button_EnableKaraoke_ToolTip" xml:space="preserve">
+        <value>Bật chế độ karaoke</value>
+    </data>
+  <data name="Audio_Button_DisableKaraoke_ToolTip" xml:space="preserve">
+        <value>Tắt chế độ karaoke</value>
+    </data>
+  <data name="Audio_Button_Spectrum_ToolTip" xml:space="preserve">
+        <value>Chuyển sang dạng hiển thị quang phổ</value>
+    </data>
+  <data name="Audio_Button_Waveform_ToolTip" xml:space="preserve">
+        <value>Chuyển sang dạng hiển thị sóng âm</value>
+    </data>
+  <data name="Message_PackageUpdates" xml:space="preserve">
+        <value>Đã có bản cập nhật cho {0} gói</value>
     </data>
 </root>

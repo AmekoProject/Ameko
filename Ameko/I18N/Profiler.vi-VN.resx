@@ -18,39 +18,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Profiler_Title" xml:space="preserve">
-        <value>Profile Subtitles</value>
+        <value>Đo hiệu năng phụ đề</value>
     </data>
   <data name="Profiler_Button_Export" xml:space="preserve">
-        <value>Export</value>
+        <value>Xuất dữ liệu</value>
     </data>
   <data name="Profiler_Button_Start" xml:space="preserve">
-        <value>Start</value>
+        <value>Bắt đầu</value>
     </data>
   <data name="Profiler_RB_All" xml:space="preserve">
-        <value>All Events</value>
+        <value>Tất cả dòng phụ đề</value>
     </data>
   <data name="Profiler_RB_SelectedTimeRange" xml:space="preserve">
-        <value>Selected Time Range</value>
+        <value>Khoảng thời gian đã chọn</value>
     </data>
   <data name="Profiler_RB_SelectedEvents" xml:space="preserve">
-        <value>Selected Events</value>
+        <value>Các dòng phụ đề đã chọn</value>
     </data>
   <data name="Profiler_CheckBox_UseVideoRes" xml:space="preserve">
-        <value>Use Video Resolution</value>
+        <value>Dùng độ phân giải của Video</value>
     </data>
   <data name="Profiler_Axis_RenderTime" xml:space="preserve">
-        <value>Render Time (ms)</value>
+        <value>Thời gian kết xuất (ms)</value>
     </data>
   <data name="Profiler_Axis_ImageSize" xml:space="preserve">
-        <value>Image Size (KP)</value>
+        <value>Kích thước ảnh (KP)</value>
     </data>
   <data name="Profiler_Axis_ImageCount" xml:space="preserve">
-        <value>Image Count</value>
+        <value>Số lượng ảnh</value>
     </data>
   <data name="Profiler_Axis_Frame" xml:space="preserve">
-        <value>Frame</value>
+        <value>Khung hình</value>
     </data>
   <data name="Profiler_Description" xml:space="preserve">
-        <value>Viewing results for "{0}"</value>
+        <value>Hiển thị kết quả kiểm tra cho "{0}"</value>
+    </data>
+  <data name="Profiler_Label_FontDirectories" xml:space="preserve">
+        <value>Thư mục font</value>
+    </data>
+  <data name="Profiler_Label_Settings" xml:space="preserve">
+        <value>Cài đặt</value>
     </data>
 </root>

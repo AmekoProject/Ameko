@@ -4,14 +4,9 @@ Giao diện người dùng của Ameko học hỏi rất nhiều từ Aegisub v�
 
 ![](../assets/editing-area.png)
 
-Hầu hết người dùng có lẽ sẽ dành phần lớn thời gian ở vùng chỉnh sửa. The editing area is linked to the active
-line, and consists of a large textbox for the line's text content (1), and a host of auxiliary buttons and textboxes for
-adjusting the line's metadata and formatting. If a reference file is attached, the corresponding lines from the
-reference will be displayed in an additional box below the main textbox (2).
+Hầu hết người dùng có lẽ sẽ dành phần lớn thời gian ở vùng chỉnh sửa. Vùng chỉnh sửa được liên kết với dòng đang chọn, gồm một khung văn bản lớn dành cho nội dung của dòng (1), cùng hàng loạt nút bấm và ô nhập liệu phụ trợ để điều chỉnh metadata và định dạng của dòng đó. Nếu có đính kèm tệp tin tham chiếu, các dòng tương ứng từ tệp tin này sẽ được hiển thị trong một khung bổ sung bên dưới khung văn bản chính (2).
 
-If the project has any Key Names & Phrases (KNP), a grid containing matching terms will be displayed at the bottom of
-the area. A term will be displayed if its Translation is present in the text content (1), or if its Original or
-Alternate forms are present in the reference file lines (2).
+Nếu dự án có thiết lập Tên riêng & Cụm từ khóa (KNP), một bảng chứa các thuật ngữ trùng khớp sẽ được hiển thị ở dưới cùng của vùng này. Một thuật ngữ sẽ xuất hiện nếu Bản dịch của nó có trong nội dung văn bản (1), hoặc nếu dạng Gốc hay Biến thể của nó có trong các dòng của tệp tin tham chiếu (2).
 
 Tóm tắt ngắn gọn về từng mục và chức năng của nó:
 

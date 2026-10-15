@@ -437,4 +437,37 @@
   <data name="Menu_Profile_Subtitles" xml:space="preserve">
         <value>Per_filar subtítulos...</value>
     </data>
+  <data name="Audio_Button_PlayPause_ToolTip" xml:space="preserve">
+        <value>Reproducir/pausar el audio de la línea activa</value>
+    </data>
+  <data name="Audio_Button_PlayBefore_ToolTip" xml:space="preserve">
+        <value>Reproducir 500 ms de audio antes de la línea activa</value>
+    </data>
+  <data name="Audio_Button_PlayFirst_ToolTip" xml:space="preserve">
+        <value>Reproducir los primeros 500 ms de audio de la línea activa</value>
+    </data>
+  <data name="Audio_Button_PlaySurround_ToolTip" xml:space="preserve">
+        <value>Reproducir 500 ms de audio antes y después de la línea activa</value>
+    </data>
+  <data name="Audio_Button_PlayLast_ToolTip" xml:space="preserve">
+        <value>Reproducir los últimos 500 ms de audio de la línea activa</value>
+    </data>
+  <data name="Audio_Button_PlayAfter_ToolTip" xml:space="preserve">
+        <value>Reproducir 500 ms de audio después de la línea activa</value>
+    </data>
+  <data name="Audio_Button_EnableKaraoke_ToolTip" xml:space="preserve">
+        <value>Activar el modo karaoke</value>
+    </data>
+  <data name="Audio_Button_DisableKaraoke_ToolTip" xml:space="preserve">
+        <value>Desactivar el modo karaoke</value>
+    </data>
+  <data name="Audio_Button_Spectrum_ToolTip" xml:space="preserve">
+        <value>Cambiar a la vista de espectro</value>
+    </data>
+  <data name="Audio_Button_Waveform_ToolTip" xml:space="preserve">
+        <value>Cambiar a la vista de forma de onda</value>
+    </data>
+  <data name="Message_PackageUpdates" xml:space="preserve">
+        <value>Actualizaciones disponibles para {0} paquete(s)</value>
+    </data>
 </root>
