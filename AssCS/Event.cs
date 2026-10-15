@@ -159,10 +159,10 @@ public partial class Event(int id) : BindableBase, IEntry
             while (tee.MoveNext())
             {
                 var element = tee.GetTextElement();
-                if (true)
+                if (!Options.CpsIncludesWhitespace)
                     if (char.IsWhiteSpace(element[0]))
                         continue;
-                if (true)
+                if (!Options.CpsIncludesPunctuation)
                     if (char.IsPunctuation(element[0]))
                         continue;
                 charCount++;
@@ -191,10 +191,10 @@ public partial class Event(int id) : BindableBase, IEntry
                     while (tee.MoveNext())
                     {
                         var element = tee.GetTextElement();
-                        if (Options.LineWidthIncludesWhitespace)
+                        if (!Options.LineWidthIncludesWhitespace)
                             if (char.IsWhiteSpace(element[0]))
                                 continue;
-                        if (Options.LineWidthIncludesPunctuation)
+                        if (!Options.LineWidthIncludesPunctuation)
                             if (char.IsPunctuation(element[0]))
                                 continue;
                         charCount++;

@@ -10,12 +10,12 @@ public static class Options
     /// <summary>
     /// If whitespace should be included in <see cref="Event.Cps"/> calculation
     /// </summary>
-    public static bool CpsIncludesWhitespace { get; set; } = true;
+    public static bool CpsIncludesWhitespace { get; set; }
 
     /// <summary>
     /// If punctuation should be included in <see cref="Event.Cps"/> calculation
     /// </summary>
-    public static bool CpsIncludesPunctuation { get; set; } = true;
+    public static bool CpsIncludesPunctuation { get; set; }
 
     /// <summary>
     /// If whitespace should be included in <see cref="Event.MaxLineWidth"/> calculation
@@ -25,7 +25,7 @@ public static class Options
     /// <summary>
     /// If punctuation should be included in <see cref="Event.MaxLineWidth"/> calculation
     /// </summary>
-    public static bool LineWidthIncludesPunctuation { get; set; } = false;
+    public static bool LineWidthIncludesPunctuation { get; set; } = true;
 
     /// <summary>
     /// Default layer to use when creating events

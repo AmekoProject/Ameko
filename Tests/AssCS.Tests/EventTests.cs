@@ -19,6 +19,15 @@ public class EventTests
     private const string CcsEvent =
         @"Dialogue: 0,0:03:09.48,0:03:12.40,TopCenter,,,,25.00,,WE CAN JUST CALL THIS THE END OF THE GAME, YEAH?\N- It was a big hit.";
 
+    [Before(Test)]
+    public void BeforeTest()
+    {
+        Options.CpsIncludesWhitespace = false;
+        Options.CpsIncludesPunctuation = false;
+        Options.LineWidthIncludesWhitespace = true;
+        Options.LineWidthIncludesPunctuation = true;
+    }
+
     [Test]
     public async Task FromAss()
     {
@@ -354,6 +363,118 @@ public class EventTests
     }
 
     [Test]
+    public async Task Cps_WithPunctuation()
+    {
+        Options.CpsIncludesPunctuation = true;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox jumps?! Over the lazy dog.",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(38);
+    }
+
+    [Test]
+    public async Task Cps_NoPunctuation()
+    {
+        Options.CpsIncludesPunctuation = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox jumps?! Over the lazy dog.",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(35);
+    }
+
+    [Test]
+    public async Task Cps_WithPunctuation_Kanji()
+    {
+        Options.CpsIncludesPunctuation = true;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "初めまして。君の名前は？",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(12);
+    }
+
+    [Test]
+    public async Task Cps_NoPunctuation_Kanji()
+    {
+        Options.CpsIncludesPunctuation = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "初めまして。君の名前は？",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(10);
+    }
+
+    [Test]
+    public async Task Cps_WithWhitespace()
+    {
+        Options.CpsIncludesWhitespace = true;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox jumps over the lazy dog",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(43);
+    }
+
+    [Test]
+    public async Task Cps_NoWhitespace()
+    {
+        Options.CpsIncludesWhitespace = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox jumps over the lazy dog",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(35);
+    }
+
+    [Test]
+    public async Task Cps_WithWhitespace_Kanji()
+    {
+        Options.CpsIncludesWhitespace = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "初めまして　君の名前は",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(10);
+    }
+
+    [Test]
+    public async Task Cps_NoWhitespace_Kanji()
+    {
+        Options.CpsIncludesWhitespace = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "初めまして　君の名前は",
+        };
+
+        await Assert.That(e.Cps).IsEqualTo(10);
+    }
+
+    [Test]
     public async Task MaxLineWidth_SingleLine()
     {
         var e = new Event(1)
@@ -363,7 +484,7 @@ public class EventTests
             Text = "The quick brown fox jumps over the lazy dog",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(35);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(43);
     }
 
     [Test]
@@ -377,7 +498,7 @@ public class EventTests
                 @"The quick {\i1}brown{\i0} fox{it could be an artic fox} jumps over the lazy dog",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(35);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(43);
     }
 
     [Test]
@@ -390,7 +511,7 @@ public class EventTests
             Text = "The quick brown fox\\Njumps over the lazy dog",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(19);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(23);
     }
 
     [Test]
@@ -404,7 +525,7 @@ public class EventTests
                 @"The quick {\i1}brown{\i0} fox{it could be an artic fox}\Njumps over the lazy dog",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(19);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(23);
     }
 
     [Test]
@@ -457,7 +578,63 @@ public class EventTests
                 "He said, \"Hello world!\"\\N彼は「おはよう世界！」と言いました。\\nОн сказал: «Здравствуй, мир!»",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(26);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(29);
+    }
+
+    [Test]
+    public async Task MaxLineWidth_WithWhitespace()
+    {
+        Options.LineWidthIncludesWhitespace = true;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox\\Njumps over the lazy dog",
+        };
+
+        await Assert.That(e.MaxLineWidth).IsEqualTo(23);
+    }
+
+    [Test]
+    public async Task MaxLineWidth_NoWhitespace()
+    {
+        Options.LineWidthIncludesWhitespace = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "The quick brown fox\\Njumps over the lazy dog",
+        };
+
+        await Assert.That(e.MaxLineWidth).IsEqualTo(23);
+    }
+
+    [Test]
+    public async Task MaxLineWidth_WithWhitespace_Kanji()
+    {
+        Options.LineWidthIncludesWhitespace = true;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "この番組は、\\nご覧のスポンサー　の提供でお送りします。",
+        };
+
+        await Assert.That(e.MaxLineWidth).IsEqualTo(20);
+    }
+
+    [Test]
+    public async Task MaxLineWidth_NoWhitespace_Kanji()
+    {
+        Options.LineWidthIncludesWhitespace = false;
+        var e = new Event(1)
+        {
+            Start = Time.FromSeconds(0),
+            End = Time.FromSeconds(1),
+            Text = "この番組は、\\nご覧のスポンサー　の提供でお送りします。",
+        };
+
+        await Assert.That(e.MaxLineWidth).IsEqualTo(19);
     }
 
     #endregion Cps & Line Width

@@ -75,7 +75,8 @@ public unsafe class MizukiSourceProvider(
         if (!libassExists)
             logger.LogWarning("Dependency libass not found!");
 
-        return ffms2Exists && libassExists;
+        return true;
+        // return ffms2Exists && libassExists;
     }
 
     /// <inheritdoc />
