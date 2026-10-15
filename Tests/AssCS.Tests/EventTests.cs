@@ -4,6 +4,8 @@ namespace AssCS.Tests;
 
 public class EventTests
 {
+    private const string ReliesOnOptions = "OptionsTest";
+
     private const string BasicEvent =
         "Dialogue: 0,0:02:10.57,0:02:13.51,Default,Heiter,0,0,0,,It's the victorious return of the heroes' party.";
     private const string TagEvent =
@@ -203,7 +205,7 @@ public class EventTests
 
     #region Cps & Line Width
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_NoTags()
     {
         var e = new Event(1)
@@ -216,7 +218,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Newline()
     {
         var e = new Event(1)
@@ -229,7 +231,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Random_Backslash()
     {
         var e = new Event(1)
@@ -242,7 +244,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Floating_Newline()
     {
         var e = new Event(1)
@@ -255,7 +257,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Hard_Space()
     {
         var e = new Event(1)
@@ -268,7 +270,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Terminating_Newline()
     {
         var e = new Event(1)
@@ -281,7 +283,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Tags()
     {
         var e = new Event(1)
@@ -295,7 +297,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Kanji()
     {
         var e = new Event(1)
@@ -308,7 +310,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(23);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Decomposed_Hangul()
     {
         var e1 = new Event(1)
@@ -328,7 +330,7 @@ public class EventTests
         await Assert.That(e1.Cps).IsEqualTo(e2.Cps);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Ffi_Ligature()
     {
         var e1 = new Event(1)
@@ -348,7 +350,7 @@ public class EventTests
         await Assert.That(e1.Cps).IsNotEqualTo(e2.Cps);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_Multilingual()
     {
         var e = new Event(1)
@@ -362,7 +364,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(51);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_WithPunctuation()
     {
         Options.CpsIncludesPunctuation = true;
@@ -376,7 +378,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(38);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_NoPunctuation()
     {
         Options.CpsIncludesPunctuation = false;
@@ -390,7 +392,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_WithPunctuation_Kanji()
     {
         Options.CpsIncludesPunctuation = true;
@@ -404,7 +406,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(12);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_NoPunctuation_Kanji()
     {
         Options.CpsIncludesPunctuation = false;
@@ -418,7 +420,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(10);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_WithWhitespace()
     {
         Options.CpsIncludesWhitespace = true;
@@ -432,7 +434,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(43);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_NoWhitespace()
     {
         Options.CpsIncludesWhitespace = false;
@@ -446,7 +448,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(35);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_WithWhitespace_Kanji()
     {
         Options.CpsIncludesWhitespace = false;
@@ -460,7 +462,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(10);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task Cps_NoWhitespace_Kanji()
     {
         Options.CpsIncludesWhitespace = false;
@@ -474,7 +476,7 @@ public class EventTests
         await Assert.That(e.Cps).IsEqualTo(10);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_SingleLine()
     {
         var e = new Event(1)
@@ -487,7 +489,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(43);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_SingleLine_Tags()
     {
         var e = new Event(1)
@@ -501,7 +503,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(43);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_MultipleLines()
     {
         var e = new Event(1)
@@ -514,7 +516,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(23);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_MultipeLines_Tags()
     {
         var e = new Event(1)
@@ -528,7 +530,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(23);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_Kanji()
     {
         var e = new Event(1)
@@ -541,7 +543,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(19);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_Decomposed_Hangul()
     {
         var e = new Event(1)
@@ -554,7 +556,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(1);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_Ffi_Ligature()
     {
         var e = new Event(1)
@@ -567,7 +569,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(3);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_Multilingual()
     {
         var e = new Event(1)
@@ -581,7 +583,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(29);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_WithWhitespace()
     {
         Options.LineWidthIncludesWhitespace = true;
@@ -595,7 +597,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(23);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_NoWhitespace()
     {
         Options.LineWidthIncludesWhitespace = false;
@@ -606,10 +608,10 @@ public class EventTests
             Text = "The quick brown fox\\Njumps over the lazy dog",
         };
 
-        await Assert.That(e.MaxLineWidth).IsEqualTo(23);
+        await Assert.That(e.MaxLineWidth).IsEqualTo(19);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_WithWhitespace_Kanji()
     {
         Options.LineWidthIncludesWhitespace = true;
@@ -623,7 +625,7 @@ public class EventTests
         await Assert.That(e.MaxLineWidth).IsEqualTo(20);
     }
 
-    [Test]
+    [Test, NotInParallel(ReliesOnOptions)]
     public async Task MaxLineWidth_NoWhitespace_Kanji()
     {
         Options.LineWidthIncludesWhitespace = false;
