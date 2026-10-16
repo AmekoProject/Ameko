@@ -45,7 +45,7 @@ build() {
   cd "Mizuki"
   zig build
   cd .. # repo root
-  dotnet publish Ameko -c Release -p:SolutionDir=./
+  dotnet publish Ameko -c Release -p:SolutionDir=./ --use-current-runtime
   
   # Create icons
   mkdir -p Icons
