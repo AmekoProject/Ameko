@@ -76,7 +76,7 @@
           Content="{x:Static i18n:Config.Config_Label_SoftLinebreaks}"
           ToolTip.Tip="{x:Static i18n:Config.Config_Label_SoftLinebreaks_ToolTip}"
         />
-        <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Config.CpsIncludesWhitespace}" />
+        <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Config.UseSoftLinebreaks}" />
         <Label
           Grid.Column="0"
           Grid.Row="4"
