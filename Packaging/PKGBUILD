@@ -45,7 +45,7 @@ build() {
   cd "Mizuki"
   zig build
   cd .. # repo root
-  dotnet publish Ameko -c Release -p:SolutionDir=./ --use-current-runtime
+  dotnet publish Ameko -c Release -p:SolutionDir=./ --use-current-runtime -o "Ameko/bin/Release/Publish"
   
   # Create icons
   mkdir -p Icons
@@ -59,7 +59,7 @@ package() {
 
   install -d "${pkgdir}/usr/bin" "${pkgdir}/usr/lib/ameko"
 
-  cp -a "Ameko/bin/Release/net10.0/publish/." "${pkgdir}/usr/lib/ameko/"
+  cp -a "Ameko/bin/Release/Publish/." "${pkgdir}/usr/lib/ameko/"
   ln -s "Ameko" "${pkgdir}/usr/lib/ameko/ameko"
   ln -s "/usr/lib/ameko/ameko" "${pkgdir}/usr/bin/ameko"
 
