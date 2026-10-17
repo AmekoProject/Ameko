@@ -32,11 +32,6 @@ public interface IPersistence
     double VisualizationScaleY { get; set; }
 
     /// <summary>
-    /// C# Playground
-    /// </summary>
-    string PlaygroundCs { get; set; }
-
-    /// <summary>
     /// JavaScript Playground
     /// </summary>
     string PlaygroundJs { get; set; }

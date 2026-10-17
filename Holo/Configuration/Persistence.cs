@@ -18,6 +18,7 @@ namespace Holo.Configuration;
 /// </summary>
 public class Persistence : BindableBase, IPersistence
 {
+    private const int CurrentApiVersion = 2;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -32,7 +33,6 @@ public class Persistence : BindableBase, IPersistence
 
     private string _layoutName;
     private bool _useColorRing;
-    private string _playgroundCs;
     private string _playgroundJs;
     private double _visualizationScaleX;
     private double _visualizationScaleY;
@@ -70,13 +70,6 @@ public class Persistence : BindableBase, IPersistence
     {
         get => _visualizationScaleY;
         set => SetProperty(ref _visualizationScaleY, value);
-    }
-
-    /// <inheritdoc />
-    public string PlaygroundCs
-    {
-        get => _playgroundCs;
-        set => SetProperty(ref _playgroundCs, value);
     }
 
     /// <inheritdoc />
@@ -189,23 +182,21 @@ public class Persistence : BindableBase, IPersistence
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new PersistenceModel
-            {
-                Version = PersistenceModelBase.CurrentApiVersion,
-                LayoutName = _layoutName,
-                UseColorRing = _useColorRing,
-                VisualizationScaleX = _visualizationScaleX,
-                VisualizationScaleY = _visualizationScaleY,
-                PlaygroundCs = StringEncoder.Base64Encode(_playgroundCs),
-                PlaygroundJs = StringEncoder.Base64Encode(_playgroundJs),
-                ScalesForRes = new Dictionary<int, ScaleFactor>(_scalesForRes),
-                AudioTrackForVideo = new Dictionary<string, int>(_audioTrackForVideo),
-                RecentDocuments = _recentDocuments.Select(d => d.AbsoluteUri).ToList(),
-                RecentProjects = _recentProjects.Select(p => p.AbsoluteUri).ToList(),
-                WindowWidth = _windowWidth,
-                WindowHeight = _windowHeight,
-                WindowState = _windowState,
-            };
+            var model = new Dictionary<string, object?>();
+            model.SetVersion(CurrentApiVersion);
+
+            model.Set(LayoutName);
+            model.Set(UseColorRing);
+            model.Set(VisualizationScaleX);
+            model.Set(VisualizationScaleY);
+            model.Set("ScalesForRes", _scalesForRes);
+            model.Set("AudioTrackForVideo", _audioTrackForVideo);
+            model.Set(_recentDocuments.Select(d => d.AbsoluteUri), nameof(RecentDocuments));
+            model.Set(_recentProjects.Select(p => p.AbsoluteUri), nameof(RecentProjects));
+            model.Set(WindowWidth);
+            model.Set(WindowHeight);
+            model.Set(WindowState);
+            model[nameof(PlaygroundJs)] = StringEncoder.Base64Encode(_playgroundJs);
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -214,7 +205,7 @@ public class Persistence : BindableBase, IPersistence
         }
         catch (Exception ex) when (ex is IOException or JsonException)
         {
-            _logger.LogError(ex, "Failed to write persistence");
+            _logger.LogError(ex, "Failed to save persistence");
             return false;
         }
     }
@@ -235,10 +226,11 @@ public class Persistence : BindableBase, IPersistence
             if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
                 fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
 
+            var @default = new Persistence(fileSystem, logger);
             if (!fileSystem.File.Exists(path))
             {
                 logger.LogWarning("Persistence file does not exist, using defaults...");
-                return new Persistence(fileSystem, logger);
+                return @default;
             }
 
             using var fs = fileSystem.FileStream.New(
@@ -247,30 +239,56 @@ public class Persistence : BindableBase, IPersistence
                 FileAccess.Read,
                 FileShare.ReadWrite
             );
-            using var reader = new StreamReader(fs);
 
-            var model =
-                JsonSerializer.Deserialize<PersistenceModel>(reader.ReadToEnd(), JsonOptions)
-                ?? throw new InvalidDataException("Persistence model deserialization failed!");
-
-            var result = new Persistence(fileSystem, logger)
+            try
             {
-                _layoutName = model.LayoutName,
-                _useColorRing = model.UseColorRing,
-                _visualizationScaleX = model.VisualizationScaleX,
-                _visualizationScaleY = model.VisualizationScaleY,
-                _playgroundCs = StringEncoder.Base64Decode(model.PlaygroundCs),
-                _playgroundJs = StringEncoder.Base64Decode(model.PlaygroundJs),
-                _scalesForRes = new Dictionary<int, ScaleFactor>(model.ScalesForRes),
-                _audioTrackForVideo = new Dictionary<string, int>(model.AudioTrackForVideo),
-                _recentDocuments = model.RecentDocuments.Select(d => new Uri(d)).ToList(),
-                _recentProjects = model.RecentProjects.Select(p => new Uri(p)).ToList(),
-                _windowWidth = model.WindowWidth,
-                _windowHeight = model.WindowHeight,
-                _windowState = model.WindowState,
-            };
-            logger.LogInformation("Done!");
-            return result;
+                using var reader = new StreamReader(fs);
+                var content = reader.ReadToEnd();
+                var model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                    content,
+                    JsonOptions
+                );
+
+                if (model is null)
+                    return @default;
+
+                var documents = model.GetOrDefault<List<string>>(
+                    nameof(@default.RecentDocuments),
+                    []
+                );
+                var projects = model.GetOrDefault<List<string>>(
+                    nameof(@default.RecentProjects),
+                    []
+                );
+
+                var result = new Persistence(fileSystem, logger)
+                {
+                    _layoutName = model.GetOrDefault(@default.LayoutName),
+                    _useColorRing = model.GetOrDefault(@default.UseColorRing),
+                    _visualizationScaleX = model.GetOrDefault(@default.VisualizationScaleX),
+                    _visualizationScaleY = model.GetOrDefault(@default.VisualizationScaleY),
+                    _scalesForRes = model.GetOrDefault("ScalesForRes", @default._scalesForRes),
+                    _audioTrackForVideo = model.GetOrDefault(
+                        "AudioTrackForVideo",
+                        @default._audioTrackForVideo
+                    ),
+                    _recentDocuments = documents.Select(d => new Uri(d)).ToList(),
+                    _recentProjects = projects.Select(p => new Uri(p)).ToList(),
+                    _windowWidth = model.GetOrDefault(@default.WindowWidth),
+                    _windowHeight = model.GetOrDefault(@default.WindowHeight),
+                    _windowState = model.GetOrDefault(@default.WindowState),
+                    _playgroundJs = StringEncoder.Base64Decode(
+                        model.GetOrDefault(@default._playgroundJs)
+                    ),
+                };
+                logger.LogInformation("Done!");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Persistence deserialization failed");
+                return @default;
+            }
         }
         catch (Exception ex) when (ex is IOException or JsonException)
         {
@@ -298,7 +316,6 @@ public class Persistence : BindableBase, IPersistence
         _useColorRing = false;
         _visualizationScaleX = 4d;
         _visualizationScaleY = 2d;
-        _playgroundCs = string.Empty;
         _playgroundJs = string.Empty;
         _windowWidth = 1350;
         _windowHeight = 650;

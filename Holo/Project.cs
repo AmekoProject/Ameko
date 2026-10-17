@@ -37,7 +37,7 @@ namespace Holo;
 /// </remarks>
 public class Project : BindableBase
 {
-    internal const int CurrentApiVersion = 2;
+    private const int CurrentApiVersion = 2;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -682,15 +682,15 @@ public class Project : BindableBase
 
             model.Set("ReferencedDocuments", ConvertToModels(_referencedItems, dir));
             model.Set("Styles", StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P))); // TODO: Detect style version
-            model.Set(Colors.Select(c => c.AsStyleColor()), nameof(Colors));
+            model.Set(Colors.Select(c => c.AsStyleColor()), propertyName: nameof(Colors));
             model.Set(Cps);
             model.Set(CpsIncludesWhitespace);
             model.Set(CpsIncludesPunctuation);
             model.Set(UseSoftLinebreaks);
             model.Set(DefaultLayer);
             model.Set(SpellcheckCulture);
-            model.Set(_customWords, nameof(CustomWords));
-            model.Set(_terms.Where(t => !t.IsEmpty), nameof(Terms));
+            model.Set(_customWords, propertyName: nameof(CustomWords));
+            model.Set(_terms.Where(t => !t.IsEmpty), propertyName: nameof(Terms));
             model.Set(
                 new TimingConfiguration
                 {
@@ -701,7 +701,7 @@ public class Project : BindableBase
                     SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
                     SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
                 },
-                nameof(Timing)
+                propertyName: nameof(Timing)
             );
             model.Set(ScriptConfiguration);
 

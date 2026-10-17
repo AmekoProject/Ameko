@@ -302,8 +302,11 @@ public class Configuration : BindableBase, IConfiguration
             model.Set(ReferenceFontSize);
             model.Set(PropagateFields);
             model.Set(EditorFontSize);
-            model.Set(RepositoryUrls.ToArray(), nameof(RepositoryUrls));
-            model.Set(ScriptMenuOverrides.ToDictionary(), nameof(ScriptMenuOverrides));
+            model.Set(RepositoryUrls.ToArray(), propertyName: nameof(RepositoryUrls));
+            model.Set(
+                ScriptMenuOverrides.ToDictionary(),
+                propertyName: nameof(ScriptMenuOverrides)
+            );
             model.Set(Timing);
             model.Set(Colors);
 

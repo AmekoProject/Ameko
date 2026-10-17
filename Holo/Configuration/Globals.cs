@@ -100,7 +100,7 @@ public class Globals : BindableBase, IGlobals
             model.SetVersion(CurrentApiVersion);
 
             model.Set("Styles", StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P)));
-            model.Set(Colors.Select(s => s.AsStyleColor()), nameof(Colors));
+            model.Set(Colors.Select(s => s.AsStyleColor()), propertyName: nameof(Colors));
             model.Set(CustomWords);
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
