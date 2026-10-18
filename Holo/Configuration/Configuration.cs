@@ -25,7 +25,6 @@ namespace Holo.Configuration;
 /// </remarks>
 public class Configuration : BindableBase, IConfiguration
 {
-    private const int CurrentApiVersion = 3;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -60,8 +59,8 @@ public class Configuration : BindableBase, IConfiguration
     private decimal _gridFontSize;
     private decimal _referenceFontSize;
     private PropagateFields _propagateFields;
-    private RangeObservableCollection<string> _repositoryUrls;
-    private Dictionary<string, string> _scriptMenuOverrides;
+    private readonly RangeObservableCollection<string> _repositoryUrls;
+    private readonly Dictionary<string, string> _scriptMenuOverrides;
 
     /// <inheritdoc />
     public uint Cps
@@ -276,39 +275,35 @@ public class Configuration : BindableBase, IConfiguration
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new Dictionary<string, object?>();
-            model.SetVersion(CurrentApiVersion);
-
-            model.Set(Cps);
-            model.Set(CpsIncludesWhitespace);
-            model.Set(CpsIncludesPunctuation);
-            model.Set(UseSoftLinebreaks);
-            model.Set(AutosaveEnabled);
-            model.Set(AutosaveInterval);
-            model.Set(IndexCacheExpiration);
-            model.Set(AutoloadAudioTracks);
-            model.Set(LineWidthIncludesWhitespace);
-            model.Set(LineWidthIncludesPunctuation);
-            model.Set(RichPresenceLevel);
-            model.Set(SaveFrames);
-            model.Set(TimingMode);
-            model.Set(DefaultLayer);
-            model.Set(Culture);
-            model.Set(SpellcheckCulture);
-            model.Set(Theme);
-            model.Set(GridPadding);
-            model.Set(EditorFontSize);
-            model.Set(GridFontSize);
-            model.Set(ReferenceFontSize);
-            model.Set(PropagateFields);
-            model.Set(EditorFontSize);
-            model.Set(RepositoryUrls.ToArray(), propertyName: nameof(RepositoryUrls));
-            model.Set(
-                ScriptMenuOverrides.ToDictionary(),
-                propertyName: nameof(ScriptMenuOverrides)
-            );
-            model.Set(Timing);
-            model.Set(Colors);
+            var model = new ConfigurationModel
+            {
+                Cps = Cps,
+                CpsIncludesWhitespace = CpsIncludesWhitespace,
+                CpsIncludesPunctuation = CpsIncludesPunctuation,
+                LineWidthIncludesWhitespace = LineWidthIncludesWhitespace,
+                LineWidthIncludesPunctuation = LineWidthIncludesPunctuation,
+                UseSoftLinebreaks = UseSoftLinebreaks,
+                AutosaveEnabled = AutosaveEnabled,
+                AutosaveInterval = AutosaveInterval,
+                IndexCacheExpiration = IndexCacheExpiration,
+                AutoloadAudioTracks = AutoloadAudioTracks,
+                RichPresenceLevel = RichPresenceLevel,
+                SaveFrames = SaveFrames,
+                TimingMode = TimingMode,
+                DefaultLayer = DefaultLayer,
+                Culture = Culture,
+                SpellcheckCulture = SpellcheckCulture,
+                Theme = Theme,
+                GridPadding = GridPadding,
+                EditorFontSize = EditorFontSize,
+                GridFontSize = GridFontSize,
+                ReferenceFontSize = ReferenceFontSize,
+                PropagateFields = PropagateFields,
+                RepositoryUrls = [.. RepositoryUrls],
+                ScriptMenuOverrides = new Dictionary<string, string>(ScriptMenuOverrides),
+                Timing = Timing,
+                Colors = Colors,
+            };
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -337,11 +332,10 @@ public class Configuration : BindableBase, IConfiguration
             if (!fileSystem.Directory.Exists(Path.GetDirectoryName(path)))
                 fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "/");
 
-            var @default = new Configuration(fileSystem, logger);
             if (!fileSystem.File.Exists(path))
             {
                 logger.LogWarning("Configuration file does not exist, using defaults...");
-                return @default;
+                return new Configuration(fileSystem, logger);
             }
 
             using var fs = fileSystem.FileStream.New(
@@ -351,84 +345,24 @@ public class Configuration : BindableBase, IConfiguration
                 FileShare.ReadWrite
             );
 
-            Dictionary<string, object?>? model;
+            ConfigurationModel? model;
             try
             {
                 using var reader = new StreamReader(fs);
                 var content = reader.ReadToEnd();
-                model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
-                    content,
-                    JsonOptions
-                );
+                model = JsonSerializer.Deserialize<ConfigurationModel>(content, JsonOptions);
 
                 if (model is null)
-                    return @default;
+                    return new Configuration(fileSystem, logger);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Configuration deserialization failed");
-                return @default;
+                return new Configuration(fileSystem, logger);
             }
 
-            var timing = model.GetOrDefault(nameof(Timing), new TimingConfiguration());
-            var colors = model.GetOrDefault(nameof(Colors), new ColorConfiguration());
-
-            var result = new Configuration(fileSystem, logger)
-            {
-                _cps = model.GetOrDefault(@default.Cps),
-                _cpsIncludesWhitespace = model.GetOrDefault(@default.CpsIncludesWhitespace),
-                _cpsIncludesPunctuation = model.GetOrDefault(@default.CpsIncludesPunctuation),
-                _useSoftLinebreaks = model.GetOrDefault(@default.UseSoftLinebreaks),
-                _autosaveEnabled = model.GetOrDefault(@default.AutosaveEnabled),
-                _autosaveInterval = model.GetOrDefault(@default.AutosaveInterval),
-                _indexCacheExpiration = model.GetOrDefault(@default.IndexCacheExpiration),
-                _autoloadAudioTracks = model.GetOrDefault(@default.AutoloadAudioTracks),
-                _lineWidthIncludesWhitespace = model.GetOrDefault(
-                    @default.LineWidthIncludesWhitespace
-                ),
-                _lineWidthIncludesPunctuation = model.GetOrDefault(
-                    @default.LineWidthIncludesPunctuation
-                ),
-                _richPresenceLevel = model.GetOrDefault(@default.RichPresenceLevel),
-                _saveFrames = model.GetOrDefault(@default.SaveFrames),
-                _timingMode = model.GetOrDefault(@default.TimingMode),
-                _defaultLayer = model.GetOrDefault(@default.DefaultLayer),
-                _culture = model.GetOrDefault(@default.Culture),
-                _spellcheckCulture = model.GetOrDefault(@default.SpellcheckCulture),
-                _theme = model.GetOrDefault(@default.Theme),
-                _gridPadding = model.GetOrDefault(@default.GridPadding),
-                _editorFontSize = model.GetOrDefault(@default.EditorFontSize),
-                _gridFontSize = model.GetOrDefault(@default.GridFontSize),
-                _referenceFontSize = model.GetOrDefault(@default.ReferenceFontSize),
-                _propagateFields = model.GetOrDefault(@default.PropagateFields),
-                _repositoryUrls = new RangeObservableCollection<string>(
-                    model.GetOrDefault(nameof(RepositoryUrls), @default._repositoryUrls)
-                ),
-                _scriptMenuOverrides = new Dictionary<string, string>(
-                    model.GetOrDefault(nameof(ScriptMenuOverrides), @default.ScriptMenuOverrides)
-                ),
-                Timing =
-                {
-                    LeadIn = timing.LeadIn,
-                    LeadOut = timing.LeadOut,
-                    SnapStartEarlierThreshold = timing.SnapStartEarlierThreshold,
-                    SnapStartLaterThreshold = timing.SnapStartLaterThreshold,
-                    SnapEndEarlierThreshold = timing.SnapEndEarlierThreshold,
-                    SnapEndLaterThreshold = timing.SnapEndLaterThreshold,
-                },
-                Colors =
-                {
-                    Default = colors.Default,
-                    Selection = colors.Selection,
-                    Comment = colors.Comment,
-                    CommentSelection = colors.CommentSelection,
-                    InFrame = colors.InFrame,
-                    Collision = colors.Collision,
-                    CollisionInFrame = colors.CollisionInFrame,
-                },
-            };
             logger.LogInformation("Done!");
-            return result;
+            return new Configuration(fileSystem, logger, model);
         }
         catch (Exception ex) when (ex is IOException or JsonException)
         {
@@ -443,40 +377,43 @@ public class Configuration : BindableBase, IConfiguration
     /// <param name="fileSystem">FileSystem to use</param>
     /// <param name="logger">Logger to use</param>
     public Configuration(IFileSystem fileSystem, ILogger<Configuration> logger)
+        : this(fileSystem, logger, new ConfigurationModel()) { }
+
+    private Configuration(
+        IFileSystem fileSystem,
+        ILogger<Configuration> logger,
+        ConfigurationModel model
+    )
     {
         _fileSystem = fileSystem;
         _logger = logger;
-        _cps = 18;
-        _useSoftLinebreaks = false;
-        _richPresenceLevel = RichPresenceLevel.Enabled;
-        _saveFrames = SaveFrames.WithSubtitles;
-        _autosaveEnabled = true;
-        _autosaveInterval = 60;
-        _indexCacheExpiration = 8;
-        _autoloadAudioTracks = true;
-        _timingMode = TimingMode.SnapToFrame;
-        _culture = "en-US";
-        _spellcheckCulture = "en_US";
-        _theme = Theme.Default;
-        _gridPadding = 2;
-        _editorFontSize = 16m;
-        _gridFontSize = 14m;
-        _referenceFontSize = 12m;
-        _propagateFields = PropagateFields.NonText;
-        _repositoryUrls = [];
-        _scriptMenuOverrides = [];
 
-        Timing = new TimingConfiguration
-        {
-            LeadIn = 120,
-            LeadOut = 400,
-            SnapStartEarlierThreshold = 350,
-            SnapStartLaterThreshold = 100,
-            SnapEndEarlierThreshold = 300,
-            SnapEndLaterThreshold = 900,
-        };
-
-        Colors = new ColorConfiguration();
+        _cps = model.Cps;
+        _cpsIncludesWhitespace = model.CpsIncludesWhitespace;
+        _cpsIncludesPunctuation = model.CpsIncludesPunctuation;
+        _lineWidthIncludesWhitespace = model.LineWidthIncludesWhitespace;
+        _lineWidthIncludesPunctuation = model.LineWidthIncludesPunctuation;
+        _useSoftLinebreaks = model.UseSoftLinebreaks;
+        _richPresenceLevel = model.RichPresenceLevel;
+        _saveFrames = model.SaveFrames;
+        _autosaveEnabled = model.AutosaveEnabled;
+        _autosaveInterval = model.AutosaveInterval;
+        _indexCacheExpiration = model.IndexCacheExpiration;
+        _autoloadAudioTracks = model.AutoloadAudioTracks;
+        _timingMode = model.TimingMode;
+        _defaultLayer = model.DefaultLayer;
+        _culture = model.Culture;
+        _spellcheckCulture = model.SpellcheckCulture;
+        _theme = model.Theme;
+        _gridPadding = model.GridPadding;
+        _editorFontSize = model.EditorFontSize;
+        _gridFontSize = model.GridFontSize;
+        _referenceFontSize = model.ReferenceFontSize;
+        _propagateFields = model.PropagateFields;
+        _repositoryUrls = new RangeObservableCollection<string>(model.RepositoryUrls);
+        _scriptMenuOverrides = new Dictionary<string, string>(model.ScriptMenuOverrides);
+        Timing = model.Timing;
+        Colors = model.Colors;
 
         RepositoryUrls = new ReadOnlyObservableCollection<string>(_repositoryUrls);
         ScriptMenuOverrides = new ReadOnlyDictionary<string, string>(_scriptMenuOverrides);
