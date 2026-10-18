@@ -58,6 +58,7 @@ public class ConfigurationTests
         await Assert.That(cfg.LineWidthIncludesWhitespace).IsTrue();
         await Assert.That(cfg.LineWidthIncludesPunctuation).IsTrue();
         await Assert.That(cfg.Theme).IsEqualTo(Theme.Light);
+        await Assert.That(cfg.GridFontSize).IsEqualTo(14m); // Not present in save, should use default
     }
 
     [Test]
@@ -110,9 +111,6 @@ public class ConfigurationTests
             "SpellcheckCulture": "en_US",
             "Theme": "light",
             "PropagateFields": "NonText",
-            "GridPadding": 2,
-            "EditorFontSize": 0.0,
-            "GridFontSize": 0.0,
             "ReferenceFontSize": 0.0,
             "RepositoryUrls": [],
             "ScriptMenuOverrides": {},
