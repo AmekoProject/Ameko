@@ -37,7 +37,6 @@ namespace Holo;
 /// </remarks>
 public class Project : BindableBase
 {
-    private const int CurrentApiVersion = 2;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         IncludeFields = true,
@@ -677,22 +676,23 @@ public class Project : BindableBase
             );
             using var writer = new StreamWriter(fs);
 
-            var model = new Dictionary<string, object?>();
-            model.SetVersion(CurrentApiVersion);
-
-            model.Set("ReferencedDocuments", ConvertToModels(_referencedItems, dir));
-            model.Set("Styles", StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P))); // TODO: Detect style version
-            model.Set(Colors.Select(c => c.AsStyleColor()), propertyName: nameof(Colors));
-            model.Set(Cps);
-            model.Set(CpsIncludesWhitespace);
-            model.Set(CpsIncludesPunctuation);
-            model.Set(UseSoftLinebreaks);
-            model.Set(DefaultLayer);
-            model.Set(SpellcheckCulture);
-            model.Set(_customWords, propertyName: nameof(CustomWords));
-            model.Set(_terms.Where(t => !t.IsEmpty), propertyName: nameof(Terms));
-            model.Set(
-                new TimingConfiguration
+            var model = new ProjectModel
+            {
+                ReferencedDocuments = [.. ConvertToModels(_referencedItems, dir)],
+                Styles = [.. StyleManager.Styles.Select(s => s.AsAss(AssVersion.V400P))],
+                Colors = [.. Colors.Select(c => c.AsStyleColor())],
+                CustomWords = [.. CustomWords],
+                Terms = [.. Terms.Where(t => !t.IsEmpty)],
+                Cps = Cps,
+                CpsIncludesWhitespace = CpsIncludesWhitespace,
+                CpsIncludesPunctuation = CpsIncludesPunctuation,
+                UseSoftLinebreaks = UseSoftLinebreaks,
+                DefaultLayer = DefaultLayer,
+                SpellcheckCulture = SpellcheckCulture,
+                ScriptConfiguration = new Dictionary<string, Dictionary<string, JsonElement>>(
+                    ScriptConfiguration
+                ),
+                Timing = new TimingConfiguration
                 {
                     LeadIn = Timing.LeadIn,
                     LeadOut = Timing.LeadOut,
@@ -701,9 +701,7 @@ public class Project : BindableBase
                     SnapEndEarlierThreshold = Timing.SnapEndEarlierThreshold,
                     SnapEndLaterThreshold = Timing.SnapEndLaterThreshold,
                 },
-                propertyName: nameof(Timing)
-            );
-            model.Set(ScriptConfiguration);
+            };
 
             var content = JsonSerializer.Serialize(model, JsonOptions);
             writer.Write(content);
@@ -933,7 +931,7 @@ public class Project : BindableBase
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <returns>List of <see cref="ProjectItem"/>s</returns>
     private static List<ProjectItem> ConvertFromModels(
-        ProjectItemModel[] models,
+        IEnumerable<ProjectItemModel> models,
         string dir,
         ref int nextId
     )
@@ -1056,63 +1054,45 @@ public class Project : BindableBase
                 FileShare.ReadWrite
             );
 
-            Dictionary<string, object?>? model;
+            ProjectModel? model;
             try
             {
                 using var reader = new StreamReader(fs);
                 var content = reader.ReadToEnd();
-                model = JsonSerializer.Deserialize<Dictionary<string, object?>>(
-                    content,
-                    JsonOptions
-                );
-                model ??= [];
+                model = JsonSerializer.Deserialize<ProjectModel>(content, JsonOptions);
+                model ??= new ProjectModel();
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Project deserialization failed");
-                model = [];
+                model = new ProjectModel();
             }
 
             // De-relative the file paths in the project
-            var referencedItems = model.GetOrDefault<ProjectItemModel[]>("ReferencedDocuments", []);
-            _referencedItems.AddRange(ConvertFromModels(referencedItems, dir, ref _docId));
+            _referencedItems.AddRange(
+                ConvertFromModels(model.ReferencedDocuments, dir, ref _docId)
+            );
 
-            var colors = model.GetOrDefault<string[]>(nameof(Colors), []);
-            var words = model.GetOrDefault<string[]>(nameof(CustomWords), []);
-            var terms = model.GetOrDefault<Term[]>(nameof(Terms), []);
-            var timing = model.GetOrDefault(nameof(Timing), new TimingConfiguration());
+            _colors.AddRange(model.Colors.Select(Color.FromAss));
+            _customWords = new ObservableCollection<string>(model.CustomWords);
+            _terms.AddRange(model.Terms);
 
-            _colors.AddRange(colors.Select(Color.FromAss));
-            _customWords = new ObservableCollection<string>(words);
-            _terms.AddRange(terms);
+            _cps = model.Cps;
+            _cpsIncludesWhitespace = model.CpsIncludesWhitespace;
+            _cpsIncludesPunctuation = model.CpsIncludesPunctuation;
+            _defaultLayer = model.DefaultLayer;
+            _useSoftLinebreaks = model.UseSoftLinebreaks;
+            _spellcheckCulture = model.SpellcheckCulture;
+            Timing = model.Timing;
 
-            _cps = model.GetOrNull<uint?>(nameof(Cps));
-            _cpsIncludesWhitespace = model.GetOrNull<bool?>(nameof(CpsIncludesWhitespace));
-            _cpsIncludesPunctuation = model.GetOrNull<bool?>(nameof(CpsIncludesPunctuation));
-            _defaultLayer = model.GetOrNull<int?>(nameof(DefaultLayer));
-            _useSoftLinebreaks = model.GetOrNull<bool?>(nameof(UseSoftLinebreaks));
-            _spellcheckCulture = model.GetOrNull<string?>(nameof(SpellcheckCulture));
-
-            Timing = new TimingConfiguration
-            {
-                LeadIn = timing.LeadIn,
-                LeadOut = timing.LeadOut,
-                SnapStartEarlierThreshold = timing.SnapStartEarlierThreshold,
-                SnapStartLaterThreshold = timing.SnapStartLaterThreshold,
-                SnapEndEarlierThreshold = timing.SnapEndEarlierThreshold,
-                SnapEndLaterThreshold = timing.SnapEndLaterThreshold,
-            };
-
-            ScriptConfiguration = model.GetOrDefault(
-                nameof(ScriptConfiguration),
-                new Dictionary<string, Dictionary<string, JsonElement>>()
+            ScriptConfiguration = new Dictionary<string, Dictionary<string, JsonElement>>(
+                model.ScriptConfiguration
             );
 
             // TODO: Detect style version
             foreach (
                 var style in model
-                    .GetOrDefault<string[]>("Styles", [])
-                    .Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P))
+                    .Styles.Select(s => Style.FromAss(StyleManager.NextId, s, AssVersion.V400P))
                     .OfType<Style>()
             )
                 StyleManager.Add(style);
