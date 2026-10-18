@@ -18,8 +18,8 @@
 
   <Application.Resources>
     <FontFamily x:Key="MartianMono">avares://Ameko/Assets/Fonts/#Martian Mono</FontFamily>
-    <FontFamily x:Key="SarasaUi">avares://Ameko/Assets/Fonts/#Sarasa UI CL</FontFamily>
-    <FontFamily x:Key="SarasaMono">avares://Ameko/Assets/Fonts/#Sarasa Mono CL</FontFamily>
+    <FontFamily x:Key="SarasaUi">avares://Ameko/Assets/Fonts/#AmekoUi</FontFamily>
+    <FontFamily x:Key="SarasaMono">avares://Ameko/Assets/Fonts/#AmekoMono</FontFamily>
   </Application.Resources>
 
   <Application.Styles>
