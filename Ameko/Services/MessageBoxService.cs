@@ -18,9 +18,13 @@ namespace Ameko.Services;
 public class MessageBoxService(MainWindow mainWindow) : IMessageBoxService
 {
     /// <inheritdoc />
-    public async Task<MsgBoxButton?> ShowAsync(string title, string text)
+    public async Task<MsgBoxButton?> ShowAsync(
+        string title,
+        string text,
+        MaterialIconKind iconKind = MaterialIconKind.Info
+    )
     {
-        var box = new MessageBox(title, text);
+        var box = new MessageBox(title, text, iconKind: iconKind);
         return await box.ShowDialog<MsgBoxButton>(mainWindow);
     }
 

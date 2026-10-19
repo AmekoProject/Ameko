@@ -16,8 +16,13 @@ public interface IMessageBoxService
     /// </summary>
     /// <param name="title">Title of the box</param>
     /// <param name="text">Body of the box</param>
+    /// <param name="iconKind">Icon to use</param>
     /// <returns>Which button was clicked</returns>
-    Task<MsgBoxButton?> ShowAsync(string title, string text);
+    Task<MsgBoxButton?> ShowAsync(
+        string title,
+        string text,
+        MaterialIconKind iconKind = MaterialIconKind.Info
+    );
 
     /// <summary>
     /// Display a message box
