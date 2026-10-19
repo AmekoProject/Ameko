@@ -243,11 +243,15 @@ public class WorkspaceTests
         wsp.Undo();
         await Assert.That(wsp.Document.EventManager.Events).DoesNotContain(e2);
         await Assert.That(wsp.Document.EventManager.Events).Contains(e1);
+        await Assert.That(wsp.SelectionManager.ActiveEvent).IsEqualTo(e1);
 
         await Assert.That(wsp.Document.HistoryManager.CanRedo).IsTrue();
         wsp.Undo();
         await Assert.That(wsp.Document.EventManager.Events).DoesNotContain(e2);
         await Assert.That(wsp.Document.EventManager.Events).DoesNotContain(e1);
+        await Assert
+            .That(wsp.SelectionManager.ActiveEvent)
+            .IsEqualTo(wsp.Document.EventManager.Head);
     }
 
     [Test]
@@ -315,6 +319,32 @@ public class WorkspaceTests
 
         wsp.Redo();
         await Assert.That(wsp.Document.EventManager.Events).DoesNotContain(e1);
+        await Assert
+            .That(wsp.SelectionManager.ActiveEvent)
+            .IsEqualTo(wsp.Document.EventManager.Head);
+    }
+
+    [Test]
+    public async Task Redo_RemoveEvent_SelectsNextFutureSelection()
+    {
+        var wsp = CreateWorkspace(new Document(true), 1);
+        var e1 = new Event(99);
+        var e2 = new Event(100);
+        wsp.Document.EventManager.AddLast([e1, e2]);
+        wsp.Commit(e1, ChangeType.AddEvent);
+        wsp.Commit(e2, ChangeType.AddEvent);
+
+        wsp.Document.EventManager.Remove(e1.Id);
+        wsp.Commit(e1, ChangeType.RemoveEvent);
+        e2.Text = "Changed";
+        wsp.Commit(e2, ChangeType.ModifyEventText);
+
+        wsp.Undo();
+        wsp.Undo();
+        wsp.Redo();
+
+        await Assert.That(wsp.Document.EventManager.Events).DoesNotContain(e1);
+        await Assert.That(wsp.SelectionManager.ActiveEvent.Id).IsEqualTo(e2.Id);
     }
 
     [Test]

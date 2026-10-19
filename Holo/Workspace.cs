@@ -245,24 +245,18 @@ public class Workspace : BindableBase
         SelectionManager.BeginSelectionChange();
         _logger.LogTrace("Undoing");
 
-        if (!Document.HistoryManager.Undo(out var _, out var undone))
+        if (!Document.HistoryManager.Undo(out _, out var undone))
         {
             _logger.LogError("Undo failed");
             return;
         }
 
-        var currentSelection = SelectionManager.SelectedEventCollection.Select(e => e.Id).ToList();
-        var shouldChangeSelection = !(undone.Selection ?? []).SequenceEqual(currentSelection); // cross-reference undone commit's selection
-        var selectionIds = shouldChangeSelection ? undone.Selection ?? [] : currentSelection;
+        // Selection recorded by the commit before the one we just undid
+        var neighborSelection = Document.HistoryManager.CanUndo
+            ? Document.HistoryManager.PeekHistory().Selection
+            : null;
 
-        // Change selection to the committed state
-        var selection = selectionIds
-            .Where(id => Document.EventManager.TryGet(id, out _)) // use applied commit's events
-            .Select(id => Document.EventManager.Get(id))
-            .ToList();
-
-        if (selection.Count > 0)
-            SelectionManager.ForceSelect(selection[0], selection);
+        RestoreSelection(undone, neighborSelection);
     }
 
     /// <summary>
@@ -277,19 +271,31 @@ public class Workspace : BindableBase
 
         if (!Document.HistoryManager.Redo(out var commit))
         {
-            _logger.LogError("Undo failed");
+            _logger.LogError("Redo failed");
             return;
         }
 
-        var currentSelection = SelectionManager.SelectedEventCollection.Select(e => e.Id).ToList();
-        var shouldChangeSelection = !(commit.Selection ?? []).SequenceEqual(currentSelection);
-        var selectionIds = shouldChangeSelection ? commit.Selection ?? [] : currentSelection;
+        // Selection recorded by the commit after the one we just redid
+        var neighborSelection = Document.HistoryManager.CanRedo
+            ? Document.HistoryManager.PeekFuture().Selection
+            : null;
 
-        // Change selection to the committed state
-        var selection = selectionIds
-            .Where(id => Document.EventManager.TryGet(id, out _)) // use applied commit's events
-            .Select(id => Document.EventManager.Get(id))
-            .ToList();
+        RestoreSelection(commit, neighborSelection);
+    }
+
+    /// <summary>
+    /// Select the commit's recorded selection if its events still exist,
+    /// otherwise the neighboring commit's selection, otherwise the head event.
+    /// </summary>
+    private void RestoreSelection(Commit commit, IReadOnlyCollection<int>? neighborSelection)
+    {
+        var selection = ResolveExisting(commit.Selection ?? []);
+
+        if (selection.Count == 0 && neighborSelection is { Count: > 0 })
+            selection = ResolveExisting(neighborSelection);
+
+        if (selection.Count == 0 && Document.EventManager.Head is { } head)
+            selection = [head];
 
         if (selection.Count > 0)
             SelectionManager.ForceSelect(selection[0], selection);
@@ -365,6 +371,11 @@ public class Workspace : BindableBase
         _lastExternalModificationAlertTime = DateTimeOffset.Now;
         FileModifiedExternally?.Invoke(this, EventArgs.Empty);
     }
+
+    private List<Event> ResolveExisting(IEnumerable<int> ids) =>
+        ids.Select(id => Document.EventManager.TryGet(id, out var e) ? e : null)
+            .OfType<Event>()
+            .ToList();
 
     /// <summary>
     /// Initialize a Workspace
