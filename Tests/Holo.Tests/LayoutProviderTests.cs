@@ -93,6 +93,7 @@ file class MockPersistence : IPersistence
     private double _windowWidth;
     private double _windowHeight;
     private PersistentWindowState _windowState;
+    private bool _scriptWarningAcknowledged;
     public string LayoutName { get; set; } = "ThunderClan Camp";
     public bool UseColorRing { get; set; } = true;
 
@@ -109,9 +110,6 @@ file class MockPersistence : IPersistence
         get => _visualizationScaleY;
         set => _visualizationScaleY = value;
     }
-
-    /// <inheritdoc />
-    public string PlaygroundCs { get; set; } = string.Empty;
 
     /// <inheritdoc />
     public string PlaygroundJs { get; set; } = string.Empty;
@@ -141,6 +139,13 @@ file class MockPersistence : IPersistence
     {
         get => _windowState;
         set => _windowState = value;
+    }
+
+    /// <inheritdoc />
+    public bool ScriptWarningAcknowledged
+    {
+        get => _scriptWarningAcknowledged;
+        set => _scriptWarningAcknowledged = value;
     }
 
     /// <inheritdoc />

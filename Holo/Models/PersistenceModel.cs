@@ -15,6 +15,7 @@ internal sealed class PersistenceModel
     public double WindowWidth { get; init; } = 1350d;
     public double WindowHeight { get; init; } = 650d;
     public PersistentWindowState WindowState { get; init; } = PersistentWindowState.Normal;
+    public bool ScriptWarningAcknowledged { get; init; }
     public Dictionary<int, ScaleFactor> ScalesForRes { get; init; } = [];
     public Dictionary<string, int> AudioTrackForVideo { get; init; } = [];
     public List<string> RecentDocuments { get; init; } = [];

@@ -62,6 +62,11 @@ public interface IPersistence
     PersistentWindowState WindowState { get; set; }
 
     /// <summary>
+    /// <see langword="true"/> if the user has acknowledged the risks related to unsandboxed scripting
+    /// </summary>
+    bool ScriptWarningAcknowledged { get; set; }
+
+    /// <summary>
     /// Set the scale for a video resolution
     /// </summary>
     /// <param name="height">Height of the video in pixels</param>

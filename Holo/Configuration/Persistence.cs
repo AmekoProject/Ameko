@@ -36,13 +36,14 @@ public class Persistence : BindableBase, IPersistence
     private string _playgroundJs;
     private double _visualizationScaleX;
     private double _visualizationScaleY;
-    private Dictionary<int, ScaleFactor> _scalesForRes;
-    private Dictionary<string, int> _audioTrackForVideo;
-    private List<Uri> _recentDocuments;
-    private List<Uri> _recentProjects;
     private double _windowWidth;
     private double _windowHeight;
     private PersistentWindowState _windowState;
+    private bool _scriptWarningAcknowledged;
+    private readonly Dictionary<int, ScaleFactor> _scalesForRes;
+    private readonly Dictionary<string, int> _audioTrackForVideo;
+    private readonly List<Uri> _recentDocuments;
+    private readonly List<Uri> _recentProjects;
 
     /// <inheritdoc />
     public string LayoutName
@@ -104,6 +105,13 @@ public class Persistence : BindableBase, IPersistence
     {
         get => _windowState;
         set => SetProperty(ref _windowState, value);
+    }
+
+    /// <inheritdoc />
+    public bool ScriptWarningAcknowledged
+    {
+        get => _scriptWarningAcknowledged;
+        set => SetProperty(ref _scriptWarningAcknowledged, value);
     }
 
     /// <inheritdoc />
@@ -195,6 +203,7 @@ public class Persistence : BindableBase, IPersistence
                 WindowWidth = WindowWidth,
                 WindowHeight = WindowHeight,
                 WindowState = WindowState,
+                ScriptWarningAcknowledged = _scriptWarningAcknowledged,
                 PlaygroundJs = StringEncoder.Base64Encode(_playgroundJs),
             };
 
@@ -285,6 +294,7 @@ public class Persistence : BindableBase, IPersistence
         _windowWidth = model.WindowWidth;
         _windowHeight = model.WindowHeight;
         _windowState = model.WindowState;
+        _scriptWarningAcknowledged = model.ScriptWarningAcknowledged;
         _scalesForRes = new Dictionary<int, ScaleFactor>(model.ScalesForRes);
         _audioTrackForVideo = new Dictionary<string, int>(model.AudioTrackForVideo);
         _recentDocuments = [.. model.RecentDocuments.Select(d => new Uri(d))];
