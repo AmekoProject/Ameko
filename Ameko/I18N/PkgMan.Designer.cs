@@ -326,5 +326,23 @@ namespace Ameko.I18N {
                 return ResourceManager.GetString("PkgMan_Button_ViewSource_ToolTip", resourceCulture);
             }
         }
+        
+        public static string PkgMan_TrustWarning_Title {
+            get {
+                return ResourceManager.GetString("PkgMan_TrustWarning_Title", resourceCulture);
+            }
+        }
+        
+        public static string PkgMan_TrustWarning_Body_1 {
+            get {
+                return ResourceManager.GetString("PkgMan_TrustWarning_Body_1", resourceCulture);
+            }
+        }
+        
+        public static string PkgMan_TrustWarning_Body_2 {
+            get {
+                return ResourceManager.GetString("PkgMan_TrustWarning_Body_2", resourceCulture);
+            }
+        }
     }
 }

@@ -36,7 +36,7 @@ public partial class PkgManWindowViewModel
             }
             else
             {
-                await _messageBoxService.ShowAsync(result);
+                await MessageBoxService.ShowAsync(result);
             }
         });
     }
@@ -63,7 +63,7 @@ public partial class PkgManWindowViewModel
             }
             else
             {
-                await _messageBoxService.ShowAsync(result);
+                await MessageBoxService.ShowAsync(result);
             }
         });
     }
@@ -94,7 +94,7 @@ public partial class PkgManWindowViewModel
             }
             else
             {
-                await _messageBoxService.ShowAsync(result);
+                await MessageBoxService.ShowAsync(result);
             }
         });
     }
@@ -144,7 +144,7 @@ public partial class PkgManWindowViewModel
             this.RaisePropertyChanged(nameof(UpdateAllButtonEnabled));
 
             if (finalResult is not InstallationResult.Success)
-                await _messageBoxService.ShowAsync(finalResult);
+                await MessageBoxService.ShowAsync(finalResult);
 
             await _scriptService.Reload(false);
         });
@@ -173,7 +173,7 @@ public partial class PkgManWindowViewModel
             this.RaisePropertyChanged(nameof(UpdateButtonEnabled));
             this.RaisePropertyChanged(nameof(UpdateAllButtonEnabled));
 
-            await _messageBoxService.ShowAsync(
+            await MessageBoxService.ShowAsync(
                 I18N.PkgMan.PkgManWindow_Title,
                 I18N.PkgMan.PkgMan_MsgBox_Refreshed
             );
@@ -199,18 +199,18 @@ public partial class PkgManWindowViewModel
             {
                 case InstallationResult.Success:
                     _configuration.AddRepositoryUrl(input);
-                    await _messageBoxService.ShowAsync(result);
+                    await MessageBoxService.ShowAsync(result);
                     break;
                 case InstallationResult.AlreadyInstalled:
                     _logger.LogError("Could not add repository because it was already installed.");
-                    await _messageBoxService.ShowAsync(
+                    await MessageBoxService.ShowAsync(
                         I18N.PkgMan.PkgManWindow_Title,
                         I18N.PkgMan.PkgMan_Result_Repository_AlreadyInstalled
                     );
                     break;
                 case InstallationResult.Failure:
                     _logger.LogError("Failed to add repository");
-                    await _messageBoxService.ShowAsync(result);
+                    await MessageBoxService.ShowAsync(result);
                     break;
                 default:
                     _logger.LogError("Invalid repository add response");
@@ -239,11 +239,11 @@ public partial class PkgManWindowViewModel
             {
                 case InstallationResult.Success:
                     _configuration.RemoveRepositoryUrl(SelectedRepository.Url);
-                    await _messageBoxService.ShowAsync(result);
+                    await MessageBoxService.ShowAsync(result);
                     break;
                 case InstallationResult.NotInstalled:
                     _logger.LogError("Could not remove repository because it was not installed");
-                    await _messageBoxService.ShowAsync(
+                    await MessageBoxService.ShowAsync(
                         I18N.PkgMan.PkgManWindow_Title,
                         I18N.PkgMan.PkgMan_Result_Repository_NotInstalled
                     );
@@ -258,12 +258,12 @@ public partial class PkgManWindowViewModel
                 _configuration.RemoveRepositoryUrl(SelectedRepository.Url);
                 await PackageManager.SetUpBaseRepository();
                 await PackageManager.AddAdditionalRepositories(_configuration.RepositoryUrls);
-                await _messageBoxService.ShowAsync(InstallationResult.Success);
+                await MessageBoxService.ShowAsync(InstallationResult.Success);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Removing repository failed");
-                await _messageBoxService.ShowAsync(
+                await MessageBoxService.ShowAsync(
                     I18N.PkgMan.PkgManWindow_Title,
                     ex.Message,
                     MsgBoxButtonSet.Ok,

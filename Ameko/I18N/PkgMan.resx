@@ -159,4 +159,13 @@
     <data name="PkgMan_Button_ViewSource_ToolTip" xml:space="preserve">
         <value>View Source</value>
     </data>
+    <data name="PkgMan_TrustWarning_Title" xml:space="preserve">
+        <value>Script With Care</value>
+    </data>
+    <data name="PkgMan_TrustWarning_Body_1" xml:space="preserve">
+        <value>Scripts are not sandboxed, and are run with the same privileges as Ameko itself. Only install scripts from authors you trust.</value>
+    </data>
+    <data name="PkgMan_TrustWarning_Body_2" xml:space="preserve">
+        <value>Not sure about one? Click the View Source button to read the source code before installing.</value>
+    </data>
 </root>

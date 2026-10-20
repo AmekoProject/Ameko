@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
+using System;
 using System.Threading.Tasks;
 using Ameko.ViewModels;
 using Ameko.ViewModels.Dialogs;
@@ -7,6 +8,8 @@ using Ameko.ViewModels.Windows;
 using Ameko.Views.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Holo.Models;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Avalonia;
 using ReactiveUI.Primitives;
@@ -35,6 +38,23 @@ public partial class PkgManWindow : ReactiveWindow<PkgManWindowViewModel>
     public PkgManWindow()
     {
         InitializeComponent();
+
+        Opened += async (_, _) =>
+        {
+            if (ViewModel is not { } vm || vm.Persistence.ScriptWarningAcknowledged)
+                return;
+
+            var result = await vm.MessageBoxService.ShowAsync(
+                I18N.PkgMan.PkgMan_TrustWarning_Title,
+                I18N.PkgMan.PkgMan_TrustWarning_Body_1
+                    + Environment.NewLine
+                    + Environment.NewLine
+                    + I18N.PkgMan.PkgMan_TrustWarning_Body_2,
+                MaterialIconKind.Warning
+            );
+            if (result is MsgBoxButton.Ok)
+                vm.Persistence.ScriptWarningAcknowledged = true;
+        };
 
         KeyDown += (_, e) =>
         {

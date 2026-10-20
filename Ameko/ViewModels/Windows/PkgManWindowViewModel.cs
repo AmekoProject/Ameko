@@ -21,7 +21,6 @@ public partial class PkgManWindowViewModel : ViewModelBase
     private readonly ILogger _logger;
     private readonly IScriptService _scriptService;
     private readonly IConfiguration _configuration;
-    private readonly IMessageBoxService _messageBoxService;
     private readonly IViewModelFactory _viewModelFactory;
 
     private readonly ObservableCollection<Package> _updateCandidates;
@@ -41,7 +40,9 @@ public partial class PkgManWindowViewModel : ViewModelBase
     public ICommand ViewLocalSourceCommand { get; }
     public ICommand ViewRemoteSourceCommand { get; }
 
+    public IMessageBoxService MessageBoxService { get; }
     public IPackageManager PackageManager { get; }
+    public IPersistence Persistence { get; }
 
     public Package? SelectedStorePackage
     {
@@ -106,6 +107,7 @@ public partial class PkgManWindowViewModel : ViewModelBase
 
     public PkgManWindowViewModel(
         IPackageManager packageManager,
+        IPersistence persistence,
         IScriptService scriptService,
         IConfiguration configuration,
         IMessageBoxService messageBoxService,
@@ -114,10 +116,11 @@ public partial class PkgManWindowViewModel : ViewModelBase
     )
     {
         PackageManager = packageManager;
+        Persistence = persistence;
+        MessageBoxService = messageBoxService;
 
         _scriptService = scriptService;
         _configuration = configuration;
-        _messageBoxService = messageBoxService;
         _viewModelFactory = viewModelFactory;
         _logger = logger;
 
