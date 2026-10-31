@@ -39,14 +39,13 @@ const State = struct {
     start_ms: f64,
     end_ms: f64,
     visible_duration_ms: f64,
-    samples_per_pixel: usize,
     effective_arr_len: usize,
 };
 
 pub fn RenderEventsView(
     g_ctx: *context.GlobalContext,
     bmp: *frames.Bitmap,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     amplitude_scale: f64,
     start_time: f64,
     v_playhead_ms: f64,
@@ -56,19 +55,19 @@ pub fn RenderEventsView(
     event_bounds_len: usize,
     selected_event_idx: usize,
 ) void {
+    if (bmp.*.width < 1 or bmp.*.height < 1 or bmp.*.pitch < 1) return;
+
     const audio_data = g_ctx.*.buffers.audio_buffer;
     const is_stereo = g_ctx.*.ffms.channel_count == 2;
     const sample_rate: f64 = @floatFromInt(g_ctx.*.ffms.sample_rate);
+    if (sample_rate == 0) return;
 
-    const bmp_width_u: usize = @intCast(bmp.*.width);
     const bmp_height_u: usize = @intCast(bmp.*.height);
     const bmp_pitch_u: usize = @intCast(bmp.*.pitch);
 
-    if (bmp_height_u < 1 or bmp_width_u < 1 or bmp_pitch_u < 1) return;
-
     if (audio_data) |audio| {
         const effective_arr_len: usize = if (is_stereo) audio.len / 2 else audio.len;
-        const view = PrepareState(bmp, pixels_per_ms, start_time, effective_arr_len, sample_rate);
+        const view = PrepareState(bmp, ms_per_pixel, start_time, effective_arr_len, sample_rate);
 
         // Clear the bitmap
         const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
@@ -81,7 +80,7 @@ pub fn RenderEventsView(
             DrawSelectionShading(
                 bmp,
                 view,
-                pixels_per_ms,
+                ms_per_pixel,
                 selected_event_start,
                 selected_event_end,
             );
@@ -91,7 +90,7 @@ pub fn RenderEventsView(
         DrawTimeScale(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
         );
 
         // Draw keyframe indicators behind the spectrum
@@ -99,7 +98,7 @@ pub fn RenderEventsView(
             DrawKeyframes(
                 bmp,
                 view,
-                pixels_per_ms,
+                ms_per_pixel,
                 timecodes,
             );
         }
@@ -112,6 +111,7 @@ pub fn RenderEventsView(
                 amplitude_scale,
                 sample_rate,
                 view,
+                ms_per_pixel,
             ),
             .spectrum => {
                 // TODO
@@ -122,7 +122,7 @@ pub fn RenderEventsView(
         DrawEventBounds(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             event_bounds,
             event_bounds_len,
             selected_event_idx,
@@ -132,7 +132,7 @@ pub fn RenderEventsView(
         DrawVideoPlayhead(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             v_playhead_ms,
         );
 
@@ -140,7 +140,7 @@ pub fn RenderEventsView(
             DrawAudioPlayhead(
                 bmp,
                 view,
-                pixels_per_ms,
+                ms_per_pixel,
                 a_playhead_ms,
             );
         }
@@ -150,7 +150,7 @@ pub fn RenderEventsView(
 pub fn RenderSyllablesView(
     g_ctx: *context.GlobalContext,
     bmp: *frames.Bitmap,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     amplitude_scale: f64,
     start_time: f64,
     v_playhead_ms: f64,
@@ -164,6 +164,7 @@ pub fn RenderSyllablesView(
     const audio_data = g_ctx.*.buffers.audio_buffer;
     const is_stereo = g_ctx.*.ffms.channel_count == 2;
     const sample_rate: f64 = @floatFromInt(g_ctx.*.ffms.sample_rate);
+    if (sample_rate == 0) return;
 
     const bmp_width_u: usize = @intCast(bmp.*.width);
     const bmp_height_u: usize = @intCast(bmp.*.height);
@@ -173,7 +174,7 @@ pub fn RenderSyllablesView(
 
     if (audio_data) |audio| {
         const effective_arr_len: usize = if (is_stereo) audio.len / 2 else audio.len;
-        const view = PrepareState(bmp, pixels_per_ms, start_time, effective_arr_len, sample_rate);
+        const view = PrepareState(bmp, ms_per_pixel, start_time, effective_arr_len, sample_rate);
 
         // Clear the bitmap
         const bmp_total_bytes = bmp_height_u * bmp_pitch_u;
@@ -183,7 +184,7 @@ pub fn RenderSyllablesView(
         DrawSelectionShading(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             @floatFromInt(event_start),
             @floatFromInt(event_end),
         );
@@ -192,7 +193,7 @@ pub fn RenderSyllablesView(
         DrawTimeScale(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
         );
 
         switch (style) {
@@ -203,6 +204,7 @@ pub fn RenderSyllablesView(
                 amplitude_scale,
                 sample_rate,
                 view,
+                ms_per_pixel,
             ),
             .spectrum => {
                 // TODO
@@ -214,7 +216,7 @@ pub fn RenderSyllablesView(
         DrawEventBound(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             &event_bounds,
             0,
             false,
@@ -223,7 +225,7 @@ pub fn RenderSyllablesView(
         DrawSyllablePositions(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             @floatFromInt(event_start),
             @floatFromInt(event_end),
             syls,
@@ -233,7 +235,7 @@ pub fn RenderSyllablesView(
         DrawSyllableText(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             @floatFromInt(event_start),
             @floatFromInt(event_end),
             syls,
@@ -244,7 +246,7 @@ pub fn RenderSyllablesView(
         DrawVideoPlayhead(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             v_playhead_ms,
         );
 
@@ -252,7 +254,7 @@ pub fn RenderSyllablesView(
             DrawAudioPlayhead(
                 bmp,
                 view,
-                pixels_per_ms,
+                ms_per_pixel,
                 a_playhead_ms,
             );
         }
@@ -261,7 +263,7 @@ pub fn RenderSyllablesView(
 
 fn PrepareState(
     bmp: *frames.Bitmap,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     start_time: f64,
     effective_arr_len: usize,
     sample_rate: f64,
@@ -276,7 +278,7 @@ fn PrepareState(
     const wfv_height: u32 = bmp_height - (gutter_height * 2);
     const wvf_mid: u32 = @divFloor(wfv_height, 2);
     const total_duration_ms: f64 = (@as(f64, @floatFromInt(effective_arr_len)) * 1000.0) / sample_rate;
-    const visible_duration_ms = bmp_width_f * pixels_per_ms;
+    const visible_duration_ms = bmp_width_f * ms_per_pixel;
 
     var start_ms = start_time;
     if (total_duration_ms > visible_duration_ms) {
@@ -288,8 +290,8 @@ fn PrepareState(
         start_ms = 0.0;
     }
 
+    start_ms = @max(0.0, start_ms);
     const end_ms = start_ms + visible_duration_ms;
-    const samples_per_pixel: usize = @intFromFloat(pixels_per_ms * sample_rate / 1000.0);
 
     return .{
         .bmp_width_f = bmp_width_f,
@@ -304,7 +306,6 @@ fn PrepareState(
         .start_ms = start_ms,
         .end_ms = end_ms,
         .visible_duration_ms = visible_duration_ms,
-        .samples_per_pixel = samples_per_pixel,
         .effective_arr_len = effective_arr_len,
     };
 }
@@ -317,16 +318,16 @@ fn DrawWaveform(
     amplitude_scale: f64,
     sample_rate: f64,
     view: State,
+    ms_per_pixel: f64,
 ) void {
     const bmp_width_u: usize = @intCast(bmp.*.width);
     const effective_arr_len = view.effective_arr_len;
-    const current_sample_start: usize = @intFromFloat(view.start_ms * sample_rate / 1000.0);
-    var current_sample: usize = current_sample_start;
 
     for (0..bmp_width_u) |x| {
-        const s0: usize = current_sample;
-        const s1: usize = @min(s0 + view.samples_per_pixel, effective_arr_len);
-        current_sample += view.samples_per_pixel;
+        const xf: f64 = @floatFromInt(x);
+        const s0: usize = @intFromFloat(@floor((view.start_ms + xf * ms_per_pixel) * sample_rate / 1000.0));
+        var s1: usize = @intFromFloat(@floor((view.start_ms + (xf + 1) * ms_per_pixel) * sample_rate / 1000.0));
+        s1 = @min(@max(s1, s0 + 1), effective_arr_len); // ensure at least 1 sample
 
         if (s0 >= effective_arr_len) break;
 
@@ -373,10 +374,10 @@ fn DrawWaveform(
 fn DrawTimeScale(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
 ) void {
     // Draw seconds hashes
-    const pixels_per_sec = 1000.0 / pixels_per_ms;
+    const pixels_per_sec = 1000.0 / ms_per_pixel;
     if (pixels_per_sec < 5.0) return;
 
     // Only draw if there's enough room
@@ -389,7 +390,7 @@ fn DrawTimeScale(
     var t = std.math.ceil(view.start_ms / 1000.0) * 1000.0;
     while (t <= view.end_ms) : (t += 1000.0) {
         const delta = t - view.start_ms;
-        const x_f = delta / pixels_per_ms;
+        const x_f = delta / ms_per_pixel;
         if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
             DrawLine(bmp, x, view.gutter_half, view.gutter_height, color_seconds);
@@ -410,7 +411,7 @@ fn DrawTimeScale(
     while (t <= view.end_ms) : (t += 250.0) {
         if (@rem(t, 1000.0) == 0) continue;
         const delta = t - view.start_ms;
-        const x_f = delta / pixels_per_ms;
+        const x_f = delta / ms_per_pixel;
         if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
             DrawLine(bmp, x, view.gutter_half, view.gutter_half + view.gutter_quarter, color_qseconds);
@@ -429,7 +430,7 @@ fn DrawTimeScale(
 fn DrawKeyframes(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     timecodes: []c_longlong,
 ) void {
     for (timecodes) |kf| {
@@ -437,7 +438,7 @@ fn DrawKeyframes(
         if (t < view.start_ms or t > view.end_ms) continue;
 
         const delta = t - view.start_ms;
-        const x_f = delta / pixels_per_ms;
+        const x_f = delta / ms_per_pixel;
         if (x_f >= 0 and x_f < view.bmp_width_f) {
             const x: u32 = @intFromFloat(x_f);
             DrawLine(bmp, x, 0, view.bmp_height, color_kf);
@@ -449,13 +450,13 @@ fn DrawKeyframes(
 fn DrawEventBounds(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     event_bounds: [*]i64,
     event_bounds_len: usize,
     selected_event_idx: usize,
 ) void {
-    // Assert that we have a list of pairs
-    std.debug.assert((event_bounds_len & 1) == 0);
+    if ((event_bounds_len & 1) != 0 or selected_event_idx >= (event_bounds_len / 2))
+        return;
 
     const selected_event_pair_idx = selected_event_idx * 2;
 
@@ -467,7 +468,7 @@ fn DrawEventBounds(
         DrawEventBound(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             event_bounds,
             ei,
             false,
@@ -478,7 +479,7 @@ fn DrawEventBounds(
         DrawEventBound(
             bmp,
             view,
-            pixels_per_ms,
+            ms_per_pixel,
             event_bounds,
             selected_event_pair_idx,
             true,
@@ -490,7 +491,7 @@ fn DrawEventBounds(
 fn DrawEventBound(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     event_bounds: [*]i64,
     event_start_idx: usize,
     is_active: bool,
@@ -504,8 +505,8 @@ fn DrawEventBound(
     if ((evt_start_ms < view.start_ms and evt_end_ms < view.start_ms) or (evt_start_ms > view.end_ms and evt_end_ms > view.end_ms))
         return;
 
-    const start_x = ((evt_start_ms - view.start_ms) / pixels_per_ms) + 1; // Place adjacent event bounds next to each other
-    const end_x = (evt_end_ms - view.start_ms) / pixels_per_ms;
+    const start_x = ((evt_start_ms - view.start_ms) / ms_per_pixel) + 1; // Place adjacent event bounds next to each other
+    const end_x = (evt_end_ms - view.start_ms) / ms_per_pixel;
 
     // Draw starting post
     if (start_x >= 0) {
@@ -534,6 +535,9 @@ fn DrawEventBound(
     const start_x_u: usize = @intFromFloat(@max(0, start_x));
     const end_x_u: usize = @intFromFloat(@min(view.bmp_width_f, end_x));
 
+    if (start_x_u >= end_x_u)
+        return;
+
     // Draw border
     for (start_x_u..end_x_u) |x| {
         const color = if (is_active) color_event_activated else color_event_deactivated;
@@ -546,7 +550,7 @@ fn DrawEventBound(
 fn DrawSelectionShading(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     start_ms: f64,
     end_ms: f64,
 ) void {
@@ -554,8 +558,8 @@ fn DrawSelectionShading(
     if ((start_ms < view.start_ms and end_ms < view.start_ms) or (start_ms > view.end_ms and end_ms > view.end_ms))
         return;
 
-    const start_x = @max(0.0, ((start_ms - view.start_ms) / pixels_per_ms) + 1.0);
-    const end_x = @min(view.bmp_width_f, (end_ms - view.start_ms) / pixels_per_ms);
+    const start_x = @max(0.0, ((start_ms - view.start_ms) / ms_per_pixel) + 1.0);
+    const end_x = @min(view.bmp_width_f, (end_ms - view.start_ms) / ms_per_pixel);
     if (end_x <= start_x) return;
 
     const x_start: usize = @intFromFloat(start_x);
@@ -593,7 +597,7 @@ fn DrawSelectionShading(
 fn DrawSyllablePositions(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     event_start_ms: f64,
     event_end_ms: f64,
     syls: [*]frames.SyllableInfo,
@@ -614,7 +618,7 @@ fn DrawSyllablePositions(
         if (rolling_start_time >= event_end_ms or rolling_start_time >= view.end_ms)
             break;
 
-        const x = ((rolling_start_time - view.start_ms) / pixels_per_ms);
+        const x = ((rolling_start_time - view.start_ms) / ms_per_pixel);
 
         // Draw dotted line
         if (x >= 0 and x < view.bmp_width_f) {
@@ -637,7 +641,7 @@ fn DrawSyllablePositions(
 fn DrawSyllableText(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     event_start_ms: f64,
     event_end_ms: f64,
     syls: [*]frames.SyllableInfo,
@@ -656,14 +660,14 @@ fn DrawSyllableText(
         if (text.len == 0)
             return;
 
-        const event_start_x: f64 = @max(0, ((event_start_ms - view.start_ms) / pixels_per_ms) - 1);
-        const event_end_x: f64 = @min(view.end_ms, ((event_end_ms - view.start_ms) / pixels_per_ms) + 1);
+        const event_start_x: f64 = @max(0, ((event_start_ms - view.start_ms) / ms_per_pixel) - 1);
+        const event_end_x: f64 = @min(view.bmp_width_f, ((event_end_ms - view.start_ms) / ms_per_pixel) + 1);
 
         if (event_start_x >= event_end_x)
             return;
 
-        const x = ((event_start_ms + @divFloor(event_end_ms - event_start_ms, 2)) - view.start_ms) / pixels_per_ms;
-        const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
+        const x = ((event_start_ms + ((event_end_ms - event_start_ms) / 2.0)) - view.start_ms) / ms_per_pixel;
+        const lx = LabelXPos(@intFromFloat(@max(0, @min(x, view.bmp_width_f))), text);
 
         DrawClippedText(
             bmp,
@@ -682,11 +686,14 @@ fn DrawSyllableText(
     var si: usize = 0;
     while (si < syls_len) : (si += 1) {
         const syl = syls[si];
-        if (syl.duration == 0)
+        if (syl.duration <= 0)
             continue;
 
-        const syl_end_time: f64 = rolling_start_time + @as(f64, @floatFromInt(syl.duration));
-        if (rolling_start_time >= event_end_ms or rolling_start_time >= view.end_ms or syl_end_time < view.start_ms)
+        const syl_start_time = rolling_start_time;
+        const syl_end_time: f64 = syl_start_time + @as(f64, @floatFromInt(syl.duration));
+        rolling_start_time = syl_end_time;
+
+        if (syl_start_time >= event_end_ms or syl_start_time >= view.end_ms or syl_end_time < view.start_ms)
             continue;
 
         const text: []const u8 = std.mem.sliceTo(&syl.text, 0);
@@ -694,13 +701,13 @@ fn DrawSyllableText(
             continue;
 
         // Visible boundaries of the syl
-        const syl_start_x: f64 = @max(0, ((rolling_start_time - view.start_ms) / pixels_per_ms) - 1);
-        const syl_end_x: f64 = @min(view.end_ms, ((syl_end_time - view.start_ms) / pixels_per_ms) + 1);
+        const syl_start_x: f64 = @max(0, ((syl_start_time - view.start_ms) / ms_per_pixel) - 1);
+        const syl_end_x: f64 = @min(view.bmp_width_f, ((syl_end_time - view.start_ms) / ms_per_pixel) + 1);
 
         if (syl_start_x >= syl_end_x)
             continue;
 
-        const x = ((rolling_start_time + @divFloor(syl_end_time - rolling_start_time, 2)) - view.start_ms) / pixels_per_ms;
+        const x = ((syl_start_time + @divFloor(syl_end_time - syl_start_time, 2)) - view.start_ms) / ms_per_pixel;
         const lx = LabelXPos(@intFromFloat(@max(0, x)), text);
 
         DrawClippedText(
@@ -712,7 +719,6 @@ fn DrawSyllableText(
             text,
             color_syl_text,
         );
-        rolling_start_time += @floatFromInt(syls[si].duration);
     }
 }
 
@@ -720,30 +726,30 @@ fn DrawSyllableText(
 fn DrawVideoPlayhead(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     playhead_ms: f64,
 ) void {
     if (playhead_ms < view.start_ms or playhead_ms > view.end_ms) return;
 
     const delta = playhead_ms - view.start_ms;
-    const x_f = delta / pixels_per_ms;
+    const x_f = delta / ms_per_pixel;
     if (x_f >= 0 and x_f < view.bmp_width_f) {
         const x: u32 = @intFromFloat(x_f);
         DrawLine(bmp, x, 0, view.bmp_height, color_v_playhead);
     }
 }
 
-/// Draw the current autio time
+/// Draw the current audio time
 fn DrawAudioPlayhead(
     bmp: *frames.Bitmap,
     view: State,
-    pixels_per_ms: f64,
+    ms_per_pixel: f64,
     playhead_ms: f64,
 ) void {
     if (playhead_ms < view.start_ms or playhead_ms > view.end_ms) return;
 
     const delta = playhead_ms - view.start_ms;
-    const x_f = delta / pixels_per_ms;
+    const x_f = delta / ms_per_pixel;
     if (x_f >= 0 and x_f < view.bmp_width_f) {
         const x: u32 = @intFromFloat(x_f);
         DrawLine(bmp, x, 0, view.bmp_height, color_a_playhead);
@@ -786,7 +792,7 @@ fn DrawLine(
     }
 }
 
-/// Draw a null-terminated ASCII string at pixel position (x, y)
+/// Draw a string at pixel position (x, y)
 fn DrawText(bmp: *frames.Bitmap, x: u32, y: u32, text: []const u8, color: u32) void {
     const uni_view = std.unicode.Utf8View.init(text) catch return; // draw nothing if malformed
     const bmp_w: u32 = @intCast(bmp.width);
@@ -802,7 +808,7 @@ fn DrawText(bmp: *frames.Bitmap, x: u32, y: u32, text: []const u8, color: u32) v
     }
 }
 
-/// Draw a null-terminated ASCII string at pixel position (x, y), restricted between min_x and max_x
+/// Draw a string at pixel position (x, y), restricted between min_x and max_x
 fn DrawClippedText(bmp: *frames.Bitmap, x: u32, y: u32, min_x: u32, max_x: u32, text: []const u8, color: u32) void {
     const uni_view = std.unicode.Utf8View.init(text) catch return; // draw nothing if malformed
     const bmp_w: u32 = @intCast(bmp.width);
@@ -830,6 +836,8 @@ fn DrawClippedText(bmp: *frames.Bitmap, x: u32, y: u32, min_x: u32, max_x: u32, 
 
 /// Draw a single glyph at pixel position (x, y), clipped to bitmap bounds.
 fn DrawGlyph(bmp: *frames.Bitmap, x: u32, y: u32, glyph: font.Glyph, color: u32) void {
+    comptime std.debug.assert(font.glyph_height <= 16); // For the u16 shift below
+
     const bmp_w: u32 = @intCast(bmp.width);
     const bmp_h: u32 = @intCast(bmp.height);
     const pitch: usize = @intCast(bmp.pitch);
