@@ -245,7 +245,7 @@
             />
             <MenuItem
               Header="{x:Static i18n:Resources.Video_ContextMenu_Copy_SubsOnly}"
-              Command="{Binding CopyFrameVideoOnlyCommand}"
+              Command="{Binding CopyFrameSubtitlesOnlyCommand}"
             />
             <Separator />
             <MenuItem

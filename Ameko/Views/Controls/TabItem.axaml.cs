@@ -13,6 +13,7 @@ using AssCS;
 using AssCS.History;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Holo.Configuration.Keybinds;
@@ -215,7 +216,7 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         interaction.SetOutput(null);
     }
 
-    private async Task DoCopyFrameAsync(IInteractionContext<string, RxVoid> interaction)
+    private async Task DoCopyFrameAsync(IInteractionContext<byte[], RxVoid> interaction)
     {
         interaction.SetOutput(RxVoid.Default);
 
@@ -223,11 +224,9 @@ public partial class TabItem : ReactiveUserControl<TabItemViewModel>
         if (window is null)
             return;
 
-        var file = await window.StorageProvider.TryGetFileFromPathAsync(interaction.Input);
-        if (file is null)
-            return;
-
-        await window.Clipboard!.SetFileAsync(file);
+        using var stream = new MemoryStream(interaction.Input);
+        var bitmap = new Bitmap(stream);
+        await window.Clipboard!.SetBitmapAsync(bitmap);
     }
 
     private async Task DoShowStyleEditor(

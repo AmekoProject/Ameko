@@ -224,7 +224,7 @@ public interface IIoService
     /// <param name="mode">Save Frame Mode</param>
     /// <returns></returns>
     Task<bool> CopyFrameToClipboard(
-        Interaction<string, RxVoid> interaction,
+        Interaction<byte[], RxVoid> interaction,
         Workspace workspace,
         SaveFrameMode mode
     );

@@ -46,7 +46,7 @@ public partial class TabItemViewModel : ViewModelBase
     public Interaction<Event, RxVoid> ScrollToAndSelectEvent { get; }
     public Interaction<IList<Event>, RxVoid> SelectEvents { get; }
     public Interaction<RxVoid, Uri?> SaveFrameAs { get; }
-    public Interaction<string, RxVoid> CopyFrame { get; }
+    public Interaction<byte[], RxVoid> CopyFrame { get; }
 
     #endregion
 
@@ -354,7 +354,7 @@ public partial class TabItemViewModel : ViewModelBase
         ScrollToAndSelectEvent = new Interaction<Event, RxVoid>();
         SelectEvents = new Interaction<IList<Event>, RxVoid>();
         SaveFrameAs = new Interaction<RxVoid, Uri?>();
-        CopyFrame = new Interaction<string, RxVoid>();
+        CopyFrame = new Interaction<byte[], RxVoid>();
         #endregion
 
         #region Commands

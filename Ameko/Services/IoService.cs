@@ -945,7 +945,7 @@ public class IoService(
 
     /// <inheritdoc />
     public async Task<bool> CopyFrameToClipboard(
-        Interaction<string, RxVoid> interaction,
+        Interaction<byte[], RxVoid> interaction,
         Workspace workspace,
         SaveFrameMode mode
     )
@@ -959,20 +959,13 @@ public class IoService(
             result = GetImageData(workspace, workspace.MediaController.GetCurrentFrame(), mode);
         }
 
-        if (result is null)
+        using var imageData = result;
+        if (imageData is null)
             return false;
 
-        // Save to temp file because apparently copying the byte[] to the clipboard doesn't work
-        var path = Path.Combine(Directories.CacheHome, $"{DateTime.Now:yyyyMMddHHmmssfff}.png");
-        await using var fs = fileSystem.FileStream.New(
-            path,
-            FileMode.Create,
-            FileAccess.Write,
-            FileShare.None
-        );
-        result.SaveTo(fs);
-
-        await interaction.Handle(path);
+        using var stream = new MemoryStream();
+        imageData.SaveTo(stream);
+        await interaction.Handle(stream.ToArray());
 
         messageService.Enqueue(I18N.Other.Message_CopiedFrame, TimeSpan.FromSeconds(5));
         return true;
