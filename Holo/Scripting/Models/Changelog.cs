@@ -33,7 +33,7 @@ public class Changelog
     public string[]? Removed { get; init; }
 
     /// <summary>
-    /// List of deprecated functionality, mostly for <see cref="HoloLibrary"/> use
+    /// List of deprecated functionality, mostly for library use
     /// </summary>
     public string[]? Deprecated { get; init; }
 }

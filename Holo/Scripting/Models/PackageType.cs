@@ -13,7 +13,7 @@ public enum PackageType
     Script = 0,
 
     /// <summary>
-    /// The <see cref="Package"/> is a <see cref="HoloLibrary"/>
+    /// The <see cref="Package"/> is a library
     /// </summary>
     Library = 1,
 

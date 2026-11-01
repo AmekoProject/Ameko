@@ -9,7 +9,7 @@ namespace Holo.Providers;
 
 /// <summary>
 /// Provides a controlled service locator for use by
-/// <see cref="HoloScript"/> and <see cref="HoloLibrary"/> instances
+/// <see cref="HoloScript"/> instances
 /// </summary>
 /// <remarks>
 /// This locator acts as a bridge for user scripts and libraries,

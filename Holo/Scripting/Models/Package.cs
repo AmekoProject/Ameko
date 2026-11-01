@@ -8,7 +8,7 @@ namespace Holo.Scripting.Models;
 
 /// <summary>
 /// A Package is an entry in a <see cref="Repository"/>
-/// for a <see cref="Scripting.HoloScript"/> or <see cref="Scripting.HoloLibrary"/>
+/// for a <see cref="Scripting.HoloScript"/>
 /// </summary>
 public record Package : IComparable<Package>
 {

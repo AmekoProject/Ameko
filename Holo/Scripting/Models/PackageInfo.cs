@@ -3,7 +3,7 @@
 namespace Holo.Scripting.Models;
 
 /// <summary>
-/// Basic information about a <see cref="HoloScript"/> or <see cref="HoloLibrary"/>
+/// Basic information about a <see cref="HoloScript"/>
 /// </summary>
 /// <remarks>
 /// This contains different information than <see cref="Package"/> does.
