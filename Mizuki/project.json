@@ -29,12 +29,20 @@
   // "target": "windows-x64",
   // Targets.
   "targets": {
-    "Mizuki": {
-      // Executable or library.
+    "linux-x64": {
       "type": "dynamic-lib",
-      // Additional libraries, sources
-      // and overrides of global settings here.
+      "linked-libraries": [ "ffms2", "ass" ]
     },
+    "windows-x64": {
+      "type": "dynamic-lib",
+      "linker-search-paths": [ "../Packaging/Ameko-Native-Bin/win-x64" ],
+      "linked-libraries": [ "ffms2", "ass" ]
+    },
+    "macos-aarch64": { // Need to check if rpath stuff is needed
+      "type": "dynamic-lib",
+      "linker-search-paths": [ "../Packaging/Ameko-Native-Bin/mac-arm64" ],
+      "linked-libraries": [ "ffms2", "ass" ]
+    }
   },
   // Global settings.
   // CPU name, used for optimizations in the LLVM backend.
