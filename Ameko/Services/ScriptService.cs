@@ -9,6 +9,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Ameko.DataModels;
+using Ameko.Utilities;
 using Ameko.ViewModels.Dialogs;
 using Ameko.Views.Dialogs;
 using Avalonia.Threading;
@@ -21,6 +22,7 @@ using Holo.Scripting.Models;
 using Jint;
 using Jint.Native;
 using Microsoft.Extensions.Logging;
+using Semver;
 
 namespace Ameko.Services;
 
@@ -264,7 +266,19 @@ public partial class ScriptService : IScriptService
             try
             {
                 _logger.LogDebug("Loading script {Path}...", path);
-                var script = CSScript.Evaluator.LoadFile<HoloScript>(path);
+
+                var script = CSScript
+                    .Evaluator.WithPrecompiler(ctx =>
+                    {
+                        SemVersion.TryParse(
+                            VersionService.FullLabel,
+                            SemVersionStyles.AllowV,
+                            out var version
+                        );
+                        version ??= new SemVersion(0, 0, 0);
+                        ctx.Content = ScriptPreprocessor.Preprocess(ctx.Content, version);
+                    })
+                    .LoadFile<HoloScript>(path);
                 if (script is null)
                 {
                     _logger.LogWarning("Script {Path} was invalid!", path);
