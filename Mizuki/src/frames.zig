@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
-const c = @import("c.zig").c;
+const c = @import("c");
 
 /// Frame containing the base video
 pub const VideoFrame = extern struct {

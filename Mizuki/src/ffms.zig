@@ -5,7 +5,7 @@
 const std = @import("std");
 const builtin = @import("builtin");
 
-const c = @import("c.zig").c;
+const c = @import("c");
 const frames = @import("frames.zig");
 const common = @import("common.zig");
 const logger = @import("logger.zig");
@@ -34,6 +34,8 @@ pub const FfmsError = error{
 // Global
 var err_buffer = std.mem.zeroes([1024]u8);
 var err_info = c.FFMS_ErrorInfo{
+    .ErrorType = c.FFMS_ERROR_UNKNOWN,
+    .SubType = c.FFMS_ERROR_UNKNOWN,
     .BufferSize = err_buffer.len,
     .Buffer = &err_buffer[0],
 };

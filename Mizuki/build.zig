@@ -1,4 +1,5 @@
 const std = @import("std");
+const Translator = @import("translate_c").Translator;
 
 // Add the required dynamic libraries
 fn linkLibraries(b: *std.Build, obj: *std.Build.Step.Compile, target: std.Build.ResolvedTarget) void {
@@ -44,6 +45,13 @@ pub fn build(b: *std.Build) void {
     // External dependencies
     const known_folders = b.dependency("known_folders", .{}).module("known-folders");
 
+    const translate_c = b.dependency("translate_c", .{});
+    const translator: Translator = .init(translate_c, .{
+        .c_source_file = b.path("include/c.h"),
+        .target = target,
+        .optimize = optimize,
+    });
+
     // This creates a "module", which represents a collection of source files alongside
     // some compilation options, such as optimization mode and linked system libraries.
     // Every executable or library we compile will be based on one or more modules.
@@ -55,6 +63,7 @@ pub fn build(b: *std.Build) void {
         .root_source_file = b.path("src/mizuki.zig"),
         .target = target,
         .optimize = optimize,
+        .imports = &.{.{ .name = "c", .module = translator.mod }},
     });
 
     // Now, we will create a static library based on the module we created above.

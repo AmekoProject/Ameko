@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 const std = @import("std");
-const c = @import("c.zig").c;
+const c = @import("c");
 const ffms = @import("ffms.zig");
 const libass = @import("libass.zig");
 const frames = @import("frames.zig");

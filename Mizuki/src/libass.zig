@@ -5,7 +5,7 @@
 const std = @import("std");
 const builtin = @import("builtin");
 
-const c = @import("c.zig").c;
+const c = @import("c");
 const fnv = @import("fnv.zig");
 const frames = @import("frames.zig");
 const common = @import("common.zig");
@@ -193,7 +193,7 @@ pub fn PreloadFontDirectory(g_ctx: *context.GlobalContext, dir_name: [*c]u8) boo
             logger.Info(entry.name);
 
             // null-terminated string
-            const font_name_z = common.allocator.dupeZ(u8, entry.name) catch continue;
+            const font_name_z = common.allocator.dupeSentinel(u8, entry.name, 0) catch continue;
             defer common.allocator.free(font_name_z);
 
             c.ass_add_font(library, font_name_z.ptr, font_data.ptr, @intCast(font_data.len));

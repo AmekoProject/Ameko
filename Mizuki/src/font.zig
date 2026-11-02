@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 const std = @import("std");
-const c = @import("c.zig").c;
+const c = @import("c");
 
 pub const glyph_height: u32 = c.MIZUKI_GLYPH_HEIGHT;
 const wide_glyph_width: u32 = c.MIZUKI_WIDE_GLYPH_WIDTH;
@@ -13,7 +13,7 @@ pub const Glyph = struct {
 };
 
 fn HalfGlyph(bytes: [half_glyph_width]u16) Glyph {
-    var columns: [wide_glyph_width]u16 = [_]u16{0} ** wide_glyph_width;
+    var columns: [wide_glyph_width]u16 = @splat(wide_glyph_width);
     @memcpy(columns[0..half_glyph_width], &bytes);
     return .{ .width = half_glyph_width, .columns = columns };
 }

@@ -3,7 +3,7 @@
 //! Contextualization
 
 const std = @import("std");
-const c = @import("c.zig").c;
+const c = @import("c");
 const frames = @import("frames.zig");
 const common = @import("common.zig");
 const logger = @import("logger.zig");
