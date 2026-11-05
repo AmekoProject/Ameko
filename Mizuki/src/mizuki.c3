@@ -4,19 +4,19 @@ module mizuki;
 
 import std;
 
-bool isInitialized = false;
+bool is_initialized = false;
 
 fn int initialize() @export
 {
-	if (isInitialized) return 0;
+	if (is_initialized) return 0;
 
-	BackingVersion v = ffms::getVersion();
+	BackingVersion v = ffms::get_version();
 
 	io::printfn("FFMS2 Version: %d.%d.%d", v.major, v.minor, v.patch);
 
 	// ffms::initialize();
 
-	isInitialized = true;
+	is_initialized = true;
 	return 0;
 }
 

@@ -3,7 +3,7 @@
 module c::ffms;
 
 // Methods
-extern fn int getVersion() @cname("FFMS_GetVersion");
+extern fn int get_version() @cname("FFMS_GetVersion");
 extern fn void init(int, int) @cname("FFMS_INIT");
 
 // Opaque structs
@@ -14,3 +14,8 @@ struct Index { void* _opaque; }
 struct Track { void* _opaque; }
 
 module c::libass;
+
+// Opaque structs
+struct Renderer { void* _opaque; }
+struct Library { void* _opaque; }
+struct Track { void* _opaque; }

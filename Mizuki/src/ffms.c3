@@ -3,12 +3,12 @@
 module mizuki::ffms;
 import c;
 
-bool isInitialized = false;
+bool is_initialized = false;
 
 <* Get the FFMS2 version *>
-fn BackingVersion getVersion()
+fn BackingVersion get_version()
 {
-	int version = c::ffms::getVersion();
+	int version = c::ffms::get_version();
 	return {
 		.major = (version >> 24) & 0xFF,
 		.minor = (version >> 16) & 0xFF,
@@ -19,8 +19,8 @@ fn BackingVersion getVersion()
 <* Initialize FFMS2. Does nothing if already initialized *>
 fn void initialize()
 {
-	if (isInitialized) return;
+	if (is_initialized) return;
 
 	c::ffms::init(0, 0);
-	isInitialized = true;
+	is_initialized = true;
 }
