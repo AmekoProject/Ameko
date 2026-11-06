@@ -11,7 +11,7 @@ struct FfmsContext
 	c::ffms::VideoSource* video_source;
 	c::ffms::AudioSource* audio_source;
 	char[128] colorspace_buffer;
-	char* colorspace;
+	ZString colorspace;
 	int video_colorspace;
 	int video_color_range;
 
