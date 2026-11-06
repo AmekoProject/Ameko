@@ -16,6 +16,7 @@ public partial class TxtWriter(
     /// <inheritdoc />
     public override bool Write(Document document, TextWriter writer, bool export = false)
     {
+        writer.NewLine = LF;
         writer.WriteLine($"# Exported by {consumer.Name} {consumer.Version} [AssCS]");
 
         var hasActors = document.EventManager.Actors.Count != 0;

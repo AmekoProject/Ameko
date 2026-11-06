@@ -8,6 +8,11 @@ namespace AssCS.IO;
 public abstract class FileWriter
 {
     /// <summary>
+    /// Line feed character
+    /// </summary>
+    protected const string LF = "\n";
+
+    /// <summary>
     /// Write an ass document to a TextWriter
     /// </summary>
     /// <param name="document">Document to write</param>

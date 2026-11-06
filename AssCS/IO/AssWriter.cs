@@ -29,6 +29,7 @@ public class AssWriter(ConsumerInfo consumer) : FileWriter
     /// <inheritdoc />
     public override bool Write(Document document, TextWriter writer, bool export = false)
     {
+        writer.NewLine = LF;
         WriteHeader(writer);
         WriteScriptInfo(document, writer);
         if (!export)
