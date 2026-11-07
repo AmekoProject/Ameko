@@ -53,26 +53,11 @@ extern fn VideoSource* create_video_source(
 alias ProgressCallback = fn CInt(CLong current, CLong total, void* _unused);
 
 // Opaque structs
-struct VideoSource
-{
-	void* _opaque;
-}
-struct AudioSource
-{
-	void* _opaque;
-}
-struct Indexer
-{
-	void* _opaque;
-}
-struct Index
-{
-	void* _opaque;
-}
-struct Track
-{
-	void* _opaque;
-}
+typedef VideoSource = void*;
+typedef AudioSource = void*;
+typedef Indexer = void*;
+typedef Index = void*;
+typedef Track = void*;
 
 // Structs
 struct ErrorInfo
@@ -146,15 +131,5 @@ constset SeekMode
 module c::libass;
 
 // Opaque structs
-struct Renderer
-{
-	void* _opaque;
-}
-struct Library
-{
-	void* _opaque;
-}
-struct Track
-{
-	void* _opaque;
-}
+typedef Renderer = void*;
+typedef Library = void*;
