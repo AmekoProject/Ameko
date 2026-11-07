@@ -5,9 +5,15 @@ module mizuki::ffms;
 import std::collections;
 import c;
 
-excuse { FILE_NOT_FOUND, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, }
-bool is_initialized = false;
+excuse { FILE_NOT_FOUND, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, }bool is_initialized = false;
+
 char[1024] error_buffer;
+c::ffms::ErrorInfo error_info = {
+	.type = UNKNOWN,
+	.subtype = UNKNOWN,
+	.buffer_size = (CInt)error_buffer.len,
+	.buffer = (ZString)&error_buffer[0]
+};
 
 <* Get the FFMS2 version *>
 fn BackingVersion get_version()
@@ -26,6 +32,7 @@ fn void initialize()
 	if (is_initialized) return;
 
 	c::ffms::init(0, 0);
+
 	is_initialized = true;
 }
 
@@ -61,7 +68,7 @@ fn void? load_video(
 	CInt video_track_number = -1;
 	if (tracks.count > 1) video_track_number = 0; // TODO: Ask which track to open
 
-	index = c::ffms::read_index(cache_file_name, null); // TODO: error info
+	index = c::ffms::read_index(cache_file_name, &error_info);
 
 	// Check if the index is for this file
 	if (index != null && c::ffms::index_belongs_to_file(index, file_name, null) != 0)
@@ -80,7 +87,7 @@ fn void? load_video(
 	if (index == null)
 	{
 		c::ffms::set_track_type_index_settings(indexer, VIDEO, true, 0);
-		index = c::ffms::do_indexing(indexer, ABORT, null); // TODO: error info
+		index = c::ffms::do_indexing(indexer, ABORT, &error_info);
 
 		if (index == null)
 		{
@@ -88,7 +95,7 @@ fn void? load_video(
 			// log error
 			return INDEXING_FAILED~;
 		}
-		CInt write_result = c::ffms::write_index(cache_file_name, index, null); // TODO: error info
+		CInt write_result = c::ffms::write_index(cache_file_name, index, &error_info);
 		if (write_result != 0)
 		{
 			// TODO: Log (do not return excuse)
@@ -102,7 +109,7 @@ fn void? load_video(
 	// If no track number has been selected, use the first one
 	if (video_track_number < 0)
 	{
-		video_track_number = c::ffms::get_first_indexed_track_of_type(index, VIDEO, null); // TODO: error info
+		video_track_number = c::ffms::get_first_indexed_track_of_type(index, VIDEO, &error_info);
 		if (video_track_number < 0) return NO_VIDEO_TRACKS~;
 	}
 
@@ -112,8 +119,8 @@ fn void? load_video(
 		index,
 		-1,
 		NORMAL,
-		null
-	); // TODO: error info
+		&error_info
+	);
 
 	// Sourcing failed
 	if (ctx.ffms.video_source == null)
