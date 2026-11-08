@@ -11,11 +11,11 @@ struct FfmsContext
 	c::ffms::VideoSource* video_source;
 	c::ffms::AudioSource* audio_source;
 	char[128] colorspace_buffer;
-	ZString colorspace;
-	int video_colorspace;
-	int video_color_range;
+	char color_space;
+	CInt video_color_space;
+	CInt video_color_range;
 
-	int[] keyframes;
+	CInt[] keyframes;
 	long[] timecodes;
 	long[] midcodes;
 	long[] kf_timecodes;
