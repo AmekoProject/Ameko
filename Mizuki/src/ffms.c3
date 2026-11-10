@@ -299,7 +299,7 @@ fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_
 	if (index == null)
 	{
 		ffms::set_track_index_settings(indexer, track_number, 1, 0);
-		
+
 		index = ffms::do_indexing(indexer, ABORT, &error_info);
 		if (index != null && !ffms::success(ffms::write_index(cache_file_name, index, &error_info)))
 		{
@@ -340,6 +340,37 @@ fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_
 
 	ctx.has_audio = true;
 	ffms::destroy_index(index);
+}
+
+fn void close_video(GlobalContext* g_ctx)
+{
+	FfmsContext* ctx = &g_ctx.ffms;
+	if (ctx.video_source != null)
+	{
+		ffms::destroy_video_source(ctx.video_source);
+		ctx.video_source = null;
+	}
+
+	if (ctx.audio_source != null)
+	{
+		ffms::destroy_audio_source(ctx.audio_source);
+		ctx.audio_source = null;
+	}
+
+	if (ctx.index != null)
+	{
+		ffms::destroy_index(ctx.index);
+		ctx.index = null;
+	}
+
+	if (ctx.keyframes) mem::free(ctx.keyframes);
+	if (ctx.timecodes) mem::free(ctx.timecodes);
+	if (ctx.midcodes) mem::free(ctx.midcodes);
+	if (ctx.kf_timecodes) mem::free(ctx.kf_timecodes);
+	if (ctx.kf_midcodes) mem::free(ctx.kf_midcodes);
+	if (ctx.frame_intervals) mem::free(ctx.frame_intervals);
+	if (ctx.track_info) mem::free(ctx.track_info);
+	ctx.frame_count = 0;
 }
 
 <*
