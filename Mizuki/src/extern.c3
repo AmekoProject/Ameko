@@ -23,8 +23,10 @@ extern fn FrameInfo* get_frame_info(Track* track, CInt frame_number) @cname("FFM
 extern fn Indexer* create_indexer(ZString file_name, ErrorInfo* error) @cname("FFMS_CreateIndexer");
 extern fn Frame* get_frame(VideoSource* source, CInt frame, ErrorInfo* error) @cname("FFMS_GetFrame");
 extern fn VideoProperties* get_video_properties(VideoSource* source) @cname("FFMS_GetVideoProperties");
+extern fn AudioProperties* get_audio_properties(AudioSource* source) @cname("FFMS_GetAudioProperties");
 extern fn CInt write_index(ZString file_name, Index* index, ErrorInfo* error) @cname("FFMS_WriteIndex");
-
+extern fn void destroy_resample_options(ResampleOptions* options) @cname("FFMS_DestroyResampleOptions");
+extern fn ResampleOptions* create_resample_options(AudioSource* source) @cname("FFMS_CreateResampleOptions");
 
 extern fn CInt get_first_indexed_track_of_type(
 	Index* index,
@@ -48,13 +50,22 @@ extern fn VideoSource* create_video_source(
 	ErrorInfo* error
 ) @cname("FFMS_CreateVideoSource");
 
-extern fn CInt index_belongs_to_file(
-	Index* index,
+extern fn AudioSource* create_audio_source(
 	ZString file_name,
+	CInt track,
+	Index* index,
+	AudioDelayMode delay_mode,
 	ErrorInfo* error
-) @cname("FFMS_IndexBelongsToFile");
+) @cname("FFMS_CreateAudioSource");
 
-extern fn CInt set_output_format(
+extern fn void set_track_index_settings(
+	Indexer* indexer,
+	CInt track,
+	CInt should_index,
+	CInt _unused
+) @cname("FFMS_TrackIndexSettings");
+
+extern fn CInt set_video_output_format(
 	VideoSource* source,
 	CInt* formats,
 	CInt width,
@@ -62,6 +73,18 @@ extern fn CInt set_output_format(
 	Resizer resizer,
 	ErrorInfo* error
 ) @cname("FFMS_SetOutputFormatV2");
+
+extern fn CInt set_audio_output_format(
+	AudioSource* source,
+	ResampleOptions* resample_options,
+	ErrorInfo* error
+) @cname("FFMS_SetOutputFormatA");
+
+extern fn CInt index_belongs_to_file(
+	Index* index,
+	ZString file_name,
+	ErrorInfo* error
+) @cname("FFMS_IndexBelongsToFile");
 
 extern fn void set_progress_cb(
 	Indexer* indexer,
@@ -111,6 +134,27 @@ struct VideoProperties
 	CInt frame_count;
 	CInt sar_numerator;
 	CInt sar_denominator;
+	// Partial implementation
+}
+
+struct AudioProperties
+{
+	SampleFormat sample_format;
+	CInt sample_rate;
+	CInt bits_per_sample;
+	CInt channel_count;
+	AudioChannel channel_layout;
+	long sample_count;
+	double first_time;
+	double last_time;
+	double last_end_time;
+}
+
+struct ResampleOptions
+{
+	AudioChannel channel_layout;
+	SampleFormat sample_format;
+	CInt sample_rate;
 	// Partial implementation
 }
 
@@ -180,7 +224,7 @@ constset ErrorType : CInt
 	CODEC,
 	NOT_AVAILABLE,
 	FILE_MISMATCH,
-	USER
+	USER,
 }
 
 constset ErrorHandling : CInt
@@ -213,7 +257,30 @@ constset Resizer : CInt
 	GAUSS         = 0x0080,
 	SINC          = 0x0100,
 	LANCZOS       = 0x0200,
-	SPLINE        = 0x0400
+	SPLINE        = 0x0400,
+}
+
+constset AudioDelayMode : CInt
+{
+	NO_SHIFT          = -3,
+	TIME_ZERO         = -2,
+	FIRST_VIDEO_TRACK = -1,
+}
+
+constset SampleFormat : CInt
+{
+	UNSIGNED_8 = 0,
+	SIGNED_16,
+	SIGNED_32,
+	FLOAT,
+	DOUBLE
+}
+
+constset AudioChannel : long
+{
+	FRONT_LEFT  = 0x00000001,
+	FRONT_RIGHT = 0x00000002,
+	// Partial implementation
 }
 
 module c::libass;

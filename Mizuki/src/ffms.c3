@@ -5,10 +5,10 @@ module mizuki::ffms;
 import std::collections;
 import c;
 
-excuse { FILE_NOT_FOUND, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, FRAME_DECODING_FAILED, FRAME_INFO_FAILED, SET_OUTPUT_FORMAT_FAILED, GET_TIME_BASE_FAILED, }bool is_initialized = false;
+excuse { FILE_NOT_FOUND, FILE_NOT_SUPPORTED, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, FRAME_DECODING_FAILED, FRAME_INFO_FAILED, SET_OUTPUT_FORMAT_FAILED, GET_TIME_BASE_FAILED }bool is_initialized = false;
 
 char[1024] error_buffer;
-ffms::ErrorInfo error_info = {
+ErrorInfo error_info = {
 	.type = UNKNOWN,
 	.subtype = UNKNOWN,
 	.buffer_size = (CInt)error_buffer.len,
@@ -44,8 +44,8 @@ fn void? load_video(
 	ProgressCallback progress_cb
 )
 {
-	ffms::Index* index     = ctx.ffms.index;
-	ffms::Indexer* indexer = ffms::create_indexer(file_name, null); // TODO: error info
+	Index* index     = ctx.ffms.index;
+	Indexer* indexer = ffms::create_indexer(file_name, null); // TODO: error info
 
 	if (indexer == null)
 	{
@@ -79,7 +79,7 @@ fn void? load_video(
 	// Check if the track we're looking for is indexed
 	if (index != null && video_track_number >= 0)
 	{
-		ffms::Track* temp_video_track = ffms::get_track_from_index(index, video_track_number);
+		Track* temp_video_track = ffms::get_track_from_index(index, video_track_number);
 		if (ffms::get_num_frames(temp_video_track) <= 0) index = null;
 	}
 
@@ -123,8 +123,8 @@ fn void? load_video(
 	}
 
 	// Fetch video properties
-	ffms::VideoProperties* props = ffms::get_video_properties(ctx.ffms.video_source);
-	ffms::Frame* frame0          = ffms::get_frame(ctx.ffms.video_source, 0, &error_info);
+	VideoProperties* props = ffms::get_video_properties(ctx.ffms.video_source);
+	Frame* frame0          = ffms::get_frame(ctx.ffms.video_source, 0, &error_info);
 
 	if (frame0 == null) return FRAME_DECODING_FAILED~;
 
@@ -140,7 +140,7 @@ fn void? load_video(
 
 	CInt[2] target_formats = { ffms::get_pixel_format("bgra"), -1 };
 	if (!ffms::success(
-		ffms::set_output_format(
+		ffms::set_video_output_format(
 			ctx.ffms.video_source,
 			&target_formats[0],
 			frame0.encoded_width,
@@ -157,10 +157,10 @@ fn void? load_video(
 	ctx.ffms.frame_pitch = (usz)frame0.line_size[0];
 
 	// Additional frame information
-	ffms::Track* track = ffms::get_track_from_video(ctx.ffms.video_source);
+	Track* track = ffms::get_track_from_video(ctx.ffms.video_source);
 	if (track == null) return TRACK_LOADING_FAILED~;
 
-	ffms::TrackTimeBase* time_base = ffms::get_time_base(track);
+	TrackTimeBase* time_base = ffms::get_time_base(track);
 	if (time_base == null) return GET_TIME_BASE_FAILED~;
 
 	// Build lists of timecodes and frames
@@ -183,7 +183,7 @@ fn void? load_video(
 
 		for (CInt frame_number = 0; frame_number < props.frame_count; frame_number++)
 		{
-			ffms::FrameInfo* frame_info = ffms::get_frame_info(track, frame_number);
+			FrameInfo* frame_info = ffms::get_frame_info(track, frame_number);
 			if (frame_info == null) return FRAME_INFO_FAILED~;
 
 			double wc_numerator   = (double)(frame_info.pts * time_base.numerator);
@@ -243,13 +243,107 @@ fn void? load_video(
 	// Log success
 }
 
+fn void? load_audio(GlobalContext* ctx, ZString file_name, ZString cache_file_name, int track_number)
+{
+	Index* index     = ctx.ffms.index;
+	Indexer* indexer = ffms::create_indexer(file_name, &error_info);
+
+	if (indexer == null)
+	{
+		if (error_info.subtype == ErrorType.FILE_READ)
+		{
+			// TODO: Log message
+			return FILE_NOT_FOUND~;
+		}
+		else
+		{
+			return FILE_NOT_SUPPORTED~;
+		}
+	}
+
+	// If a track number was not specified, look for the first one
+	if (track_number == -1)
+	{
+		HashMap{CInt, ZString} tracks;
+		tracks.init(mem);
+		defer tracks.free();
+
+		// get audio tracks
+		get_tracks_of_type(indexer, AUDIO, &tracks);
+		if (tracks.count == 0)
+		{
+			ctx.ffms.has_audio = false;
+			return;
+		}
+
+		track_number = tracks[tracks.keys()[0]];
+	}
+
+	index = ffms::read_index(cache_file_name, &error_info);
+	if (index != null && !ffms::success(ffms::index_belongs_to_file(index, file_name, &error_info)))
+	{
+		index = null;
+	}
+
+	if (index != null && track_number >= 0)
+	{
+		Track* track = ffms::get_track_from_index(index, track_number);
+		if (track == null || ffms::get_num_frames(track) <= 0) index = null;
+	}
+
+	if (index == null)
+	{
+		ffms::set_track_index_settings(indexer, track_number, 1, 0);
+		
+		index = ffms::do_indexing(indexer, ABORT, &error_info);
+		if (index != null && !ffms::success(ffms::write_index(cache_file_name, index, &error_info)))
+		{
+			// TODO: log, but do not return excuse
+		}
+	}
+	else
+	{
+		ffms::cancel_indexing(indexer);
+	}
+
+	if (index == null) return INDEXING_FAILED~;
+
+	ctx.ffms.audio_source = ffms::create_audio_source(file_name, track_number, index, FIRST_VIDEO_TRACK, &error_info);
+	if (ctx.ffms.audio_source == null) return TRACK_LOADING_FAILED~;
+
+	// Get audio properties
+	AudioProperties* props = ffms::get_audio_properties(ctx.ffms.audio_source);
+	ctx.ffms.channel_count = props.channel_count;
+	ctx.ffms.sample_rate = props.sample_rate;
+	ctx.ffms.sample_count = props.sample_count;
+
+	// Configure the resampler
+	ResampleOptions* rs_options = ffms::create_resample_options(ctx.ffms.audio_source);
+	defer ffms::destroy_resample_options(rs_options);
+
+	rs_options.sample_format = SIGNED_16;
+	if (ctx.ffms.channel_count > 2) // Downmix to stereo
+	{
+		rs_options.channel_layout = FRONT_LEFT | FRONT_RIGHT;
+		ctx.ffms.channel_count = 2;
+	}
+
+	if (!ffms::success(ffms::set_audio_output_format(ctx.ffms.audio_source, rs_options, &error_info)))
+	{
+		// TODO log
+	}
+
+	ctx.ffms.has_audio = true;
+	ffms::destroy_index(index);
+}
+
 <*
  Find the tracks of the given type
  @param indexer : "FFMS indexer"
  @param track_type : `The type of track to look for`
  @param map : `Map to add found tracks to`
 *>
-fn void get_tracks_of_type(ffms::Indexer* indexer, ffms::TrackType track_type, HashMap{CInt, ZString}* map)
+fn void get_tracks_of_type(Indexer* indexer, TrackType track_type, HashMap{CInt, ZString}* map)
 {
 	map.clear();
 	CInt track_count = ffms::get_num_tracks(indexer);
