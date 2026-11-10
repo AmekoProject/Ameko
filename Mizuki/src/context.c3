@@ -37,7 +37,7 @@ struct FfmsContext
 struct LibassContext
 {
 	c::libass::Renderer renderer;
-	c::libass::Track track;
+	c::libass::SubtitleTrack track;
 	uint current_hash;
 
 	AssProfilePoint[] profile_points;

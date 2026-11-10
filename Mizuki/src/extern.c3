@@ -10,16 +10,18 @@ extern fn void init(CInt, CInt) @cname("FFMS_INIT");
 extern fn CInt get_version() @cname("FFMS_GetVersion");
 extern fn void destroy_index(Index* index) @cname("FFMS_DestroyIndex");
 extern fn CInt get_pixel_format(ZString name) @cname("FFMS_GetPixFmt");
-extern fn CInt get_num_frames(Track* track) @cname("FFMS_GetNumFrames");
+extern fn CInt get_num_frames(SourceTrack* track) @cname("FFMS_GetNumFrames");
 extern fn CInt get_num_tracks(Indexer* indexer) @cname("FFMS_GetNumTracksI");
 extern fn void cancel_indexing(Indexer* indexer) @cname("FFMS_CancelIndexing");
-extern fn TrackTimeBase* get_time_base(Track* track) @cname("FFMS_TrackTimeBase");
+extern fn TrackTimeBase* get_time_base(SourceTrack* track) @cname("FFMS_TrackTimeBase");
 extern fn Index* read_index(ZString file_name, ErrorInfo* error) @cname("FFMS_ReadIndex");
+extern fn void destroy_video_source(VideoSource* source) @cname("FFMS_DestroyVideoSource");
+extern fn void destroy_audio_source(AudioSource* source) @cname("FFMS_DestroyAudioSource");
 extern fn ZString get_codec_name(Indexer* indexer, CInt track) @cname("FFMS_GetCodecNameI");
-extern fn Track* get_track_from_video(VideoSource* source) @cname("FFMS_GetTrackFromVideo");
+extern fn SourceTrack* get_track_from_video(VideoSource* source) @cname("FFMS_GetTrackFromVideo");
 extern fn TrackType get_track_type(Indexer* indexer, CInt track) @cname("FFMS_GetTrackTypeI");
-extern fn Track* get_track_from_index(Index* index, CInt track) @cname("FFMS_GetTrackFromIndex");
-extern fn FrameInfo* get_frame_info(Track* track, CInt frame_number) @cname("FFMS_GetFrameInfo");
+extern fn SourceTrack* get_track_from_index(Index* index, CInt track) @cname("FFMS_GetTrackFromIndex");
+extern fn FrameInfo* get_frame_info(SourceTrack* track, CInt frame_number) @cname("FFMS_GetFrameInfo");
 extern fn Indexer* create_indexer(ZString file_name, ErrorInfo* error) @cname("FFMS_CreateIndexer");
 extern fn Frame* get_frame(VideoSource* source, CInt frame, ErrorInfo* error) @cname("FFMS_GetFrame");
 extern fn VideoProperties* get_video_properties(VideoSource* source) @cname("FFMS_GetVideoProperties");
@@ -106,7 +108,7 @@ typedef VideoSource = void*;
 typedef AudioSource = void*;
 typedef Indexer = void*;
 typedef Index = void*;
-typedef Track = void*;
+typedef SourceTrack = void*;
 
 // Structs
 struct ErrorInfo
@@ -288,4 +290,4 @@ module c::libass;
 // Opaque structs
 typedef Renderer = void*;
 typedef Library = void*;
-typedef Track = void*;
+typedef SubtitleTrack = void*;

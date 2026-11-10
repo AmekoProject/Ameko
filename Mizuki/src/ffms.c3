@@ -37,14 +37,15 @@ fn void initialize()
 }
 
 fn void? load_video(
-	GlobalContext* ctx,
+	GlobalContext* g_ctx,
 	ZString file_name,
 	ZString cache_file_name,
 	ZString color_matrix,
 	ProgressCallback progress_cb
 )
 {
-	Index* index     = ctx.ffms.index;
+	FfmsContext* ctx = &g_ctx.ffms;
+	Index* index     = ctx.index;
 	Indexer* indexer = ffms::create_indexer(file_name, null); // TODO: error info
 
 	if (indexer == null)
@@ -79,7 +80,7 @@ fn void? load_video(
 	// Check if the track we're looking for is indexed
 	if (index != null && video_track_number >= 0)
 	{
-		Track* temp_video_track = ffms::get_track_from_index(index, video_track_number);
+		SourceTrack* temp_video_track = ffms::get_track_from_index(index, video_track_number);
 		if (ffms::get_num_frames(temp_video_track) <= 0) index = null;
 	}
 
@@ -113,18 +114,18 @@ fn void? load_video(
 		if (video_track_number < 0) return NO_VIDEO_TRACKS~;
 	}
 
-	ctx.ffms.video_source = ffms::create_video_source(file_name, video_track_number, index, -1, NORMAL, &error_info);
+	ctx.video_source = ffms::create_video_source(file_name, video_track_number, index, -1, NORMAL, &error_info);
 
 	// Sourcing failed
-	if (ctx.ffms.video_source == null)
+	if (ctx.video_source == null)
 	{
 		// TODO: log
 		return TRACK_LOADING_FAILED~;
 	}
 
 	// Fetch video properties
-	VideoProperties* props = ffms::get_video_properties(ctx.ffms.video_source);
-	Frame* frame0          = ffms::get_frame(ctx.ffms.video_source, 0, &error_info);
+	VideoProperties* props = ffms::get_video_properties(ctx.video_source);
+	Frame* frame0          = ffms::get_frame(ctx.video_source, 0, &error_info);
 
 	if (frame0 == null) return FRAME_DECODING_FAILED~;
 
@@ -134,14 +135,14 @@ fn void? load_video(
 		&& props.sar_denominator > 0) ? (width * props.sar_numerator) / (height * props.sar_denominator)
 		: width / height;
 
-	ctx.ffms.video_color_space = frame0.color_space;
-	ctx.ffms.video_color_range = frame0.color_range;
+	ctx.video_color_space = frame0.color_space;
+	ctx.video_color_range = frame0.color_range;
 	set_color_space(color_matrix);
 
 	CInt[2] target_formats = { ffms::get_pixel_format("bgra"), -1 };
 	if (!ffms::success(
 		ffms::set_video_output_format(
-			ctx.ffms.video_source,
+			ctx.video_source,
 			&target_formats[0],
 			frame0.encoded_width,
 			frame0.encoded_height,
@@ -151,20 +152,20 @@ fn void? load_video(
 	)) return SET_OUTPUT_FORMAT_FAILED~;
 
 	// Now that we have everything set up, re-fetch the frame
-	frame0 = ffms::get_frame(ctx.ffms.video_source, 0, &error_info);
-	ctx.ffms.frame_width = (usz)frame0.encoded_width;
-	ctx.ffms.frame_height = (usz)frame0.encoded_height;
-	ctx.ffms.frame_pitch = (usz)frame0.line_size[0];
+	frame0 = ffms::get_frame(ctx.video_source, 0, &error_info);
+	ctx.frame_width = (usz)frame0.encoded_width;
+	ctx.frame_height = (usz)frame0.encoded_height;
+	ctx.frame_pitch = (usz)frame0.line_size[0];
 
 	// Additional frame information
-	Track* track = ffms::get_track_from_video(ctx.ffms.video_source);
+	SourceTrack* track = ffms::get_track_from_video(ctx.video_source);
 	if (track == null) return TRACK_LOADING_FAILED~;
 
 	TrackTimeBase* time_base = ffms::get_time_base(track);
 	if (time_base == null) return GET_TIME_BASE_FAILED~;
 
 	// Build lists of timecodes and frames
-	ctx.ffms.frame_count = (int)props.frame_count;
+	ctx.frame_count = (int)props.frame_count;
 
 	@pool() // Skip having to deinit the lists
 	{
@@ -198,9 +199,9 @@ fn void? load_video(
 			}
 		}
 
-		ctx.ffms.keyframes = keyframes.to_array(mem);
-		ctx.ffms.timecodes = timecodes.to_array(mem);
-		ctx.ffms.kf_timecodes = kf_timecodes.to_array(mem);
+		ctx.keyframes = keyframes.to_array(mem);
+		ctx.timecodes = timecodes.to_array(mem);
+		ctx.kf_timecodes = kf_timecodes.to_array(mem);
 
 		// Calculate frame midcodes
 		for (CInt frame_number = 0; frame_number < props.frame_count; frame_number++)
@@ -222,11 +223,11 @@ fn void? load_video(
 				midcodes.push(((ms2 - ms1) / 2) + ms1);
 			}
 		}
-		ctx.ffms.midcodes = midcodes.to_array(mem);
+		ctx.midcodes = midcodes.to_array(mem);
 
 		// Get the keyframe midcodes
 		foreach (kf : keyframes) kf_midcodes.push(midcodes[kf]);
-		ctx.ffms.kf_midcodes = kf_midcodes.to_array(mem);
+		ctx.kf_midcodes = kf_midcodes.to_array(mem);
 
 		// Calculate frame intervals
 		for (sz i = 0; i + 1 < props.frame_count; i++)
@@ -236,16 +237,17 @@ fn void? load_video(
 
 		// Last interval is 0
 		intervals.push(0);
-		ctx.ffms.frame_intervals = intervals.to_array(mem);
+		ctx.frame_intervals = intervals.to_array(mem);
 	};
 
 	ffms::destroy_index(index);
 	// Log success
 }
 
-fn void? load_audio(GlobalContext* ctx, ZString file_name, ZString cache_file_name, int track_number)
+fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_name, int track_number)
 {
-	Index* index     = ctx.ffms.index;
+	FfmsContext* ctx = &g_ctx.ffms;
+	Index* index     = ctx.index;
 	Indexer* indexer = ffms::create_indexer(file_name, &error_info);
 
 	if (indexer == null)
@@ -272,11 +274,14 @@ fn void? load_audio(GlobalContext* ctx, ZString file_name, ZString cache_file_na
 		get_tracks_of_type(indexer, AUDIO, &tracks);
 		if (tracks.count == 0)
 		{
-			ctx.ffms.has_audio = false;
+			ctx.has_audio = false;
 			return;
 		}
 
-		track_number = tracks[tracks.keys()[0]];
+		@pool()
+		{
+			track_number = tracks.keys(mem)[0];
+		};
 	}
 
 	index = ffms::read_index(cache_file_name, &error_info);
@@ -287,7 +292,7 @@ fn void? load_audio(GlobalContext* ctx, ZString file_name, ZString cache_file_na
 
 	if (index != null && track_number >= 0)
 	{
-		Track* track = ffms::get_track_from_index(index, track_number);
+		SourceTrack* track = ffms::get_track_from_index(index, track_number);
 		if (track == null || ffms::get_num_frames(track) <= 0) index = null;
 	}
 
@@ -308,32 +313,32 @@ fn void? load_audio(GlobalContext* ctx, ZString file_name, ZString cache_file_na
 
 	if (index == null) return INDEXING_FAILED~;
 
-	ctx.ffms.audio_source = ffms::create_audio_source(file_name, track_number, index, FIRST_VIDEO_TRACK, &error_info);
-	if (ctx.ffms.audio_source == null) return TRACK_LOADING_FAILED~;
+	ctx.audio_source = ffms::create_audio_source(file_name, track_number, index, FIRST_VIDEO_TRACK, &error_info);
+	if (ctx.audio_source == null) return TRACK_LOADING_FAILED~;
 
 	// Get audio properties
-	AudioProperties* props = ffms::get_audio_properties(ctx.ffms.audio_source);
-	ctx.ffms.channel_count = props.channel_count;
-	ctx.ffms.sample_rate = props.sample_rate;
-	ctx.ffms.sample_count = props.sample_count;
+	AudioProperties* props = ffms::get_audio_properties(ctx.audio_source);
+	ctx.channel_count = props.channel_count;
+	ctx.sample_rate = props.sample_rate;
+	ctx.sample_count = props.sample_count;
 
 	// Configure the resampler
-	ResampleOptions* rs_options = ffms::create_resample_options(ctx.ffms.audio_source);
+	ResampleOptions* rs_options = ffms::create_resample_options(ctx.audio_source);
 	defer ffms::destroy_resample_options(rs_options);
 
 	rs_options.sample_format = SIGNED_16;
-	if (ctx.ffms.channel_count > 2) // Downmix to stereo
+	if (ctx.channel_count > 2) // Downmix to stereo
 	{
 		rs_options.channel_layout = FRONT_LEFT | FRONT_RIGHT;
-		ctx.ffms.channel_count = 2;
+		ctx.channel_count = 2;
 	}
 
-	if (!ffms::success(ffms::set_audio_output_format(ctx.ffms.audio_source, rs_options, &error_info)))
+	if (!ffms::success(ffms::set_audio_output_format(ctx.audio_source, rs_options, &error_info)))
 	{
 		// TODO log
 	}
 
-	ctx.ffms.has_audio = true;
+	ctx.has_audio = true;
 	ffms::destroy_index(index);
 }
 
