@@ -27,21 +27,21 @@ struct AssProfilePoint
 {
 	int frame;
 	long timestamp;
-	double renderMs;
-	int imageSize;
-	int imageCount;
+	double render_ms;
+	int image_size;
+	int image_count;
 }
 
 struct VideoFrame
 {
-	int frameNumber;
+	int frame_number;
 	long timestamp;
 	int width;
 	int height;
 	int pitch;
-	bool flipped;
+	bool is_flipped;
 	char* data;
-	bool isValid;
+	bool is_valid;
 }
 
 struct SubtitleFrame
@@ -51,27 +51,27 @@ struct SubtitleFrame
 	int width;
 	int height;
 	int pitch;
-	bool flipped;
+	bool is_flipped;
 	char* data;
-	bool isValid;
+	bool is_valid;
 }
 
 struct AudioFrame
 {
 	short* data;
 	long length;
-	int channelCount;
-	long sampleCount;
-	int sampleRate;
-	long durationMs;
-	bool isValid;
+	int channel_count;
+	long sample_count;
+	int sample_rate;
+	long duration_ms;
+	bool is_valid;
 }
 
 struct FrameGroup
 {
-	VideoFrame* videoFrame;
-	SubtitleFrame* subtitleFrame;
-	int refCount;
+	VideoFrame* video_frame;
+	SubtitleFrame* subtitle_frame;
+	int ref_count;
 }
 
 struct Bitmap
@@ -81,7 +81,7 @@ struct Bitmap
 	int pitch;
 	usz capacity;
 	char* data;
-	int refCount;
+	int ref_count;
 }
 
 struct SyllableInfo
