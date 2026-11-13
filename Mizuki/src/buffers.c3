@@ -19,13 +19,13 @@ Initialize the buffer ring
 @require width > 0, height > 0 : `frame must have a non-zero size`
 @require buffer_count > 0 : `must have at least 1 initial buffer`
 @require max_cache_size_mb >= width * pitch * buffer_count : `max cache size must be big enough to store the initial buffers`
+@ensure g_ctx.buffers.frame_buffers.size == buffer_count : `failed to initialize buffer ring`
 *>
 fn void? init_video_buffers(GlobalContext* g_ctx, int buffer_count, int max_cache_size_mb, int width, int height, int pitch)
 {
 	BuffersContext* ctx = &g_ctx.buffers;
 	ctx.frame_buffers.init(mem);
 	ctx.max_size = max_cache_size_mb * (long)math::pow(1024, 2);
-
 	for (int i = 0; i < buffer_count; i++)
 	{
 		ctx.frame_buffers.push(allocate_video_frame(width, height, pitch));
