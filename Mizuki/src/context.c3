@@ -49,7 +49,7 @@ struct BuffersContext
 	long max_size;
 	long total_size;
 	List{FrameGroup*} frame_buffers;
-	short* audio_buffer;
+	short[] audio_buffer;
 	AudioFrame* audio_frame;
 	List{Bitmap*} viz_buffers;
 }

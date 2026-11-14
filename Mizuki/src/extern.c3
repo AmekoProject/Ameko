@@ -100,6 +100,14 @@ extern fn Index* do_indexing(
 	ErrorInfo* error
 ) @cname("FFMS_DoIndexing2");
 
+extern fn int get_audio(
+	AudioSource* source,
+	void* buffer,
+	long start,
+	long count,
+	ErrorInfo* error
+) @cname("FFMS_GetAudio");
+
 // Callbacks
 alias ProgressCallback = fn CInt(CLong current, CLong total, void* _unused);
 

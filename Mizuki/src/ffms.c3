@@ -5,7 +5,7 @@ module mizuki::ffms;
 import std::collections;
 import c;
 
-excuse { FILE_NOT_FOUND, FILE_NOT_SUPPORTED, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, FRAME_DECODING_FAILED, FRAME_INFO_FAILED, SET_OUTPUT_FORMAT_FAILED, GET_TIME_BASE_FAILED }bool is_initialized = false;
+excuse { FILE_NOT_FOUND, FILE_NOT_SUPPORTED, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, FRAME_DECODING_FAILED, AUDIO_DECODING_FAILED, FRAME_INFO_FAILED, SET_OUTPUT_FORMAT_FAILED, GET_TIME_BASE_FAILED }bool is_initialized = false;
 
 char[1024] error_buffer;
 ErrorInfo error_info = {
@@ -18,7 +18,7 @@ ErrorInfo error_info = {
 <* Get the FFMS2 version *>
 fn BackingVersion get_version()
 {
-	int version = c::ffms::get_version();
+	CInt version = c::ffms::get_version();
 	return {
 		.major = (version >> 24) & 0xFF,
 		.minor = (version >> 16) & 0xFF,
@@ -36,6 +36,14 @@ fn void initialize()
 	is_initialized = true;
 }
 
+<*
+Load a video track
+@param g_ctx : `context`
+@param file_name : `path of the file to load`
+@param cache_file_name : `path of the index cache file`
+@param color_matrix : `color matrix to use`
+@param progress_cb : `progress callback`
+*>
 fn void? load_video(
 	GlobalContext* g_ctx,
 	ZString file_name,
@@ -244,7 +252,14 @@ fn void? load_video(
 	// Log success
 }
 
-fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_name, int track_number)
+<*
+Load an audio track
+@param g_ctx : `context`
+@param file_name : `path of the file to load`
+@param cache_file_name : `path of the index cache file`
+@param track_number : `index of the track to load. -1 for automatic selection.`
+*>
+fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_name, CInt track_number)
 {
 	FfmsContext* ctx = &g_ctx.ffms;
 	Index* index     = ctx.index;
@@ -342,6 +357,10 @@ fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_
 	ffms::destroy_index(index);
 }
 
+<*
+Close the loaded video (and audio)
+@param g_ctx : `context`
+*>
 fn void close_video(GlobalContext* g_ctx)
 {
 	FfmsContext* ctx = &g_ctx.ffms;
@@ -371,6 +390,61 @@ fn void close_video(GlobalContext* g_ctx)
 	if (ctx.frame_intervals) mem::free(ctx.frame_intervals);
 	if (ctx.track_info) mem::free(ctx.track_info);
 	ctx.frame_count = 0;
+}
+
+<*
+Fetch a video frame and write it to the output buffer
+@param g_ctx : `context`
+@param frame_number : `frame number to fetch`
+@param out : `VideoFrame struct receiving the data`
+@require frame_number >= 0, frame_number < g_ctx.ffms.frame_count : `frame number must be in bounds`
+*>
+fn void? fetch_frame(GlobalContext* g_ctx, CInt frame_number, VideoFrame* out)
+{
+	FfmsContext* ctx = &g_ctx.ffms;
+
+	Frame* in = ffms::get_frame(ctx.video_source, frame_number, &error_info);
+	if (in == null) return FRAME_DECODING_FAILED~;
+
+	sz total_bytes = (sz)(in.line_size[0] * in.encoded_height);
+	mem::copy(out.data, in.data[0], total_bytes);
+	out.frame_number = frame_number;
+	out.is_valid = true;
+}
+
+<*
+Fetch audio samples and write them to the output buffer
+@param g_ctx : `context`
+@param [out] buffer : `buffer to write the samples to`
+@param start : `sample to start fetching`
+@param count : `number of samples to fetch`
+@param progress_cb : `progress callback`
+@require start >= 0, count > 0 : `must fetch at least one sample`
+*>
+fn void? fetch_audio(GlobalContext* g_ctx, short* buffer, long start, long count, ProgressCallback progress_cb)
+{
+	FfmsContext* ctx = &g_ctx.ffms;
+
+	if (!ctx.has_audio) return;
+
+	long max_chunk_size = 4096;
+	long current_chunk_size = 0;
+	long decoded = 0;
+
+	while (decoded < count)
+	{
+		current_chunk_size = count - decoded > max_chunk_size ? max_chunk_size : count - decoded;
+		long offset = decoded * ctx.channel_count;
+
+		if (!ffms::success(ffms::get_audio(ctx.audio_source, buffer + offset, start + decoded, current_chunk_size, &error_info)))
+		{
+			return AUDIO_DECODING_FAILED~;
+		}
+
+		if (progress_cb != null) progress_cb(start + decoded, start + count, null);
+		
+		decoded += current_chunk_size;
+	}
 }
 
 <*
