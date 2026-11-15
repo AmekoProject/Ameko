@@ -25,11 +25,11 @@ struct TrackInfo
 
 struct AssProfilePoint
 {
-	int frame;
+	CInt frame;
 	long timestamp;
 	double render_ms;
-	int image_size;
-	int image_count;
+	CInt image_size;
+	CInt image_count;
 }
 
 struct VideoFrame

@@ -305,6 +305,10 @@ extern fn void free_track(SubtitleTrack* track) @cname("ass_free_track");
 extern fn void deinit_library(Library* library) @cname("ass_library_done");
 extern fn void destroy_renderer(Renderer* renderer) @cname("ass_renderer_done");
 extern fn Renderer* create_renderer(Library* library) @cname("ass_renderer_init");
+extern fn void set_font_scale(Renderer* renderer, double scale) @cname("ass_set_font_scale");
+extern fn void set_frame_size(Renderer* renderer, CInt width, CInt height) @cname("ass_set_frame_size");
+extern fn void add_font(Library* library, ZString name, char* data, CInt data_size) @cname("ass_add_font");
+extern fn void set_storage_size(Renderer* renderer, CInt width, CInt height) @cname("ass_set_storage_size");
 extern fn void set_message_cb(Library* library, MessageCallback callback, void* data) @cname("ass_set_message_cb");
 
 extern fn SubtitleTrack* read_memory(
@@ -314,13 +318,60 @@ extern fn SubtitleTrack* read_memory(
 	ZString code_page
 ) @cname("ass_read_memory");
 
+extern fn Image* render_frame(
+	Renderer* renderer,
+	SubtitleTrack* track,
+	CLongLong now,
+	int detect_change
+) @cname("ass_render_frame");
+
+extern fn void set_fonts(
+	Renderer* renderer,
+	ZString default_font,
+	ZString default_family,
+	FontProvider default_fp,
+	ZString config_path,
+	CInt should_update
+) @cname("ass_set_fonts");
+
+// Callbacks
+alias MessageCallback = fn void(CInt level, ZString format, args..., void* data);
+
 // Opaque structs
 typedef Renderer = void*;
 typedef Library = void*;
 typedef SubtitleTrack = void*;
 
-// Callbacks
-alias MessageCallback = fn void(CInt level, ZString format, args..., void* data);
+// Structs
+struct Image
+{
+	CInt width;
+	CInt height;
+	CInt stride;
+	char* bitmap;
+	CUInt color;
+	CInt x;
+	CInt y;
+	Image* next;
+	ImageType type;
+}
+
+// Enums
+constset FontProvider : CInt
+{
+	NONE       = 0,
+	AUTODETECT = 1,
+	CORE_TEXT,
+	FONT_CONFIG,
+	DIRECT_WRITE
+}
+
+constset ImageType : CInt
+{
+	CHARACTER,
+	OUTLINE,
+	SHADOW
+}
 
 module c::libc;
 
