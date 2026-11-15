@@ -10,6 +10,7 @@ extern fn void init(CInt, CInt) @cname("FFMS_INIT");
 extern fn CInt get_version() @cname("FFMS_GetVersion");
 extern fn void destroy_index(Index* index) @cname("FFMS_DestroyIndex");
 extern fn CInt get_pixel_format(ZString name) @cname("FFMS_GetPixFmt");
+extern fn CInt get_num_tracks(Indexer* indexer) @cname("FFMS_GetNumTracksI");
 extern fn CInt get_num_frames(SourceTrack* track) @cname("FFMS_GetNumFrames");
 extern fn CInt get_num_tracks(Indexer* indexer) @cname("FFMS_GetNumTracksI");
 extern fn void cancel_indexing(Indexer* indexer) @cname("FFMS_CancelIndexing");
@@ -18,12 +19,12 @@ extern fn Index* read_index(ZString file_name, ErrorInfo* error) @cname("FFMS_Re
 extern fn void destroy_video_source(VideoSource* source) @cname("FFMS_DestroyVideoSource");
 extern fn void destroy_audio_source(AudioSource* source) @cname("FFMS_DestroyAudioSource");
 extern fn ZString get_codec_name(Indexer* indexer, CInt track) @cname("FFMS_GetCodecNameI");
-extern fn SourceTrack* get_track_from_video(VideoSource* source) @cname("FFMS_GetTrackFromVideo");
 extern fn TrackType get_track_type(Indexer* indexer, CInt track) @cname("FFMS_GetTrackTypeI");
-extern fn SourceTrack* get_track_from_index(Index* index, CInt track) @cname("FFMS_GetTrackFromIndex");
-extern fn FrameInfo* get_frame_info(SourceTrack* track, CInt frame_number) @cname("FFMS_GetFrameInfo");
+extern fn SourceTrack* get_track_from_video(VideoSource* source) @cname("FFMS_GetTrackFromVideo");
 extern fn Indexer* create_indexer(ZString file_name, ErrorInfo* error) @cname("FFMS_CreateIndexer");
 extern fn Frame* get_frame(VideoSource* source, CInt frame, ErrorInfo* error) @cname("FFMS_GetFrame");
+extern fn SourceTrack* get_track_from_index(Index* index, CInt track) @cname("FFMS_GetTrackFromIndex");
+extern fn FrameInfo* get_frame_info(SourceTrack* track, CInt frame_number) @cname("FFMS_GetFrameInfo");
 extern fn VideoProperties* get_video_properties(VideoSource* source) @cname("FFMS_GetVideoProperties");
 extern fn AudioProperties* get_audio_properties(AudioSource* source) @cname("FFMS_GetAudioProperties");
 extern fn CInt write_index(ZString file_name, Index* index, ErrorInfo* error) @cname("FFMS_WriteIndex");
@@ -107,6 +108,9 @@ extern fn int get_audio(
 	long count,
 	ErrorInfo* error
 ) @cname("FFMS_GetAudio");
+
+// Optional functions
+alias GetTrackMetadataI = fn ZString(Indexer* indexer, CInt track, ZString key);
 
 // Callbacks
 alias ProgressCallback = fn CInt(CLong current, CLong total, void* _unused);

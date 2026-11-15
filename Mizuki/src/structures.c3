@@ -17,10 +17,10 @@ struct BackingVersion
 
 struct TrackInfo
 {
-	int index;
-	char* codec;
-	char* language;
-	char* title;
+	CInt index;
+	ZString codec;
+	ZString language;
+	ZString title;
 }
 
 struct AssProfilePoint

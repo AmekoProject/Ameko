@@ -3,9 +3,13 @@
 module mizuki::ffms;
 
 import std::collections;
+import std::os;
 import c;
 
 excuse { FILE_NOT_FOUND, FILE_NOT_SUPPORTED, INDEXING_FAILED, NO_VIDEO_TRACKS, NO_AUDIO_TRACKS, TRACK_LOADING_FAILED, FRAME_DECODING_FAILED, AUDIO_DECODING_FAILED, FRAME_INFO_FAILED, SET_OUTPUT_FORMAT_FAILED, GET_TIME_BASE_FAILED }bool is_initialized = false;
+
+DylibHandle? ffms2_handle;
+GetTrackMetadataI? get_track_metadata_fn;
 
 char[1024] error_buffer;
 ErrorInfo error_info = {
@@ -32,17 +36,30 @@ fn void initialize()
 	if (is_initialized) return;
 
 	ffms::init(0, 0);
-
 	is_initialized = true;
+
+	$switch:
+		$case $feat(MACOS):
+			ffms2_handle = os::dlopen_any("libffms2.dylib", "ffms2.dylib");
+		$case $feat(WIN32):
+			ffms2_handle = os::dlopen_any("ffms2.dll", "libffms2.dll");
+		$default:
+			ffms2_handle = os::dlopen_any("libffms2.so", "ffms2.so");
+	$endswitch
+
+	// No dll found
+	if (catch ffms2_handle) return;
+
+	get_track_metadata_fn = os::dlsym_try(ffms2_handle, "FFMS_GetTrackMetadataI");
 }
 
 <*
-Load a video track
-@param g_ctx : `context`
-@param file_name : `path of the file to load`
-@param cache_file_name : `path of the index cache file`
-@param color_matrix : `color matrix to use`
-@param progress_cb : `progress callback`
+ Load a video track
+ @param g_ctx : `context`
+ @param file_name : `path of the file to load`
+ @param cache_file_name : `path of the index cache file`
+ @param color_matrix : `color matrix to use`
+ @param progress_cb : `progress callback`
 *>
 fn void? load_video(
 	GlobalContext* g_ctx,
@@ -253,11 +270,11 @@ fn void? load_video(
 }
 
 <*
-Load an audio track
-@param g_ctx : `context`
-@param file_name : `path of the file to load`
-@param cache_file_name : `path of the index cache file`
-@param track_number : `index of the track to load. -1 for automatic selection.`
+ Load an audio track
+ @param g_ctx : `context`
+ @param file_name : `path of the file to load`
+ @param cache_file_name : `path of the index cache file`
+ @param track_number : `index of the track to load. -1 for automatic selection.`
 *>
 fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_name, CInt track_number)
 {
@@ -358,8 +375,8 @@ fn void? load_audio(GlobalContext* g_ctx, ZString file_name, ZString cache_file_
 }
 
 <*
-Close the loaded video (and audio)
-@param g_ctx : `context`
+ Close the loaded video (and audio)
+ @param g_ctx : `context`
 *>
 fn void close_video(GlobalContext* g_ctx)
 {
@@ -393,11 +410,11 @@ fn void close_video(GlobalContext* g_ctx)
 }
 
 <*
-Fetch a video frame and write it to the output buffer
-@param g_ctx : `context`
-@param frame_number : `frame number to fetch`
-@param out : `VideoFrame struct receiving the data`
-@require frame_number >= 0, frame_number < g_ctx.ffms.frame_count : `frame number must be in bounds`
+ Fetch a video frame and write it to the output buffer
+ @param g_ctx : `context`
+ @param frame_number : `frame number to fetch`
+ @param out : `VideoFrame struct receiving the data`
+ @require frame_number >= 0, frame_number < g_ctx.ffms.frame_count : `frame number must be in bounds`
 *>
 fn void? fetch_frame(GlobalContext* g_ctx, CInt frame_number, VideoFrame* out)
 {
@@ -413,13 +430,13 @@ fn void? fetch_frame(GlobalContext* g_ctx, CInt frame_number, VideoFrame* out)
 }
 
 <*
-Fetch audio samples and write them to the output buffer
-@param g_ctx : `context`
-@param [out] buffer : `buffer to write the samples to`
-@param start : `sample to start fetching`
-@param count : `number of samples to fetch`
-@param progress_cb : `progress callback`
-@require start >= 0, count > 0 : `must fetch at least one sample`
+ Fetch audio samples and write them to the output buffer
+ @param g_ctx : `context`
+ @param [out] buffer : `buffer to write the samples to`
+ @param start : `sample to start fetching`
+ @param count : `number of samples to fetch`
+ @param progress_cb : `progress callback`
+ @require start >= 0, count > 0 : `must fetch at least one sample`
 *>
 fn void? fetch_audio(GlobalContext* g_ctx, short* buffer, long start, long count, ProgressCallback progress_cb)
 {
@@ -427,24 +444,99 @@ fn void? fetch_audio(GlobalContext* g_ctx, short* buffer, long start, long count
 
 	if (!ctx.has_audio) return;
 
-	long max_chunk_size = 4096;
+	long max_chunk_size     = 4096;
 	long current_chunk_size = 0;
-	long decoded = 0;
+	long decoded            = 0;
 
 	while (decoded < count)
 	{
 		current_chunk_size = count - decoded > max_chunk_size ? max_chunk_size : count - decoded;
 		long offset = decoded * ctx.channel_count;
 
-		if (!ffms::success(ffms::get_audio(ctx.audio_source, buffer + offset, start + decoded, current_chunk_size, &error_info)))
+		if (!ffms::success(
+			ffms::get_audio(ctx.audio_source, buffer + offset, start + decoded, current_chunk_size, &error_info)
+		))
 		{
 			return AUDIO_DECODING_FAILED~;
 		}
 
 		if (progress_cb != null) progress_cb(start + decoded, start + count, null);
-		
+
 		decoded += current_chunk_size;
 	}
+}
+
+fn Array{TrackInfo}? get_audio_track_info(GlobalContext* g_ctx, ZString file_name)
+{
+	FfmsContext* ctx = &g_ctx.ffms;
+	List{TrackInfo} track_list;
+	track_list.init(mem);
+	defer track_list.free();
+
+	Indexer* indexer = ffms::create_indexer(file_name, &error_info);
+	if (indexer == null)
+	{
+		if (error_info.subtype == ErrorType.FILE_READ)
+		{
+			// TODO: Log message
+			return FILE_NOT_FOUND~;
+		}
+		else
+		{
+			return FILE_NOT_SUPPORTED~;
+		}
+	}
+
+	HashMap{CInt, ZString} tracks;
+	tracks.init(mem);
+	defer tracks.free();
+
+	// get audio tracks
+	get_tracks_of_type(indexer, AUDIO, &tracks);
+	if (tracks.count == 0)
+	{
+		return (Array{TrackInfo}) {
+			.length = 0,
+			.ptr = null,
+		};
+	}
+
+	tracks.@each(; track_number, value)
+	{
+		ZString track_lang;
+		ZString track_title;
+		ZString codec_name;
+
+		// If the track metadata function is present, we can fetch the language and title
+		if (catch get_track_metadata_fn)
+		{
+			track_lang = null;
+			track_title = null;
+			codec_name = ffms::get_codec_name(indexer, track_number);
+		}
+		else
+		{
+			track_lang = get_track_metadata_fn(indexer, track_number, "language");
+			track_title = get_track_metadata_fn(indexer, track_number, "title");
+			codec_name = ffms::get_codec_name(indexer, track_number);
+		}
+
+		track_list.push((TrackInfo) {
+			.index = track_number,
+			.codec = codec_name,
+			.language = track_lang,
+			.title = track_title,
+		});
+	};
+
+	// Dealloc the array if it's already allocated
+	if (ctx.track_info) mem::free(ctx.track_info);
+
+	ctx.track_info = track_list.to_array(mem);
+	return (Array{TrackInfo}) {
+		.ptr = ctx.track_info,
+		.length = (CInt)track_list.size,
+	};
 }
 
 <*
