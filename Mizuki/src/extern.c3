@@ -12,7 +12,6 @@ extern fn void destroy_index(Index* index) @cname("FFMS_DestroyIndex");
 extern fn CInt get_pixel_format(ZString name) @cname("FFMS_GetPixFmt");
 extern fn CInt get_num_tracks(Indexer* indexer) @cname("FFMS_GetNumTracksI");
 extern fn CInt get_num_frames(SourceTrack* track) @cname("FFMS_GetNumFrames");
-extern fn CInt get_num_tracks(Indexer* indexer) @cname("FFMS_GetNumTracksI");
 extern fn void cancel_indexing(Indexer* indexer) @cname("FFMS_CancelIndexing");
 extern fn TrackTimeBase* get_time_base(SourceTrack* track) @cname("FFMS_TrackTimeBase");
 extern fn Index* read_index(ZString file_name, ErrorInfo* error) @cname("FFMS_ReadIndex");
@@ -299,7 +298,30 @@ constset AudioChannel : long
 
 module c::libass;
 
+// Methods
+extern fn CInt get_version() @cname("ass_library_version");
+extern fn Library* init_library() @cname("ass_library_init");
+extern fn void free_track(SubtitleTrack* track) @cname("ass_free_track");
+extern fn void deinit_library(Library* library) @cname("ass_library_done");
+extern fn void destroy_renderer(Renderer* renderer) @cname("ass_renderer_done");
+extern fn Renderer* create_renderer(Library* library) @cname("ass_renderer_init");
+extern fn void set_message_cb(Library* library, MessageCallback callback, void* data) @cname("ass_set_message_cb");
+
+extern fn SubtitleTrack* read_memory(
+	Library* library,
+	ZString data,
+	sz data_len,
+	ZString code_page
+) @cname("ass_read_memory");
+
 // Opaque structs
 typedef Renderer = void*;
 typedef Library = void*;
 typedef SubtitleTrack = void*;
+
+// Callbacks
+alias MessageCallback = fn void(CInt level, ZString format, args..., void* data);
+
+module c::libc;
+
+extern fn CInt vsnprintf(char* buffer, usz length, ZString format, void* args);
